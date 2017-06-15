@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: flex_commerce_development
+  username: <%= ENV['PQ_DEV_UN'] %>
+  password: <%= ENV['PQ_DEV_PW'] %>
+
+test:
+  <<: *default
+  database: flex_commerce_test
+  username: <%= ENV['PQ_DEV_UN'] %>
+  password: <%= ENV['PQ_DEV_PW'] %>
+  
+production:
+  <<: *default
+  database: flex_commerce_production
+  username: flex_commerce
+  password: <%= ENV['FLEX_COMMERCE_DATABASE_PASSWORD'] %>
