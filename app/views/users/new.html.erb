@@ -1,10 +1,36 @@
 <div class="container">
 
+  <h1 class="text-center" id="sign_up_title">
+    Sign Up
+  </h1>
+
   <%= form_for @user do |f| %>
-    <%= f.text_field :ident %>
-    <%= f.password_field :password %>
-    <%= f.password_field :password_confirmation %>
-    <%= f.submit %>
+    <div class="form-group row justify-content-center">
+      <div class="col-6">
+        <%= f.text_field :ident, placeholder: 'Email/Cell Phone Number',
+                         class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="form-group row justify-content-center">
+      <div class="col-6">
+        <%= f.password_field :password, placeholder: 'Password',
+                             class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="form-group row justify-content-center">
+      <div class="col-6">
+        <%= f.password_field :password_confirmation, class: 'form-control',
+                             placeholder: 'Password Confirmation' %>
+      </div>
+    </div>
+
+    <row class="row justify-content-center">
+      <div class="col-6">
+        <%= f.submit 'Sign Up', class: 'btn btn-block btn-primary' %>
+      </div>
+    </row>
   <% end %>
 
 </div>
