@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  root 'home#homepage'
+  root 'home#index'
 
-  get 'homepage', to: 'home#homepage'
+  get 'index', to: 'home#index'
   resources :users
 
 end
