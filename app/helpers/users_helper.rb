@@ -3,7 +3,7 @@ module UsersHelper
   EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   CN_CELLULAR = /\A0?(13[0-9]|15[012356789]|17[0135678]|18[0-9]|14[579])[0-9]{8}\z/
 
-  def analyize_ident
+  def convert_ident
     if is_email?
       params[:user][:email] = params[:user][:ident]
     elsif is_cell_number?

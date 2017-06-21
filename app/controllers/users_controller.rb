@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    helpers.analyize_ident
+    helpers.convert_ident
     @user = User.new(user_params_on_create)
     if @user.save
       redirect_to @user
