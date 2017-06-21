@@ -5,7 +5,7 @@ class IdentificationValidator < ActiveModel::Validator
   def validate(record)
     if record.email.nil? && record.cell_number.nil?
       record.errors.add(:base,
-        'An email address or a cell phoone number is required.')
+        'A valid email address or a valid cell phoone number is required.')
     end
   end
 end
