@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'sign up as customer' do
   it 'allows sign up with email' do
-    visit new_user_path
+    visit signup_path
     fill_in "user_ident", with: "feature_test_user@example.com"
     fill_in "user_password", with: "example"
     fill_in "user_password_confirmation", with: "example"
@@ -13,7 +13,7 @@ describe 'sign up as customer' do
   end
 
   it 'allows sign up with cell number' do
-    visit new_user_path
+    visit signup_path
     fill_in "user_ident", with: "18398765432"
     fill_in "user_password", with: "example"
     fill_in "user_password_confirmation", with: "example"
