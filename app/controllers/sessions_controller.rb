@@ -9,6 +9,7 @@ class SessionsController < ApplicationController
            User.find_by(cell_number: params[:session][:ident])
     if user && user.authenticate(params[:session][:password])
       helpers.login(user)
+      params[:session][:remember_me] == '1' ? helpers.remember(user) : ""
       redirect_to user
     else
       render :new

@@ -28,6 +28,15 @@ RSpec.describe SessionsController, type: :controller do
       expect(session[:user_id]).to eq(user.id)
     end
 
+    it 'sets cookies and remember_token when remember me is selected' do
+      post :create, params: { session: { ident: user.email,
+                                         password: 'example',
+                                         remember_me: '1' }}
+      user.reload
+      expect(cookies.signed['user_id']).to eql(user.id)
+      expect(cookies[:remember_token]).to eql(user.remember_token)
+    end
+
     it 'goes back to login form when invalid ident is provided' do
       post :create, params: { session: { ident: 'wrong ident',
                                          password: 'wrong pass' } }
