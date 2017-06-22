@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   # Validations
   has_secure_password
+  has_secure_token :remember_token
   validates_with IdentificationValidator
   validates :email, length: { maximum: 255 }, allow_nil: true,
                     format: { with: EMAIL_REGEX },

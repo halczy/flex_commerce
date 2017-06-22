@@ -5,13 +5,15 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :email
       t.string :cell_number
-      t.string :password_digest, unique: true
-      t.string :remember_digest, unique: true
+      t.string :password_digest
+      t.string :remember_token
 
       t.timestamps
     end
 
     add_index :users, :email,                unique: true
     add_index :users, :cell_number,          unique: true
+    add_index :users, :password_digest,      unique: true
+    add_index :users, :remember_token,       unique: true
   end
 end
