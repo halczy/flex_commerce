@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'users/new' do
 
-  it 'renders the sign up page with current dom elements' do
+  it 'renders the sign up page with correct dom elements' do
     @user = User.new
     render
     expect(rendered).to have_selector("#sign_up_title")
