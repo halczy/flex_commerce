@@ -16,4 +16,9 @@ class SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    user = User.find(params[:id])
+    helpers.logout(user)
+    redirect_to root_url
+  end
 end

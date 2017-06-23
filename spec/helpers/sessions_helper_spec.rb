@@ -11,32 +11,30 @@ RSpec.describe SessionsHelper, type: :helper do
     end
   end
 
-  describe '#remember' do
-    it 'sets user_id and remember_token in cookies' do
-      # See user_controller_spec. Cookies read/write is not supported here.
-    end
-
-    it 'refreshes remember_token' do
-      old_token = user.remember_token
-      helper.remember(user)
-      expect(old_token).not_to eql(user.remember_token)
-    end
-
-    it 'creates new remember_token' do
-      user.remember_token = nil
-      helper.remember(user)
-      expect(user.remember_token).not_to be_nil
-    end
-  end
-
-  describe '#forget' do
+  describe '#logout' do
     it 'deletes user_id and remember_token in cookies' do
-      # See user_controller_spec. Cookies read/write is not supported here.
+      # See sessions_controller. Cookies read/write is not supported here.
     end
 
     it 'sets remember_token to nil' do
-      helper.forget(user)
-      expect(user.remember_token).to be_nil
+      helper.logout(user)
+      expect(helper.current_user).to be_nil
+    end
+  end
+
+  describe '#current_user' do
+    it 'returns @current_user if user has login session' do
+      helper.login(user)
+      expect(helper.current_user).to eql(user)
+    end
+
+    it 'returns @current_user if user has login cookies' do
+      helper.remember(user)
+      expect(helper.current_user).to eql(user)
+    end
+
+    it 'returns nil if user does not have login session nor cookies' do
+      expect(helper.current_user).to be_nil
     end
   end
 
