@@ -100,10 +100,38 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#create_digest' do
+    it 'creates token with cost of 10' do
+      digest = User.create_digest('random')
+      expect(digest).to start_with '$2a$10'
+    end
+  end
+
+  describe '#authenticate_token?' do
+    it 'returns true when valid digest and token are given' do
+      user.remember
+      result = user.authenticate_token?(:remember, user.remember_token)
+      expect(result).to be_truthy
+    end
+  end
+
+  describe '#remember' do
+    it 'creates/refreshes remember_token and set remember_digest' do
+      old_token = user.remember_token
+      old_digest = user.remember_digest
+      user.remember
+      expect(user.remember_token).to be_present
+      expect(user.remember_token).not_to eql(old_token)
+      expect(user.remember_digest).to be_present
+      expect(user.remember_digest).not_to eql(old_digest)
+    end
+  end
+
   describe '#forget' do
-    it 'sets remember_token to nil' do
+    it 'sets remember_token and remember_digest to nil' do
       user.forget
       expect(user.remember_token).to be_nil
+      expect(user.remember_digest).to be_nil
     end
   end
 end
