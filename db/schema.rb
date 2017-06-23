@@ -21,13 +21,12 @@ ActiveRecord::Schema.define(version: 20170616110859) do
     t.string "email"
     t.string "cell_number"
     t.string "password_digest"
+    t.string "remember_digest"
     t.string "remember_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cell_number"], name: "index_users_on_cell_number", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["password_digest"], name: "index_users_on_password_digest", unique: true
-    t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
   end
 
 end
