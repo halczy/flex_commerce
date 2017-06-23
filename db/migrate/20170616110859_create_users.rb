@@ -7,7 +7,6 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :cell_number
       t.string :password_digest
       t.string :remember_digest
-      t.string :remember_token
 
       t.timestamps
     end

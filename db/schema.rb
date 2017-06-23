@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 20170616110859) do
     t.string "cell_number"
     t.string "password_digest"
     t.string "remember_digest"
-    t.string "remember_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cell_number"], name: "index_users_on_cell_number", unique: true
