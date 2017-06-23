@@ -29,4 +29,15 @@ RSpec.describe SessionsHelper, type: :helper do
     end
   end
 
+  describe '#forget' do
+    it 'deletes user_id and remember_token in cookies' do
+      # See user_controller_spec. Cookies read/write is not supported here.
+    end
+
+    it 'sets remember_token to nil' do
+      helper.forget(user)
+      expect(user.remember_token).to be_nil
+    end
+  end
+
 end

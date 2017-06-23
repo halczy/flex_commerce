@@ -20,6 +20,10 @@ class User < ApplicationRecord
   # Filter
   before_save :downcase_email
 
+  def forget
+    update(remember_token: nil)
+  end
+
   private
 
     def downcase_email

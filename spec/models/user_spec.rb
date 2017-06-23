@@ -11,6 +11,8 @@ RSpec.describe User, type: :model do
                                   password_confirmation: 'example')
   end
 
+  let(:user) { FactoryGirl.create(:user) }
+
   describe 'creation' do
     it 'can be created' do
       expect(@user_with_email).to be_valid
@@ -95,6 +97,13 @@ RSpec.describe User, type: :model do
         @user_with_email.password_confirmation = @user_with_email.password
         expect(@user_with_email).not_to be_valid
       end
+    end
+  end
+
+  describe '#forget' do
+    it 'sets remember_token to nil' do
+      user.forget
+      expect(user.remember_token).to be_nil
     end
   end
 end
