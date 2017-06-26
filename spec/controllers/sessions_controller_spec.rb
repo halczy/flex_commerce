@@ -68,7 +68,8 @@ RSpec.describe SessionsController, type: :controller do
     end
 
     it 'redirects to root' do
-
+      delete :destroy, params: { id: user.id }
+      expect(response).to redirect_to root_url
     end
   end
 
