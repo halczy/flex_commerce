@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe SessionsHelper, type: :helper do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user)       { FactoryGirl.create(:user) }
+  let(:other_user) { FactoryGirl.create(:user) }
 
   describe '#login' do
     it 'writes user id to session' do
@@ -35,6 +36,18 @@ RSpec.describe SessionsHelper, type: :helper do
 
     it 'returns nil if user does not have login session nor cookies' do
       expect(helper.current_user).to be_nil
+    end
+  end
+
+  describe '#current_user?' do
+    it 'returns true if current_user is the given user' do
+      helper.login(user)
+      expect(helper.current_user?(user)).to be_truthy
+    end
+
+    it 'returns false if current_user is not the given user' do
+      helper.login(other_user)
+      expect(helper.current_user?(user)).to be_falsy
     end
   end
 
