@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # Filters
-  before_action :authenticate_user, only: [:show]
   before_action :set_user, only: [:show]
+  before_action :authenticate_user, only: [:show]
   before_action :correct_user, only: [:show]
 
   def new
@@ -12,6 +12,7 @@ class UsersController < ApplicationController
     helpers.convert_ident
     @user = User.new(user_params_on_create)
     if @user.save
+      flash[:success] = 'Your account has been created successfully.'
       redirect_to @user
     else
       render :new

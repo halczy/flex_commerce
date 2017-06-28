@@ -58,12 +58,16 @@ footer p {
 
 
 // users#new
-
 #sign_up_title {
   padding: 3rem;
 }
 
+// sessions#new
 #sign_in_title {
   padding: 3rem;
 }
 
+// flash message
+.alert {
+  margin-top: 2rem;
+}
