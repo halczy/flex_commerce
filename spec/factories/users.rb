@@ -5,7 +5,7 @@ FactoryGirl.define do
   end
 
   sequence :cell_number do |n|
-    "183#{n}#{Faker::Number.number(7)}"
+    "183#{Faker::Number.number(8)}"
   end
 
   factory :user do
