@@ -5,7 +5,7 @@ RSpec.describe UsersController, type: :controller do
   context 'GET new' do
     it "renders the new user template" do
       get :new
-      expect(response).to render_template("new")
+      expect(response).to render_template(:new)
       expect(assigns(:user)).to be_a_new(User)
     end
   end
@@ -50,6 +50,30 @@ RSpec.describe UsersController, type: :controller do
       expect(assigns(:user).email).to eq('user_create@example.com')
       expect(assigns(:user).cell_number).to eq('14900000000')
       expect(assigns(:user).name).to eq('User Create Test')
+    end
+  end
+
+  describe 'GET show' do
+    let(:user) { FactoryGirl.create(:user) }
+
+    it 'renders show page for signed in user' do
+      signin_as(user)
+      get :show, params: { id: user.id }
+      expect(response).to render_template(:show)
+    end
+
+    describe 'access control' do
+      it 'requires user to be signed in' do
+        get :show, params: { id: user.id }
+        expect(response).to redirect_to(signin_path)
+      end
+
+      xit 'only allows user to see their own profile' do
+      end
+
+      xit 'allow admin to access user profile' do
+
+      end
     end
   end
 

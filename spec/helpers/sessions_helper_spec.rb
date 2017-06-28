@@ -38,4 +38,15 @@ RSpec.describe SessionsHelper, type: :helper do
     end
   end
 
+  describe '#signed_in?' do
+    it 'returns true when @current_user is present' do
+      helper.login(user)
+      expect(helper.signed_in?).to be_truthy
+    end
+
+    it 'returns false when @current_user is not present' do
+      expect(helper.signed_in?).to be_falsy
+    end
+  end
+
 end
