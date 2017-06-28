@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   # Filters
   before_action :authenticate_user, only: [:show]
   before_action :set_user, only: [:show]
+  before_action :correct_user, only: [:show]
 
   def new
     @user = User.new
@@ -31,4 +32,7 @@ class UsersController < ApplicationController
                                    :password, :password_confirmation)
     end
 
+    def correct_user
+      redirect_to root_url unless helpers.current_user?(set_user)
+    end
 end

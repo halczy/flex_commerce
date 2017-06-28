@@ -54,7 +54,8 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'GET show' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user)       { FactoryGirl.create(:user) }
+    let(:other_user) { FactoryGirl.create(:user) }
 
     it 'renders show page for signed in user' do
       signin_as(user)
@@ -68,7 +69,10 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(signin_path)
       end
 
-      xit 'only allows user to see their own profile' do
+      it 'only allows user to see their own profile' do
+        signin_as(other_user)
+        get :show, params: { id: user.id }
+        expect(response).to redirect_to(root_url)
       end
 
       xit 'allow admin to access user profile' do
