@@ -75,9 +75,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(root_url)
       end
 
-      xit 'allow admin to access user profile' do
-
-      end
+      it 'allow admin to access user profile'
     end
   end
 
