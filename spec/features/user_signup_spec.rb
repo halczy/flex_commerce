@@ -24,4 +24,10 @@ describe 'sign up as customer' do
     expect(page).to have_selector('.alert-success')
     expect(page).to have_content('18398765432')
   end
+
+  it 'displays error messages when using invalid information' do
+    visit signup_path
+    click_button 'Submit'
+    expect(page).to have_selector('#error_messages')
+  end
 end

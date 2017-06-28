@@ -31,7 +31,7 @@
   background-color: #f7f7f7;
 }
 
-.card {
+#index-card {
   float: left;
   width: 33.333%;
   padding: .75rem;
@@ -39,11 +39,11 @@
   border: 0;
 }
 
-.card > img {
+#index-card > img {
   margin-bottom: .75rem;
 }
 
-.card-text {
+#index-card-text {
   font-size: 85%;
 }
 
@@ -70,4 +70,9 @@ footer p {
 // flash message
 .alert {
   margin-top: 2rem;
+}
+
+// error message
+#error_messages {
+  margin-bottom: 3rem;
 }
