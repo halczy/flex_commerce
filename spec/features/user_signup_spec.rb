@@ -6,10 +6,11 @@ describe 'sign up as customer' do
     fill_in "user_ident", with: "feature_test_user@example.com"
     fill_in "user_password", with: "example"
     fill_in "user_password_confirmation", with: "example"
-    click_button "Sign Up"
+    click_button 'Submit'
 
     expect(page.current_path).to eq(user_path(User.last))
-    expect(page).to have_content("feature_test_user@example.com")
+    expect(page).to have_selector('.alert-success')
+    expect(page).to have_content('feature_test_user@example.com')
   end
 
   it 'allows sign up with cell number' do
@@ -17,9 +18,10 @@ describe 'sign up as customer' do
     fill_in "user_ident", with: "18398765432"
     fill_in "user_password", with: "example"
     fill_in "user_password_confirmation", with: "example"
-    click_button "Sign Up"
+    click_button 'Submit'
 
     expect(page.current_path).to eq(user_path(User.last))
-    expect(page).to have_content("18398765432")
+    expect(page).to have_selector('.alert-success')
+    expect(page).to have_content('18398765432')
   end
 end

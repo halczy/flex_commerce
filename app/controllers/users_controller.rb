@@ -13,6 +13,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params_on_create)
     if @user.save
       flash[:success] = 'Your account has been created successfully.'
+      helpers.login(@user)
       redirect_to @user
     else
       render :new
