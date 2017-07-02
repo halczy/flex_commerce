@@ -8,9 +8,9 @@ FactoryGirl.define do
     "test.admin#{n}@example.com"
   end
 
-  factory :user do
-    type ""
-    name "Sample User"
+  factory :customer do
+    type "Customer"
+    name "Sample Customer"
     email { generate :email }
     cell_number { "183#{Faker::Number.number(8)}" }
     password 'example'

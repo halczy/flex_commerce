@@ -11,7 +11,7 @@ RSpec.describe User, type: :model do
                                   password_confirmation: 'example')
   end
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryGirl.create(:customer) }
 
   describe 'creation' do
     it 'can be created' do

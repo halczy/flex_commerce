@@ -43,6 +43,10 @@ class User < ApplicationRecord
     update(remember_token: nil, remember_digest: nil)
   end
 
+  def customer?
+    self.is_a?(Customer)
+  end
+
   def admin?
     User.admin_types.include?(self.class.to_s)
   end

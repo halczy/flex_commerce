@@ -11,13 +11,13 @@ RSpec.describe Admin, type: :model do
     end
   end
 
-  describe '#admin' do
+  describe '#admin?' do
     it 'returns true when user is an admin' do
       expect(admin.admin?).to be_truthy
     end
 
     it 'returns false when user is not an admin' do
-      customer = FactoryGirl.create(:user)
+      customer = FactoryGirl.create(:customer)
       expect(customer.admin?).to be_falsy
     end
   end
