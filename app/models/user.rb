@@ -43,6 +43,16 @@ class User < ApplicationRecord
     update(remember_token: nil, remember_digest: nil)
   end
 
+  def admin?
+    User.admin_types.include?(self.class.to_s)
+  end
+
+  protected
+
+    def self.admin_types
+      ['Admin']
+    end
+
   private
 
     def downcase_email
