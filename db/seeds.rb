@@ -8,8 +8,17 @@
 
 User.delete_all
 
-User.create(name: 'Seed Customer',
-            email: 'seed@example.com',
-            cell_number: '18611112222',
-            password: 'example',
-            password_confirmation: 'example')
+Admin.create(name: 'Admin User',
+             email: 'admin@example.com',
+             cell_number: '13811112222',
+             password: 'example',
+             password_confirmation: 'example')
+
+50.times do |n|
+  Customer.create(name: Faker::Name.name,
+                  email: "customer_#{n}@example.com",
+                  cell_number: "186#{Faker::Number.number(8)}",
+                  password: 'example',
+                  password_confirmation: 'example')
+
+end
