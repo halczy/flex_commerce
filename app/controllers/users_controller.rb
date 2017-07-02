@@ -12,9 +12,10 @@ class UsersController < ApplicationController
     helpers.convert_ident
     @user = User.new(user_params_on_create)
     if @user.save
+      @user.set_as_customer
       flash[:success] = 'Your account has been created successfully.'
       helpers.login(@user)
-      redirect_to @user
+      redirect_to user_path(@user)
     else
       render :new
     end

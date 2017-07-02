@@ -11,7 +11,7 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   context 'POST create' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryGirl.create(:customer) }
 
     it 'allows sign in through email' do
       post :create, params: { session: { ident: user.email,
@@ -54,7 +54,7 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   context 'DELETE destroy' do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryGirl.create(:customer) }
 
     before do
       post :create, params: { session: { ident: user.email,

@@ -134,4 +134,15 @@ RSpec.describe User, type: :model do
       expect(user.remember_digest).to be_nil
     end
   end
+
+  describe '#set_as_customer' do
+    it 'can be set_as_customer' do
+      user = FactoryGirl.create(:user)
+      expect(user.customer?).to be_falsey
+      user.set_as_customer
+      expect(user.customer?).to be_truthy
+      customer = Customer.find(user.id)
+      expect(customer).to be_an_instance_of(Customer)
+    end
+  end
 end

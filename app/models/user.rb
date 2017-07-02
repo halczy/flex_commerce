@@ -43,8 +43,12 @@ class User < ApplicationRecord
     update(remember_token: nil, remember_digest: nil)
   end
 
+  def set_as_customer
+    update(type: 'Customer')
+  end
+
   def customer?
-    self.is_a?(Customer)
+    type == 'Customer'
   end
 
   def admin?
