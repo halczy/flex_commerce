@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user
     unless helpers.signed_in?
+      # TODO FLASH MESSAGE
       redirect_to signin_path
     end
   end

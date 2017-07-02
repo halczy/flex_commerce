@@ -5,18 +5,18 @@ module UsersHelper
 
   def convert_ident
     if is_email?
-      params[:user][:email] = params[:user][:ident]
+      params[:customer][:email] = params[:customer][:ident]
     elsif is_cell_number?
-      params[:user][:cell_number] = params[:user][:ident]
+      params[:customer][:cell_number] = params[:customer][:ident]
     end
   end
 
   def is_email?
-    EMAIL_REGEX.match?(params[:user][:ident])
+    EMAIL_REGEX.match?(params[:customer][:ident])
   end
 
   def is_cell_number?
-    CN_CELLULAR.match?(params[:user][:ident])
+    CN_CELLULAR.match?(params[:customer][:ident])
   end
 
 end

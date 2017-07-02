@@ -17,14 +17,14 @@ RSpec.describe SessionsController, type: :controller do
       post :create, params: { session: { ident: user.email,
                                          password: 'example' } }
 
-      expect(response).to redirect_to(user_path(user))
+      expect(response).to redirect_to(customer_path(user))
       expect(session[:user_id]).to eq(user.id)
     end
 
     it 'allows sign in through cell number' do
       post :create, params: { session: { ident: user.cell_number,
                                          password: 'example' } }
-      expect(response).to redirect_to(user_path(user))
+      expect(response).to redirect_to(customer_path(user))
       expect(session[:user_id]).to eq(user.id)
     end
 

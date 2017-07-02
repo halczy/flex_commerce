@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       helpers.login(user)
       params[:session][:remember_me] == '1' ? helpers.remember(user) : ""
-      redirect_to user_path(user)
+      redirect_to customer_path(user)
     else
       flash.now[:warning] = 'Incorrect account / password combination.'
       render :new
