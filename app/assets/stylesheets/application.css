@@ -23,3 +23,8 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 13px;
 }
+
+/* Bootstrap Dropdown */
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}

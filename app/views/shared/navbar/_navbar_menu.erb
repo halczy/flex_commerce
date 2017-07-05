@@ -1,0 +1,18 @@
+<% Category.top_level.each do |menu_item| %>
+  <li class="nav-item">
+    <% if menu_item.child_categories.empty? %>
+      <%= link_to menu_item.name, root_url, class: 'nav-link' %>
+    <% else %>
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= menu_item.name %>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <% menu_item.child_categories.each do |menu_child| %>
+            <%= link_to menu_child.name, "#", class: 'dropdown-item' %>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </li>
+<% end %>

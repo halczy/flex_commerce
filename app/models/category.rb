@@ -10,4 +10,8 @@ class Category < ApplicationRecord
   # Scope / Enum
   scope :top_level, -> { where(parent: nil, hide: false) }
   enum flavor: { normal: 0, feature: 1 }
+
+  def childless?
+
+  end
 end

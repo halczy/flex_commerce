@@ -9,11 +9,7 @@
         <li class="nav-item <%= active?(root_url) %>">
           <%= link_to 'Home', root_url, class: 'nav-link' %>
         </li>
-        <% Category.top_level.each do |menu_item| %>
-          <li class="nav-item">
-            <%= link_to menu_item.name, "#", class: 'nav-link' %>
-          </li>
-        <% end %>
+        <%= render 'shared/navbar/navbar_menu' %>
       </ul>
       <ul class="nav navbar-nav">
         <% if current_user %>
