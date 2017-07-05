@@ -7,6 +7,7 @@ class Category < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :display_order, numericality: { greater_than_or_equal_to: 0 }
 
-  # Enum
+  # Scope / Enum
+  scope :top_level, -> { where(parent: nil, hide: false) }
   enum flavor: { normal: 0, feature: 1 }
 end

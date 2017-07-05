@@ -48,6 +48,12 @@ RSpec.describe Category, type: :model do
       expect(@child_cat_1.parent).to eq(@main_cat)
       expect(@child_cat_2.parent).to eq(@main_cat)
     end
+
+    context 'scope' do
+      it 'scopes visible category without parent as top level menu' do
+        expect(Category.top_level).to eq([@main_cat])
+      end
+    end
   end
 
 end
