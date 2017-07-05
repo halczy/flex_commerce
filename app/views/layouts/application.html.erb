@@ -10,7 +10,7 @@
 
   <body>
     <%= render 'shared/navbar' %>
-    <%= render 'shared/flash' %>
+    <%= render 'shared/flash' unless flash.empty? %>
     <%= yield %>
   </body>
 </html>

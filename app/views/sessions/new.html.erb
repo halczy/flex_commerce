@@ -6,7 +6,7 @@
         <h4>Sign In</h4>
       </div>
       <div class="card-block">
-        <%= form_for :session, url: sessions_path do |f| %>
+        <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
           <div class="form-group">
             <%= f.text_field :ident, placeholder: 'Email / Cell Phone Number',
                              class: 'form-control' %>
