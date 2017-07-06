@@ -14,17 +14,3 @@
  *= require_tree .
  *= require_self
  */
-
-
-/* Font (Global) */
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
-* {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 13px;
-}
-
-/* Bootstrap Dropdown */
-.dropdown:hover>.dropdown-menu {
-  display: block;
-}
