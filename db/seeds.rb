@@ -1,5 +1,8 @@
+puts 'Seed file is running'
+
 # USER
 User.delete_all
+puts 'Clear old user data'
 
 Admin.create(name: 'Admin User',
              email: 'admin@example.com',
@@ -14,9 +17,11 @@ Admin.create(name: 'Admin User',
                   password: 'example',
                   password_confirmation: 'example')
 end
+puts "#{User.count} users created"
 
 # CATEGORIES
 Category.delete_all
+puts 'Clear old category data'
 
 5.times do |n|
   current_cat = Category.create(name: Faker::Space.galaxy,
@@ -31,3 +36,6 @@ Category.delete_all
                     parent: current_cat)
   end
 end
+puts "#{Category.count} categories created."
+puts "Categories created #{Category.top_level.count} top level categories"
+
