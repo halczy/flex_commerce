@@ -12,9 +12,9 @@ module SessionsHelper
 
   def current_user
     if session[:user_id]
-      @current_user ||= User.find(session[:user_id])
+      @current_user ||= find_user(session[:user_id])
     elsif cookies.signed[:user_id]
-      user = User.find(cookies.signed[:user_id])
+      user = find_user(cookies.signed[:user_id])
       if user && user.authenticate_token?(:remember, cookies[:remember_token])
         login(user)
         @current_user = user
@@ -32,10 +32,24 @@ module SessionsHelper
 
   def logout(user)
     user.forget
-    session.delete(:user_id)
-    cookies.delete(:user_id)
-    cookies.delete(:remember_token)
+    clear_session_and_cookies
     @current_user = nil
   end
 
+  private
+
+    def find_user(session_user_id)
+      begin
+        User.find(session_user_id)
+      rescue ActiveRecord::RecordNotFound
+        clear_session_and_cookies
+        return nil
+      end
+    end
+
+    def clear_session_and_cookies
+      session.delete(:user_id)
+      cookies.delete(:user_id)
+      cookies.delete(:remember_token)
+    end
 end

@@ -37,6 +37,20 @@ RSpec.describe SessionsHelper, type: :helper do
     it 'returns nil if user does not have login session nor cookies' do
       expect(helper.current_user).to be_nil
     end
+
+    context 'invalid user_id in session or cookies' do
+      it 'resets user session when given invalid user_id in session' do
+        helper.login(user)
+        User.delete(user)
+        expect(helper.current_user).to be_nil
+      end
+
+      it 'resets user session when given invalid user_id in cookies' do
+        helper.remember(user)
+        User.delete(user)
+        expect(helper.current_user).to be_nil
+      end
+    end
   end
 
   describe '#current_user?' do
