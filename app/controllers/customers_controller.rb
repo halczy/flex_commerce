@@ -35,7 +35,7 @@ class CustomersController < UsersController
     end
 
     def correct_customer
-      unless helpers.current_user?(set_customer)
+      unless helpers.current_user?(set_customer) || helpers.current_user.admin?
         # TODO FLASH MESSAGE
         redirect_to root_url
       end

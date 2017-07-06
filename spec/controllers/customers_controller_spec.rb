@@ -86,6 +86,7 @@ RSpec.describe CustomersController, type: :controller do
   describe 'GET show' do
     let(:customer)       { FactoryGirl.create(:customer) }
     let(:other_customer) { FactoryGirl.create(:customer) }
+    let(:admin)          { FactoryGirl.create(:admin) }
 
     it 'renders show page for signed in customer' do
       signin_as(customer)
@@ -105,7 +106,11 @@ RSpec.describe CustomersController, type: :controller do
         expect(response).to redirect_to(root_url)
       end
 
-      it 'allows admin to access any customer profile'
+      it 'allows admin to access any customer profile' do
+        signin_as(admin)
+        get :show, params: { id: customer.id }
+        expect(response).to render_template(:show)
+      end
     end
   end
 
