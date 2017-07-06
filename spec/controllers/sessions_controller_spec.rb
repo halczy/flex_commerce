@@ -2,15 +2,14 @@ require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
 
-
-  context 'GET new' do
+  describe 'GET new' do
     it 'renders the new session template' do
       get :new
       expect(response).to render_template(:new)
     end
   end
 
-  context 'POST create' do
+  describe 'POST create' do
     let(:user) { FactoryGirl.create(:customer) }
 
     it 'allows sign in through email' do
@@ -53,7 +52,7 @@ RSpec.describe SessionsController, type: :controller do
     end
   end
 
-  context 'DELETE destroy' do
+  describe 'DELETE destroy' do
     let(:user) { FactoryGirl.create(:customer) }
 
     before do
