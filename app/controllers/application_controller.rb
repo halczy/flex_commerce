@@ -7,4 +7,11 @@ class ApplicationController < ActionController::Base
       redirect_to signin_path
     end
   end
+
+  def authenticate_admin
+    unless helpers.current_user.admin?
+      # TODO FLASH MESSAGE
+      redirect_to root_url
+    end
+  end
 end
