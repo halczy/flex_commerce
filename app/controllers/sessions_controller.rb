@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       helpers.login(user)
       params[:session][:remember_me] == '1' ? helpers.remember(user) : ""
-      redirect_to customer_path(user)
+      redirect_by_class(user)
     else
       flash.now[:warning] = 'Incorrect account / password combination.'
       render :new
@@ -23,4 +23,14 @@ class SessionsController < ApplicationController
     flash[:info] = 'You are now logged out of your account.'
     redirect_to root_url
   end
+
+  private
+
+    def redirect_by_class(user)
+      if user.customer?
+        redirect_to customer_path(user)
+      elsif user.admin?
+        redirect_to admin_dashboard_index_path
+      end
+    end
 end
