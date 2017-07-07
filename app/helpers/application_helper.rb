@@ -13,4 +13,9 @@ module ApplicationHelper
     end
   end
 
+  def admin_controller?(controller)
+    admin_controllers = [ 'dashboard' ]
+    admin_controllers.include?(controller.controller_name.downcase)
+  end
+
 end
