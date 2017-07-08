@@ -1,6 +1,4 @@
-class Admin::CategoriesController < ApplicationController
-  before_action :authenticate_user
-  before_action :authenticate_admin
+class Admin::CategoriesController < Admin::AdminController
 
   def index
     @title = 'Categories'
