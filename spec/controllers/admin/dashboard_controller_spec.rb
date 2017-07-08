@@ -12,6 +12,12 @@ RSpec.describe Admin::DashboardController, type: :controller do
       expect(response).to render_template(:index)
     end
 
+    it 'contains header title' do
+      signin_as(admin)
+      get :index
+      expect(assigns(:title)).to be_truthy
+    end
+
     context 'access control' do
       it 'does not allow non-admin access' do
         signin_as(customer)
