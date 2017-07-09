@@ -35,6 +35,7 @@ RSpec.describe Category, type: :model do
   describe 'relationships' do
     before do
       @main_cat = FactoryGirl.create(:category)
+      @hidden_cat = FactoryGirl.create(:category, hide: true)
       @child_cat_1 = FactoryGirl.create(:category, parent: @main_cat)
       @child_cat_2 = FactoryGirl.create(:category, parent: @main_cat)
     end
@@ -52,6 +53,10 @@ RSpec.describe Category, type: :model do
     context 'scope' do
       it 'scopes visible category without parent as top level menu' do
         expect(Category.top_level).to eq([@main_cat])
+      end
+
+      it 'scopes categories without parent' do
+        expect(Category.no_parent).to eq([@main_cat, @hidden_cat])
       end
     end
   end
