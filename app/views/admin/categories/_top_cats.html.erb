@@ -1,0 +1,35 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th># of Child Categories</th>
+      <th>Display Order</th>
+      <th>Hidden</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% top_level.each do |top_cat| %>
+      <tr>
+        <td><%= top_cat.name %></td>
+        <td><%= top_cat.child_categories.count %></td>
+        <td><%= top_cat.display_order %></td>
+        <td><%= top_cat.hide %></td>
+        <td>
+          <%= link_to 'Add Child Category',
+                      new_admin_category_path(parent_id: top_cat.id),
+                      class: "btn btn-sm btn-info" %>
+        </td>
+        <td>
+          <%= link_to 'Edit', edit_admin_category_path(top_cat),
+                      class: "btn btn-sm btn-warning" %>
+        </td>
+        <td>
+          <%= link_to 'Delete', '#', class: "btn btn-sm btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
