@@ -57,7 +57,6 @@
           <th># of Child Categoreis</th>
           <th>Display Order</th>
           <th>Hidden</th>
-          <th>Special Category</th>
           <th></th>
           <th></th>
           <th></th>
@@ -77,7 +76,6 @@
             <td><%= cat.child_categories.count %></td>
             <td><%= cat.display_order %></td>
             <td><%= cat.hide %></td>
-            <td><%= cat.flavor %></td>
             <td>
               <%= link_to 'Add Child Category',
                           new_admin_category_path(parent_id: cat.id),
