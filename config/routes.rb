@@ -7,7 +7,6 @@ Rails.application.routes.draw do
 
   resources :customers, only: [:new, :create, :show]
   resources :sessions, only: [:new, :create, :destroy]
-  resources :categories
 
   namespace :admin do
     resources :dashboard, only: [:index]

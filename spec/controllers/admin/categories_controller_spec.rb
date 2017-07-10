@@ -6,9 +6,10 @@ RSpec.describe Admin::CategoriesController, type: :controller do
   let(:customer) { FactoryGirl.create(:customer) }
   let(:category) { FactoryGirl.create(:category) }
 
+  before { signin_as(admin) }
+
   describe 'GET index' do
     it 'responses successfully' do
-      signin_as(admin)
       get :index
       expect(response).to render_template(:index)
     end
@@ -24,15 +25,35 @@ RSpec.describe Admin::CategoriesController, type: :controller do
 
   describe 'GET new' do
     it 'responses successfully' do
-      signin_as(admin)
       get :new
       expect(response).to render_template(:new)
     end
   end
 
+  describe 'POST create' do
+    describe 'category creation' do
+      context 'with valid params' do
+        it 'creates category' do
+          post :create, params: { category: { name: 'Drama',
+                                              display_order: 0 } }
+          expect(response).to redirect_to(admin_categories_path)
+          expect(flash[:success]).to be_present
+        end
+      end
+
+      context 'with invalid params' do
+        it 'does not create and renders new action' do
+          post :create, params: { category: { parent_id: 9999,
+                                              name: 'Invalid Cat'},
+                                              display_order: 0 }
+          expect(response).to render_template(:new)
+        end
+      end
+    end
+  end
+
   describe 'GET edit' do
     it 'responses successfully' do
-      signin_as(admin)
       get :edit, params: { id: category.id }
       expect(response).to render_template(:edit)
     end
