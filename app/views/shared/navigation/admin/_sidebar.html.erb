@@ -6,13 +6,13 @@
   <ul class="nav nav-pills flex-column sidebar-nav">
     <li class="nav-item">
       <%= link_to admin_dashboard_index_path,
-                  class: "nav-link #{active?(admin_dashboard_index_path)}" do %>
+                  class: "nav-link #{active_controller?('dashboard')}" do %>
         <em class="fa fa-dashboard"></em> Dashboard
       <% end %>
     </li>
     <li class="nav-item">
       <%= link_to admin_categories_path,
-                  class: "nav-link #{active?(admin_categories_path)}" do %>
+                  class: "nav-link #{active_controller?('categories')}" do %>
        <em class="fa fa-list-ul"></em> Categories</a>
       <% end %>
     </li>

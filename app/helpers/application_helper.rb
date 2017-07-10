@@ -4,6 +4,10 @@ module ApplicationHelper
     "active" if current_page?(path)
   end
 
+  def active_controller?(nav_controller)
+    "active" if controller.controller_name.downcase == nav_controller
+  end
+
   def page_title(title = "")
     application_title = 'Flex Commerce'
     unless title.empty?
