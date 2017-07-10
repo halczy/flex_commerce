@@ -4,6 +4,7 @@ class Category < ApplicationRecord
   belongs_to :parent, class_name: 'Category', optional: true
 
   # Validations
+  validate  :ensure_parent_exists
   validates :name, presence: true, uniqueness: true
   validates :display_order, numericality: { greater_than_or_equal_to: 0 }
 
@@ -12,4 +13,16 @@ class Category < ApplicationRecord
   scope :no_parent, -> { where(parent: nil) }
   enum flavor: { normal: 0, feature: 1 }
 
+
+  private
+
+  def ensure_parent_exists
+    return true if parent_id.nil?
+    begin
+      Category.find(self.parent_id)
+    rescue ActiveRecord::RecordNotFound
+      errors.add(:parent_id, 'category with this ID does not exist')
+      false
+    end
+  end
 end

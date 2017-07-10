@@ -29,6 +29,13 @@ RSpec.describe Category, type: :model do
         expect(neg_order.errors.messages[:display_order]).
           to include('must be greater than or equal to 0')
       end
+
+      it 'cannot have an non-existence parent' do
+        fake_parent = FactoryGirl.build(:category, parent_id: 9999999)
+        fake_parent.valid?
+        expect(fake_parent.errors.messages[:parent_id]).
+          to include('category with this ID does not exist')
+      end
     end
   end
 
