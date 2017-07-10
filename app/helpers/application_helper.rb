@@ -4,12 +4,12 @@ module ApplicationHelper
     "active" if current_page?(path)
   end
 
-  def page_title
-    base_title = 'Flex Commerce'
-    if @title
-      "#{@title} | #{base_title}"
+  def page_title(title = "")
+    application_title = 'Flex Commerce'
+    unless title.empty?
+      "#{title} | #{application_title}"
     else
-      base_title
+      application_title
     end
   end
 

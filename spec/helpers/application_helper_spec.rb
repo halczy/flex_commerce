@@ -6,8 +6,8 @@ RSpec.describe ApplicationHelper, :type => :helper do
     let(:base_title) { "Flex Commerce" }
 
     it "returns the instance variable + base title" do
-      assign(:title, "Test Title")
-      expect(helper.page_title).to eql("Test Title | #{base_title}")
+      expect(helper.page_title('Test Title'))
+        .to eql("Test Title | #{base_title}")
     end
 
     it 'returns only base title when no instance variable is provided' do
