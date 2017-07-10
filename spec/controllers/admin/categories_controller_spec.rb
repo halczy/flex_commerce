@@ -21,4 +21,12 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     end
   end
 
+  describe 'GET new' do
+    it 'responses successfully' do
+      signin_as(admin)
+      get :new
+      expect(response).to render_template(:new)
+    end
+  end
+
 end
