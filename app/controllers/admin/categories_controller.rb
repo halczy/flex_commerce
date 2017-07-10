@@ -1,4 +1,6 @@
 class Admin::CategoriesController < Admin::AdminController
+  # Filters
+  before_action :set_category, only: [:edit]
 
   def index
     @top_level = Category.no_parent.order(:display_order)
@@ -19,7 +21,14 @@ class Admin::CategoriesController < Admin::AdminController
     end
   end
 
+  def edit
+  end
+
   private
+
+    def set_category
+      @category = Category.find(params[:id])
+    end
 
     def category_params
       params.require(:category).permit(:parent_id, :name, :display_order, :hide)
