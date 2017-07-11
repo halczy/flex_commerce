@@ -27,6 +27,7 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     it 'responses successfully' do
       get :new
       expect(response).to render_template(:new)
+      expect(assigns(:category)).to be_a_new(Category)
     end
   end
 
@@ -56,6 +57,20 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     it 'responses successfully' do
       get :edit, params: { id: category.id }
       expect(response).to render_template(:edit)
+      expect(assigns(:category)).to be_an_instance_of(Category)
+    end
+  end
+
+  describe 'PATCH update' do
+
+    it 'updates with valid params' do
+      category = FactoryGirl.create(:category)
+      patch :update, params: { id: category.id,
+                               category: { name: 'New Name',
+                                           display_order: 10 } }
+      expect(category.reload.name).to eq('New Name')
+      expect(category.reload.display_order).to eq(10)
+      expect(flash[:success]).to be_present
     end
   end
 

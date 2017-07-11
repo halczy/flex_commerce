@@ -1,6 +1,6 @@
 class Admin::CategoriesController < Admin::AdminController
   # Filters
-  before_action :set_category, only: [:edit]
+  before_action :set_category, only: [:edit, :edit, :update]
 
   def index
     @top_level = Category.no_parent.order(:display_order)
@@ -22,6 +22,15 @@ class Admin::CategoriesController < Admin::AdminController
   end
 
   def edit
+  end
+
+  def update
+    if @category.update(category_params)
+      flash[:success] = "Successfully updated the category."
+      redirect_to admin_categories_path
+    else
+      render :edit
+    end
   end
 
   private
