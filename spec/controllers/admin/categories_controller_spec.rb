@@ -62,15 +62,24 @@ RSpec.describe Admin::CategoriesController, type: :controller do
   end
 
   describe 'PATCH update' do
+    before do
+      category = FactoryGirl.create(:category)
+    end
 
     it 'updates with valid params' do
-      category = FactoryGirl.create(:category)
       patch :update, params: { id: category.id,
                                category: { name: 'New Name',
                                            display_order: 10 } }
       expect(category.reload.name).to eq('New Name')
       expect(category.reload.display_order).to eq(10)
+      expect(response).to redirect_to(admin_categories_path)
       expect(flash[:success]).to be_present
+    end
+
+    it 'rejects update action when given invalid params' do
+      patch :update, params: { id: category.id,
+                               category: { parent_id: 9999999} }
+      expect(response).to render_template(:edit)
     end
   end
 
