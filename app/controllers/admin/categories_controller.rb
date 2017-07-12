@@ -4,7 +4,6 @@ class Admin::CategoriesController < Admin::AdminController
 
   def index
     @top_level = Category.no_parent.order(:display_order)
-    @categories = Category.all
   end
 
   def new
@@ -42,6 +41,20 @@ class Admin::CategoriesController < Admin::AdminController
       flash[:success] = "Deleted category successfully."
       redirect_to admin_categories_path
     end
+  end
+
+  def move
+    position = params[:position].to_i || 0
+    if @category.move(position)
+      redirect_to admin_categories_path
+    else
+      flash[:danger] = "Cannot move category to that position."
+      redirect_to admin_categories_path
+    end
+  end
+
+  def move_down
+
   end
 
   private

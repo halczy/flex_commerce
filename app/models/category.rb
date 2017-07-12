@@ -17,6 +17,10 @@ class Category < ApplicationRecord
     child_categories.each { |c| c.update(parent_id: nil) }
   end
 
+  def move(magnitude)
+    update(display_order: display_order + magnitude)
+  end
+
   private
 
   def ensure_parent_exists

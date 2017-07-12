@@ -1,0 +1,18 @@
+<% child_categories.each do |cat| %>
+  <tr>
+    <%= render 'order_control', cat: cat %>
+    <td>
+      <% if cat.child_categories.present? %>
+        <i class="fa fa-arrow-circle-down mr-2" aria-hidden="true"
+           style="margin-left: <%= parent_count(cat) * 1.5 %>rem"></i>
+      <% else %>
+        <i class="fa fa-arrow-circle-right mr-2" aria-hidden="true"
+           style="margin-left: <%= parent_count(cat) * 1.5 %>rem" ></i>
+      <% end %>
+      <%= link_to cat.name, admin_category_path(cat) %>
+    </td>
+    <td><%= cat.hide %></td>
+    <%= render 'category_control', cat: cat %>
+  </tr>
+  <%= render 'child_categories', child_categories: cat.child_categories %>
+<% end %>

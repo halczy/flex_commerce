@@ -97,4 +97,33 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     end
   end
 
+  describe 'PATCH move' do
+    let(:cat_order_init_1) { FactoryGirl.create(:category, display_order: 1) }
+
+    it 'increase category position' do
+      patch :move, params: { id: cat_order_init_1.id, position: 1 }
+      expect(response).to redirect_to admin_categories_path
+      expect(cat_order_init_1.reload.display_order).to eq(2)
+    end
+
+    it 'decrease category position' do
+      patch :move, params: { id: cat_order_init_1.id, position: -1 }
+      expect(response).to redirect_to admin_categories_path
+      expect(cat_order_init_1.reload.display_order).to eq(0)
+    end
+
+    it 'disregard invalid params' do
+      patch :move, params: { id: cat_order_init_1.id, position: -100 }
+      expect(response).to redirect_to admin_categories_path
+      expect(cat_order_init_1.reload.display_order).to eq(1)
+      expect(flash[:danger]).to eq('Cannot move category to that position.')
+    end
+
+    it 'does not move category when no position params is given' do
+      patch :move, params: { id: cat_order_init_1.id }
+      expect(response).to redirect_to admin_categories_path
+      expect(cat_order_init_1.reload.display_order).to eq(1)
+    end
+  end
+
 end

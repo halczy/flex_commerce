@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :dashboard, only: [:index]
-    resources :categories
+    resources :categories do
+      member do
+        patch 'move'
+      end
+    end
   end
 end

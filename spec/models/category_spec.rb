@@ -77,4 +77,23 @@ RSpec.describe Category, type: :model do
     end
   end
 
+  describe '#move' do
+    let(:cat_order_init_5) { FactoryGirl.create(:category, display_order: 5) }
+
+    it 'lower display order by 1' do
+      cat_order_init_5.move(-1)
+      expect(cat_order_init_5.reload.display_order).to eq(4)
+    end
+
+    it 'increase display order by 1 ' do
+      cat_order_init_5.move(1)
+      expect(cat_order_init_5.reload.display_order).to eq(6)
+    end
+
+    it 'display_order cannot be negative' do
+      cat_order_init_5.move(-100)
+      expect(cat_order_init_5.reload.display_order).to eq(5)
+    end
+  end
+
 end

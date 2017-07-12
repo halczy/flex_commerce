@@ -1,0 +1,15 @@
+<td>
+  <%= link_to new_admin_category_path(parent_id: cat.id),
+              class: "btn btn-sm btn-info" do %>
+    <i class="fa fa-plus" aria-hidden="true"></i> Child Category
+  <% end %>
+</td>
+<td>
+  <%= link_to 'Edit', edit_admin_category_path(cat),
+              class: "btn btn-sm btn-warning" %>
+</td>
+<td>
+  <%= link_to 'Delete', admin_category_path(cat), method: :delete,
+                        class: "btn btn-sm btn-danger",
+                        data: { confirm: 'Are you sure?'} %>
+</td>
