@@ -14,7 +14,7 @@
   <tbody>
     <% @categories.each do |cat| %>
       <tr>
-        <td><%= cat.name %></td>
+        <td><%= link_to cat.name, admin_category_path(cat) %></td>
         <td>
           <% if cat.parent %>
             <%= cat.parent.name %>

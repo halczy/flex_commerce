@@ -53,6 +53,13 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     end
   end
 
+  describe 'GET show' do
+    it 'responses successfully' do
+      get :show, params: { id: category.id }
+      expect(assigns(:category)).to eq(category)
+    end
+  end
+
   describe 'GET edit' do
     it 'responses successfully' do
       get :edit, params: { id: category.id }
@@ -62,10 +69,6 @@ RSpec.describe Admin::CategoriesController, type: :controller do
   end
 
   describe 'PATCH update' do
-    before do
-      category = FactoryGirl.create(:category)
-    end
-
     it 'updates with valid params' do
       patch :update, params: { id: category.id,
                                category: { name: 'New Name',

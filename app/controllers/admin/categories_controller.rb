@@ -1,6 +1,6 @@
 class Admin::CategoriesController < Admin::AdminController
   # Filters
-  before_action :set_category, only: [:edit, :edit, :update]
+  before_action :set_category, only: [:show, :edit, :edit, :update]
 
   def index
     @top_level = Category.no_parent.order(:display_order)
@@ -19,6 +19,9 @@ class Admin::CategoriesController < Admin::AdminController
     else
       render :new
     end
+  end
+
+  def show
   end
 
   def edit

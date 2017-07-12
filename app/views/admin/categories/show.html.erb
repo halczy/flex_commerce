@@ -1,0 +1,62 @@
+<%= provide :title, 'Category' %>
+
+<div class="row mb-5">
+  <div class="col">
+    <%= link_to admin_categories_path, class: 'btn btn-info' do %>
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to list
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="jumbotron">
+      <h4 class="mb-3">Category Detail</h4>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Category Name</th>
+            <td><%= @category.name %></td>
+          </tr>
+          <tr>
+            <th scope="row">Display Order</th>
+            <td><%= @category.display_order %></td>
+          </tr>
+          <tr>
+            <th scope="row">Hidden Category</th>
+            <td><%= @category.hide %></td>
+          </tr>
+          <tr>
+            <th scope="row">Category Type</th>
+            <td><%= @category.flavor %></td>
+          </tr>
+          <% unless @category.parent.nil? %>
+            <tr>
+              <th scope="row">Parent Category Name</th>
+              <td><%= @category.parent.name %></td>
+            </tr>
+            <tr>
+              <th scope="row">Parent Category ID</th>
+              <td><%= @category.parent.id %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col">
+    <div class="jumbotron">
+      <h4>Child Categories</h4>
+      <% if @category.child_categories.empty? %>
+        <p>This category does not have any child categories.</p>
+      <% else %>
+        <ul>
+          <% @category.child_categories.each do |c| %>
+            <li><%= link_to c.name, admin_category_path(c) %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+    </div>
+  </div>
+</div>

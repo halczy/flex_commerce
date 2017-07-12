@@ -13,7 +13,7 @@
   <tbody>
     <% top_level.each do |top_cat| %>
       <tr>
-        <td><%= top_cat.name %></td>
+        <td><%= link_to top_cat.name, admin_category_path(top_cat) %></td>
         <td><%= top_cat.child_categories.count %></td>
         <td><%= top_cat.display_order %></td>
         <td><%= top_cat.hide %></td>
