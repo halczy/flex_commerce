@@ -10,11 +10,11 @@
 
   <div class="col-lg-12">
     <h5 class="mt-5">Top Level Categories (Menu)</h5>
-    <%= render partial: 'top_cats', locals: {top_level: @top_level} %>
+    <%= render 'top_cats', top_level: @top_level %>
   </div>
 
   <div class="col-md-12">
     <h5 class="mt-5">All Categories</h5>
-    <%= render partial: 'all_cats', locals: {categories: @categories} %>
+    <%= render 'all_cats', categories: @categories %>
   </div>
 </div>

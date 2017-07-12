@@ -27,7 +27,9 @@
                       class: "btn btn-sm btn-warning" %>
         </td>
         <td>
-          <%= link_to 'Delete', '#', class: "btn btn-sm btn-danger" %>
+          <%= link_to 'Delete', admin_category_path(top_cat), method: :delete,
+                                class: "btn btn-sm btn-danger",
+                                data: { confirm: 'Are you sure?'} %>
         </td>
       </tr>
     <% end %>

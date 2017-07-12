@@ -86,4 +86,15 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     end
   end
 
+  describe 'DELETE destroy' do
+    it 'destroys category' do
+      cat_1 = category
+      cat_2 = FactoryGirl.create(:category, parent: cat_1)
+      delete :destroy, params: { id: cat_1.id }
+      expect(response).to redirect_to(admin_categories_path)
+      expect{cat_1.reload}.to raise_error(ActiveRecord::RecordNotFound)
+      expect(cat_2.reload.parent).to be_nil
+    end
+  end
+
 end

@@ -1,6 +1,6 @@
 class Admin::CategoriesController < Admin::AdminController
   # Filters
-  before_action :set_category, only: [:show, :edit, :edit, :update]
+  before_action :set_category, except: [:index, :new, :create]
 
   def index
     @top_level = Category.no_parent.order(:display_order)
@@ -33,6 +33,14 @@ class Admin::CategoriesController < Admin::AdminController
       redirect_to admin_category_path(@category)
     else
       render :edit
+    end
+  end
+
+  def destroy
+    @category.unassociate_children
+    if @category.destroy
+      flash[:success] = "Deleted category successfully."
+      redirect_to admin_categories_path
     end
   end
 

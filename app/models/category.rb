@@ -13,6 +13,9 @@ class Category < ApplicationRecord
   scope :no_parent, -> { where(parent: nil) }
   enum flavor: { normal: 0, feature: 1 }
 
+  def unassociate_children
+    child_categories.each { |c| c.update(parent_id: nil) }
+  end
 
   private
 

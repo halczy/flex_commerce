@@ -57,6 +57,15 @@ RSpec.describe Category, type: :model do
       expect(@child_cat_2.parent).to eq(@main_cat)
     end
 
+    context '#unassociate_child' do
+      it 'removes parent id from child categories' do
+        @main_cat.unassociate_children
+        expect(@main_cat.reload.child_categories).to be_empty
+        expect(@child_cat_1.reload.parent).to be_nil
+        expect(@child_cat_2.reload.parent).to be_nil
+      end
+    end
+
     context 'scope' do
       it 'scopes visible category without parent as top level menu' do
         expect(Category.top_level).to eq([@main_cat])
