@@ -37,7 +37,7 @@ RSpec.describe Admin::CategoriesController, type: :controller do
         it 'creates category' do
           post :create, params: { category: { name: 'Drama',
                                               display_order: 0 } }
-          expect(response).to redirect_to(admin_categories_path)
+          expect(response).to redirect_to(admin_category_path(Category.last))
           expect(flash[:success]).to be_present
         end
       end
@@ -75,7 +75,7 @@ RSpec.describe Admin::CategoriesController, type: :controller do
                                            display_order: 10 } }
       expect(category.reload.name).to eq('New Name')
       expect(category.reload.display_order).to eq(10)
-      expect(response).to redirect_to(admin_categories_path)
+      expect(response).to redirect_to(admin_category_path(category))
       expect(flash[:success]).to be_present
     end
 
