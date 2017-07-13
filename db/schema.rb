@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170702081239) do
+ActiveRecord::Schema.define(version: 20170713090737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,27 @@ ActiveRecord::Schema.define(version: 20170702081239) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["parent_id"], name: "index_categories_on_parent_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.string "tag_line"
+    t.string "sku"
+    t.text "introduction"
+    t.text "description"
+    t.text "specification"
+    t.integer "price_market_cents", default: 0, null: false
+    t.string "price_market_currency", default: "CNY", null: false
+    t.integer "price_member_cents", default: 0, null: false
+    t.string "price_member_currency", default: "CNY", null: false
+    t.integer "price_reward_cents", default: 0, null: false
+    t.string "price_reward_currency", default: "CNY", null: false
+    t.integer "cost_cents", default: 0, null: false
+    t.string "cost_currency", default: "CNY", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_products_on_name"
+    t.index ["sku"], name: "index_products_on_sku"
   end
 
   create_table "users", force: :cascade do |t|
