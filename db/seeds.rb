@@ -1,8 +1,8 @@
-puts 'Seed file is running'
+puts 'SEED: Seed file is running......'
 
 # USER
 User.delete_all
-puts 'Clear old user data'
+puts 'USER: Clear old user data'
 
 Admin.create(name: 'Admin User',
              email: 'admin@example.com',
@@ -17,11 +17,11 @@ Admin.create(name: 'Admin User',
                   password: 'example',
                   password_confirmation: 'example')
 end
-puts "#{User.count} users created"
+puts "USER: #{User.count} users created"
 
 # CATEGORIES
 Category.delete_all
-puts 'Clear old category data'
+puts 'CATEGORY: Clear old category data'
 
 5.times do |n|
   current_cat = Category.create(name: Faker::Space.galaxy,
@@ -36,6 +36,25 @@ puts 'Clear old category data'
                     parent: current_cat)
   end
 end
-puts "#{Category.count} categories created."
-puts "Categories created #{Category.top_level.count} top level categories"
+puts "CATEGORY: #{Category.count} categories created."
+puts "CATEGORY: Categories created #{Category.top_level.count} top level categories"
 
+# PRODUCTS
+Product.delete_all
+puts 'PRODUCT: Clear old product data'
+
+100.times do |n|
+  Product.create(name: Faker::Commerce.product_name,
+                 tag_line: Faker::Coffee.origin,
+                 sku: Faker::Number.unique.number(10),
+                 introduction: Faker::Coffee.notes,
+                 description: Faker::Lorem.paragraph,
+                 specification: Faker::Lorem.paragraph,
+                 price_market: Faker::Number.decimal(4, 2).to_f,
+                 price_member: Faker::Number.decimal(3, 2).to_f,
+                 price_reward: Faker::Number.decimal(2, 2).to_f,
+                 cost: Faker::Number.decimal(1, 2).to_f,
+                 strict_inventory: true,
+                 digital: false)
+end
+puts "PRODUCT: #{Product.count} products created."
