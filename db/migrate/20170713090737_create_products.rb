@@ -19,7 +19,5 @@ class CreateProducts < ActiveRecord::Migration[5.1]
 
     add_index :products, :name
     add_index :products, :sku
-    add_index :price_market
-    add_index :price_member
   end
 end
