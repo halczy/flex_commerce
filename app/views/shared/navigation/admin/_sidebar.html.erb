@@ -16,6 +16,12 @@
        <em class="fa fa-list-ul"></em> Categories</a>
       <% end %>
     </li>
+    <li class="nav-item">
+      <%= link_to admin_products_path,
+                  class: "nav-link #{active_controller?('products')}" do %>
+       <em class="fa fa-archive"></em> Products</a>
+      <% end %>
+    </li>
   </ul>
   <%= link_to root_url, class: 'logout-button hidden-xs-down' do %>
     <em class="fa fa-arrow-left"></em> Front Page</a>
