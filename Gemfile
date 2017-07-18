@@ -17,6 +17,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 3.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'money-rails', '~> 1'
+gem 'trix', '~> 0.10.2'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

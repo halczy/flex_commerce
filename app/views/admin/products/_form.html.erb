@@ -44,14 +44,43 @@
 
     <div class="col-sm-6">
       <%= f.label :introduction %>
-      <%= f.text_area :introduction, rows: 5, class: 'form-control' %>
+      <%= f.trix_editor :introduction, class: 'form-control' %>
     </div>
   </div>
 
   <div class="row form-group">
     <div class="col-md-12">
       <%= f.label :description %>
-      <%= f.text_area :description, class: 'form-control' %>
+      <%= f.trix_editor :description, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-12">
+      <%= f.label :specification %>
+      <%= f.trix_editor :specification, class: 'form-control' %>
+    </div>
+  </div>
+
+  <h4>Pricing and Shopping</h4>
+  <hr \>
+
+  <div class="row form-group">
+    <div class="col-sm-3">
+      <%= f.label :price_member, 'Member Price' %>
+      <%= f.number_field :price_member, step: :any, class: 'form-control' %>
+    </div>
+    <div class="col-sm-3">
+      <%= f.label :price_reward, 'Reward Price' %>
+      <%= f.number_field :price_reward, step: :any, class: 'form-control' %>
+    </div>
+    <div class="col-sm-3">
+      <%= f.label :price_market, 'Market Price' %>
+      <%= f.number_field :price_market, step: :any, class: 'form-control' %>
+    </div>
+    <div class="col-sm-3">
+      <%= f.label :cost, 'Cost' %>
+      <%= f.number_field :cost, step: :any, class: 'form-control' %>
     </div>
   </div>
 
