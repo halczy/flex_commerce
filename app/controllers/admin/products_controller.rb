@@ -4,5 +4,4 @@ class Admin::ProductsController < Admin::AdminController
     @products = Product.all
   end
 
-
 end

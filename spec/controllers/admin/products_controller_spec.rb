@@ -14,6 +14,12 @@ RSpec.describe Admin::ProductsController, type: :controller do
       expect(response).to render_template(:index)
     end
 
+    it 'products a list of products' do
+      product_1 = product
+      product_2 = product
+      expect(assigns(:products).count).to be_two
+    end
+
     context 'access control' do
       it 'does not allow non-admin' do
         signin_as(customer)
@@ -22,4 +28,18 @@ RSpec.describe Admin::ProductsController, type: :controller do
       end
     end
   end
+
+  describe 'GET new' do
+    it 'responses successfully' do
+      get :new
+      expect(response).to render_template(:new)
+      expect(assigns(:product)).to be_a_new(Product)
+    end
+  end
+
+  describe 'POST create' do
+
+  end
+
+
 end
