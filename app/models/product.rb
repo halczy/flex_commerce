@@ -1,5 +1,7 @@
 class Product < ApplicationRecord
   # Realtionships
+  has_many :categorizations
+  has_many :categories, through: :categorizations
 
   # Validations
   validates :name, presence: true, length: { maximum: 30 }
