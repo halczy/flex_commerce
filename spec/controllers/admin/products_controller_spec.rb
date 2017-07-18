@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Admin::ProductsController, type: :controller do
 
-  let(:product) { Product.create(:product) }
+  let(:product) { FactoryGirl.create(:product) }
   let(:admin) { FactoryGirl.create(:admin) }
   let(:customer) { FactoryGirl.create(:customer) }
 
@@ -17,7 +17,8 @@ RSpec.describe Admin::ProductsController, type: :controller do
     it 'products a list of products' do
       product_1 = product
       product_2 = product
-      expect(assigns(:products).count).to be_two
+      get :index
+      expect(assigns(:products).count).to be_present
     end
 
     context 'access control' do

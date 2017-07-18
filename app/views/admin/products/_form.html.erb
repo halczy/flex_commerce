@@ -1,0 +1,60 @@
+<%= form_with(model: [:admin, product], local: true) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <h4>Basic Properties</h4>
+  <hr \>
+  <div class="row form-group">
+    <div class="col-sm-6">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+
+    <div class="col-sm-6">
+      <%= f.label :tag_line %>
+      <%= f.text_field :tag_line, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-sm-12">
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-sm-6">
+      <div class="mb-2">
+        <%= f.label :sku, 'SKU' %>
+        <%= f.text_field :sku, class: 'form-control' %>
+      </div>
+      <div class="row">
+        <div class="col">
+          <%= f.label :strict_inventory, 'Enforce Strict Inventory' %>
+          <%= f.select :strict_inventory, options_for_select([['False', 0],
+                                                             ['True',  1]]),
+                                          {}, class: 'form-control' %>
+        </div>
+        <div class="col">
+          <%= f.label :digital, 'Set As Digital Product' %>
+          <%= f.select :digital, options_for_select([['False', 0],
+                                                     ['True',  1]]),
+                                 {}, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <%= f.label :introduction %>
+      <%= f.text_area :introduction, rows: 5, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-md-12">
+      <%= f.label :description %>
+      <%= f.text_area :description, class: 'form-control' %>
+    </div>
+  </div>
+
+  <%= f.submit class: 'btn btn-block btn-primary' %>
+
+<% end %>
