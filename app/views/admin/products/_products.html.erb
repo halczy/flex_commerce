@@ -14,10 +14,10 @@
     <% products.each do |p| %>
     <tr>
       <td>
-        <%= p.id %>
+        <%= link_to p.id, admin_product_path(p) %>
       </td>
       <td>
-        <%= p.name %>
+        <%= link_to p.name, admin_product_path(p) %>
       </td>
       <td>
         <%= p.sku %>
