@@ -1,3 +1,6 @@
 <%= provide :title, 'Product Detail' %>
 
 <%= @product.inspect %>
+<% @product.categories.each do |c| %>
+ <p><%= c.name %></p>
+<% end %>

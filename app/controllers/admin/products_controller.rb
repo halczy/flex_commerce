@@ -7,6 +7,7 @@ class Admin::ProductsController < Admin::AdminController
 
   def new
     @product = Product.new
+    @categories = Category.all
   end
 
   def create
@@ -32,6 +33,7 @@ class Admin::ProductsController < Admin::AdminController
       params.require(:product).permit(:name, :tag_line, :sku, :introduction,
                                       :description, :specification, :digital,
                                       :strict_inventory, :price_market,
-                                      :price_member, :price_reward, :cost)
+                                      :price_member, :price_reward, :cost,
+                                      category_ids: [])
     end
 end
