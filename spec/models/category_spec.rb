@@ -45,6 +45,7 @@ RSpec.describe Category, type: :model do
       @hidden_cat = FactoryGirl.create(:category, hide: true)
       @child_cat_1 = FactoryGirl.create(:category, parent: @main_cat)
       @child_cat_2 = FactoryGirl.create(:category, parent: @main_cat)
+      @special_cat = FactoryGirl.create(:category, flavor: 1)
     end
 
     it 'can have child categories' do
@@ -73,6 +74,15 @@ RSpec.describe Category, type: :model do
 
       it 'scopes categories without parent' do
         expect(Category.no_parent).to eq([@main_cat, @hidden_cat])
+      end
+
+      it 'scopes normal categories' do
+        expect(Category.regular).not_to include(@special_cat)
+        expect(Category.regular).to include(@main_cat)
+      end
+
+      it 'scopes special categories' do
+        expect(Category.special).to eq([@special_cat])
       end
     end
 

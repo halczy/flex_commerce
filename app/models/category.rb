@@ -12,6 +12,7 @@ class Category < ApplicationRecord
 
   # Scope / Enum
   scope :special,   -> { where.not(flavor: 0) }
+  scope :regular,   -> { where(flavor: 0) }
   scope :top_level, -> { where(parent: nil, hide: false, flavor: 0) }
   scope :no_parent, -> { where(parent: nil, flavor: 0) }
   enum flavor: { normal: 0, feature: 1 }
