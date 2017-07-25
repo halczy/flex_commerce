@@ -53,8 +53,6 @@ ActiveRecord::Schema.define(version: 20170718114930) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_products_on_name"
-    t.index ["price_market_cents"], name: "index_products_on_price_market_cents"
-    t.index ["price_member_cents"], name: "index_products_on_price_member_cents"
     t.index ["sku"], name: "index_products_on_sku"
   end
 

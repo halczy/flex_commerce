@@ -23,6 +23,12 @@ puts "USER: #{User.count} users created"
 Category.delete_all
 puts 'CATEGORY: Clear old category data'
 
+Category.create(name: 'Feature Products',
+                display_order: 0,
+                flavor: 1,
+                hide: false)
+puts "CATEGORY: #{Category.special.count} special categories created."
+
 5.times do |n|
   current_cat = Category.create(name: Faker::Space.galaxy,
                                 display_order: n,
@@ -36,8 +42,8 @@ puts 'CATEGORY: Clear old category data'
                     parent: current_cat)
   end
 end
-puts "CATEGORY: #{Category.count} categories created."
 puts "CATEGORY: Categories created #{Category.top_level.count} top level categories"
+puts "CATEGORY: #{Category.count} categories created."
 
 # PRODUCTS
 Product.delete_all

@@ -4,6 +4,7 @@ class Admin::CategoriesController < Admin::AdminController
 
   def index
     @top_level = Category.no_parent.order(:display_order)
+    @special = Category.special
   end
 
   def new

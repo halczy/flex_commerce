@@ -75,6 +75,13 @@ RSpec.describe Category, type: :model do
         expect(Category.no_parent).to eq([@main_cat, @hidden_cat])
       end
     end
+
+    context 'enum' do
+      it 'can set category as feature' do
+        feature_cat = FactoryGirl.create(:category, flavor: 1)
+        expect(feature_cat.flavor).to eq('feature')
+      end
+    end
   end
 
   describe '#move' do
