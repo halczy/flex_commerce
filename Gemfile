@@ -18,6 +18,7 @@ gem 'redis', '~> 3.0'
 gem 'bcrypt', '~> 3.1.7'
 gem 'money-rails', '~> 1'
 gem 'trix', '~> 0.10.2'
+gem 'shrine', '~> 2.6', '>= 2.6.1'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -43,4 +44,5 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'rails-controller-testing'
+  gem 'shrine-memory'
 end

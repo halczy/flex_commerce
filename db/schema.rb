@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170718114930) do
+ActiveRecord::Schema.define(version: 20170727073636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,19 @@ ActiveRecord::Schema.define(version: 20170718114930) do
     t.bigint "category_id"
     t.index ["category_id"], name: "index_categorizations_on_category_id"
     t.index ["product_id"], name: "index_categorizations_on_product_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.integer "display_order", default: 0
+    t.string "description"
+    t.string "title"
+    t.boolean "in_use", default: false
+    t.text "image_data"
+    t.string "imageable_type"
+    t.bigint "imageable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end
 
   create_table "products", force: :cascade do |t|

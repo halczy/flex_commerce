@@ -2,6 +2,7 @@ class Product < ApplicationRecord
   # Realtionships
   has_many :categorizations
   has_many :categories, through: :categorizations
+  has_many :images, as: :imageable
 
   # Validations
   validates :name, presence: true, length: { maximum: 30 }

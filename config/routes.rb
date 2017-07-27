@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :customers, only: [:new, :create, :show]
   resources :sessions, only: [:new, :create, :destroy]
+  resources :images, only: [:show]
 
   namespace :admin do
     resources :dashboard, only: [:index]
@@ -16,5 +17,6 @@ Rails.application.routes.draw do
       end
     end
     resources :products
+    resources :images
   end
 end

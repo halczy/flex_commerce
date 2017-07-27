@@ -10,6 +10,8 @@ Admin.create(name: 'Admin User',
              password: 'example',
              password_confirmation: 'example')
 
+puts "USER: #{Admin.count} admin created"
+
 50.times do |n|
   Customer.create(name: Faker::Name.name,
                   email: "customer_#{n}@example.com",
@@ -17,7 +19,7 @@ Admin.create(name: 'Admin User',
                   password: 'example',
                   password_confirmation: 'example')
 end
-puts "USER: #{User.count} users created"
+puts "USER: #{Customer.count} customer created"
 
 # CATEGORIES
 Category.delete_all
@@ -42,8 +44,8 @@ puts "CATEGORY: #{Category.special.count} special categories created."
                     parent: current_cat)
   end
 end
-puts "CATEGORY: Categories created #{Category.top_level.count} top level categories"
-puts "CATEGORY: #{Category.count} categories created."
+puts "CATEGORY: #{Category.top_level.count} top level categories created"
+puts "CATEGORY: #{Category.count} total categories created."
 
 # PRODUCTS
 Product.delete_all
