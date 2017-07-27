@@ -22,6 +22,12 @@
        <em class="fa fa-archive"></em> Products</a>
       <% end %>
     </li>
+    <li class="nav-item">
+      <%= link_to admin_images_path,
+                  class: "nav-link #{active_controller?('images')}" do %>
+       <em class="fa fa-picture-o"></em> Images</a>
+      <% end %>
+    </li>
   </ul>
   <%= link_to root_url, class: 'logout-button hidden-xs-down' do %>
     <em class="fa fa-arrow-left"></em> Front Page</a>
