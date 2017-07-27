@@ -17,6 +17,6 @@ Rails.application.routes.draw do
       end
     end
     resources :products
-    resources :images
+    resources :images, only: [:index, :create, :show, :destroy]
   end
 end
