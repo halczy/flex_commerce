@@ -2,7 +2,8 @@ class Product < ApplicationRecord
   # Realtionships
   has_many :categorizations
   has_many :categories, through: :categorizations
-  has_many :images, as: :imageable
+  has_many :images, as: :imageable, dependent: :destroy
+  accepts_nested_attributes_for :images, allow_destroy: true
 
   # Validations
   validates :name, presence: true, length: { maximum: 30 }

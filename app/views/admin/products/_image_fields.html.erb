@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="mb-1 mt-1 col-md-3">
+    <%= f.label :image, 'Upload Image' %>
+    <%= f.hidden_field :image, value: f.object.cached_image_data %>
+    <%= f.file_field :image, class: 'form-control' %>
+  </div>
+  <div class="mb-1 mt-1 col-md-3">
+    <%= f.label :title, 'Title' %>
+    <%= f.text_field :title, class: 'form-control' %>
+  </div>
+  <div class="mb-1 mt-1 col-md-4">
+    <%= f.label :description, 'Description' %>
+    <%= f.text_field :description, class: 'form-control' %>
+  </div>
+  <div class="mb-1 mt-1 col-md-2">
+    <%= f.label :display_order, 'Display Order' %>
+    <%= f.number_field :display_order, class: 'form-control' %>
+  </div>
+  <% if f.object.image.present? %>
+    <div class="mb-1 mt-1 col-md-3">
+      <%= image_tag(f.object.image_url, class: 'img-fluid') %>
+    </div>
+    <div class="mb-1 mt-1 col-md-9">
+    </div>
+  <% end %>
+</div>

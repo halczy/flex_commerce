@@ -1,6 +1,11 @@
 <%= provide :title, 'Product Detail' %>
 
 <%= @product.inspect %>
+<hr>
 <% @product.categories.each do |c| %>
  <p><%= c.name %></p>
+<% end %>
+<hr>
+<% @product.images.each do |i| %>
+  <p><%= i.inspect %></p>
 <% end %>

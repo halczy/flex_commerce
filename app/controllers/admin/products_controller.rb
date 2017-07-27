@@ -7,6 +7,7 @@ class Admin::ProductsController < Admin::AdminController
 
   def new
     @product = Product.new
+    @image = @product.images.build
   end
 
   def create
@@ -30,9 +31,9 @@ class Admin::ProductsController < Admin::AdminController
 
     def product_params
       params.require(:product).permit(:name, :tag_line, :sku, :introduction,
-                                      :description, :specification, :digital,
-                                      :strict_inventory, :price_market,
-                                      :price_member, :price_reward, :cost,
-                                      category_ids: [])
+        :description, :specification, :digital, :strict_inventory, :price_market,
+        :price_member, :price_reward, :cost, category_ids: [],
+        images_attributes: [:image, :display_order, :title, :description,
+                            :image_data, :imageable_id, :imageable_type])
     end
 end
