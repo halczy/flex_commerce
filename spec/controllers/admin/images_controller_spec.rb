@@ -15,4 +15,14 @@ RSpec.describe Admin::ImagesController, type: :controller do
     end
   end
 
+  describe 'GET show' do
+    it 'returns a success response with an image instance' do
+      get :show, params: { id: image.id }
+      expect(response).to be_success
+      expect(response).to render_template(:show)
+      expect(assigns(:image)).to eq(image)
+      expect(assigns(:image_data)).not_to be_empty
+    end
+  end
+
 end

@@ -1,0 +1,78 @@
+<%= provide :title, 'Image Detail' %>
+
+<div class="row mb-5">
+  <div class="col">
+    <%= link_to admin_images_path, class: 'btn btn-info' do %>
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="jumbotron">
+      <%= image_tag @image.image_url, class: 'img-fluid' %>
+    </div>
+  </div>
+  <div class="col">
+    <div class="jumbotron">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Image ID</th>
+            <td><%= @image.id %></td>
+          </tr>
+          <tr>
+            <th scope="row">Display Order</th>
+            <td><%= @image.display_order %></td>
+          </tr>
+          <tr>
+            <th scope="row">In Use</th>
+            <td><%= @image.in_use %></td>
+          </tr>
+          <tr>
+            <th scope="row">Title</th>
+            <td><%= @image.title %></td>
+          </tr>
+          <tr>
+            <th scope="row">Deescription</th>
+            <td><%= @image.description %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<% if @image_data %>
+  <div class="row">
+    <div class="jumbotron">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">File Name</th>
+            <td><%= @image_data['id'] %></td>
+          </tr>
+          <tr>
+            <th scope="row">Original File Name</th>
+            <td><%= @image_data['metadata']['filename'] %></td>
+          </tr>
+          <tr>
+            <th scope="row">File Size</th>
+            <td>
+              <%= (@image_data['metadata']['size'] / 1_000_000.0).to_f.round %> MB
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">File Type</th>
+            <td><%= @image_data['metadata']['mime_type'] %></td>
+          </tr>
+          <tr>
+            <th scope="row">Storage Location</th>
+            <td><%= @image_data['storage'] %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>
