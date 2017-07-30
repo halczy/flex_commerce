@@ -8,6 +8,13 @@ class Admin::ImagesController < Admin::AdminController
   def show
   end
 
+  def destroy
+    if @image.destroy
+      flash[:success] = 'Image was successfully destroyed.'
+      redirect_to admin_images_path
+    end
+  end
+
   private
 
     def set_image
