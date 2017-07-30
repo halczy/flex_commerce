@@ -7,6 +7,7 @@ class Admin::ImagesController < Admin::AdminController
   end
 
   def show
+    @image_data = JSON.parse(@image.image_data) if @image.image_data
   end
 
   def create
@@ -30,7 +31,6 @@ class Admin::ImagesController < Admin::AdminController
 
     def set_image
       @image = Image.find(params[:id])
-      @image_data = JSON.parse(@image.image_data) if @image.image_data
     end
 
     def image_params
