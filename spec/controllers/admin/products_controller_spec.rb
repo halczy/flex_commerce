@@ -82,5 +82,13 @@ RSpec.describe Admin::ProductsController, type: :controller do
     end
   end
 
+  describe 'GET edit' do
+    it 'returns a success response' do
+      get :edit, params: { id: product.id }
+      expect(response).to be_success
+      expect(response).to render_template(:edit)
+    end
+  end
+
 
 end
