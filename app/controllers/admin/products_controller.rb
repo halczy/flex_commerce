@@ -13,6 +13,7 @@ class Admin::ProductsController < Admin::AdminController
   def create
     @product = Product.new(product_params)
     if @product.save
+      @product.associate_images
       flash[:success] = "Successfully created a product."
       redirect_to admin_product_path(@product)
     else
@@ -21,8 +22,8 @@ class Admin::ProductsController < Admin::AdminController
   end
 
   def show
-
   end
+
   private
 
     def set_product

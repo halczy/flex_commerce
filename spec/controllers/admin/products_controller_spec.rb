@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Admin::ProductsController, type: :controller do
 
-  let(:product) { FactoryGirl.create(:product) }
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:product)  { FactoryGirl.create(:product) }
+  let(:admin)    { FactoryGirl.create(:admin) }
   let(:customer) { FactoryGirl.create(:customer) }
+  let(:image)    { FactoryGirl.create(:image) }
 
   before { signin_as(admin) }
 
@@ -44,6 +45,7 @@ RSpec.describe Admin::ProductsController, type: :controller do
                                  sku: 'SKU',
                                  introduction: 'Introduction',
                                  description: 'Description',
+                                 specification: 'Specification',
                                  digital: false,
                                  strict_inventory: false,
                                  price_market: 12.35,
@@ -54,8 +56,14 @@ RSpec.describe Admin::ProductsController, type: :controller do
     context 'with valid params' do
       it 'creates product' do
         post :create, params: product_params
-        expect(response).to redirect_to admin_product_path(Product.last)
+        expect(response).to redirect_to admin_product_path(assigns(:product))
         expect(flash[:success]).to be_present
+      end
+
+      it 'associates image uploaded through trix editor' do
+        product_params[:product][:description] = "<img src=\"/#{image.image.id}\">"
+        post :create, params: product_params
+        expect(assigns(:product).images).to match_array([image])
       end
     end
 
