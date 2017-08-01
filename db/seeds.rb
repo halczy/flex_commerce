@@ -66,3 +66,7 @@ puts 'PRODUCT: Clear old product data'
                  digital: false)
 end
 puts "PRODUCT: #{Product.count} products created."
+
+# IMAGES
+Image.delete_all
+puts 'IMAGE: Clear old image data'
