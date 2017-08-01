@@ -11,7 +11,7 @@
 <div class="row">
   <div class="col">
     <div class="jumbotron">
-      <%= image_tag @image.image_url, class: 'img-fluid' %>
+      <%= image_tag @image.image_url(:original), class: 'img-fluid' %>
     </div>
   </div>
   <div class="col">
@@ -51,25 +51,25 @@
         <tbody>
           <tr>
             <th scope="row">File Name</th>
-            <td><%= @image_data['id'] %></td>
+            <td><%= @image_data['original']['id'] %></td>
           </tr>
           <tr>
             <th scope="row">Original File Name</th>
-            <td><%= @image_data['metadata']['filename'] %></td>
+            <td><%= @image_data['original']['metadata']['filename'] %></td>
           </tr>
           <tr>
             <th scope="row">File Size</th>
             <td>
-              <%= (@image_data['metadata']['size'] / 1_000_000.0).to_f.round %> MB
+              <%= (@image_data['original']['metadata']['size'] / 1_000_000.0).to_f.round %> MB
             </td>
           </tr>
           <tr>
             <th scope="row">File Type</th>
-            <td><%= @image_data['metadata']['mime_type'] %></td>
+            <td><%= @image_data['original']['metadata']['mime_type'] %></td>
           </tr>
           <tr>
             <th scope="row">Storage Location</th>
-            <td><%= @image_data['storage'] %></td>
+            <td><%= @image_data['original']['storage'] %></td>
           </tr>
         </tbody>
       </table>

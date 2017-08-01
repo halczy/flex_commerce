@@ -66,8 +66,8 @@ RSpec.describe Product, type: :model do
     before do
       @img_1 = FactoryGirl.create(:image)
       @img_2 = FactoryGirl.create(:image)
-      desc = "/" + @img_1.image.id
-      spec = "/" + @img_2.image.id
+      desc = "/" + @img_1.image[:fit].data['id']
+      spec = "/" + @img_2.image[:fit].data['id']
       @product = FactoryGirl.create(:product, description: desc,
                                               specification: spec)
     end

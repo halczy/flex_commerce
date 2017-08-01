@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Image, type: :model do
 
-  let(:image) { FactoryGirl.create(:image) }
+  let(:image)   { FactoryGirl.create(:image) }
   let(:product) { FactoryGirl.create(:product) }
 
   describe 'creation' do
@@ -40,7 +40,7 @@ RSpec.describe Image, type: :model do
 
   describe '#associate' do
     it 'locates the image and call tag method' do
-      Image.associate(product, image.image.id)
+      Image.associate(product, image.image[:fit].data['id'])
       expect(image.reload.in_use).to be_truthy
       expect(image.imageable).to eq(product)
     end

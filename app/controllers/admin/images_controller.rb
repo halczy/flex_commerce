@@ -14,7 +14,7 @@ class Admin::ImagesController < Admin::AdminController
     @image = Image.new(image_params)
 
     if @image.save
-      render json: { id: @image.id, url: @image.image_url }.to_json
+      render json: { id: @image.id, url: @image.image_url(:fit) }.to_json
     else
       render json: @image.errors, status: :unprocessable_entity
     end

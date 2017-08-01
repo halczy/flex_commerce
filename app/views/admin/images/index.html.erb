@@ -19,7 +19,7 @@
             <td><%= image.id %></td>
             <td><%= image.title %></td>
             <td><%= image.imageable_type.try(:capitalize) %></td>
-            <td><%= image_tag image.image_url, class: 'img-fluid' %></td>
+            <td><%= image_tag image.image_url(:thumb), class: 'img-fluid' %></td>
             <td>
               <%= link_to 'Detail', admin_image_path(image),
                                     class: 'btn btn-sm btn-info' %>

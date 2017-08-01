@@ -61,7 +61,7 @@ RSpec.describe Admin::ProductsController, type: :controller do
       end
 
       it 'associates image uploaded through trix editor' do
-        product_params[:product][:description] = "<img src=\"/#{image.image.id}\">"
+        product_params[:product][:description] = "<img src=\"/#{image.image[:fit].data['id']}\">"
         post :create, params: product_params
         expect(assigns(:product).images).to match_array([image])
       end

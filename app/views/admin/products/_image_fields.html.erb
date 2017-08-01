@@ -18,7 +18,7 @@
   </div>
   <% if f.object.image.present? %>
     <div class="mb-1 mt-1 col-md-3">
-      <%= image_tag(f.object.image_url, class: 'img-fluid') %>
+      <%= image_tag(f.object.image_url(:thumb), class: 'img-fluid') %>
     </div>
     <div class="mb-1 mt-1 col-md-9">
     </div>
