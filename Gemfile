@@ -5,22 +5,22 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.1.1'
-gem 'pg', '~> 0.18'
-gem 'puma', '~> 3.7'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
+gem 'rails'
+gem 'pg'
+gem 'puma'
+gem 'sass-rails'
+gem 'uglifier'
 gem 'webpacker'
-gem 'coffee-rails', '~> 4.2'
-gem 'turbolinks', '~> 5'
-gem 'jbuilder', '~> 2.5'
-gem 'redis', '~> 3.0'
-gem 'bcrypt', '~> 3.1.7'
-gem 'money-rails', '~> 1'
-gem 'trix', '~> 0.10.2'
-gem 'shrine', '~> 2.6', '>= 2.6.1'
-gem 'image_processing', '~> 0.4.4'
-gem 'mini_magick', '~> 4.8'
+gem 'coffee-rails'
+gem 'turbolinks'
+gem 'jbuilder'
+gem 'redis'
+gem 'bcrypt'
+gem 'money-rails'
+gem 'trix'
+gem 'shrine'
+gem 'image_processing'
+gem 'mini_magick'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -34,12 +34,12 @@ group :development, :test do
 end
 
 group :development do
-  gem 'web-console', '>= 3.3.0'
+  gem 'web-console'
   gem "better_errors"
   gem "binding_of_caller"
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'listen'
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring-watcher-listen'
   gem 'spring-commands-rspec'
 end
 
