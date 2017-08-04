@@ -23,7 +23,11 @@ class Admin::ImagesController < Admin::AdminController
   def destroy
     if @image.destroy
       flash[:success] = 'Image was successfully destroyed.'
-      redirect_to admin_images_path
+      if params['return_loc'].present?
+        redirect_to admin_product_path(params[:return_loc])
+      else
+        redirect_to admin_images_path
+      end
     end
   end
 
