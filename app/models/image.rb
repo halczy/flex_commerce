@@ -13,7 +13,9 @@ class Image < ApplicationRecord
 
   def self.associate(object, filename)
     Image.orphans.each do |img|
-      img.tag(object.class, object.id) if img.image[:fit].data['id']
+      if img.image[:fit].data['id'] == filename
+        img.tag(object.class, object.id)
+      end
     end
   end
 

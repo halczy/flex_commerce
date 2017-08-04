@@ -66,6 +66,7 @@ RSpec.describe Product, type: :model do
     before do
       @img_1 = FactoryGirl.create(:image)
       @img_2 = FactoryGirl.create(:image)
+      @unrelated_img_3 = FactoryGirl.create(:image)
       desc = "/" + @img_1.image[:fit].data['id']
       spec = "/" + @img_2.image[:fit].data['id']
       @product = FactoryGirl.create(:product, description: desc,
@@ -76,6 +77,11 @@ RSpec.describe Product, type: :model do
       it 'associates images with product' do
         @product.associate_images
         expect(@product.images).to match_array([@img_1, @img_2])
+      end
+
+      it 'does not associate unrelated images' do
+        @product.associate_images
+        expect(@product.images).not_to include(@unrelated_img_3)
       end
     end
 
