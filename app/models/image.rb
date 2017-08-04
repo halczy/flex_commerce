@@ -10,21 +10,24 @@ class Image < ApplicationRecord
 
   # Scope
   scope :orphans, ->  { where(in_use: false) }
+  enum source_channel: { attachment: 0, editor: 1 }
 
-  def self.associate(object, filename)
+  def self.associate(object, filename, source_channel)
     Image.orphans.each do |img|
       if img.image[:fit].data['id'] == filename
-        img.tag(object.class, object.id)
+        img.tag(object.class, object.id, source_channel)
       end
     end
   end
 
-  def tag(klass, id)
-    update(imageable_type: klass, imageable_id: id, in_use: true)
+  def tag(klass, id, source_channel)
+    update(imageable_type: klass, imageable_id: id, in_use: true,
+           source_channel: source_channel)
   end
 
   def untag
-    update(imageable_type: nil, imageable_id: nil, in_use: false)
+    update(imageable_type: nil, imageable_id: nil, in_use: false,
+           source_channel: nil)
   end
 
 end

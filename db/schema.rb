@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20170727073636) do
     t.string "description"
     t.string "title"
     t.boolean "in_use", default: false
+    t.integer "source_channel"
     t.text "image_data"
     t.string "imageable_type"
     t.bigint "imageable_id"

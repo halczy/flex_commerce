@@ -17,7 +17,7 @@ class Product < ApplicationRecord
     return if extract_images.empty?
     image_files = extract_images
     image_files.each do |image_file|
-      Image.associate(self, image_file)
+      Image.associate(self, image_file, 1)
     end
   end
 

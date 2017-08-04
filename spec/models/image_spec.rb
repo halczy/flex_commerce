@@ -26,21 +26,24 @@ RSpec.describe Image, type: :model do
 
   describe '#tag' do
 
-    before { image.tag(product.class, product.id) }
+    before { image.tag(product.class, product.id, 1) }
 
     it 'creates product relationship to image' do
       expect(image.imageable).to eq(product)
     end
 
     it 'toggles in_use to true' do
-      image.tag(product.class, product.id)
       expect(image.in_use).to be_truthy
+    end
+
+    it 'logs the source channel' do
+      expect(image.source_channel).to eq('editor')
     end
   end
 
   describe '#associate' do
     it 'locates the image and call tag method' do
-      Image.associate(product, image.image[:fit].data['id'])
+      Image.associate(product, image.image[:fit].data['id'], 1)
       expect(image.reload.in_use).to be_truthy
       expect(image.imageable).to eq(product)
     end
@@ -48,7 +51,7 @@ RSpec.describe Image, type: :model do
 
   describe '#untag' do
 
-    before { image.tag(product.class, product.id) }
+    before { image.tag(product.class, product.id, 1) }
 
     it 'sets relationship to nil' do
       image.untag

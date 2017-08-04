@@ -5,6 +5,7 @@ class CreateImages < ActiveRecord::Migration[5.1]
       t.string     :description
       t.string     :title
       t.boolean    :in_use, default: false
+      t.integer    :source_channel
       t.text       :image_data
       t.references :imageable, polymorphic: true, index: true
 

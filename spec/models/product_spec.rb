@@ -79,6 +79,11 @@ RSpec.describe Product, type: :model do
         expect(@product.images).to match_array([@img_1, @img_2])
       end
 
+      it 'logs the source channel as editor' do
+        @product.associate_images
+        expect(@product.images.first.source_channel).to eq('editor')
+      end
+
       it 'does not associate unrelated images' do
         @product.associate_images
         expect(@product.images).not_to include(@unrelated_img_3)
