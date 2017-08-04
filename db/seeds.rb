@@ -1,9 +1,18 @@
 puts 'SEED: Seed file is running......'
 
-# USER
+# CLEAN UP
 User.delete_all
 puts 'USER: Clear old user data'
+Product.delete_all
+puts 'PRODUCT: Clear old product data'
+Category.delete_all
+puts 'CATEGORY: Clear old category data'
+Image.delete_all
+puts 'IMAGE: Clear old image data'
 
+
+
+# USER
 Admin.create(name: 'Admin User',
              email: 'admin@example.com',
              cell_number: '13811112222',
@@ -22,9 +31,6 @@ end
 puts "USER: #{Customer.count} customer created"
 
 # CATEGORIES
-Category.delete_all
-puts 'CATEGORY: Clear old category data'
-
 Category.create(name: 'Feature Products',
                 display_order: 0,
                 flavor: 1,
@@ -48,9 +54,6 @@ puts "CATEGORY: #{Category.top_level.count} top level categories created"
 puts "CATEGORY: #{Category.count} total categories created."
 
 # PRODUCTS
-Product.delete_all
-puts 'PRODUCT: Clear old product data'
-
 100.times do |n|
   Product.create(name: Faker::Commerce.product_name,
                  tag_line: Faker::Coffee.origin,
@@ -68,5 +71,3 @@ end
 puts "PRODUCT: #{Product.count} products created."
 
 # IMAGES
-Image.delete_all
-puts 'IMAGE: Clear old image data'
