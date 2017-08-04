@@ -1,11 +1,120 @@
 <%= provide :title, 'Product Detail' %>
 
-<%= @product.inspect %>
-<hr>
-<% @product.categories.each do |c| %>
- <p><%= c.name %></p>
-<% end %>
-<hr>
-<% @product.images.each do |i| %>
-  <p><%= i.inspect %></p>
-<% end %>
+<div class="row mb-5">
+  <div class="col">
+    <%= link_to admin_products_path, class: 'btn btn-info' do %>
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+    <% end %>
+    <%= link_to edit_admin_product_path(@product), class: 'btn btn-warning' do %>
+      <i class="fa fa-edit" aria-hidden="true"></i> Edit Product
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="jumbotron">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Name</th>
+            <td><%= @product.name %></td>
+          </tr>
+          <tr>
+            <th scope="row">Tag Line</th>
+            <td><%= @product.tag_line %></td>
+          </tr>
+          <tr>
+            <th scope="row">SKU</th>
+            <td><%= @product.sku %></td>
+          </tr>
+          <tr>
+            <th scope="row">Strict Inventory</th>
+            <td><%= @product.strict_inventory.to_s.try(:capitalize) %></td>
+          </tr>
+          <tr>
+            <th scope="row">Digital Product</th>
+            <td><%= @product.digital.to_s.try(:capitalize) %></td>
+          </tr>
+          <tr>
+            <th scope="row">Categories</th>
+            <td>
+              <ul>
+              <% @product.categories.each do |category| %>
+                <li><%= category.name %></li>
+              <% end %>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col">
+    <div class="jumbotron">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Market Price</th>
+            <td><%= humanized_money_with_symbol(@product.price_market) %></td>
+          </tr>
+          <tr>
+            <th scope="row">Member Price</th>
+            <td><%= humanized_money_with_symbol(@product.price_member) %></td>
+          </tr>
+          <tr>
+            <th scope="row">Reward Price</th>
+            <td><%= humanized_money_with_symbol(@product.price_reward) %></td>
+          </tr>
+          <tr>
+            <th scope="row">Cost</th>
+            <td><%= humanized_money_with_symbol(@product.cost) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="jumbotron">
+      <h5 class="mb-3">Introduction</h5>
+      <%= @product.introduction.html_safe %>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="jumbotron">
+      <h5 class="mb-3">Specification</h5>
+      <%= @product.specification.html_safe %>
+    </div>
+  </div>
+  <div class="col-lg-12">
+    <div class="jumbotron">
+      <h5 class="mb-3">Description</h5>
+      <%= @product.description.html_safe %>
+    </div>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="row">
+    <div class="col">
+      <h5 class="mb-5">Attached Images</h5>
+    </div>
+  </div>
+  <div class="row">
+    <% @product.images.each do |image| %>
+      <div class="col">
+        <p><%= image.title %></p>
+        <p><%= image_tag(image.image_url(:thumb)) %></p>
+        <p>
+          <%= link_to 'View', admin_image_path(image),
+                              class: 'btn btn-sm btn-info' %>
+          <%= link_to 'Delete', '#',
+                              class: 'btn btn-sm btn-danger' %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+</div>
