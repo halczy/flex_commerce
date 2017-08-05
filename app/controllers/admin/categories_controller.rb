@@ -38,10 +38,9 @@ class Admin::CategoriesController < Admin::AdminController
 
   def destroy
     @category.unassociate_children
-    if @category.destroy
-      flash[:success] = "Category was successfully destroyed."
-      redirect_to admin_categories_path
-    end
+    @category.destroy
+    flash[:success] = "Category was successfully destroyed."
+    redirect_to admin_categories_path
   end
 
   def move

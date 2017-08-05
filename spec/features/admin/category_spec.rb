@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin Category Dashboard' do
+describe 'Admin Category Dashboard', type: :feature do
 
   let(:admin) { FactoryGirl.create(:admin) }
 
@@ -52,6 +52,33 @@ describe 'Admin Category Dashboard' do
       fill_in 'category[parent_id]', with: 123456789
       click_button 'Update Category'
       expect(page).to have_css('#error_messages')
+    end
+  end
+
+  describe 'delete' do
+    it 'can delete category' do
+      click_on("btn_del_#{@child_cat.id}")
+      click_on("confirm_del_#{@child_cat.id}")
+      expect(page).not_to have_content(@child_cat.name)
+    end
+
+    it 'can delete parent category' do
+      click_on("btn_del_#{@parent_cat.id}")
+      click_on("confirm_del_#{@parent_cat.id}")
+      expect(page).not_to have_content(@parent_cat.name)
+      expect(page).to have_content(@child_cat.name)
+    end
+
+    it 'can delete category with products' do
+      product = FactoryGirl.create(:product)
+      product.categorizations.create(category: @child_cat)
+      visit admin_categories_path
+      click_on("btn_del_#{@child_cat.id}")
+      expect(page).to have_css('ul>li')
+      expect(page).to have_content(product.name)
+
+      click_on("confirm_del_#{@child_cat.id}")
+      expect(page).not_to have_content(@child_cat.name)
     end
   end
 
