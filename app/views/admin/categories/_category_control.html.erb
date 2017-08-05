@@ -1,12 +1,13 @@
 <td>
   <%= link_to new_admin_category_path(parent_id: cat.id),
+              id: "new_child_for_#{cat.id}",
               class: "btn btn-sm btn-info" do %>
     <i class="fa fa-plus" aria-hidden="true"></i> Child Category
   <% end %>
 </td>
 <td>
-  <%= link_to 'Edit', edit_admin_category_path(cat),
-              class: "btn btn-sm btn-warning" %>
+  <%= link_to 'Edit', edit_admin_category_path(cat), id: "edit_#{cat.id}",
+                      class: "btn btn-sm btn-warning" %>
 </td>
 <td>
   <%= link_to 'Delete', admin_category_path(cat), method: :delete,
