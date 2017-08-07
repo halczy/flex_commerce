@@ -90,5 +90,27 @@ RSpec.describe Admin::ProductsController, type: :controller do
     end
   end
 
+  describe 'PATCH update' do
+    context 'with valid params' do
+      it 'updates the requested product' do
+        patch :update, params: { id: product.id, product: { name: 'New Name'} }
+        product.reload
+        expect(product.name).to eq('New Name')
+      end
+
+      it 'redirects to the product' do
+        patch :update, params: { id: product.id, product: { tag_line: 'New Tag'} }
+        expect(response).to redirect_to admin_product_path(product)
+      end
+    end
+
+    context 'with invalid params' do
+      it 'renders edit page' do
+        patch :update, params: { id: product.id, product: { name: ''} }
+        expect(response).to render_template(:edit)
+      end
+    end
+  end
+
 
 end

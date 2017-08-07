@@ -27,6 +27,15 @@ class Admin::ProductsController < Admin::AdminController
   def edit
   end
 
+  def update
+    if @product.update(product_params)
+      flash[:success] = "Successfully updated product."
+      redirect_to admin_product_path(@product)
+    else
+      render :edit
+    end
+  end
+
   private
 
     def set_product
