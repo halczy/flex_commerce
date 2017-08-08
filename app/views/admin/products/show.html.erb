@@ -100,11 +100,36 @@
 <div class="jumbotron">
   <div class="row">
     <div class="col">
-      <h5 class="mb-5">Attached Images</h5>
+      <h5 class="">Attached Images</h5>
     </div>
   </div>
   <div class="row">
-    <% @product.images.each do |image| %>
+    <% @product.images.attachment.each do |image| %>
+      <div class="col">
+        <p><%= image.title %></p>
+        <p><%= image_tag(image.image_url(:thumb)) %></p>
+        <p>
+          <%= link_to 'View', admin_image_path(image),
+                              class: 'btn btn-sm btn-info' %>
+          <% if image.source_channel == 'attachment' %>
+            <%= link_to 'Delete', admin_image_path(image, return_loc: @product),
+                                  method: :delete,
+                                  class: 'btn btn-sm btn-danger',
+                                  data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="jumbotron">
+  <div class="row">
+    <div class="col">
+      <h5 class="">Editor Image Files</h5>
+    </div>
+  </div>
+  <div class="row">
+    <% @product.images.editor.each do |image| %>
       <div class="col">
         <p><%= image.title %></p>
         <p><%= image_tag(image.image_url(:thumb)) %></p>

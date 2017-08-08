@@ -1,3 +1,4 @@
+<% unless f.object.source_channel == 'editor' %>
 <div class="row">
   <div class="mb-1 mt-1 col-md-3">
     <%= f.label :image, 'Upload Image' %>
@@ -27,3 +28,4 @@
     <%= f.hidden_field :in_use, value: 1 %>
   <% end %>
 </div>
+<% end %>

@@ -10,6 +10,8 @@ class Image < ApplicationRecord
 
   # Scope
   scope :orphans, ->  { where(in_use: false) }
+
+  # Enum
   enum source_channel: { attachment: 0, editor: 1 }
 
   def self.associate(object, filename, source_channel)
