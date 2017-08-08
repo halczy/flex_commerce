@@ -29,6 +29,7 @@ class Admin::ProductsController < Admin::AdminController
 
   def update
     if @product.update(product_params)
+      @product.reassociate_images
       flash[:success] = "Successfully updated product."
       redirect_to admin_product_path(@product)
     else

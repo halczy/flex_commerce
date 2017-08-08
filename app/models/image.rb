@@ -26,8 +26,10 @@ class Image < ApplicationRecord
   end
 
   def untag
-    update(imageable_type: nil, imageable_id: nil, in_use: false,
-           source_channel: nil)
+    unless source_channel == 'attachment'
+      update(imageable_type: nil, imageable_id: nil, in_use: false,
+             source_channel: nil)
+    end
   end
 
 end
