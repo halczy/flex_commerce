@@ -8,9 +8,13 @@ describe 'Admin Dashboard - Product', type: :feature do
   describe 'create' do
     before { visit admin_products_path }
 
-    it 'can create product' do
+    it 'renders the new product page' do
       click_on('New Product')
       expect(page.current_path).to eq(new_admin_product_path)
+    end
+
+    it 'can create product' do
+      click_on('New Product')
 
       fill_in "product[name]", with: "Test Product Name"
       fill_in "product[tag_line]", with: "Test Product Tag Line"
@@ -79,15 +83,93 @@ describe 'Admin Dashboard - Product', type: :feature do
   end
 
   describe 'edit' do
-    it 'can edit product'
-    it 'can reassgin categories'
-    it 'can attach new images'
-    it 'can edit existing image properties'
+    before do
+      @product = FactoryGirl.create(:product)
+      @product.categorizations.create(category: FactoryGirl.create(:category))
+      visit admin_products_path
+    end
+
+    it 'renders the edit product page' do
+      click_on("edit_#{@product.id}")
+      expect(page.current_path).to eq(edit_admin_product_path(@product))
+    end
+
+    it 'can edit product' do
+      click_on("edit_#{@product.id}")
+
+      fill_in "product[name]", with: "EDIT Product Name"
+      fill_in "product[tag_line]", with: "EDIT Product Tag Line"
+      fill_in "product[sku]", with: "TESTEDITSKU1234567890"
+      select "False", from: "product[strict_inventory]"
+      select "True", from: "product[digital]"
+      first('input#introduction', visible: false).set("EDIT Test Introduction")
+      first('input#description', visible: false).set("EDIT Test Description")
+      first('input#specification', visible: false).set("EDIT Test Specification")
+      fill_in "product[price_member]", with: "123.01"
+      fill_in "product[price_reward]", with: "82.01"
+      fill_in "product[price_market]", with: "119.01"
+      fill_in "product[cost]", with: "50.11"
+      click_on('Update Product')
+
+      expect(page.current_path).to eq(admin_product_path(@product))
+      expect(page).to have_content('EDIT Product Name')
+      expect(page).to have_content('EDIT Product Tag Line')
+      expect(page).to have_content('TESTEDITSKU1234567890')
+      expect(page).to have_content('Strict Inventory False')
+      expect(page).to have_content('Digital Product True')
+      expect(page).to have_content('EDIT Test Introduction')
+      expect(page).to have_content('EDIT Test Description')
+      expect(page).to have_content('EDIT Test Specification')
+      expect(page).to have_content('¥123.01')
+      expect(page).to have_content('¥82.01')
+      expect(page).to have_content('¥119.01')
+      expect(page).to have_content('¥50.11')
+    end
+
+    it 'can reassgin categories' do
+      old_cat = @product.categories.first
+      new_cat = FactoryGirl.create(:category)
+      click_on("edit_#{@product.id}")
+      select "#{new_cat.name}", from: "reg_cat_sel"
+      click_on('Update Product')
+
+      expect(page).to have_content(new_cat.name)
+    end
+
+    it 'can edit existing image properties' do
+      click_on('New Product')
+      fill_in "product[name]", with: "Test Product with Images"
+      attach_file('product[images_attributes][0][image]', 'spec/support/files/img_1.jpeg')
+      fill_in "product[images_attributes][0][title]", with: "Test Image 1"
+      click_on('Create Product')
+
+      visit admin_products_path
+      click_on("edit_#{Product.last.id}")
+      fill_in "product[images_attributes][0][title]", with: "EDIT Image 1"
+      click_on('Update Product')
+
+      expect(page).to have_content('EDIT Image 1')
+    end
+
+    context 'invalid edit' do
+      it 'renders error messages' do
+        click_on("edit_#{@product.id}")
+        fill_in "product[name]", with: ""
+        click_on('Update Product')
+
+        expect(page).to have_css('#error_messages')
+      end
+    end
   end
 
   describe 'delete' do
     it 'can delete product'
     it 'removes categories associations when product is removed'
     it 'removes associated images when product is deleted'
+  end
+
+  describe 'show' do
+    it 'can delete uploaded image'
+    it 'does not show delete button for image uploaded through editor'
   end
 end

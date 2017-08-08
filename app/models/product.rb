@@ -3,8 +3,9 @@ class Product < ApplicationRecord
   has_many :categorizations
   has_many :categories, through: :categorizations
   has_many :images, as: :imageable, dependent: :destroy
-  accepts_nested_attributes_for :images, allow_destroy: true,
-    reject_if: proc { |attributes| attributes['image'].blank? }
+
+  # Nested form
+  accepts_nested_attributes_for :images, allow_destroy: true, reject_if: :reject_images
 
   # Validations
   validates :name, presence: true, length: { maximum: 30 }
@@ -44,4 +45,9 @@ class Product < ApplicationRecord
       image_paths = image_paths.reject(&:empty?).flatten
       image_paths.map! { |image_path| image_path.delete("/") }
     end
+
+    def reject_images(attributes)
+      attributes['id'].nil? && attributes['image'].blank?
+    end
+
 end

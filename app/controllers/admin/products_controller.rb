@@ -46,7 +46,8 @@ class Admin::ProductsController < Admin::AdminController
       params.require(:product).permit(:name, :tag_line, :sku, :introduction,
         :description, :specification, :digital, :strict_inventory, :price_market,
         :price_member, :price_reward, :cost, category_ids: [],
-        images_attributes: [:image, :display_order, :title, :description, :in_use,
-                            :source_channel, :imageable_id, :imageable_type])
+        images_attributes: [:id, :image, :display_order, :title, :description,
+                            :in_use, :source_channel, :imageable_id,
+                            :imageable_type])
     end
 end
