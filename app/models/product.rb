@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
   # Realtionships
-  has_many :categorizations
+  has_many :categorizations, dependent: :destroy
   has_many :categories, through: :categorizations
   has_many :images, as: :imageable, dependent: :destroy
 

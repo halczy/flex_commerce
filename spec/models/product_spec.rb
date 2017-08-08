@@ -98,4 +98,31 @@ RSpec.describe Product, type: :model do
       end
     end
   end
+
+  describe '#destroy' do
+    context 'deletable product' do
+      it 'destroy itself' do
+        product.destroy
+        expect{product.reload}.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it 'does not remove associated categories on destroy' do
+        3.times do
+          product.categorizations.create(category: FactoryGirl.create(:category))
+        end
+        product.destroy
+        expect(Categorization.count).to eq(0)
+        expect(Category.count).to eq(3)
+      end
+
+      it 'removes attached images on destroy' do
+        3.times do
+          FactoryGirl.create(:image, imageable_type: 'Product',
+                                     imageable_id: product.id)
+        end
+        product.destroy
+        expect(Image.count).to eq(0)
+      end
+    end
+  end
 end
