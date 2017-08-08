@@ -111,6 +111,23 @@ RSpec.describe Admin::ProductsController, type: :controller do
       end
     end
   end
+  
+  describe 'DELETE destroy' do
+    
+    before { @product = product }
+    
+    it 'destroys the requested product' do
+      expect{ 
+        delete :destroy, params: { id: @product.id }
+      }.to change(Product, :count).by(-1)
+    end
+    
+    it "redirects to the product list" do
+      delete :destroy, params: { id: @product.id }
+      expect(response).to redirect_to(admin_products_path)
+    end
+    
+  end
 
 
 end

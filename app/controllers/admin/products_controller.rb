@@ -36,6 +36,14 @@ class Admin::ProductsController < Admin::AdminController
       render :edit
     end
   end
+  
+  def destroy
+    @product.unassociate_images
+    if @product.destroy
+      flash[:success] = "Product was successfully destroyed."
+      redirect_to admin_products_path
+    end
+  end
 
   private
 
