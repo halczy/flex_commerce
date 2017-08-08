@@ -169,7 +169,26 @@ describe 'Admin Dashboard - Product', type: :feature do
   end
 
   describe 'show' do
-    it 'can delete uploaded image'
-    it 'does not show delete button for image uploaded through editor'
+    context 'images' do
+      before do
+        visit admin_products_path
+        click_on('New Product')
+        fill_in "product[name]", with: "Test Product with Images"
+        attach_file('product[images_attributes][0][image]', 'spec/support/files/img_1.jpeg')
+        fill_in "product[images_attributes][0][title]", with: "Test Image 1"
+        click_on('Create Product')
+      end
+
+      it 'only show delete button for uploaded image' do
+        expect(page).to have_content('Delete', count: 1)
+      end
+
+      it 'does not show delete button for image uploaded through editor' do
+        product = Product.last
+        product.images.first.update(source_channel: 1)
+        visit admin_product_path(product)
+        expect(page).not_to have_content('Delete')
+      end
+    end
   end
 end
