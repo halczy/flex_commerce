@@ -12,7 +12,7 @@
       <%= link_to cat.name, admin_category_path(cat) %>
     </td>
     <td><%= cat.hide %></td>
-    <%= render 'category_control', cat: cat %>
+    <%= render 'action_control', cat: cat %>
   </tr>
   <%= render 'child_categories', child_categories: cat.child_categories %>
 <% end %>
