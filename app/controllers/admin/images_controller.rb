@@ -3,7 +3,7 @@ class Admin::ImagesController < Admin::AdminController
   before_action :set_image, only: [:show, :destroy]
 
   def index
-    @images = Image.all
+    @images = Image.order(updated_at: :desc).page params[:page]
   end
 
   def show
