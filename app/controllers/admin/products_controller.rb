@@ -2,7 +2,7 @@ class Admin::ProductsController < Admin::AdminController
   before_action :set_product, except: [:index, :new, :create]
 
   def index
-    @products = Product.all
+    @products = Product.order(updated_at: :desc).page params[:page]
   end
 
   def new
@@ -36,7 +36,7 @@ class Admin::ProductsController < Admin::AdminController
       render :edit
     end
   end
-  
+
   def destroy
     @product.unassociate_images
     if @product.destroy
