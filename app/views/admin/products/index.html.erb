@@ -8,9 +8,9 @@
     <% end %>
   </div>
 
-  <%= render 'shared/paginate', objects: @products %>
+  <%= render 'shared/paginate', objects: @products if @products.present? %>
   <div class="col-lg-12">
     <%= render 'products', products: @products %>
   </div>
-  <%= render 'shared/paginate', objects: @products %>
+  <%= render 'shared/paginate', objects: @products if @presents.present? %>
 </div>

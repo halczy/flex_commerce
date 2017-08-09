@@ -2,6 +2,7 @@
 
 <div class="row">
   <div class="col-lg-12">
+    <%= render 'shared/paginate', objects: @images if @images.present? %>
     <table class="table table-hover table-responsive">
       <thead>
         <tr>
@@ -12,7 +13,6 @@
           <th colspan="3"></th>
         </tr>
       </thead>
-
       <tbody>
         <% @images.each do |image| %>
           <tr>
@@ -33,6 +33,6 @@
         <% end %>
       </tbody>
     </table>
-
+    <%= render 'shared/paginate', objects: @images if @images.present? %>
   </div>
 </div>
