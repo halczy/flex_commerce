@@ -127,7 +127,7 @@ describe 'Admin Dashboard - Product', type: :feature do
     end
 
     it 'can reassgin categories' do
-      old_cat = @product.categories.first
+      @product.categories.first
       new_cat = FactoryGirl.create(:category)
       click_on("edit_#{@product.id}")
       select "#{new_cat.name}", from: "reg_cat_sel"
