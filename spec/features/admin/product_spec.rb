@@ -163,9 +163,33 @@ describe 'Admin Dashboard - Product', type: :feature do
   end
 
   describe 'delete' do
-    it 'can delete product'
-    it 'removes categories associations when product is removed'
-    it 'removes associated images when product is deleted'
+    before do
+      @product = FactoryGirl.create(:product)
+      @category = FactoryGirl.create(:category)
+      @image = FactoryGirl.create(:image, imageable_type: 'Product', imageable_id: @product.id)
+      @product.categorizations.create(category: @category)
+      visit admin_products_path
+    end
+    
+    it 'can delete product' do
+      click_on("btn_del_#{@product.id}")
+      click_on("confirm_del_#{@product.id}")
+      expect(page.current_path).to eq(admin_products_path)
+      expect(page).not_to have_content(@product.name)
+    end
+    
+    it 'removes categories associations when product is removed' do
+      click_on("btn_del_#{@product.id}")
+      click_on("confirm_del_#{@product.id}")
+      expect(@category).to be_valid
+      expect(@category.reload.products.count).to eq(0)
+    end
+    
+    it 'removes associated images when product is deleted' do
+      click_on("btn_del_#{@product.id}")
+      click_on("confirm_del_#{@product.id}")
+      expect{@image.reload}.to raise_error(ActiveRecord::RecordNotFound)
+    end
   end
 
   describe 'show' do
