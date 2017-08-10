@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
 
-  def homepage
+  def index
+    @feature_products = Category.feature.first.try(:products)
   end
 
 end

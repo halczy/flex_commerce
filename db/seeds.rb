@@ -76,7 +76,7 @@ puts "PRODUCT: #{Product.count} products created."
   product = Product.all.sample
   product.categorizations.create(category: Category.special.first)
 end
-puts "Categorization: #{Categorization.count} product categories relationship created."
+puts "Categorization: #{Categorization.count} product-categorie relationships created."
 
 # IMAGES
 images = ['img_1.jpeg', 'img_2.jpeg', 'img_3.jpeg', 'img_4.jpeg']
@@ -85,6 +85,8 @@ Category.special.first.products.each do |product|
     image = Image.create(title: "Seed file #{n}",
                          imageable_type: 'Product',
                          imageable_id: product.id,
+                         in_use: true,
+                         source_channel: 0,
                          image: Rack::Test::UploadedFile.new(File.join(
                                   Rails.root, 'spec', 'support', 'files',
                                   images.sample), 'image/jpeg'))

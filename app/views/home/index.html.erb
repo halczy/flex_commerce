@@ -1,9 +1,9 @@
-<div class="container">
-  Breadcrumb Placeholder
-</div>
-
-<section class="jumbotron text-center">
+<section class="jumbotron">
   <div class="container">
+    <h3>Feature Products</h3>
+    <% unless @feature_products.nil? %>
+      <%= render 'feature_products', feature_products: @feature_products %>
+    <% end %>
   </div>
 </section>
 
