@@ -1,13 +1,14 @@
 puts 'SEED: Seed file is running......'
 
 # CLEAN UP
-User.delete_all
+User.destroy_all
 puts 'USER: Clear old user data'
-Product.delete_all
+Product.destroy_all
 puts 'PRODUCT: Clear old product data'
-Category.delete_all
+Categorization.destroy_all
+Category.destroy_all
 puts 'CATEGORY: Clear old category data'
-Image.delete_all
+Image.destroy_all
 puts 'IMAGE: Clear old image data'
 
 
@@ -70,4 +71,24 @@ puts "CATEGORY: #{Category.count} total categories created."
 end
 puts "PRODUCT: #{Product.count} products created."
 
+# Categorization
+5.times do
+  product = Product.all.sample
+  product.categorizations.create(category: Category.special.first)
+end
+puts "Categorization: #{Categorization.count} product categories relationship created."
+
 # IMAGES
+images = ['img_1.jpeg', 'img_2.jpeg', 'img_3.jpeg', 'img_4.jpeg']
+Category.special.first.products.each do |product|
+  5.times do |n|
+    image = Image.create(title: "Seed file #{n}",
+                         imageable_type: 'Product',
+                         imageable_id: product.id,
+                         image: Rack::Test::UploadedFile.new(File.join(
+                                  Rails.root, 'spec', 'support', 'files',
+                                  images.sample), 'image/jpeg'))
+  end
+end
+puts "IMAGE: #{Image.count} images created."
+
