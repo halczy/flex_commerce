@@ -16,7 +16,11 @@ Rails.application.routes.draw do
         patch 'move'
       end
     end
-    resources :products
+    resources :products do
+      collection do
+        get 'search'
+      end
+    end
     resources :images, only: [:index, :create, :show, :destroy]
   end
 end

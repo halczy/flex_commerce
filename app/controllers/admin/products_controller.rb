@@ -1,5 +1,5 @@
 class Admin::ProductsController < Admin::AdminController
-  before_action :set_product, except: [:index, :new, :create]
+  before_action :set_product, except: [:index, :new, :create, :search]
 
   def index
     @products = Product.order(updated_at: :desc).page params[:page]
@@ -42,6 +42,17 @@ class Admin::ProductsController < Admin::AdminController
     if @product.destroy
       flash[:success] = "Product was successfully destroyed."
       redirect_to admin_products_path
+    end
+  end
+
+  def search
+    search_term = params[:search_term] || ""
+    unless search_term.empty?
+      @search_run = ProductSearchService.new(search_term).quick_search
+      @search_result = @search_run.page params[:page]
+    else
+      flash.now[:warning] = "Please enter one or more search terms."
+      render :search
     end
   end
 

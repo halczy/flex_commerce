@@ -111,22 +111,40 @@ RSpec.describe Admin::ProductsController, type: :controller do
       end
     end
   end
-  
+
   describe 'DELETE destroy' do
-    
     before { @product = product }
-    
+
     it 'destroys the requested product' do
-      expect{ 
+      expect{
         delete :destroy, params: { id: @product.id }
       }.to change(Product, :count).by(-1)
     end
-    
+
     it "redirects to the product list" do
       delete :destroy, params: { id: @product.id }
       expect(response).to redirect_to(admin_products_path)
     end
-    
+  end
+
+  describe 'GET search' do
+    before do
+      @product_blue = FactoryGirl.create(:product, name: 'Blue Book')
+      @product_red  = FactoryGirl.create(:product, name: 'Red Book')
+    end
+
+    it 'responses successfully with search result' do
+      get :search, params: { search_term: 'RED' }
+      expect(response).to render_template(:search)
+      expect(assigns(:search_result).count).to eq(1)
+    end
+
+    it 'renders flash message when no search term is provided' do
+      get :search, params: { }
+      expect(response).to render_template(:search)
+      expect(flash[:warning]).to be_present
+      expect(assigns(:search_result)).to eq(0)
+    end
   end
 
 
