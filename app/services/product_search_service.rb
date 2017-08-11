@@ -1,0 +1,3 @@
+class ProductSearchService < SearchService
+
+end
