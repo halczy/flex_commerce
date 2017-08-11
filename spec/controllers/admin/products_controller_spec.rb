@@ -139,11 +139,16 @@ RSpec.describe Admin::ProductsController, type: :controller do
       expect(assigns(:search_result).count).to eq(1)
     end
 
+    it 'responses successfully with empty serach result' do
+      get :search, params: { search_term: 'this_product_should_not_exist'}
+      expect(assigns(:search_result).count).to eq(0)
+    end
+
     it 'renders flash message when no search term is provided' do
       get :search, params: { }
       expect(response).to render_template(:search)
       expect(flash[:warning]).to be_present
-      expect(assigns(:search_result)).to eq(0)
+      expect(assigns(:search_result)).to be_nil
     end
   end
 
