@@ -10,4 +10,24 @@ RSpec.describe ProductSearchService, type: :model do
     end
   end
 
+  describe '#quick_search' do
+    before do
+      @product_1 = FactoryGirl.create(:product, name: 'Blue Book',
+                                               tag_line: 'A tag line')
+      @product_2 = FactoryGirl.create(:product, name: 'Yellow Book',
+                                               tag_line: 'YATL')
+    end
+
+    it 'returns the matching product' do
+      search_run = ProductSearchService.new('BLUE')
+      result = search_run.quick_search
+      expect(result).to match_array([@product_1])
+    end
+
+    it 'returns the all matching products' do
+      search_run = ProductSearchService.new('Book')
+      result = search_run.quick_search
+      expect(result).to match_array([@product_1, @product_2])
+    end
+  end
 end
