@@ -5,6 +5,9 @@
   <%= form.search_field :search_term, value: "#{params[:search_term]}", class: "form-control" %>
 
   <span class="input-group-btn">
-    <%= form.submit 'Search', class: 'btn btn-success' %>
+    <%= button_tag class: 'btn btn-success', data: { disable_with: "Searching..." } do %>
+      <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+      Search
+    <% end %>
   </span>
 <% end %>
