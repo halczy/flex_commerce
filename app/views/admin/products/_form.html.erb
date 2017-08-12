@@ -115,6 +115,7 @@
 
   <%= link_to_add_fields "Add Image", f, :images, {class: 'btn btn-success'} %>
 
-  <%= f.submit class: 'btn btn-block btn-primary mb-5' %>
+  <%= f.submit class: 'btn btn-block btn-primary mb-5',
+               data: { disable_with: "One Moment..." } %>
 
 <% end %>
