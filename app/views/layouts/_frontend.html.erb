@@ -1,3 +1,5 @@
-<%= render 'shared/navigation/navbar' %>
-<%= render 'shared/flash' unless flash.empty?%>
-<%= yield %>
+<div id="frontend">
+  <%= render 'shared/navigation/navbar' %>
+  <%= render 'shared/flash' unless flash.empty?%>
+  <%= yield %>
+</div>

@@ -1,13 +1,12 @@
 <%= provide :title, 'Sign In' %>
 
 <div class="container">
-  <div class="row">
-   <div class="col-6 offset-3">
-     <div class="card mt-5 mb-5">
+  <div class="d-flex justify-content-center" id="signin">
+    <div class="card w-50">
       <div class="card-header text-center">
         <h4>Sign In</h4>
       </div>
-      <div class="card-block">
+      <div class="card-body">
         <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
           <div class="form-group">
             <%= f.text_field :ident, placeholder: 'Email / Cell Phone Number',
@@ -22,12 +21,11 @@
           <div class="form-group">
             <%= f.label :remember_me, class: "checkbox inline" do %>
               <%= f.check_box :remember_me %>
-              <span>Remember me</span>
+              <span>Remember Me</span>
             <% end %>
           </div>
 
             <%= f.submit 'Submit', class: 'btn btn-block btn-primary' %>
-          </div>
         <% end %>
       </div>
     </div>

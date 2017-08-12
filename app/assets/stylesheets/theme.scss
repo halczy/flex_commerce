@@ -21,13 +21,17 @@ $dark-gray: #444444;
   font-size: $theme-font-size;
 }
 
+// Fixed Navbar - Frontend
+#frontend {
+  padding-top: 3.5rem;
+}
+
 // Dropdown Expand on Hover
 .dropdown:hover>.dropdown-menu {
   display: block;
 }
 
 // General Styles
-
 body {
   background-color: #ffffff;
   font-size: $theme-font-size;
@@ -41,10 +45,6 @@ h1, h2 {
 
 h3, h4, h5, h6 {
 }
-
-// a, a:visited {
-//   color: $theme-color;
-// }
 
 .arrow-control {
   color: inherit;
@@ -160,6 +160,7 @@ p {
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   border-right: 1px solid #eee;
   background: $theme-color;
+
   a {
     color: #fff;
     text-transform: uppercase;
@@ -284,4 +285,8 @@ p {
 
 .btn>.fa {
   margin-right: 0.3rem;
+}
+
+#signin, #signup {
+  padding-top: 3rem;
 }
