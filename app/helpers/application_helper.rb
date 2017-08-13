@@ -18,8 +18,7 @@ module ApplicationHelper
   end
 
   def admin_controller?(controller)
-    admin_controllers = [ 'dashboard', 'categories', 'products', 'images' ]
-    admin_controllers.include?(controller.controller_name.downcase)
+    controller.controller_path.match?(/admin/)
   end
 
   def link_to_add_fields(name, f, association, options={})
