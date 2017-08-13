@@ -6,6 +6,7 @@
 
 # Ignore bundler config.
 /.bundle
+Gemfile.lock
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -16,6 +17,7 @@
 /node_modules
 /yarn-error.log
 .yarnclean
+yarn.lock
 
 .byebug_history
 /public/packs
