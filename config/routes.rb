@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   get 'signup', to: 'customers#new'
   get 'signin', to: 'sessions#new'
 
-  resources :customers, only: [:new, :create, :show]
-  resources :sessions, only: [:new, :create, :destroy]
-  resources :images, only: [:show]
+  resources :customers,  only: [:new, :create, :show]
+  resources :sessions,   only: [:new, :create, :destroy]
+  resources :images,     only: [:show]
+  resources :categories, only: [:show]
 
   namespace :admin do
     resources :dashboard, only: [:index]
