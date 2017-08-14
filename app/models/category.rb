@@ -11,11 +11,12 @@ class Category < ApplicationRecord
   validates :display_order, numericality: { greater_than_or_equal_to: 0 }
 
   # Scope / Enum
-  scope :special,   -> { where.not(flavor: 0) }
   scope :regular,   -> { where(flavor: 0) }
+  scope :brands,    -> { where(flavor: 1) }
+  scope :special,   -> { where("flavor >= ?", 2) }
   scope :top_level, -> { where(parent: nil, hide: false, flavor: 0) }
   scope :no_parent, -> { where(parent: nil, flavor: 0) }
-  enum flavor: { normal: 0, feature: 1 }
+  enum flavor: { regular: 0, brand: 1, feature: 2 }
 
   def unassociate_children
     child_categories.each { |c| c.update(parent_id: nil) }

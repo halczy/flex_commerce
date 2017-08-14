@@ -12,8 +12,8 @@ describe 'Admin Category Dashboard', type: :feature do
   end
 
   describe 'create' do
-    it 'can create category' do
-      click_on('New Category')
+    it 'can create regular category' do
+      click_on('New Regular Category')
       expect(page.current_path).to eq(new_admin_category_path)
 
       fill_in 'category[name]', with: 'Test Category'
@@ -34,6 +34,17 @@ describe 'Admin Category Dashboard', type: :feature do
       expect(page).to have_content('2')
       expect(page).to have_content(@parent_cat.name)
       expect(page).to have_content(@parent_cat.id)
+    end
+
+    it 'can create brand category' do
+      click_on('New Brand Category')
+      expect(page.current_path).to eq(new_admin_category_path)
+
+      fill_in "category[name]", with: "Test Brand"
+      fill_in 'category[display_order]', with: 0
+      click_button 'Create Category'
+      expect(page).to have_content('Test Brand')
+      expect(page).to have_content('brand')
     end
   end
 

@@ -48,7 +48,7 @@ describe 'Admin Dashboard - Product', type: :feature do
     it 'can create product with categories' do
       cat_1 = FactoryGirl.create(:category)
       cat_2 = FactoryGirl.create(:category)
-      special_cat = FactoryGirl.create(:category, flavor: 1)
+      special_cat = FactoryGirl.create(:feature)
 
       visit admin_products_path
       click_on('New Product')
@@ -170,21 +170,21 @@ describe 'Admin Dashboard - Product', type: :feature do
       @product.categorizations.create(category: @category)
       visit admin_products_path
     end
-    
+
     it 'can delete product' do
       click_on("btn_del_#{@product.id}")
       click_on("confirm_del_#{@product.id}")
       expect(page.current_path).to eq(admin_products_path)
       expect(page).not_to have_content(@product.name)
     end
-    
+
     it 'removes categories associations when product is removed' do
       click_on("btn_del_#{@product.id}")
       click_on("confirm_del_#{@product.id}")
       expect(@category).to be_valid
       expect(@category.reload.products.count).to eq(0)
     end
-    
+
     it 'removes associated images when product is deleted' do
       click_on("btn_del_#{@product.id}")
       click_on("confirm_del_#{@product.id}")

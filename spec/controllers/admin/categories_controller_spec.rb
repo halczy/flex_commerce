@@ -12,6 +12,25 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     it 'responses successfully' do
       get :index
       expect(response).to render_template(:index)
+      expect(response).to be_success
+    end
+
+    it 'returns an instance of regular categories' do
+      FactoryGirl.create(:category)
+      get :index
+      expect(assigns(:top_level).first.flavor).to eq('regular')
+    end
+
+    it 'returns an instance of brand categoreis' do
+      FactoryGirl.create(:brand)
+      get :index
+      expect(assigns(:brands).first.flavor).to eq('brand')
+    end
+
+    it 'returns an instance of special categories' do
+      FactoryGirl.create(:feature)
+      get :index
+      expect(assigns(:special).first.flavor).to eq('feature')
     end
 
     context 'access control' do
@@ -34,11 +53,28 @@ RSpec.describe Admin::CategoriesController, type: :controller do
   describe 'POST create' do
     describe 'category creation' do
       context 'with valid params' do
-        it 'creates category' do
-          post :create, params: { category: { name: 'Drama',
-                                              display_order: 0 } }
+
+        let(:category_attrs) { FactoryGirl.attributes_for(:category) }
+
+        it 'creates regular category' do
+          category_attrs[:flavor] = 'regular'
+          post :create, params: { category: category_attrs }
           expect(response).to redirect_to(admin_category_path(Category.last))
           expect(flash[:success]).to be_present
+        end
+
+        it 'creates brand category' do
+          category_attrs[:flavor] = 'brand'
+          post :create, params: { category: category_attrs }
+          expect(response).to redirect_to(admin_category_path(Category.last))
+          expect(assigns(:category).flavor).to eq('brand')
+        end
+
+        it 'creates feature category' do
+          category_attrs[:flavor] = 'feature'
+          post :create, params: { category: category_attrs }
+          expect(response).to redirect_to(admin_category_path(Category.last))
+          expect(Category.special.count).to eq(1)
         end
       end
 

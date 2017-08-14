@@ -6,7 +6,8 @@
   <% end %>
 </td>
 <td>
-  <%= link_to 'Edit', edit_admin_category_path(cat), id: "edit_#{cat.id}",
+  <%= link_to 'Edit', edit_admin_category_path(cat, regular: true),
+                      id: "edit_#{cat.id}",
                       class: "btn btn-sm btn-warning" %>
 </td>
 <td>

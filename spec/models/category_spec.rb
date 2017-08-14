@@ -45,7 +45,7 @@ RSpec.describe Category, type: :model do
       @hidden_cat = FactoryGirl.create(:category, hide: true)
       @child_cat_1 = FactoryGirl.create(:category, parent: @main_cat)
       @child_cat_2 = FactoryGirl.create(:category, parent: @main_cat)
-      @special_cat = FactoryGirl.create(:category, flavor: 1)
+      @special_cat = FactoryGirl.create(:feature)
     end
 
     it 'can have child categories' do
@@ -88,8 +88,13 @@ RSpec.describe Category, type: :model do
 
     context 'enum' do
       it 'can set category as feature' do
-        feature_cat = FactoryGirl.create(:category, flavor: 1)
+        feature_cat = FactoryGirl.create(:feature)
         expect(feature_cat.flavor).to eq('feature')
+      end
+
+      it 'can set category as brand' do
+        brand_cat = FactoryGirl.create(:brand)
+        expect(brand_cat.flavor).to eq('brand')
       end
     end
   end

@@ -34,7 +34,7 @@ puts "USER: #{Customer.count} customer created"
 # CATEGORIES
 Category.create(name: 'Feature Products',
                 display_order: 0,
-                flavor: 1,
+                flavor: 2,
                 hide: false)
 puts "CATEGORY: #{Category.special.count} special categories created."
 
@@ -76,7 +76,7 @@ puts "PRODUCT: #{Product.count} products created."
   product = Product.all.sample
   product.categorizations.create(category: Category.special.first)
 end
-puts "Categorization: #{Categorization.count} product-categorie relationships created."
+puts "Categorization: #{Categorization.count} product-category relationships created."
 
 # IMAGES
 images = ['img_1.jpeg', 'img_2.jpeg', 'img_3.jpeg', 'img_4.jpeg']
