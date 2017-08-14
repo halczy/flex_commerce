@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :sessions,   only: [:new, :create, :destroy]
   resources :images,     only: [:show]
   resources :categories, only: [:show]
+  resources :products,   only: [:show]
 
   namespace :admin do
     resources :dashboard, only: [:index]
