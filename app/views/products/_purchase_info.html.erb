@@ -1,0 +1,32 @@
+<h3><%= @product.name %></h3>
+<h5 class="text-muted"><%= @product.tag_line %></h5>
+<hr>
+<%= @product.introduction.html_safe %>
+<hr>
+<p>Brand: </p>
+<p>SKU: <%= @product.sku %></p>
+<p>Availability: In Stock</p>
+<hr>
+<p>
+  Market Price:
+  <%= humanized_money_with_symbol(@product.price_market) %>
+</p>
+<p class="font-weight-bold">
+  Member Price:
+  <%= humanized_money_with_symbol(@product.price_member) %>
+</p>
+
+<form class="form-inline">
+
+  <div class="input-group mr-3" style="width: 8rem;">
+    <span class="input-group-btn">
+      <button class="btn btn-secondary" type="button">-</button>
+    </span>
+    <input type="text" class="form-control" value="1">
+    <span class="input-group-btn">
+      <button class="btn btn-secondary" type="button">+</button>
+    </span>
+  </div>
+  <button type="submit" class="btn btn-primary">Add to Cart</button>
+</form>
+

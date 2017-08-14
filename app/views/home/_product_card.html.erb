@@ -4,11 +4,11 @@
     <h4 class="card-title">
       <div class="row">
         <div class="col-lg-8">
-          <%= link_to product.name, '#' %>
+          <%= link_to product.name, product_path(product) %>
         </div>
         <div class="col-lg-4">
           <%= humanized_money_with_symbol(product.price_member) %>
-        </div>      
+        </div>
       </div>
     </h4>
     <p class="card-text">
@@ -18,7 +18,7 @@
   <div class="card-footer">
     <div class="row">
       <div class="col mb-1 mt-1">
-        <%= link_to '#', class: 'btn btn-info btn-block' do %>
+        <%= link_to product_path(product), class: 'btn btn-info btn-block' do %>
           <i class="fa fa-columns" aria-hidden="true"></i>
           Detail
         <% end %>
