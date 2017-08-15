@@ -26,6 +26,21 @@ class Category < ApplicationRecord
     update(display_order: display_order + magnitude)
   end
 
+  def refine
+    refined_categories = []
+    return refined_categories if products.empty?
+    if regular?
+      products.each do |product|
+        refined_categories << product.categories.select { |category| category.brand? }
+      end
+    elsif brand?
+      products.each do |product|
+        refined_categories << product.categories.select { |category| category.regular? }
+      end
+    end
+    refined_categories.flatten.uniq
+  end
+
   private
 
   def ensure_parent_exists

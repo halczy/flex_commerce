@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Category, type: :model do
 
-  let(:cat) { FactoryGirl.create(:category) }
+  let(:cat)   { FactoryGirl.create(:category) }
+  let(:brand) { FactoryGirl.create(:brand) }
 
   describe 'creation' do
     it 'can be created with valid data' do
@@ -115,6 +116,42 @@ RSpec.describe Category, type: :model do
     it 'display_order cannot be negative' do
       cat_order_init_5.move(-100)
       expect(cat_order_init_5.reload.display_order).to eq(5)
+    end
+  end
+
+  describe '#refine' do
+    context 'brand category' do
+      it 'returns regular categories associted with category products' do
+        product_1 = FactoryGirl.create(:product)
+        product_2 = FactoryGirl.create(:product)
+        cat_1 = FactoryGirl.create(:category)
+        cat_2 = FactoryGirl.create(:category)
+        Categorization.create(category: brand, product: product_1)
+        Categorization.create(category: brand, product: product_2)
+        Categorization.create(category: cat_1, product: product_1)
+        Categorization.create(category: cat_2, product: product_2)
+
+        expect(brand.refine).to match_array([cat_1, cat_2])
+      end
+    end
+
+    context 'regular category' do
+      it 'returns brand categories associted with category products' do
+        product_1 = FactoryGirl.create(:product)
+        product_2 = FactoryGirl.create(:product)
+        Categorization.create(category: cat, product: product_1)
+        Categorization.create(category: cat, product: product_2)
+        Categorization.create(category: brand, product: product_1)
+        Categorization.create(category: brand, product: product_2)
+
+        expect(cat.refine).to match_array(brand)
+      end
+    end
+
+    context 'empty category' do
+      it 'returns an empty category list' do
+        expect(cat.refine).to match_array([])
+      end
     end
   end
 
