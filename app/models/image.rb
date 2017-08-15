@@ -9,8 +9,9 @@ class Image < ApplicationRecord
   validates :image, presence: true
 
   # Scope
-  scope :orphans, ->  { where(in_use: false) }
-  scope :placeholder, -> {where(title: 'Placeholder Image')}
+  scope :orphans,     -> { where(in_use: false) }
+  scope :attachments, -> { where(source_channel: 0) }
+  scope :placeholder, -> { where(title: 'Placeholder Image') }
 
   # Enum
   enum source_channel: { attachment: 0, editor: 1 }
