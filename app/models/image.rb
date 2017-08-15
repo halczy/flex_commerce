@@ -10,6 +10,7 @@ class Image < ApplicationRecord
 
   # Scope
   scope :orphans, ->  { where(in_use: false) }
+  scope :placeholder, -> {where(title: 'Placeholder Image')}
 
   # Enum
   enum source_channel: { attachment: 0, editor: 1 }

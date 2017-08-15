@@ -99,6 +99,17 @@ RSpec.describe Product, type: :model do
     end
   end
 
+  describe '#cover_image' do
+    it 'reutrns a cover image' do
+      image = FactoryGirl.create(:image, imageable_type: 'Product', imageable_id: product.id)
+      expect(product.cover_image).to eq(image)
+    end
+
+    it 'returns a placeholder image when no product image is available' do
+      expect(product.cover_image).to eq(Image.placeholder.first)
+    end
+  end
+
   describe '#destroy' do
     context 'deletable product' do
       it 'destroy itself' do
@@ -125,4 +136,5 @@ RSpec.describe Product, type: :model do
       end
     end
   end
+
 end

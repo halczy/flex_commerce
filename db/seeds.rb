@@ -12,8 +12,7 @@ Image.destroy_all
 puts 'IMAGE: Clear old image data'
 
 
-
-# USER
+# ADMIN
 Admin.create(name: 'Admin User',
              email: 'admin@example.com',
              cell_number: '13811112222',
@@ -21,6 +20,15 @@ Admin.create(name: 'Admin User',
              password_confirmation: 'example')
 
 puts "USER: #{Admin.count} admin created"
+
+# PLACEHOLDER IMAGE
+Image.create(title: "Placeholder Image",
+             in_use: true,
+             source_channel: 0,
+             image: Rack::Test::UploadedFile.new(File.join(
+                      Rails.root, 'public', 'placeholder_img',
+                      'no-image-slide.png'), 'image/png'))
+puts "IMAGE: #{Image.count} placeholder image created"
 
 50.times do |n|
   Customer.create(name: Faker::Name.name,

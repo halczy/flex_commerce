@@ -31,6 +31,14 @@ class Product < ApplicationRecord
     associate_images
   end
 
+  def cover_image
+    if images.present?
+      images.order(display_order: :desc).first
+    else
+      Image.placeholder.first
+    end
+  end
+
   private
 
     def extract_images
