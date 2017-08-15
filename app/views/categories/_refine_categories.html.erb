@@ -1,0 +1,21 @@
+<% unless @category.refine.empty? %>
+  <div class="card mt-3">
+    <div class="card-body">
+      <h4 class="card-title">
+        <% if @category.regular? %>
+          Categories
+        <% elsif @category.brand? %>
+          Brands
+        <% end %>
+      </h4>
+      <div class="ml-1">
+        <% @category.refine.each do |category| %>
+          <li>
+            <%= link_to category.name, category_path(category) %>
+            (<%= category.products.count %>) 
+          </li> 
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
