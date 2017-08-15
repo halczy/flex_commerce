@@ -7,7 +7,13 @@
       <%= render 'side' %>
     </div>
     <div class="col-lg-9">
-      <%= render 'grid', products: @products %>
+      <div class="row">
+        <% products.each do |product| %>
+          <div class="col-sm-4 mb-3">
+            <%= render 'shared/product_card', product: product %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 
