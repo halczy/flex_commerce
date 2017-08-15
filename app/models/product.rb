@@ -33,7 +33,7 @@ class Product < ApplicationRecord
 
   def cover_image
     if images.present?
-      images.order(display_order: :desc).first
+      images.order(display_order: :asc).first
     else
       Image.placeholder.first
     end
