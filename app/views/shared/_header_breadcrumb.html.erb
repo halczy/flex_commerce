@@ -1,3 +1,5 @@
+<% breadcrumb ||= [] %>
+
 <div class="bg-light pt-3 pb-3" id="header_breadcrumb">
   <div class="container">
     <div class="d-flex justify-content-start">
@@ -6,6 +8,9 @@
       </div>
       <div class="ml-auto p-2 align-self-center">
         <%= link_to 'Home', root_url, class: "breadcrumb-item" %>
+        <% breadcrumb.each do |bc| %>
+          <%= link_to bc.first, bc.last, class: "breadcrumb-item" %>
+        <% end %>
         <span class="breadcrumb-item active"><%= title %></span>
       </div>
     </div>

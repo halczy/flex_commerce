@@ -1,5 +1,6 @@
 <%= provide :title, 'Product Detail' %>
-<%= render 'shared/header_breadcrumb', title: 'Product Detail' %>
+<%= render 'shared/header_breadcrumb', title: yield(:title),
+            breadcrumb: build_product_breadcrumb(@product)%>
 
 <div class="container mt-3">
   <div class="row">

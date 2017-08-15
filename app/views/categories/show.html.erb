@@ -1,4 +1,5 @@
-<%= render 'shared/header_breadcrumb', title: @category.name %>
+<%= provide :title, @category.name %>
+<%= render 'shared/header_breadcrumb', title: yield(:title) %>
 
 <div class="container mt-5">
   <div class="row">
