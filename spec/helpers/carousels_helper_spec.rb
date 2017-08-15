@@ -12,21 +12,34 @@ RSpec.describe CarouselsHelper, type: :helper do
       result = helper.build_carousel_indicators(3)
       expect(result).to eq(expected_result)
     end
+
+    it 'returns one indicator for placeholder image if image_count is zero' do
+      expected_result = <<~INDICATORS
+       <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+      INDICATORS
+      result = helper.build_carousel_indicators(0)
+      expect(result).to eq(expected_result)
+    end
   end
 
   describe '#build_carousel_inner' do
-    before do
-      @img_1 = FactoryGirl.create(:image)
-      @img_2 = FactoryGirl.create(:image)
-      @img_3 = FactoryGirl.create(:image)
-      @imgs = [@img_1, @img_2, @img_3]
-    end
-
     it 'returns carousel-inner html' do
-      result = helper.build_carousel_inner(@imgs)
+      img_1 = FactoryGirl.create(:image)
+      img_2 = FactoryGirl.create(:image)
+      img_3 = FactoryGirl.create(:image)
+      imgs = [img_1, img_2, img_3]
+      result = helper.build_carousel_inner(imgs)
       expect(result).to have_css("div.carousel-item", count: 3)
       expect(result).to have_css("div.carousel-item.active", count: 1)
       expect(result).to have_css("img.d-block.w-100", count: 3)
+    end
+
+    it 'returns one carousel-inner if image array is empty' do
+      product = FactoryGirl.create(:product)
+      FactoryGirl.create(:image, title: 'Placeholder Image')
+      result = helper.build_carousel_inner(product.images)
+      expect(result).to have_css("div.carousel-item.active", count: 1)
+      expect(result).to have_css("img.d-block.w-100", count: 1)
     end
 
   end
