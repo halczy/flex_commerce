@@ -1,3 +1,14 @@
+<li class="nav-item dropdown">
+  <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Brands
+  </a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+    <% Category.brands.each do |menu_item| %>
+      <%= link_to menu_item.name, category_path(menu_item), class: 'dropdown-item' %>
+    <% end %>
+  </div>
+</li>
+
 <% Category.top_level.each do |menu_item| %>
   <li class="nav-item">
     <% if menu_item.child_categories.empty? %>

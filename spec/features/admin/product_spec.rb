@@ -46,20 +46,24 @@ describe 'Admin Dashboard - Product', type: :feature do
     end
 
     it 'can create product with categories' do
-      cat_1 = FactoryGirl.create(:category)
-      cat_2 = FactoryGirl.create(:category)
+      cat_1 =       FactoryGirl.create(:category)
+      cat_2 =       FactoryGirl.create(:category)
+      brand_cat =   FactoryGirl.create(:brand)
       special_cat = FactoryGirl.create(:feature)
+      
 
       visit admin_products_path
       click_on('New Product')
       fill_in "product[name]", with: "Test Product with Categories"
       select "#{cat_1.name}", from: "reg_cat_sel"
       select "#{cat_2.name}", from: "reg_cat_sel"
+      select "#{brand_cat.name}", from: 'brand_cat_sel'
       select "#{special_cat.name}", from: 'spc_cat_sel'
       click_on('Create Product')
 
       expect(page).to have_content("#{cat_1.name}")
       expect(page).to have_content("#{cat_2.name}")
+      expect(page).to have_content("#{brand_cat.name}")
       expect(page).to have_content("#{special_cat.name}")
     end
 

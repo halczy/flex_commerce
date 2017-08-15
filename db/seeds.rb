@@ -32,6 +32,14 @@ end
 puts "USER: #{Customer.count} customer created"
 
 # CATEGORIES
+10.times do
+  Category.create(name: Faker::Company.name,
+                  display_order: 0,
+                  flavor: 1,
+                  hide: false)
+end
+puts "CATEGORY: #{Category.brands.count} brand categories created."
+
 Category.create(name: 'Feature Products',
                 display_order: 0,
                 flavor: 2,
@@ -43,7 +51,7 @@ puts "CATEGORY: #{Category.special.count} special categories created."
                                 display_order: n,
                                 flavor: 0,
                                 hide: false)
-  3.times do |n|
+  3.times do
     Category.create(name: Faker::Space.star,
                     display_order: n,
                     flavor: 0,
@@ -78,18 +86,24 @@ puts "PRODUCT: #{Product.count} products created."
 end
 puts "Categorization: #{Categorization.count} product-category relationships created."
 
+10.times do
+  product = Product.all.sample
+  product.categorizations.create(category: Category.brands.sample)
+end
+puts "Categorization: #{Categorization.count} product-brand relationships created."
+
 # IMAGES
 images = ['img_1.jpeg', 'img_2.jpeg', 'img_3.jpeg', 'img_4.jpeg']
 Category.special.first.products.each do |product|
   5.times do |n|
-    image = Image.create(title: "Seed file #{n}",
-                         imageable_type: 'Product',
-                         imageable_id: product.id,
-                         in_use: true,
-                         source_channel: 0,
-                         image: Rack::Test::UploadedFile.new(File.join(
-                                  Rails.root, 'spec', 'support', 'files',
-                                  images.sample), 'image/jpeg'))
+    Image.create(title: "Seed file #{n}",
+                 imageable_type: 'Product',
+                 imageable_id: product.id,
+                 in_use: true,
+                 source_channel: 0,
+                 image: Rack::Test::UploadedFile.new(File.join(
+                          Rails.root, 'spec', 'support', 'files',
+                          images.sample), 'image/jpeg'))
   end
 end
 puts "IMAGE: #{Image.count} images created."
