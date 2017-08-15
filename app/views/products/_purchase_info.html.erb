@@ -3,13 +3,13 @@
 <hr>
 <%= @product.introduction.html_safe %>
 <hr>
-<p>Brand: </p>
+<p>Brand: <%= @product.categories.brands.first.try(:name) %></p>
 <p>SKU: <%= @product.sku %></p>
 <p>Availability: In Stock</p>
 <hr>
 <p>
   Market Price:
-  <%= humanized_money_with_symbol(@product.price_market) %>
+  <s><%= humanized_money_with_symbol(@product.price_market) %></s>
 </p>
 <p class="font-weight-bold">
   Member Price:
@@ -17,7 +17,6 @@
 </p>
 
 <form class="form-inline">
-
   <div class="input-group mr-3" style="width: 8rem;">
     <span class="input-group-btn">
       <button class="btn btn-secondary" type="button">-</button>

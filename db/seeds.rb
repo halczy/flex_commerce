@@ -30,6 +30,17 @@ Image.create(title: "Placeholder Image",
                       'no-image-slide.png'), 'image/png'))
 puts "IMAGE: #{Image.count} placeholder image created"
 
+# CATEGORY - SPECIAL
+Category.create(name: 'Feature Products',
+                display_order: 0,
+                flavor: 2,
+                hide: false)
+puts "CATEGORY: #{Category.special.count} special categories created."
+
+# Production Essential
+################################################################################
+# Development
+
 50.times do |n|
   Customer.create(name: Faker::Name.name,
                   email: "customer_#{n}@example.com",
@@ -47,12 +58,6 @@ puts "USER: #{Customer.count} customer created"
                   hide: false)
 end
 puts "CATEGORY: #{Category.brands.count} brand categories created."
-
-Category.create(name: 'Feature Products',
-                display_order: 0,
-                flavor: 2,
-                hide: false)
-puts "CATEGORY: #{Category.special.count} special categories created."
 
 5.times do |n|
   current_cat = Category.create(name: Faker::Space.galaxy,
@@ -94,7 +99,7 @@ puts "PRODUCT: #{Product.count} products created."
 end
 puts "Categorization: #{Categorization.count} product-category relationships created."
 
-10.times do
+20.times do
   product = Product.all.sample
   product.categorizations.create(category: Category.brands.sample)
 end
