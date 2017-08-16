@@ -29,13 +29,9 @@ class Category < ApplicationRecord
   def refine
     refined_categories = []
     return refined_categories if products.empty?
-    if regular?
-      products.each do |product|
-        refined_categories << product.categories.select { |category| category.brand? }
-      end
-    elsif brand?
-      products.each do |product|
-        refined_categories << product.categories.select { |category| category.regular? }
+    products.each do |product|
+      refined_categories << product.categories.select do |category|
+        regular? ? category.brand? : category.regular?
       end
     end
     refined_categories.flatten.uniq
