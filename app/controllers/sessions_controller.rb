@@ -27,9 +27,9 @@ class SessionsController < ApplicationController
 
     def redirect_by_class(user)
       if user.customer?
-        redirect_to customer_path(user)
+        redirect_back_or(customer_path(user))
       elsif user.admin?
-        redirect_to admin_dashboard_index_path
+        redirect_back_or(admin_dashboard_index_path)
       end
     end
 end

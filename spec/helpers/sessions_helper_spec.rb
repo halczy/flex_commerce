@@ -75,5 +75,13 @@ RSpec.describe SessionsHelper, type: :helper do
       expect(helper.signed_in?).to be_falsy
     end
   end
+  
+  describe '#store_location' do
+    # See requests/friendly_forwarding_spec
+  end
+  
+  describe '#redirect_back_or' do
+    # See requests/friendly_forwarding_spec
+  end
 
 end

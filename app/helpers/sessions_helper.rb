@@ -35,7 +35,12 @@ module SessionsHelper
     clear_session_and_cookies
     @current_user = nil
   end
-
+  
+  def store_location
+    session[:forwarding_url] = request.url if request.get?
+  end
+  
+  
   private
 
     def find_user(session_user_id)

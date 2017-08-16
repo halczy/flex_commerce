@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'sign in as customer' do
+  
   let(:customer) { FactoryGirl.create(:customer) }
 
   before do
@@ -31,8 +32,18 @@ describe 'sign in as customer' do
 
     expect(page).to have_css('.alert.alert-warning')
   end
-
-  it 'redirects to previous page if sign in was prompted'
+  
+  # TODO Switch to a better requested address
+  it 'redirects to previous page if sign in was prompted' do
+    visit "/customers/#{customer.id}"
+    expect(page.current_path).to eq(signin_path)
+    
+    fill_in "session[ident]", with: customer.cell_number
+    fill_in "session[password]", with: customer.password
+    click_button 'Submit'
+    
+    expect(page.current_path).to eq(customer_path(customer))
+  end
 end
 
 describe 'sign in as admin' do
@@ -47,7 +58,15 @@ describe 'sign in as admin' do
     expect(page.current_path).to eq(admin_dashboard_index_path)
   end
 
-  it 'has link to admin dashboard from frontpage'
+  it 'has link to admin dashboard from frontpage' do
+    visit signin_path
+    fill_in "session[ident]", with: admin.email
+    fill_in "session[password]", with: admin.password
+    click_button 'Submit'
+    visit root_path
+    
+    expect(page).to have_content('Admin Dashboard')
+  end
 end
 
 describe 'sign out' do

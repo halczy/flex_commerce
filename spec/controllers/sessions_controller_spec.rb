@@ -15,15 +15,14 @@ RSpec.describe SessionsController, type: :controller do
     it 'allows sign in through email' do
       post :create, params: { session: { ident: user.email,
                                          password: 'example' } }
-
-      expect(response).to redirect_to(customer_path(user))
+    
       expect(session[:user_id]).to eq(user.id)
     end
 
     it 'allows sign in through cell number' do
       post :create, params: { session: { ident: user.cell_number,
                                          password: 'example' } }
-      expect(response).to redirect_to(customer_path(user))
+    
       expect(session[:user_id]).to eq(user.id)
     end
 
@@ -31,6 +30,7 @@ RSpec.describe SessionsController, type: :controller do
       post :create, params: { session: { ident: user.email,
                                          password: 'example',
                                          remember_me: '1' }}
+    
       expect(cookies.signed['user_id']).to eql(user.id)
       expect(cookies['remember_token']).not_to be_nil
     end
@@ -38,6 +38,7 @@ RSpec.describe SessionsController, type: :controller do
     it 'goes back to login form when invalid ident is provided' do
       post :create, params: { session: { ident: 'wrong ident',
                                          password: 'wrong pass' } }
+    
       expect(response).to render_template(:new)
       expect(flash[:warning]).to eq('Incorrect account / password combination.')
       expect(session[:user_id]).to be_nil
@@ -46,6 +47,7 @@ RSpec.describe SessionsController, type: :controller do
     it 'goes back to login form when incorrect password is provided' do
       post :create, params: { session: { ident: user.email,
                                          password: 'wrongpass' } }
+    
       expect(response).to render_template(:new)
       expect(flash[:warning]).to eq('Incorrect account / password combination.')
       expect(session[:user_id]).to be_nil
