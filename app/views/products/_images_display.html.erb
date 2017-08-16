@@ -1,9 +1,9 @@
 <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
-    <%= build_carousel_indicators(@images.count).html_safe %>
+    <%= build_carousel_indicators(images.count).html_safe %>
   </ol>
   <div class="carousel-inner">
-    <%= build_carousel_inner(@images).html_safe %>
+    <%= build_carousel_inner(images).html_safe %>
   </div>
   <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>

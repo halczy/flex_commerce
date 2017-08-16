@@ -10,10 +10,12 @@
       </h4>
       <div class="ml-1">
         <% @category.refine.each do |category| %>
-          <li>
-            <%= link_to category.name, category_path(category) %>
-            (<%= category.products.count %>) 
-          </li> 
+          <% cache category do %>
+            <li>
+              <%= link_to category.name, category_path(category) %>
+              (<%= category.products.count %>)
+            </li>
+          <% end %>
         <% end %>
       </div>
     </div>

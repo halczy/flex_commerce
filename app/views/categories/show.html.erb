@@ -1,20 +1,24 @@
-<%= provide :title, @category.name %>
-<%= render 'shared/header_breadcrumb', title: yield(:title) %>
+<% cache @category do %>
+  <%= provide :title, @category.name %>
+  <%= render 'shared/header_breadcrumb', title: yield(:title) %>
 
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-lg-3">
-      <%= render 'side' %>
-    </div>
-    <div class="col-lg-9">
-      <div class="row">
-        <% @products.each do |product| %>
-          <div class="col-sm-4 mb-3">
-            <%= render 'shared/product_card', product: product %>
-          </div>
-        <% end %>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-lg-3">
+        <%= render 'side' %>
+      </div>
+      <div class="col-lg-9">
+        <div class="row">
+          <% @products.each do |product| %>
+            <% cache product do %>
+              <div class="col-sm-4 mb-3">
+                <%= render 'shared/product_card', product: product %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
-  </div>
 
-</div>
+  </div>
+<% end %>

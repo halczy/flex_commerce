@@ -1,19 +1,21 @@
-<%= provide :title, 'Product Detail' %>
-<%= render 'shared/header_breadcrumb', title: yield(:title),
-            breadcrumb: build_product_breadcrumb(@product)%>
+<% cache @product do %>
+  <%= provide :title, 'Product Detail' %>
+  <%= render 'shared/header_breadcrumb', title: yield(:title),
+              breadcrumb: build_product_breadcrumb(@product)%>
 
-<div class="container mt-3">
-  <div class="row">
-    <div class="col-6">
-      <%= render 'images_display' %>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-6">
+        <%= render 'images_display', images: @images, cache: true %>
+      </div>
+      <div class="col-6">
+        <%= render 'purchase_info' %>
+      </div>
     </div>
-    <div class="col-6">
-      <%= render 'purchase_info' %>
+    <div class="row">
+      <div class="col-12">
+        <%= render 'descriptions' %>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12">
-      <%= render 'descriptions' %>
-    </div>
-  </div>
-</div>
+<% end %>
