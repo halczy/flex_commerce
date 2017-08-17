@@ -85,6 +85,10 @@ RSpec.describe Category, type: :model do
       it 'scopes special categories' do
         expect(Category.special).to eq([@special_cat])
       end
+
+      it 'scopes child categories' do
+        expect(Category.children).to eq([@child_cat_1, @child_cat_2])
+      end
     end
 
     context 'enum' do

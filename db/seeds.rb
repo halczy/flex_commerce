@@ -64,7 +64,7 @@ puts "CATEGORY: #{Category.brands.count} brand categories created."
                                 display_order: n,
                                 flavor: 0,
                                 hide: false)
-  3.times do
+  10.times do
     Category.create(name: Faker::Space.star,
                     display_order: n,
                     flavor: 0,
@@ -76,7 +76,7 @@ puts "CATEGORY: #{Category.top_level.count} top level categories created"
 puts "CATEGORY: #{Category.count} total categories created."
 
 # PRODUCTS
-100.times do |n|
+500.times do |n|
   Product.create(name: Faker::Commerce.product_name,
                  tag_line: Faker::Coffee.origin,
                  sku: Faker::Number.unique.number(10),
@@ -97,13 +97,19 @@ puts "PRODUCT: #{Product.count} products created."
   product = Product.all.sample
   product.categorizations.create(category: Category.special.first)
 end
-puts "Categorization: #{Categorization.count} product-category relationships created."
+puts "Categorization: #{Categorization.count} product-feature category relationships created."
 
-20.times do
+100.times do
   product = Product.all.sample
   product.categorizations.create(category: Category.brands.sample)
 end
 puts "Categorization: #{Categorization.count} product-brand relationships created."
+
+100.times do
+  product = Product.all.sample
+  product.categorizations.create(category: Category.children.sample)
+end
+puts "Categorization: #{Categorization.count} product-category relationships created."
 
 # IMAGES
 images = ['img_1.jpeg', 'img_2.jpeg', 'img_3.jpeg', 'img_4.jpeg']

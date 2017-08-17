@@ -16,6 +16,7 @@ class Category < ApplicationRecord
   scope :special,   -> { where("flavor >= ?", 2) }
   scope :top_level, -> { where(parent: nil, hide: false, flavor: 0) }
   scope :no_parent, -> { where(parent: nil, flavor: 0) }
+  scope :children,  -> { where(flavor: 0).where.not(parent: nil) }
   enum flavor: { regular: 0, brand: 1, feature: 2 }
 
   def unassociate_children
