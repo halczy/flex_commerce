@@ -3,7 +3,7 @@ class Image < ApplicationRecord
   include ImageUploader::Attachment.new(:image)
 
   # Relationships
-  belongs_to :imageable, polymorphic: true, optional: true
+  belongs_to :imageable, polymorphic: true, optional: true, touch: true
 
   # Validations
   validates :image, presence: true
