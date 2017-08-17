@@ -3,7 +3,7 @@ class Admin::CategoriesController < Admin::AdminController
   before_action :set_category, except: [:index, :new, :create]
 
   def index
-    @top_level = Category.no_parent.order(:display_order)
+    @top_level = Category.no_parent.order(display_order: :asc)
     @brands    = Category.brands
     @special   = Category.special
   end

@@ -1,4 +1,4 @@
-<% child_categories.each do |cat| %>
+<% child_categories.order(display_order: :asc).each do |cat| %>
   <tr>
     <%= render 'order_control', cat: cat %>
     <td>

@@ -1,7 +1,8 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th class="w-25">Name</th>
+      <th colspan="3" class="text-center">Order</th>
+      <th class="w-50">Name</th>
       <th>Type</th>
       <th>Products</th>
       <th></th>
@@ -9,8 +10,9 @@
     </tr>
   </thead>
   <tbody>
-    <% categories.each do |cat| %>
+    <% categories.order(display_order: :asc).each do |cat| %>
       <tr>
+        <%= render 'order_control', cat: cat %>
         <td><%= link_to cat.name, admin_category_path(cat) %></td>
         <td><%= cat.flavor.capitalize %></td>
         <td><%= cat.products.count %></td>
