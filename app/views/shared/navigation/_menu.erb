@@ -4,15 +4,15 @@
     Brands
   </a>
   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-    <% Category.brands.each do |menu_item| %>
-      <% cache menu_item do %>
-        <%= link_to menu_item.name, category_path(menu_item), class: 'dropdown-item' %>
+    <% Category.brands.order(display_order: :asc).each do |brand| %>
+      <% cache brand do %>
+        <%= link_to brand.name, category_path(brand), class: 'dropdown-item' %>
       <% end %>
     <% end %>
   </div>
 </li>
 
-<% Category.top_level.each do |menu_item| %>
+<% Category.top_level.order(display_order: :asc).each do |menu_item| %>
   <% cache menu_item do %>
     <li class="nav-item">
       <% if menu_item.child_categories.empty? %>
@@ -24,8 +24,11 @@
             <%= menu_item.name %>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <% menu_item.child_categories.each do |menu_child| %>
-              <%= link_to menu_child.name, category_path(menu_child), class: 'dropdown-item' %>
+            <% menu_item.child_categories.order(display_order: :asc).each do |menu_child| %>
+              <% cache menu_child do %>
+                <%= link_to menu_child.name, category_path(menu_child),
+                                             class: 'dropdown-item' %>
+              <% end %>
             <% end %>
           </div>
         </li>
