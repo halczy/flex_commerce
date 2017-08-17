@@ -16,10 +16,9 @@ RSpec.describe Admin::ProductsController, type: :controller do
     end
 
     it 'products a list of products' do
-      product_1 = product
-      product_2 = product
+      5.times { FactoryGirl.create(:product) }
       get :index
-      expect(assigns(:products).count).to be_present
+      expect(assigns(:products).count).to eq(5)
     end
 
     context 'access control' do
@@ -139,7 +138,7 @@ RSpec.describe Admin::ProductsController, type: :controller do
       expect(assigns(:search_result).count).to eq(1)
     end
 
-    it 'responses successfully with empty serach result' do
+    it 'responses successfully with empty search result' do
       get :search, params: { search_term: 'this_product_should_not_exist'}
       expect(assigns(:search_result).count).to eq(0)
     end
