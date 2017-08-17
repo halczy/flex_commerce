@@ -22,4 +22,48 @@ RSpec.describe CategoriesController, type: :controller do
       expect(assigns(:products)).to match_array([product])
     end
   end
+  
+  describe 'GET search' do
+    before do
+      @product_1 = FactoryGirl.create(:product, name: 'Red Sun')
+      @product_2 = FactoryGirl.create(:product, name: 'Blue Sun')
+      @product_3 = FactoryGirl.create(:product, name: 'Green Sun')
+      @category = FactoryGirl.create(:category)
+      Categorization.create(category: @category, product: @product_1)
+      Categorization.create(category: @category, product: @product_2)
+    end
+    
+    context 'full products quick search' do    
+      it "responses with search result" do
+        get :search, params: { search_term: 'sun' }
+        expect(response).to render_template(:search)
+        expect(assigns(:search_result)).to match_array([@product_1, @product_2, @product_3])
+      end
+      
+      it "responses with empty search result " do
+        get :search, params: { search_term: 'ABCDEFGAOOEKKCIE' }
+        expect(response).to render_template(:search)
+        expect(assigns(:search_result)).to match_array([])
+      end
+      
+      it "renders flash message when no search term is provided" do
+        get :search, params: { }
+        expect(response).to render_template(:search)
+        expect(flash[:warning]).to be_present
+      end
+    end
+    
+    context 'current category product search' do
+      it "responses with search result" do
+        
+      end
+      
+      it "responses with empty search result " do
+        
+      end
+      
+      it "renders flash message when no search term is provided" do
+      end
+    end
+  end
 end

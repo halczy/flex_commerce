@@ -1,0 +1,4 @@
+<% @search_result.each |p| %>
+  <%= p.inspect %>
+<% end %>
+<%= render 'shared/paginate', objects: @search_result if @search_result.present? %>

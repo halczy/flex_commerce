@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   resources :customers,  only: [:new, :create, :show]
   resources :sessions,   only: [:new, :create, :destroy]
   resources :images,     only: [:show]
-  resources :categories, only: [:show]
+  resources :categories, only: [:show] do
+    collection do
+      get :search
+    end
+  end
   resources :products,   only: [:show]
 
   namespace :admin do
