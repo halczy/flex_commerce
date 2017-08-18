@@ -1,4 +1,4 @@
-<% cache @category do %>
+<% cache [@category, @products] do %>
   <%= provide :title, @category.name %>
   <%= render 'shared/header_breadcrumb', title: yield(:title) %>
 
