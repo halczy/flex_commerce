@@ -56,4 +56,34 @@ describe 'category_grid' do
       expect(page).to have_content("#{@cat.name} (#{@cat.products.count}")
     end
   end
+  
+  context 'pagination' do
+    before do
+      20.times do 
+        product = FactoryGirl.create(:product)
+        Categorization.create(category: @cat, product: product)
+      end
+    end
+    
+    it 'returns page selector' do
+      visit category_path(@cat)
+      
+      expect(page).to have_content('Next')
+      expect(page).to have_content('Last')
+    end
+    
+    it "returns only six products per page" do
+      visit category_path(@cat)
+      
+      expect(page).to have_content('Add to Cart', count: 6)
+    end
+    
+    it "returns only X products in the last page" do
+      visit category_path(@cat)
+      click_on('Last')
+      
+      expect(page).to have_content('Add to Cart', count: 5)
+    end
+    
+  end
 end
