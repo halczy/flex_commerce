@@ -1,12 +1,21 @@
 <div class="mt-5">
   <footer class="text-muted">
     <div class="container">
-      <p class="float-left">
-        Copyright © <%= Time.now.year %> Flex Commerce
-      </p>
-      <p class="float-right">
-        <a href="#">Back to top</a>
-      </p>
+      <div class="row">
+        <div class="col-12">
+          <p class="float-left">
+            Copyright © <%= Time.now.year %> Flex Commerce
+          </p>
+          <p class="float-right">
+            <a href="#">Back to top</a>
+          </p>
+        </div>
+        <div class="col-12">
+          <p class="text-muted float-right" style="font-size: 0.8rem;">
+            <%= sprintf('%.3f', (Time.zone.now - @init_time) * 1000) %> ms
+          </p>
+        </div>
+      </div>
     </div>
   </footer>
 </div>

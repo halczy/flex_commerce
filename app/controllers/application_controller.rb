@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  before_action :page_speed
+  
   def authenticate_user
     unless helpers.signed_in?
       flash[:warning] = "You must log in to perform this action."
@@ -21,4 +23,9 @@ class ApplicationController < ActionController::Base
     redirect_to(session[:forwarding_url] || default)
     session.delete(:forwarding_url)
   end
+  
+  def page_speed
+    @init_time = Time.zone.now
+  end
+  
 end
