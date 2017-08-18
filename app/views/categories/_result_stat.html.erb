@@ -1,0 +1,14 @@
+<div class="card mt-3">
+  <div class="card-body">
+    <h4 class="card-title">Result</h4>
+    <% if @search_result %>
+      <p class="card-text">
+        <%= @search_result.total_count %> 
+        <%= "Product".pluralize(@search_result.count) %> Found
+      </p>
+    <% else %>
+      <p class="card-text">0 Products Found</p>
+    <% end %>
+  </div>
+</div>
+
