@@ -9,11 +9,12 @@ class CategoriesController < ApplicationController
     search_term = params[:search_term] || ""
     unless search_term.empty?
       search = ProductSearchService.new(search_term)
-      if params[:category_id]
-
+      if params[:current_category] == 1
+        @search_run = search.search_in_category(params[:category_id])
+        @search_result = @search_run.page(params[:page]).per(6)
       else
         @search_run = search.quick_search
-        @search_result = @search_run.page params[:page]
+        @search_result = @search_run.page(params[:page]).per(6)
       end
     else
       flash.now[:warning] = "Please enter one or more search terms."

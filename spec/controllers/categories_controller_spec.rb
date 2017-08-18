@@ -37,7 +37,8 @@ RSpec.describe CategoriesController, type: :controller do
       it "responses with search result" do
         get :search, params: { search_term: 'sun' }
         expect(response).to render_template(:search)
-        expect(assigns(:search_result)).to match_array([@product_1, @product_2, @product_3])
+        expect(assigns(:search_result)).to match_array([@product_1, @product_2, 
+                                                        @product_3])
       end
       
       it "responses with empty search result " do
@@ -55,14 +56,22 @@ RSpec.describe CategoriesController, type: :controller do
     
     context 'current category product search' do
       it "responses with search result" do
-        
+        get :search, params: { search_term: 'Red', current_category: 1, 
+                               category_id: @category.id }
+        expect(response).to render_template(:search)
+        expect(assigns(:search_result)).to match_array([@product_1])
       end
       
       it "responses with empty search result " do
-        
+        get :search, params: { search_term: 'Yellow', current_category: 1, 
+                               category_id: @category.id }
+        expect(assigns(:search_result)).to match_array([]) 
       end
       
       it "renders flash message when no search term is provided" do
+        get :search, params: { }
+        expect(response).to render_template(:search)
+        expect(flash[:warning]).to be_present
       end
     end
   end

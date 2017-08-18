@@ -1,17 +1,29 @@
 <div class="card">
   <div class="card-body">
     <h4 class="card-title">Search</h4>
+      <%= form_with(url: search_categories_path, 
+                    local: true, method: :get) do |form| %>
+        
+        <div class="input-group">
+          <%= form.search_field :search_term, value: "#{params[:search_term]}",
+                                              class: 'form-control' %>
+          <span class="input-group-btn">
+            <%= form.submit 'Go', class: 'btn btn-secondary' %>
+          </span>
+        </div>
+        
+        <% if @category %>
+          <div class="form-check mt-2 mb-0">
+            <label class="form-check-label">
+              <%= form.hidden_field :category_id, value: @category.id %>
+              <%= form.check_box :current_category, class: 'form-check-input' %>
+              In current category
+            </label>
+          </div>
+        <% end %>
 
-
-
-
+      <% end %>
   </div>
 </div>
 
 
-    <div class="input-group">
-      <input type="text" class="form-control">
-      <span class="input-group-btn">
-        <button class="btn btn-secondary" type="button">Go</button>
-      </span>
-    </div>

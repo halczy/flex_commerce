@@ -1,4 +1,28 @@
-<% @search_result.each |p| %>
-  <%= p.inspect %>
-<% end %>
-<%= render 'shared/paginate', objects: @search_result if @search_result.present? %>
+<%= provide :title, 'Search Result' %>
+<%= render 'shared/header_breadcrumb', title: yield(:title) %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-3">
+      <%= render 'search_card' %>
+    </div>
+    <div class="col-lg-9">
+      <% if @search_result.present? %>
+        <div class="row">
+          <% @search_result.each do |product| %>
+            <div class="col-sm-4 mb-3">
+              <%= render 'shared/product_card', product: product %>
+            </div>
+          <% end %>
+          <%= render 'shared/paginate', objects: @search_result if @search_result.present? %>
+        </div>
+      <% else %>
+        <div class="col-12">
+          <div class="jumbotron">
+            <h5 class="text-center">No Matching Product Found</h5>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
