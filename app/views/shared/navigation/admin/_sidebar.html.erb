@@ -10,16 +10,26 @@
         <em class="fa fa-dashboard"></em> Dashboard
       <% end %>
     </li>
+  </ul>
+  <ul class="nav nav-pills flex-column sidebar-nav">
+    <li class="nav-item">
+      <%= link_to admin_products_path,
+                  class: "nav-link #{active_controller?('products')}" do %>
+       <em class="fa fa-industry"></em> Products</a>
+      <% end %>
+    </li>
+    <li class="nav-item">
+      <%= link_to '',
+                  class: "nav-link #{active_controller?('')}" do %>
+       <em class="fa fa-archive"></em> Inventory</a>
+      <% end %>
+    </li>
+  </ul>
+  <ul class="nav nav-pills flex-column sidebar-nav">
     <li class="nav-item">
       <%= link_to admin_categories_path,
                   class: "nav-link #{active_controller?('categories')}" do %>
        <em class="fa fa-list-ul"></em> Categories</a>
-      <% end %>
-    </li>
-    <li class="nav-item">
-      <%= link_to admin_products_path,
-                  class: "nav-link #{active_controller?('products')}" do %>
-       <em class="fa fa-archive"></em> Products</a>
       <% end %>
     </li>
     <li class="nav-item">

@@ -6,5 +6,4 @@ class Inventory < ApplicationRecord
   # Scope | Enum
   enum status: { unsold: 0 }
 
-
 end
