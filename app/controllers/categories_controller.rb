@@ -2,9 +2,17 @@ class CategoriesController < ApplicationController
 
   def show
     @category = Category.find(params[:id])
-    @products = @category.products.page(params[:page]).per(6)
+    available_products = @category.products
+
+    if params[:price_asc]
+      available_products = available_products.order(price_member_cents: :asc)
+    elsif params[:price_desc]
+      available_products = available_products.order(price_member_cents: :desc)
+    end
+
+    @products = available_products.page(params[:page]).per(6)
   end
-  
+
   def search
     search_term = params[:search_term] || ""
     unless search_term.empty?
