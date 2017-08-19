@@ -33,13 +33,13 @@ RSpec.describe CategoriesController, type: :controller do
       end
 
       it 'sort prices from low to high' do
-        get :show, params: { id: category.id, price_asc: '' }
+        get :show, params: { id: category.id, price_sort: 'asc' }
         expect(assigns(:products).first).to eq(@p_cheap)
         expect(assigns(:products).last).to eq(@p_expensive)
       end
 
       it 'sort products prices form high to low' do
-        get :show, params: { id: category.id, price_desc: '' }
+        get :show, params: { id: category.id, price_sort: 'desc' }
         expect(assigns(:products).first).to eq(@p_expensive)
         expect(assigns(:products).last).to eq(@p_cheap)
       end

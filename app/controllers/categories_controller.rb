@@ -4,9 +4,9 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
     available_products = @category.products
 
-    if params[:price_asc]
+    if params[:price_sort] && params[:price_sort] == 'asc'
       available_products = available_products.order(price_member_cents: :asc)
-    elsif params[:price_desc]
+    elsif params[:price_sort] && params[:price_sort] == 'desc'
       available_products = available_products.order(price_member_cents: :desc)
     end
 

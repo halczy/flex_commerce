@@ -31,7 +31,6 @@ group :development, :test do
   gem 'faker'
   gem 'pry-rails'
   gem 'pry-rescue'
-  gem 'capybara'
 end
 
 group :development do
@@ -45,6 +44,9 @@ group :development do
 end
 
 group :test do
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem "chromedriver-helper"
   gem 'database_cleaner'
   gem 'rails-controller-testing'
   gem 'shrine-memory'

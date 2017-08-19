@@ -11,9 +11,9 @@ describe 'category_grid' do
 
     @cat = FactoryGirl.create(:category)
     @brand = FactoryGirl.create(:brand)
-    @product_1 = FactoryGirl.create(:product)
-    @product_2 = FactoryGirl.create(:product)
-    @product_3 = FactoryGirl.create(:product)
+    @product_1 = FactoryGirl.create(:product, price_member: 900.01)
+    @product_2 = FactoryGirl.create(:product, price_member: 100.02)
+    @product_3 = FactoryGirl.create(:product, price_member: 500.03)
     Categorization.create(category: @cat, product: @product_1)
     Categorization.create(category: @cat, product: @product_2)
     Categorization.create(category: @cat, product: @product_3)
@@ -44,6 +44,26 @@ describe 'category_grid' do
     end
   end
 
+  context 'side card - search'  do
+    # Set up as standalone spec in feature/search_products_spec.rb
+  end
+
+  context 'side card - sort', js: true do
+    it 'sorts product prices from low to high' do
+      visit(category_path(@cat))
+      select 'Price From Low to High'
+      expect(page).not_to have_content("Add to Cart #{@product_2.name}")
+      expect(page).to have_content("Add to Cart #{@product_1.name}")
+    end
+
+    it 'sorts product prices from high to low' do
+      visit(category_path(@cat))
+      select 'Price From High to Low'
+      expect(page).not_to have_content("Add to Cart #{@product_1.name}")
+      expect(page).to have_content("Add to Cart #{@product_3.name}")
+    end
+  end
+
   context 'side card - refine' do
     it 'displays brands with product count in regular category' do
       visit(category_path(@cat))
@@ -56,34 +76,34 @@ describe 'category_grid' do
       expect(page).to have_content("#{@cat.name} (#{@cat.products.count}")
     end
   end
-  
+
   context 'pagination' do
     before do
-      20.times do 
+      20.times do
         product = FactoryGirl.create(:product)
         Categorization.create(category: @cat, product: product)
       end
     end
-    
+
     it 'returns page selector' do
       visit category_path(@cat)
-      
+
       expect(page).to have_content('Next')
       expect(page).to have_content('Last')
     end
-    
+
     it "returns only six products per page" do
       visit category_path(@cat)
-      
+
       expect(page).to have_content('Add to Cart', count: 6)
     end
-    
+
     it "returns only X products in the last page" do
       visit category_path(@cat)
       click_on('Last')
-      
+
       expect(page).to have_content('Add to Cart', count: 5)
     end
-    
+
   end
 end
