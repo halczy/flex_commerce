@@ -1,0 +1,26 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>PID</th>
+      <th class="w-25">Product Name</th>
+      <th>Total Inventories</th>
+      <th>Unsold</th>
+      <th>Sold</th>
+      <th>Returned</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% products.each do |product| %>
+    <tr>
+      <td><%= product.id %></td>
+      <td><%= link_to product.name, '#' %></td>
+      <td>#</td>
+      <td>#</td>
+      <td>#</td>
+      <td>#</td>
+      <%= render 'action_control', product: product %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

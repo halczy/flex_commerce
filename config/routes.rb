@@ -16,17 +16,18 @@ Rails.application.routes.draw do
   resources :products,   only: [:show]
 
   namespace :admin do
-    resources :dashboard, only: [:index]
-    resources :categories do
+    resources :dashboard, only: [:index]                          # Dashboard
+    resources :categories do                                      # Categories
       member do
         patch 'move'
       end
     end
-    resources :products do
+    resources :products do                                        # Products
       collection do
         get 'search'
       end
     end
-    resources :images, only: [:index, :create, :show, :destroy]
+    resources :images, only: [:index, :create, :show, :destroy]   # Images
+    get 'inventories', to: 'inventories#index'                    # Inventories
   end
 end
