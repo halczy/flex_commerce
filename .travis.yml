@@ -1,18 +1,21 @@
 sudo: false
 language: ruby
-cache:
-  bundler: true
-  yarn: true
-  directories:
-  - node_modules
 rvm:
   - 2.4.1
   - ruby-head
 matrix:
   allow_failures:
     - rvm: ruby-head
-services:
-  - postgresql
+cache:
+  bundler: true
+  yarn: true
+  directories:
+  - node_modules
+before_install:
+  - gem update bundler
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.27.5
+  - export PATH="$HOME/.yarn/bin:$PATH"
+  - yarn install
 addons:
   apt:
     sources:
@@ -24,11 +27,8 @@ addons:
       - libmagickcore-dev
       - libmagickwand-dev
       - graphicsmagick
+services:
+  - postgresql
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
-before_install:
-  - gem update bundler
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.27.5
-  - export PATH="$HOME/.yarn/bin:$PATH"
-  - yarn install
