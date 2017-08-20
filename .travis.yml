@@ -11,17 +11,12 @@ cache:
   yarn: true
   directories:
   - node_modules
-before_install:
-  - gem update bundler
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.27.5
-  - export PATH="$HOME/.yarn/bin:$PATH"
-  - yarn install
 addons:
+  postgresql: "9.6"
   apt:
     sources:
       - google-chrome
     packages:
-      - postgresql
       - google-chrome-stable
       - imagemagick
       - libmagickcore-dev
@@ -32,3 +27,10 @@ services:
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
+before_install:
+  - gem update bundler
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 0.27.5
+  - export PATH="$HOME/.yarn/bin:$PATH"
+  - yarn install
+  - rails db:create
+  - rails db:migrate
