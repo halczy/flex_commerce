@@ -76,13 +76,8 @@ class Product < ApplicationRecord
     end
 
     def remove_inventory
-      if inventories.unsold.present?
-        inventories.unsold.first.destroy
-      elsif inventories.destroyable.present?
-        inventories.destroyable.order(status: :asc).first.destroy
-      else
-        false
-      end
+      remove_queue = inventories.destroyable.try(:order, {status: :asc})
+      remove_queue.present? ? remove_queue.first.destroy : false
     end
 
 end
