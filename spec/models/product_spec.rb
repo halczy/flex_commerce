@@ -175,25 +175,82 @@ RSpec.describe Product, type: :model do
         end
 
         it 'removes destroyable inventory if no unsold inventory is available' do
-          cart_inv = FactoryGirl.create(:inventory, product: product, status: 1)
+          FactoryGirl.create(:inventory, product: product, status: 1)
           order_inv = FactoryGirl.create(:inventory, product: product, status: 2)
           product.send(:remove_inventory)
           expect(product.inventories).to match_array([order_inv])
+        end
+
+        it 'removes the most recently changed inventory first' do
+          inv_a = FactoryGirl.create(:inventory, product: product)
+          inv_b = FactoryGirl.create(:inventory, product: product,
+                                                 status: 2,
+                                                 created_at: 3.days.ago,
+                                                 updated_at: 2.days.ago)
+          inv_a.in_order!
+          product.send(:remove_inventory)
+          expect(product.inventories).to match_array([inv_b])
         end
 
         it 'does not remove undestroyable inventory' do
           FactoryGirl.create(:inventory, product: product, status: 3)
           FactoryGirl.create(:inventory, product: product, status: 4)
           FactoryGirl.create(:inventory, product: product, status: 5)
-          product.send(:remove_inventory)
+          expect(product.send(:remove_inventory)).to be_falsey
           expect(product.inventories.count).to eq(3)
         end
       end
 
       describe '#remove_inventories' do
-        it 'removes all destoryable inventories by default'
-        it 'removes specified inventories'
-        it 'returns false if requested exceeds destroyable'
+        it 'removes inventories' do
+          5.times { FactoryGirl.create(:inventory, product: product) }
+          product.remove_inventories(2)
+          expect(product.inventories.count).to eq(3)
+        end
+
+        it 'removes all unsold inventories by default' do
+          5.times { FactoryGirl.create(:inventory, product: product) }
+          product.remove_inventories
+          expect(product.inventories).to be_empty
+        end
+
+        it 'returns false if requested exceeds unsold inventories' do
+          5.times { FactoryGirl.create(:inventory, product: product) }
+          5.times { FactoryGirl.create(:inventory, product: product, status: 1) }
+          expect(product.remove_inventories(10)).to be_falsey
+          expect(product.inventories.count).to eq(10)
+        end
+      end
+
+      describe '#force_remove_inventories' do
+        it 'removes destroyable inventories' do
+          5.times { FactoryGirl.create(:inventory, product: product, status: 1) }
+          product.force_remove_inventories(3)
+          expect(product.inventories.count).to eq(2)
+        end
+
+        it 'removes all destroyable inventories by default' do
+          2.times { FactoryGirl.create(:inventory, product: product, status: 1) }
+          3.times { FactoryGirl.create(:inventory, product: product, status: 2) }
+          product.force_remove_inventories
+          expect(product.inventories).to be_empty
+        end
+
+        it 'prioritize remove by status' do
+          2.times { FactoryGirl.create(:inventory, product: product, status: 0) }
+          2.times { FactoryGirl.create(:inventory, product: product, status: 1) }
+          2.times { FactoryGirl.create(:inventory, product: product, status: 2) }
+          product.force_remove_inventories(5)
+          expect(product.inventories.in_order.count).to eq(1)
+        end
+
+        it 'return false when no destroyable is available' do
+          FactoryGirl.create(:inventory, product: product, status: 3)
+          FactoryGirl.create(:inventory, product: product, status: 4)
+          FactoryGirl.create(:inventory, product: product, status: 5)
+          expect(product.force_remove_inventories(1)).to be_falsey
+          expect(product.inventories.count).to eq(3)
+        end
       end
     end
   end

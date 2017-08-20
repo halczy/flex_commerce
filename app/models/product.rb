@@ -40,15 +40,20 @@ class Product < ApplicationRecord
     end
   end
 
-  def add_inventories(amount=1)
+  def add_inventories(amount = 1)
     amount.to_i.times { add_inventory }
   end
 
-  def remove_inventories(amount="all")
-
+  def remove_inventories(amount = nil)
+    amount = inventories.unsold.count if amount.nil?
+    return false if amount.to_i > inventories.unsold.count
+    amount.to_i.times { remove_inventory }
   end
 
-  def force_remove_inventories(amount="all")
+  def force_remove_inventories(amount = nil)
+    amount = inventories.destroyable.count if amount.nil?
+    return false if amount.to_i > inventories.destroyable.count
+    amount.to_i.times { remove_inventory }
 
   end
 
@@ -76,7 +81,8 @@ class Product < ApplicationRecord
     end
 
     def remove_inventory
-      remove_queue = inventories.destroyable.try(:order, {status: :asc})
+      remove_queue = inventories.destroyable.try(:order, {status: :asc}).
+                                             try(:order, {updated_at: :desc})
       remove_queue.present? ? remove_queue.first.destroy : false
     end
 
