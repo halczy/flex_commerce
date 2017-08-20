@@ -3,6 +3,7 @@ class Product < ApplicationRecord
   has_many :categorizations, dependent: :destroy
   has_many :categories, through: :categorizations
   has_many :images, as: :imageable, dependent: :destroy
+  has_many :inventories, dependent: :destroy
 
   # Nested form
   accepts_nested_attributes_for :images, allow_destroy: true, reject_if: :reject_images
