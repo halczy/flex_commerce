@@ -1,7 +1,10 @@
 sudo: false
 language: ruby
 cache:
-  - bundler
+  bundler: true
+  yarn: true
+  directories:
+  - node_modules
 rvm:
   - 2.4.1
   - ruby-head
