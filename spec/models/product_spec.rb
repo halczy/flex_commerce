@@ -138,24 +138,62 @@ RSpec.describe Product, type: :model do
   end
 
   describe 'inventory management' do
-    context '#add_inventory' do
-      it 'creates one inventory for product' do
-        product.send(:add_inventory)
-        inventory = product.inventories.first
-        expect(product.inventories.count).to eq(1)
-        expect(inventory).to be_an_instance_of(Inventory)
+    context 'add' do
+      describe '#add_inventory' do
+        it 'creates one inventory for product' do
+          product.send(:add_inventory)
+          inventory = product.inventories.first
+          expect(product.inventories.count).to eq(1)
+          expect(inventory).to be_an_instance_of(Inventory)
+        end
+      end
+
+      describe '#add_inventories' do
+        it 'creates multiple inventories for product' do
+          product.add_inventories(10)
+          expect(product.inventories.count).to eq(10)
+        end
+
+        it 'creates as unsold inventories by default' do
+          product.add_inventories(3)
+          expect(product.inventories.available.count).to eq(3)
+        end
+
+        it 'creates one inventory if no arugment is given' do
+          product.add_inventories
+          expect(product.inventories.unsold.count).to eq(1)
+        end
       end
     end
 
-    context '#add_inventories' do
-      it 'creates multiple inventories for product' do
-        product.add_inventories(10)
-        expect(product.inventories.count).to eq(10)
+    context 'remove' do
+      describe '#remove_inventory' do
+        it 'removes unsold inventory' do
+          product.add_inventories(2)
+          product.send(:remove_inventory)
+          expect(product.inventories.count).to eq(1)
+        end
+
+        it 'removes destroyable inventory if no unsold inventory is available' do
+          cart_inv = FactoryGirl.create(:inventory, product: product, status: 1)
+          order_inv = FactoryGirl.create(:inventory, product: product, status: 2)
+          product.send(:remove_inventory)
+          expect(product.inventories).to match_array([order_inv])
+        end
+
+        it 'does not remove undestroyable inventory' do
+          FactoryGirl.create(:inventory, product: product, status: 3)
+          FactoryGirl.create(:inventory, product: product, status: 4)
+          FactoryGirl.create(:inventory, product: product, status: 5)
+          product.send(:remove_inventory)
+          expect(product.inventories.count).to eq(3)
+        end
       end
 
-      it 'creates as unsold inventories by default' do
-        product.add_inventories(3)
-        expect(product.inventories.available.count).to eq(3)
+      describe '#remove_inventories' do
+        it 'removes all destoryable inventories by default'
+        it 'removes specified inventories'
+        it 'returns false if requested exceeds destroyable'
       end
     end
   end

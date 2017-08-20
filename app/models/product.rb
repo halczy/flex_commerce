@@ -40,8 +40,16 @@ class Product < ApplicationRecord
     end
   end
 
-  def add_inventories(amount)
+  def add_inventories(amount=1)
     amount.to_i.times { add_inventory }
+  end
+
+  def remove_inventories(amount="all")
+
+  end
+
+  def force_remove_inventories(amount="all")
+
   end
 
   private
@@ -65,6 +73,16 @@ class Product < ApplicationRecord
 
     def add_inventory
       inventories.create(status: 0)
+    end
+
+    def remove_inventory
+      if inventories.unsold.present?
+        inventories.unsold.first.destroy
+      elsif inventories.destroyable.present?
+        inventories.destroyable.order(status: :asc).first.destroy
+      else
+        false
+      end
     end
 
 end
