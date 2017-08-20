@@ -40,6 +40,10 @@ class Product < ApplicationRecord
     end
   end
 
+  def add_inventories(amount)
+    amount.to_i.times { add_inventory }
+  end
+
   private
 
     def extract_images
@@ -57,6 +61,10 @@ class Product < ApplicationRecord
 
     def reject_images(attributes)
       attributes['id'].nil? && attributes['image'].blank?
+    end
+
+    def add_inventory
+      inventories.create(status: 0)
     end
 
 end

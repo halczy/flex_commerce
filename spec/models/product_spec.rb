@@ -137,4 +137,27 @@ RSpec.describe Product, type: :model do
     end
   end
 
+  describe 'inventory management' do
+    context '#add_inventory' do
+      it 'creates one inventory for product' do
+        product.send(:add_inventory)
+        inventory = product.inventories.first
+        expect(product.inventories.count).to eq(1)
+        expect(inventory).to be_an_instance_of(Inventory)
+      end
+    end
+
+    context '#add_inventories' do
+      it 'creates multiple inventories for product' do
+        product.add_inventories(10)
+        expect(product.inventories.count).to eq(10)
+      end
+
+      it 'creates as unsold inventories by default' do
+        product.add_inventories(3)
+        expect(product.inventories.available.count).to eq(3)
+      end
+    end
+  end
+
 end
