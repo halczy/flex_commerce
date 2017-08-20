@@ -27,5 +27,10 @@ module FlexCommerce
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Migration generator will use UUID as primary key
+    config.generators do |g|
+      g.orm :active_record, primary_key_type: :uuid
+    end
   end
 end

@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170819121006) do
+ActiveRecord::Schema.define(version: 60) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pgcrypto"
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -27,13 +28,13 @@ ActiveRecord::Schema.define(version: 20170819121006) do
   end
 
   create_table "categorizations", force: :cascade do |t|
-    t.bigint "product_id"
+    t.uuid "product_id"
     t.bigint "category_id"
     t.index ["category_id"], name: "index_categorizations_on_category_id"
     t.index ["product_id"], name: "index_categorizations_on_product_id"
   end
 
-  create_table "images", force: :cascade do |t|
+  create_table "images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "display_order", default: 0
     t.string "description"
     t.string "title"
@@ -41,15 +42,15 @@ ActiveRecord::Schema.define(version: 20170819121006) do
     t.integer "source_channel"
     t.text "image_data"
     t.string "imageable_type"
-    t.bigint "imageable_id"
+    t.uuid "imageable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
   end
 
-  create_table "inventories", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "product_id"
+  create_table "inventories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "product_id"
     t.integer "status"
     t.datetime "purchased_at"
     t.datetime "returned_at"
@@ -59,7 +60,7 @@ ActiveRecord::Schema.define(version: 20170819121006) do
     t.index ["user_id"], name: "index_inventories_on_user_id"
   end
 
-  create_table "products", force: :cascade do |t|
+  create_table "products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "tag_line"
     t.string "sku"
@@ -82,7 +83,7 @@ ActiveRecord::Schema.define(version: 20170819121006) do
     t.index ["sku"], name: "index_products_on_sku"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type"
     t.string "name"
     t.string "email"

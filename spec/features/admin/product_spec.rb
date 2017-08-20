@@ -50,7 +50,6 @@ describe 'Admin Dashboard - Product', type: :feature do
       cat_2 =       FactoryGirl.create(:category)
       brand_cat =   FactoryGirl.create(:brand)
       special_cat = FactoryGirl.create(:feature)
-      
 
       visit admin_products_path
       click_on('New Product')
@@ -148,7 +147,8 @@ describe 'Admin Dashboard - Product', type: :feature do
       click_on('Create Product')
 
       visit admin_products_path
-      click_on("edit_#{Product.last.id}")
+      product_e1 = Product.order(created_at: :desc).first
+      click_on("edit_#{product_e1.id}")
       fill_in "product[images_attributes][0][title]", with: "EDIT Image 1"
       click_on('Update Product')
 
