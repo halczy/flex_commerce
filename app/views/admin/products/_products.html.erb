@@ -1,7 +1,6 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>ID</th>
       <th class="w-25">Name</th>
       <th>SKU</th>
       <th>Member Price</th>
@@ -13,9 +12,6 @@
   <tbody>
     <% products.each do |product| %>
     <tr>
-      <td>
-        <%= link_to product.id, admin_product_path(product) %>
-      </td>
       <td>
         <%= link_to product.name, admin_product_path(product) %>
       </td>

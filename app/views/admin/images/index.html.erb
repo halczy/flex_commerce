@@ -6,7 +6,6 @@
     <table class="table table-hover table-responsive">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Title</th>
           <th>Type</th>
           <th>Image</th>
@@ -16,7 +15,6 @@
       <tbody>
         <% @images.each do |image| %>
           <tr>
-            <td><%= image.id %></td>
             <td><%= image.title %></td>
             <td><%= image.imageable_type.try(:capitalize) %></td>
             <td><%= image_tag image.image_url(:thumb), class: 'img-fluid' %></td>
