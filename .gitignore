@@ -21,6 +21,6 @@ yarn.lock
 
 .byebug_history
 /public/packs
-/node_modules
-
 /public/uploads
+
+.env

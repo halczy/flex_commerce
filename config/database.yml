@@ -6,15 +6,15 @@ default: &default
 development:
   <<: *default
   database: flex_commerce_development
-  username: <%= ENV['PQ_DEV_UN'] %>
-  password: <%= ENV['PQ_DEV_PW'] %>
+  username: <%= ENV['PG_DEV_USERNAME'] %>
+  password: <%= ENV['PG_DEV_PASSWORD'] %>
 
 test:
   <<: *default
   database: flex_commerce_test
-  username: <%= ENV['PQ_DEV_UN'] %>
-  password: <%= ENV['PQ_DEV_PW'] %>
-  
+  username: <%= ENV['PG_DEV_USERNAME'] %>
+  password: <%= ENV['PG_DEV_PASSWORD'] %>
+
 production:
   <<: *default
   database: flex_commerce_production
