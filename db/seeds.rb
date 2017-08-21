@@ -3,6 +3,8 @@ puts 'SEED: Seed file is running......'
 # CLEAN UP
 User.destroy_all
 puts 'USER: Clear old user data'
+Inventory.destroy_all
+puts 'INVENTORY: Clear old inventory data'
 Product.destroy_all
 puts 'PRODUCT: Clear old product data'
 Categorization.destroy_all
@@ -41,6 +43,7 @@ puts "CATEGORY: #{Category.special.count} special categories created."
 ################################################################################
 # Development
 
+# USERS
 50.times do |n|
   Customer.create(name: Faker::Name.name,
                   email: "customer_#{n}@example.com",
@@ -131,4 +134,4 @@ puts "IMAGE: #{Image.count} images created."
 1000.times do 
   Product.all.sample.inventories.create(status: Random.rand(0..5))
 end
-puts "INVENTORIES: #{Inventory.count} inventories created."
+puts "INVENTORY: #{Inventory.count} inventories created."
