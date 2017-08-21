@@ -127,3 +127,8 @@ Category.special.first.products.each do |product|
 end
 puts "IMAGE: #{Image.count} images created."
 
+# INVENTORIES
+1000.times do 
+  Product.all.sample.inventories.create(status: Random.rand(0..5))
+end
+puts "INVENTORIES: #{Inventory.count} inventories created."

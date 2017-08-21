@@ -1,7 +1,6 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>PID</th>
       <th class="w-25">Product Name</th>
       <th>Total Inventories</th>
       <th>Unsold</th>
@@ -13,13 +12,25 @@
   <tbody>
     <% products.each do |product| %>
     <tr>
-      <td><%= product.id %></td>
       <td><%= link_to product.name, '#' %></td>
-      <td>#</td>
-      <td>#</td>
-      <td>#</td>
-      <td>#</td>
-      <%= render 'action_control', product: product %>
+      <td><%= product.inventories.count %></td>
+      <td><%= product.inventories.unsold.count %></td>
+      <td><%= product.inventories.sold.count %></td>
+      <td><%= product.inventories.returned.count %></td>
+      <td>
+        <%= link_to "",
+                    id: "",
+                    class: "btn btn-sm btn-info" do %>
+          <i class="fa fa-plus" aria-hidden="true"></i> Add Inventory
+        <% end %>
+      </td>
+      <td>
+        <%= link_to "",
+                    id: "",
+                    class: "btn btn-sm btn-warning" do %>
+          <i class="fa fa-edit" aria-hidden="true"></i> Modify Inventory
+        <% end %>
+      </td>
     </tr>
     <% end %>
   </tbody>

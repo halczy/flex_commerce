@@ -14,7 +14,11 @@ class Product < ApplicationRecord
   monetize :price_member_cents, numericality: { greater_than_or_equal_to: 0 }
   monetize :price_reward_cents, numericality: { greater_than_or_equal_to: 0 }
   monetize :cost_cents, numericality: { greater_than_or_equal_to: 0 }
-
+  
+  # Scopes
+  scope :in_stock, -> { joins(:inventories).merge(Inventory.available) }
+  scope :out_of_stock, -> { joins(:inventories).merge(Inventory.unavailable) }
+  
   def associate_images
     return if extract_images.empty?
     image_files = extract_images
@@ -54,7 +58,6 @@ class Product < ApplicationRecord
     amount = inventories.destroyable.count if amount.nil?
     return false if amount.to_i > inventories.destroyable.count
     amount.to_i.times { remove_inventory }
-
   end
 
   private

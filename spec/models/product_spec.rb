@@ -254,5 +254,23 @@ RSpec.describe Product, type: :model do
       end
     end
   end
+  
+  describe 'scope' do
+    it "#in_stock returns product with unsold inventories" do
+      3.times { FactoryGirl.create(:inventory, product: product) }
+      result = Product.in_stock.distinct
+      expect(result).to match_array([product])
+      expect(result.first.inventories.first.status).to eq('unsold') 
+    end
+    
+    it "#out_of_stock returns product without unsold inventories" do
+      3.times { FactoryGirl.create(:inventory, product: product, status: 1) }
+      2.times { FactoryGirl.create(:inventory, product: product, status: 5) }
+      
+      result = Product.out_of_stock.distinct
+      expect(result).to match_array([product])
+      expect(result.first.inventories.count).to eq(5)
+    end
+  end
 
 end

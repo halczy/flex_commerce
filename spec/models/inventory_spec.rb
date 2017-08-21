@@ -25,6 +25,13 @@ RSpec.describe Inventory, type: :model do
     it '#available returns unsold inventories' do
       expect(product.inventories.available).to match_array([@inv_0_1, @inv_0_2])
     end
+    
+    it "unavailable returns inventories all modified products" do
+      expect(product.inventories.unavailable).to match_array([@inv_1_1, @inv_2_1,
+                                                              @inv_3_1, @inv_4_1,
+                                                              @inv_5_1])
+    end
+    
 
     it '#destroyable returns unsold|in_cart|in_order inventories' do
       expect(product.inventories.destroyable).to match_array(
