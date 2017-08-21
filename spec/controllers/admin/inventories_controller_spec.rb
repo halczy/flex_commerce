@@ -9,6 +9,15 @@ RSpec.describe Admin::InventoriesController, type: :controller do
   before { signin_as admin }
 
   describe 'GET products_view' do
+    
+    before do
+      @product_1 = FactoryGirl.create(:product)
+      @product_2 = FactoryGirl.create(:product)
+      3.times { FactoryGirl.create(:inventory, product: @product_1) }
+      2.times { FactoryGirl.create(:inventory, product: @product_2, status: 2) }
+      2.times { FactoryGirl.create(:inventory, product: @product_2, status: 3) }
+    end
+    
     it 'response successfully' do
       get :products_view
       expect(response).to render_template(:products_view)
@@ -25,22 +34,17 @@ RSpec.describe Admin::InventoriesController, type: :controller do
     end
     
     it "returns a list of products that are in stock" do
-      3.times { FactoryGirl.create(:inventory, product: product) }
-      get :products_view, params: { in_stock: 1 }
+      get :products_view, params: { inv_status: "in_stock" }
       
       products = assigns(:products)
-      expect(products).to be_present
-      expect(products.first.inventories.count).to eq(3)
+      expect(products).to match_array([@product_1])
     end
     
     it "returns a list of products that are out of stock" do
-      3.times { FactoryGirl.create(:inventory, product: product, status: 1) }
-      2.times { FactoryGirl.create(:inventory, product: product, status: 1) }
-      get :products_view, params: { out_of_stock: 1 }
+      get :products_view, params: { inv_status: "out_of_stock" }
       
       products = assigns(:products)
-      expect(products).to be_present
-      expect(products.first.inventories.count).to eq(5)
+      expect(products).to match_array([@product_2])
     end
   end
 
