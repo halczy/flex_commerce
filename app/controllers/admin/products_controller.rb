@@ -1,6 +1,8 @@
 class Admin::ProductsController < Admin::AdminController
+  # Filters
   before_action :set_product, except: [:index, :new, :create, :search]
   before_action :validate_amount, only: [:add_inventories, :remove_inventories]
+
   def index
     @products = Product.order(updated_at: :desc).page params[:page]
   end
@@ -73,6 +75,14 @@ class Admin::ProductsController < Admin::AdminController
     else
       flash[:danger] = "The requested amount exceeds unsold inventories."
     end
+    redirect_to(inventories_admin_product_path(@product))
+  end
+
+  def force_remove_inventories
+    inv_before = @product.inventories.count
+    @product.force_remove_inventories(@amount)
+    inv_deleted = inv_before - @product.inventories.count
+    flash[:info] = "Successfully force deleted #{inv_deleted} inventories."
     redirect_to(inventories_admin_product_path(@product))
   end
 

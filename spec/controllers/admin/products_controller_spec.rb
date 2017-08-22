@@ -212,4 +212,30 @@ RSpec.describe Admin::ProductsController, type: :controller do
       expect(response).to redirect_to(inventories_admin_product_path(@product))
     end
   end
+
+  describe 'PATCH force_remove_inventories' do
+    before do
+      @product = FactoryGirl.create(:product)
+      2.times { FactoryGirl.create(:inventory, product: @product) }
+      2.times { FactoryGirl.create(:inventory, product: @product, status: 1) }
+      2.times { FactoryGirl.create(:inventory, product: @product, status: 3) }
+      4.times { FactoryGirl.create(:inventory, product: @product, status: 5) }
+    end
+
+    it 'removes inventories from product' do
+      expect {
+        patch :force_remove_inventories, params: { id: @product.id, amount: 4 }
+      }.to change(Inventory, :count).by(-4)
+      expect(flash[:info]).to be_present
+      expect(response).to redirect_to(inventories_admin_product_path(@product))
+    end
+
+    it 'rejects request to remove more than destroyable inventories' do
+      expect {
+        patch :force_remove_inventories, params: { id: @product.id, amount: 10 }
+      }.to change(Inventory, :count).by(-4)
+      expect(flash[:info]).to be_present
+      expect(response).to redirect_to(inventories_admin_product_path(@product))
+    end
+  end
 end
