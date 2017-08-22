@@ -26,12 +26,13 @@ Rails.application.routes.draw do
       collection do
         get 'search'
       end
+      member do
+        get 'inventories'
+      end
+
     end
     resources :images, only: [:index, :create, :show, :destroy]   # Images
-    resources :inventories, only: [:index, :show] do              # Inventories
-      collection do
-        get 'products_view'
-      end
+    resources :inventories, only: [:index, :show]                 # Inventories
     end
   end
 end
