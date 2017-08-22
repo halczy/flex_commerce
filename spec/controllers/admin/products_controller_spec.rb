@@ -183,9 +183,33 @@ RSpec.describe Admin::ProductsController, type: :controller do
       expect {
         post :add_inventories, params: { id: product.id, amount: -10 }
       }.to change(Inventory, :count).by(0)
-      expect(flash[:warning]).to be_present
+      expect(flash[:danger]).to be_present
       expect(response).to redirect_to(inventories_admin_product_path(product))
     end
   end
 
+  describe 'PATCH remove_inventories' do
+    before do
+      @product = FactoryGirl.create(:product)
+      3.times { FactoryGirl.create(:inventory, product: @product) }
+      2.times { FactoryGirl.create(:inventory, product: @product, status: 1) }
+      3.times { FactoryGirl.create(:inventory, product: @product, status: 3) }
+    end
+
+    it 'removes inventories from product' do
+      expect {
+        patch :remove_inventories, params: { id: @product.id, amount: 3 }
+      }.to change(Inventory, :count).by(-3)
+      expect(flash[:success]).to be_present
+      expect(response).to redirect_to(inventories_admin_product_path(@product))
+    end
+
+    it 'rejects request to remove more than unsold inventories' do
+      expect {
+        patch :remove_inventories, params: { id: @product.id, amount: 5 }
+      }.to change(Inventory, :count).by(0)
+      expect(flash[:danger]).to be_present
+      expect(response).to redirect_to(inventories_admin_product_path(@product))
+    end
+  end
 end

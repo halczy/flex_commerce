@@ -1,6 +1,6 @@
 class Admin::ProductsController < Admin::AdminController
   before_action :set_product, except: [:index, :new, :create, :search]
-
+  before_action :validate_amount, only: [:add_inventories, :remove_inventories]
   def index
     @products = Product.order(updated_at: :desc).page params[:page]
   end
@@ -61,18 +61,19 @@ class Admin::ProductsController < Admin::AdminController
   end
 
   def add_inventories
-    if params[:amount] && params[:amount].to_i > 0
-      @product.add_inventories(params[:amount].to_i)
-      flash[:success] = "Successfully created #{params[:amount]} inventories."
-    else
-      flash[:warning] = "Invalid Amount. Please enter a valid number."
+    if @product.add_inventories(@amount)
+      flash[:success] = "Successfully created #{@amount} inventories."
+      redirect_to(inventories_admin_product_path(@product))
     end
-
-    redirect_to(inventories_admin_product_path(@product))
   end
 
   def remove_inventories
-
+    if @product.remove_inventories(@amount)
+      flash[:success] = "Successfully deleted #{@amount} inventories."
+    else
+      flash[:danger] = "The requested amount exceeds unsold inventories."
+    end
+    redirect_to(inventories_admin_product_path(@product))
   end
 
   private
@@ -88,5 +89,14 @@ class Admin::ProductsController < Admin::AdminController
         images_attributes: [:id, :image, :display_order, :title, :description,
                             :in_use, :source_channel, :imageable_id,
                             :imageable_type])
+    end
+
+    def validate_amount(action = 'add')
+      if params[:amount] && params[:amount].to_i <= 0
+        flash[:danger] = "Invalid Amount. Please enter a valid number."
+        redirect_to(inventories_admin_product_path(@product))
+      else
+        @amount = params[:amount].to_i
+      end
     end
 end
