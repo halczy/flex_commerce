@@ -92,24 +92,24 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Total Inventories</th>
-            <th>Unsold</th>
-            <th>In Cart</th>
-            <th>In Order</th>
-            <th>In Checkout</th>
-            <th>Sold</th>
-            <th>Returned</th>
+            <th class="text-center">Total Inventories</th>
+            <th class="text-center">Unsold</th>
+            <th class="text-center">In Cart</th>
+            <th class="text-center">In Order</th>
+            <th class="text-center">In Checkout</th>
+            <th class="text-center">Sold</th>
+            <th class="text-center">Returned</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><%= @product.inventories.count %></td>
-            <td><%= @product.inventories.unsold.count %></td>
-            <td><%= @product.inventories.in_cart.count %></td>
-            <td><%= @product.inventories.in_order.count %></td>
-            <td><%= @product.inventories.in_checkout.count %></td>
-            <td><%= @product.inventories.sold.count %></td>
-            <td><%= @product.inventories.returned.count %></td>
+            <td class="text-center"><%= @product.inventories.count %></td>
+            <td class="text-center"><%= @product.inventories.unsold.count %></td>
+            <td class="text-center"><%= @product.inventories.in_cart.count %></td>
+            <td class="text-center"><%= @product.inventories.in_order.count %></td>
+            <td class="text-center"><%= @product.inventories.in_checkout.count %></td>
+            <td class="text-center"><%= @product.inventories.sold.count %></td>
+            <td class="text-center"><%= @product.inventories.returned.count %></td>
           </tr>
         </tbody>
       </table>
