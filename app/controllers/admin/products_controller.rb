@@ -60,6 +60,21 @@ class Admin::ProductsController < Admin::AdminController
     @inventories = @product.inventories
   end
 
+  def add_inventories
+    if params[:amount] && params[:amount].to_i > 0
+      @product.add_inventories(params[:amount].to_i)
+      flash[:success] = "Successfully created #{params[:amount]} inventories."
+    else
+      flash[:warning] = "Invalid Amount. Please enter a valid number."
+    end
+
+    redirect_to(inventories_admin_product_path(@product))
+  end
+
+  def remove_inventories
+
+  end
+
   private
 
     def set_product

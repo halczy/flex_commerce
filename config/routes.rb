@@ -27,7 +27,8 @@ Rails.application.routes.draw do
         get 'search'
       end
       member do
-        get 'inventories'
+        get  'inventories'
+        post 'add_inventories'
       end
 
     end

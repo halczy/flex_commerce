@@ -171,4 +171,21 @@ RSpec.describe Admin::ProductsController, type: :controller do
     end
   end
 
+  describe 'POST add_inventories' do
+    it 'adds inventories to product' do
+      expect {
+        post :add_inventories, params: { id: product.id, amount: 5 }
+      }.to change(Inventory, :count).by(5)
+      expect(response).to redirect_to(inventories_admin_product_path(product))
+    end
+
+    it 'rejects invalid amount' do
+      expect {
+        post :add_inventories, params: { id: product.id, amount: -10 }
+      }.to change(Inventory, :count).by(0)
+      expect(flash[:warning]).to be_present
+      expect(response).to redirect_to(inventories_admin_product_path(product))
+    end
+  end
+
 end
