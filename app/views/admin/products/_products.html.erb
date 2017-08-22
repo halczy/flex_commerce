@@ -4,8 +4,8 @@
       <th class="w-25">Name</th>
       <th>SKU</th>
       <th>Member Price</th>
-      <th>Reward Price</th>
-      <th>Strict Inv.</th>
+      <th>Stock</th>
+      <th>Sold</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -22,10 +22,10 @@
         <%= humanized_money_with_symbol(product.price_market) %>
       </td>
       <td>
-        <%= humanized_money_with_symbol(product.price_reward) %>
+        <%= product.inventories.available.count %>
       </td>
       <td>
-        <%= product.strict_inventory %>
+        <%= product.inventories.sold.count %>
       </td>
       <%= render 'action_control', product: product %>
     </tr>
