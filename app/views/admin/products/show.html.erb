@@ -2,11 +2,14 @@
 
 <div class="d-flex justify-content-start mb-3">
   <div class="p-2">
-    <%= link_to admin_products_path, class: 'btn btn-info' do %>
+    <%= link_to admin_products_path, class: 'btn btn-secondary' do %>
       <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
     <% end %>
     <%= link_to edit_admin_product_path(@product), class: 'btn btn-warning' do %>
       <i class="fa fa-edit" aria-hidden="true"></i> Edit Product
+    <% end %>
+    <%= link_to '#', class: 'btn btn-info' do %>
+      <i class="fa fa-archive" aria-hidden="true"></i> Manage Inventories
     <% end %>
   </div>
 </div>
@@ -14,8 +17,13 @@
 <div class="row">
   <div class="col">
     <div class="jumbotron">
+      <h4 class="mb-3 mt-0">Basic Properties</h4>
       <table class="table">
         <tbody>
+          <tr>
+            <th scope="row">ID</th>
+            <td><%= @product.id %></td>
+          </tr>
           <tr>
             <th scope="row">Name</th>
             <td><%= @product.name %></td>
@@ -52,6 +60,7 @@
   </div>
   <div class="col">
     <div class="jumbotron">
+      <h4 class="mb-3 mt-0">Pricing</h4>
       <table class="table">
         <tbody>
           <tr>
@@ -69,6 +78,38 @@
           <tr>
             <th scope="row">Cost</th>
             <td><%= humanized_money_with_symbol(@product.cost) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="jumbotron">
+      <h5 class="mb-3">Inventories</h5>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Total Inventories</th>
+            <th>Unsold</th>
+            <th>In Cart</th>
+            <th>In Order</th>
+            <th>In Checkout</th>
+            <th>Sold</th>
+            <th>Returned</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @product.inventories.count %></td>
+            <td><%= @product.inventories.unsold.count %></td>
+            <td><%= @product.inventories.in_cart.count %></td>
+            <td><%= @product.inventories.in_order.count %></td>
+            <td><%= @product.inventories.in_checkout.count %></td>
+            <td><%= @product.inventories.sold.count %></td>
+            <td><%= @product.inventories.returned.count %></td>
           </tr>
         </tbody>
       </table>
@@ -100,12 +141,15 @@
 <div class="jumbotron">
   <div class="row">
     <div class="col">
-      <h5 class="">Attached Images</h5>
+      <h5 class="mb-3">Attached Images</h5>
+      <% if @product.images.attachment.empty? %>
+        <p>No Image</p>
+      <% end %>
     </div>
   </div>
   <div class="row">
     <% @product.images.attachment.each do |image| %>
-      <div class="col">
+      <div class="col-4">
         <p><%= image.title %></p>
         <p><%= image_tag(image.image_url(:thumb)) %></p>
         <p>
@@ -125,7 +169,10 @@
 <div class="jumbotron">
   <div class="row">
     <div class="col">
-      <h5 class="">Editor Image Files</h5>
+      <h5 class="mb-3">Editor Image Files</h5>
+      <% if @product.images.editor.empty? %>
+        <p>No Image</p>
+      <% end %>
     </div>
   </div>
   <div class="row">
