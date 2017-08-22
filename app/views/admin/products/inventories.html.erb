@@ -1,0 +1,76 @@
+<%= provide :title, 'Inventory Management' %>
+
+<div class="d-flex justify-content-start mb-3">
+  <div class="p-2">
+    <%= link_to admin_product_path(@product), class: 'btn btn-secondary' do %>
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return
+    <% end %>
+    <%= link_to '#', class: 'btn btn-primary' do %>
+      <i class="fa fa-plus" aria-hidden="true"></i> Add Inventories
+    <% end %>
+    <%= link_to '#', class: 'btn btn-danger' do %>
+      <i class="fa fa-minus" aria-hidden="true"></i> Delete Inventories
+    <% end %>
+  </div>
+</div>
+
+<nav class="nav nav-pills nav-justified" id="inventoriesTab" role="tablist">
+  <a class="nav-item nav-link active" id="nav-total-tab" data-toggle="tab"
+     href="#nav-total" role="tab" aria-controls="nav-total" aria-expanded="true">
+    Total (<%= @inventories.count %>)
+  </a>
+  <a class="nav-item nav-link" id="nav-unsold-tab" data-toggle="tab"
+     href="#nav-unsold" role="tab" aria-controls="nav-unsold">
+    Unsold (<%= @inventories.unsold.count %>)
+  </a>
+  <a class="nav-item nav-link" id="nav-in-cart-tab" data-toggle="tab"
+     href="#nav-in-cart" role="tab" aria-controls="nav-in-cart">
+    In Cart (<%= @inventories.in_cart.count %>)
+  </a>
+  <a class="nav-item nav-link" id="nav-in-order-tab" data-toggle="tab"
+     href="#nav-in-order" role="tab" aria-controls="nav-in-order">
+    In Order (<%= @inventories.in_order.count %>)
+  </a>
+  <a class="nav-item nav-link" id="nav-in-checkout-tab" data-toggle="tab"
+     href="#nav-in-checkout" role="tab" aria-controls="nav-in-checkout">
+    In Checkout (<%= @inventories.in_checkout.count %>)
+  </a>
+  <a class="nav-item nav-link" id="nav-sold-tab" data-toggle="tab"
+     href="#nav-sold" role="tab" aria-controls="nav-sold">
+    Sold (<%= @inventories.sold.count %>)
+  </a>
+  <a class="nav-item nav-link" id="nav-returned-tab" data-toggle="tab"
+     href="#nav-returned" role="tab" aria-controls="nav-returned">
+    Returned (<%= @inventories.returned.count %>)
+  </a>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-total" role="tabpanel"
+       aria-labelledby="nav-total-tab">
+    <%= render 'inventories', inventories: @inventories %>
+  </div>
+  <div class="tab-pane fade" id="nav-unsold" role="tabpanel"
+       aria-labelledby="nav-unsold-tab">
+    <%= render 'inventories', inventories: @inventories.unsold %>
+  </div>
+  <div class="tab-pane fade" id="nav-in-cart" role="tabpanel"
+       aria-labelledby="nav-in-cart-tab">
+    <%= render 'inventories', inventories: @inventories.in_cart %>
+  </div>
+  <div class="tab-pane fade" id="nav-in-order" role="tabpanel"
+       aria-labelledby="nav-in-order-tab">
+    <%= render 'inventories', inventories: @inventories.in_order %>
+  </div>
+  <div class="tab-pane fade" id="nav-in-checkout" role="tabpanel"
+       aria-labelledby="nav-in-checkout-tab">
+    <%= render 'inventories', inventories: @inventories.in_checkout %>
+  </div>
+  <div class="tab-pane fade" id="nav-sold" role="tabpanel"
+       aria-labelledby="nav-sold-tab">
+    <%= render 'inventories', inventories: @inventories.sold %>
+  </div>
+  <div class="tab-pane fade" id="nav-returned" role="tabpanel"
+       aria-labelledby="nav-returned-tab">
+    <%= render 'inventories', inventories: @inventories.returned %>
+  </div>
+</div>

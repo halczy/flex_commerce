@@ -56,6 +56,10 @@ class Admin::ProductsController < Admin::AdminController
     end
   end
 
+  def inventories
+    @inventories = @product.inventories
+  end
+
   private
 
     def set_product

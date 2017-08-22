@@ -1,0 +1,24 @@
+<table class="table table-hover mt-3">
+  <thead>
+    <tr>
+      <th class="w-50">ID</th>
+      <th>Status</th>
+      <th>In Order</th>
+      <th>Customer</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% inventories.each do |inventory| %>
+    <tr>
+      <td><%= link_to inventory.id, '#' %></td>
+      <td><%= inventory.status %></td>
+      <td></td>
+      <td></td>
+      <td>
+        Delete
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

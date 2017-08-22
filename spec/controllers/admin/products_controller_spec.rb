@@ -151,5 +151,24 @@ RSpec.describe Admin::ProductsController, type: :controller do
     end
   end
 
+  describe 'GET inventoreis' do
+    before do
+      @product = FactoryGirl.create(:product)
+      2.times { FactoryGirl.create(:inventory, product: @product) }
+      3.times { FactoryGirl.create(:inventory, product: @product, status: 1) }
+      2.times { FactoryGirl.create(:inventory, product: @product, status: 5) }
+    end
+
+    it 'response successfully' do
+      get :inventories, params: { id: @product.id }
+      expect(response).to render_template(:inventories)
+      expect(response).to be_success
+    end
+
+    it 'returns inventories under current product' do
+      get :inventories, params: { id: @product.id }
+      expect(assigns(:inventories).count).to eq(7)
+    end
+  end
 
 end
