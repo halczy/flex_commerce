@@ -262,16 +262,62 @@ describe 'Admin Dashboard - Product', type: :feature do
       expect(page).to have_css(".alert.alert-success")
     end
 
-    xit 'can force remove inventories', js: true do
+    it "can remove inventories", js: true do
+      click_on "#{@product_sold.name}"
+      click_on 'Manage Inventories'
+      click_on 'Delete Inventories'
+      within('#delete_inventories') do
+        fill_in 'amount', with: 2
+      end
+      # Workaround for Capybara submit button bug
+      evaluate_script 'document.getElementById("del_inv").submit();'
+      # element = find_by_id('del_inv')
+      # Capybara::RackTest::Form.new(page.driver, element.native).submit(el: nil)
+
+      expect(page).to have_css(".alert.alert-success")
+      expect(page).to have_content('Total (3)')
+      expect(page).to have_content('Returned (3)')
+    end
+
+    it 'cannot remove more than unsold products', js: true do
       click_on "#{@product_unsold.name}"
       click_on 'Manage Inventories'
       click_on 'Delete Inventories'
-      click_link 'force delete.'
-      within('#force_delete_inventories') do
-        fill_in "amount", with: "5"
+      within('#delete_inventories') do
+        fill_in 'amount', with: 10
       end
+      evaluate_script 'document.getElementById("del_inv").submit();'
 
-      expect(page).to have_content('Total (3)')
+      expect(page).to have_content('Total (7)')
+      expect(page).to have_css(".alert.alert-danger")
+    end
+
+    it 'can force remove destroyable inventories', js: true do
+      click_on "#{@product_unsold.name}"
+      click_on 'Manage Inventories'
+      click_on 'Delete Inventories'
+      click_on 'force delete.'
+      within('#force_delete_inventories') do
+        fill_in 'amount', with: 7
+      end
+      evaluate_script 'document.getElementById("f_del_inv").submit();'
+
+      expect(page).to have_content('Total (0)')
+      expect(page).to have_css('.alert.alert-info')
+    end
+
+    it 'cannot remove more than destroyable prodcuts', js: true do
+      click_on "#{@product_sold.name}"
+      click_on 'Manage Inventories'
+      click_on 'Delete Inventories'
+      click_on 'force delete.'
+      within('#force_delete_inventories') do
+        fill_in 'amount', with: 5
+      end
+      evaluate_script 'document.getElementById("f_del_inv").submit();'
+
+      expect(page).to have_content('Total (5)')
+      expect(page).to have_css('.alert.alert-info')
     end
   end
 end
