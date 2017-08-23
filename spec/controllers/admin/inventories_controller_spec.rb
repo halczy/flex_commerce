@@ -8,43 +8,66 @@ RSpec.describe Admin::InventoriesController, type: :controller do
 
   before { signin_as admin }
 
-  xdescribe 'GET products_view' do
+  describe 'GET index' do
 
     before do
-      @product_1 = FactoryGirl.create(:product)
-      @product_2 = FactoryGirl.create(:product)
-      3.times { FactoryGirl.create(:inventory, product: @product_1) }
-      2.times { FactoryGirl.create(:inventory, product: @product_2, status: 2) }
-      2.times { FactoryGirl.create(:inventory, product: @product_2, status: 3) }
+      @unsold =       FactoryGirl.create(:inventory)
+      @in_cart =      FactoryGirl.create(:inventory, status: 1)
+      @in_order =     FactoryGirl.create(:inventory, status: 2)
+      @in_checkout =  FactoryGirl.create(:inventory, status: 3)
+      @sold =         FactoryGirl.create(:inventory, status: 4)
+      @returned =     FactoryGirl.create(:inventory, status: 5)
     end
 
     it 'response successfully' do
-      get :products_view
-      expect(response).to render_template(:products_view)
+      get :index
+      expect(response).to render_template(:index)
       expect(response).to be_success
     end
 
-    it 'returns all products' do
-      FactoryGirl.create(:inventory)
-      get :products_view
-
-      product_1 = assigns(:products).first
-      expect(product_1).to be_an_instance_of(Product)
-      expect(product_1.inventories.first).to be_an_instance_of(Inventory)
+    it 'returns all inventories' do
+      get :index
+      expect(assigns(:inventories).count).to eq(6)
     end
 
-    it "returns a list of products that are in stock" do
-      get :products_view, params: { inv_status: "in_stock" }
-
-      products = assigns(:products)
-      expect(products).to match_array([@product_1])
+    it 'returns all unsold inventories' do
+      get :index, params: { status: 'unsold' }
+      expect(assigns(:inventories)).to match_array([@unsold])
     end
 
-    it "returns a list of products that are out of stock" do
-      get :products_view, params: { inv_status: "out_of_stock" }
+    it 'returns all in cart inventories' do
+      get :index, params: { status: 'in_cart' }
+      expect(assigns(:inventories)).to match_array([@in_cart])
+    end
 
-      products = assigns(:products)
-      expect(products).to match_array([@product_2])
+    it 'returns all in order inventories' do
+      get :index, params: { status: 'in_order' }
+      expect(assigns(:inventories)).to match_array([@in_order])
+    end
+
+    it 'returns all in checkout inventories' do
+      get :index, params: { status: 'in_checkout' }
+      expect(assigns(:inventories)).to match_array([@in_checkout])
+    end
+
+    it 'returns all sold inventories' do
+      get :index, params: { status: 'sold' }
+      expect(assigns(:inventories)).to match_array([@sold])
+    end
+
+    it 'returns all returned inventories' do
+      get :index, params: { status: 'returned' }
+      expect(assigns(:inventories)).to match_array([@returned])
+    end
+
+    it 'returns all destroyable inventories' do
+      get :index, params: { status: 'destroyable' }
+      expect(assigns(:inventories)).to match_array([@unsold, @in_cart, @in_order])
+    end
+
+    it 'returns all undestroyable inventories' do
+      get :index, params: { status: 'undestroyable' }
+      expect(assigns(:inventories)).to match_array([@in_checkout, @sold, @returned])
     end
   end
 
