@@ -16,4 +16,4 @@ end
 
 Capybara.javascript_driver = :headless_chrome
 
-Capybara.default_max_wait_time = 5
+Capybara.default_max_wait_time = 30
