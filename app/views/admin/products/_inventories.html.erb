@@ -9,16 +9,24 @@
     </tr>
   </thead>
   <tbody>
-    <% inventories.each do |inventory| %>
-    <tr>
-      <td><%= link_to inventory.id, '#' %></td>
-      <td><%= inventory.status %></td>
-      <td></td>
-      <td></td>
-      <td>
-        Delete
-      </td>
-    </tr>
+    <% if inventories.present? %>
+      <% inventories.each do |inventory| %>
+      <tr>
+        <td><%= link_to inventory.id, '#' %></td>
+        <td><%= inventory.status %></td>
+        <td></td>
+        <td></td>
+        <td>
+          Delete
+        </td>
+      </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="6" class="text-center">
+          No Matching Inventories
+        </td>
+      </tr>
     <% end %>
   </tbody>
 </table>
