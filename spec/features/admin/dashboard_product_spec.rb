@@ -221,10 +221,36 @@ describe 'Admin Dashboard - Product', type: :feature do
   end
 
   describe 'filter' do
-    it "does not filter products without params"
-    it "does not filter products with empty display param"
-    it "filters to display only in stock proudcts"
-    it 'fitlers to display only out of stock products'
+    before do
+      @product_in_stock = FactoryGirl.create(:product)
+      @product_oos = FactoryGirl.create(:product)
+      FactoryGirl.create(:inventory, product: @product_in_stock)
+      FactoryGirl.create(:inventory, product: @product_oos, status: 4)
+      visit admin_products_path
+    end
+
+    it "does not filter products without params" do
+      expect(page).to have_content(@product_in_stock.name)
+      expect(page).to have_content(@product_oos.name)
+    end
+
+    it "does not filter products with empty display param", js: true do
+      select 'No Filter'
+      expect(page).to have_content(@product_in_stock.name)
+      expect(page).to have_content(@product_oos.name)
+    end
+
+    it "filters to display only in stock proudcts", js: true do
+      select 'In Stock'
+      expect(page).to have_content(@product_in_stock.name)
+      expect(page).not_to have_content(@product_oos.name)
+    end
+
+    it 'fitlers to display only out of stock products', js: true do
+      select 'Out of Stock'
+      expect(page).not_to have_content(@product_in_stock.name)
+      expect(page).to have_content(@product_oos.name)
+    end
   end
 
   describe 'inventory management' do
@@ -296,7 +322,9 @@ describe 'Admin Dashboard - Product', type: :feature do
       click_on "#{@product_unsold.name}"
       click_on 'Manage Inventories'
       click_on 'Delete Inventories'
-      click_on 'force delete.'
+      page.find :css, '#delete_inventories', wait: 10        # <-- Dummy find to
+      click_on 'force delete.'                               #
+      page.find :css, '#force_delete_inventories', wait: 10  # slow down selenium
       within('#force_delete_inventories') do
         fill_in 'amount', with: 7
       end
@@ -310,7 +338,9 @@ describe 'Admin Dashboard - Product', type: :feature do
       click_on "#{@product_sold.name}"
       click_on 'Manage Inventories'
       click_on 'Delete Inventories'
+      page.find :css, '#delete_inventories', wait: 10
       click_on 'force delete.'
+      page.find :css, '#force_delete_inventories', wait: 10
       within('#force_delete_inventories') do
         fill_in 'amount', with: 5
       end
