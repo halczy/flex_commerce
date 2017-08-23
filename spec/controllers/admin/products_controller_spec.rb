@@ -2,10 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Admin::ProductsController, type: :controller do
 
-  let(:product)  { FactoryGirl.create(:product) }
-  let(:admin)    { FactoryGirl.create(:admin) }
-  let(:customer) { FactoryGirl.create(:customer) }
-  let(:image)    { FactoryGirl.create(:image) }
+  let(:product)    { FactoryGirl.create(:product) }
+  let(:admin)      { FactoryGirl.create(:admin) }
+  let(:customer)   { FactoryGirl.create(:customer) }
+  let(:image)      { FactoryGirl.create(:image) }
+  let(:inventory)  { FactoryGirl.create(:inventory) }
 
   before { signin_as(admin) }
 
@@ -13,6 +14,7 @@ RSpec.describe Admin::ProductsController, type: :controller do
     it 'responses successfully' do
       get :index
       expect(response).to render_template(:index)
+      expect(response).to be_success
     end
 
     it 'products a list of products' do
@@ -27,6 +29,27 @@ RSpec.describe Admin::ProductsController, type: :controller do
         get :index
         expect(response).to redirect_to(root_url)
       end
+    end
+    
+    context 'filter' do
+      before do
+        @product_1 = FactoryGirl.create(:product)
+        @product_2 = FactoryGirl.create(:product)
+        3.times { FactoryGirl.create(:inventory, product: @product_1) }
+        2.times { FactoryGirl.create(:inventory, product: @product_2, status: 2) }
+        2.times { FactoryGirl.create(:inventory, product: @product_2, status: 3) }
+      end
+      
+      it "returns products that are in stock" do
+        get :index, params: { display: "in_stock" }
+        expect(assigns(:products)).to match_array([@product_1])
+      end
+      
+      it "returns products that are out of stock" do
+        get :index, params: { display: "out_of_stock" }
+        expect(assigns(:products)).to match_array([@product_2])
+      end
+      
     end
   end
 

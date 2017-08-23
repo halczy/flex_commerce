@@ -4,7 +4,16 @@ class Admin::ProductsController < Admin::AdminController
   before_action :validate_amount, only: [:add_inventories, :remove_inventories]
 
   def index
-    @products = Product.order(updated_at: :desc).page params[:page]
+    case params[:display]
+    when 'in_stock'
+      products = Product.in_stock.distinct
+    when 'out_of_stock'
+      products = Product.out_of_stock.distinct
+    else
+      products = Product.all
+    end
+    
+    @products = products.order(updated_at: :desc).page params[:page]
   end
 
   def new
