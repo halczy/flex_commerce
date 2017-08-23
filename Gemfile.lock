@@ -60,9 +60,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-screenshot (1.0.17)
-      capybara (>= 1.0, < 3)
-      launchy
     childprocess (0.7.1)
       ffi (~> 1.0, >= 1.0.11)
     chromedriver-helper (1.1.0)
@@ -95,8 +92,6 @@ GEM
     faker (1.8.4)
       i18n (~> 0.5)
     ffi (1.9.18)
-    geckodriver-helper (0.0.3)
-      archive-zip (~> 0.7.0)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     i18n (0.8.6)
@@ -118,8 +113,6 @@ GEM
       activerecord
       kaminari-core (= 1.0.1)
     kaminari-core (1.0.1)
-    launchy (2.4.3)
-      addressable (~> 2.3)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -284,14 +277,12 @@ DEPENDENCIES
   binding_of_caller
   byebug
   capybara
-  capybara-screenshot
   chromedriver-helper
   coffee-rails
   database_cleaner
   dotenv-rails
   factory_girl_rails
   faker
-  geckodriver-helper
   image_processing
   jbuilder
   kaminari
