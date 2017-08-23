@@ -1,7 +1,8 @@
 class Admin::ProductsController < Admin::AdminController
   # Filters
   before_action :set_product, except: [:index, :new, :create, :search]
-  before_action :validate_amount, only: [:add_inventories, :remove_inventories]
+  before_action :validate_amount, only: [:add_inventories, :remove_inventories,
+                                         :force_remove_inventories]
 
   def index
     case params[:display]
@@ -12,7 +13,7 @@ class Admin::ProductsController < Admin::AdminController
     else
       @result = Product.all
     end
-    
+
     @products = @result.order(updated_at: :desc).page params[:page]
   end
 

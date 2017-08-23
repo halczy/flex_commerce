@@ -262,10 +262,16 @@ describe 'Admin Dashboard - Product', type: :feature do
       expect(page).to have_css(".alert.alert-success")
     end
 
-    it 'can remove inventories' do
-      # Manual Pass
-      # TODO: Fix feature spec for remove_inventories
-      #                            force_remove_inventories
+    xit 'can force remove inventories', js: true do
+      click_on "#{@product_unsold.name}"
+      click_on 'Manage Inventories'
+      click_on 'Delete Inventories'
+      click_link 'force delete.'
+      within('#force_delete_inventories') do
+        fill_in "amount", with: "5"
+      end
+
+      expect(page).to have_content('Total (3)')
     end
   end
 end

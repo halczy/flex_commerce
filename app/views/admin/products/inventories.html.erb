@@ -134,7 +134,7 @@
         Unsold Inventories: <strong><%= @inventories.unsold.count %></strong>
       </div>
       <%= form_with(url: remove_inventories_admin_product_path(@product),
-                   local: true, method: :delete) do |form| %>
+                   local: true, method: :patch) do |form| %>
         <div class="form-group row">
           <%= form.label :amount, class: 'col-sm-2 col-form-label' %>
           <div class="col-sm-10">
@@ -168,7 +168,7 @@
           Deletable Inventories: <strong><%= @inventories.destroyable.count %></strong>
         </div>
       <%= form_with(url: force_remove_inventories_admin_product_path(@product),
-                    local: true, method: :delete) do |form| %>
+                    local: true, method: :patch) do |form| %>
         <div class="form-group row">
           <%= form.label :amount, class: 'col-sm-2 col-form-label' %>
           <div class="col-sm-10">
@@ -177,7 +177,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <%= form.submit 'Force Delete', class: 'btn btn-danger' %>
+        <%= form.submit 'Force Delete', id: 'force_del', class: 'btn btn-danger' %>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Close
         </button>
