@@ -7,6 +7,9 @@
       New Product
     <% end %>
   </div>
+  <div class="p-2">
+    <%= render 'filter' %>
+  </div>
   <div class="ml-auto p-2">
     <%= render 'search_form' %>
   </div>
@@ -14,6 +17,9 @@
 
 <div class="row">
   <%= render 'shared/paginate', objects: @products if @products.present? %>
+  <div class="col-lg-12">
+    <p>Displaying: <%= @result.count  %> Products</p>
+  </div>
   <div class="col-lg-12">
     <%= render 'products', products: @products %>
   </div>

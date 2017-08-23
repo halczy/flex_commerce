@@ -1,0 +1,8 @@
+<%= form_with(url: admin_products_path, local: true, method: :get) do |form| %>
+  <%= form.select :display, options_for_select([
+                  ['No Filter', ''],
+                  ['In Stock', 'in_stock'], 
+                  ['Out of Stock', 'out_of_stock']]),
+                  { prompt: "Filter Products" },
+                  class: 'form-control', onchange: 'this.form.submit();' %>
+<% end %>
