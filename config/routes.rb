@@ -27,10 +27,10 @@ Rails.application.routes.draw do
         get 'search'
       end
       member do
-        get   'inventories'
-        post  'add_inventories'
-        patch 'remove_inventories'
-        patch 'force_remove_inventories'
+        get    'inventories'
+        post   'add_inventories'
+        delete 'remove_inventories'
+        delete 'force_remove_inventories'
       end
     end
     resources :images, only: [:index, :create, :show, :destroy]   # Images

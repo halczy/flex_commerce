@@ -219,4 +219,61 @@ describe 'Admin Dashboard - Product', type: :feature do
       end
     end
   end
+  
+  describe 'filter' do
+    it "does not filter products without params"
+    it "does not filter products with empty display param"
+    it "filters to display only in stock proudcts"
+    it 'fitlers to display only out of stock products'
+  end
+  
+  describe 'inventory management' do
+    before do
+      @product_unsold = FactoryGirl.create(:product)
+      @product_sold = FactoryGirl.create(:product)
+      3.times { FactoryGirl.create(:inventory, product: @product_unsold) }
+      4.times { FactoryGirl.create(:inventory, product: @product_unsold, status: 1) }
+      2.times { FactoryGirl.create(:inventory, product: @product_sold) }      
+      3.times { FactoryGirl.create(:inventory, product: @product_sold, status: 5) }
+      visit admin_products_path
+    end
+    
+    it "displays all inventories" do
+      click_on "#{@product_unsold.name}"
+      click_on 'Manage Inventories'
+      
+      expect(page.current_path).to eq(inventories_admin_product_path(@product_unsold))
+      expect(page).to have_content("Total (7)")
+      expect(page).to have_content("Unsold (3)")
+      expect(page).to have_content("In Cart (4)")
+      expect(page).to have_content(@product_unsold.inventories.sample.id)
+    end
+    
+    it "can add inventories" do
+      click_on "#{@product_sold.name}"
+      click_on 'Manage Inventories'
+      click_on 'Add Inventories'
+      within('#add_inventories') do
+        fill_in 'amount', with: 10
+        click_on 'Submit'
+      end
+      
+      expect(page).to have_content('Total (15)')
+      expect(page).to have_css(".alert.alert-success")
+    end
+    
+    xit "can delete inventories" do
+      click_on "#{@product_unsold.name}"
+      click_on 'Manage Inventories'
+      click_on 'Delete Inventories'
+      within('#delete_inventories') do
+        fill_in 'amount', with: 3
+        click_on 'Delete'
+      end
+      
+      visit inventories_admin_product_path(@product_unsold)
+      expect(page).to have_content("Total (5)")
+      # expect(page).to have_content('Sold (3)')
+    end
+  end
 end

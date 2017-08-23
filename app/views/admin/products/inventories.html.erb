@@ -49,31 +49,31 @@
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="nav-total" role="tabpanel"
        aria-labelledby="nav-total-tab">
-    <%= render 'inventories', inventories: @inventories %>
+    <%= render 'inventories_list', inventories: @inventories %>
   </div>
   <div class="tab-pane fade" id="nav-unsold" role="tabpanel"
        aria-labelledby="nav-unsold-tab">
-    <%= render 'inventories', inventories: @inventories.unsold %>
+    <%= render 'inventories_list', inventories: @inventories.unsold %>
   </div>
   <div class="tab-pane fade" id="nav-in-cart" role="tabpanel"
        aria-labelledby="nav-in-cart-tab">
-    <%= render 'inventories', inventories: @inventories.in_cart %>
+    <%= render 'inventories_list', inventories: @inventories.in_cart %>
   </div>
   <div class="tab-pane fade" id="nav-in-order" role="tabpanel"
        aria-labelledby="nav-in-order-tab">
-    <%= render 'inventories', inventories: @inventories.in_order %>
+    <%= render 'inventories_list', inventories: @inventories.in_order %>
   </div>
   <div class="tab-pane fade" id="nav-in-checkout" role="tabpanel"
        aria-labelledby="nav-in-checkout-tab">
-    <%= render 'inventories', inventories: @inventories.in_checkout %>
+    <%= render 'inventories_list', inventories: @inventories.in_checkout %>
   </div>
   <div class="tab-pane fade" id="nav-sold" role="tabpanel"
        aria-labelledby="nav-sold-tab">
-    <%= render 'inventories', inventories: @inventories.sold %>
+    <%= render 'inventories_list', inventories: @inventories.sold %>
   </div>
   <div class="tab-pane fade" id="nav-returned" role="tabpanel"
        aria-labelledby="nav-returned-tab">
-    <%= render 'inventories', inventories: @inventories.returned %>
+    <%= render 'inventories_list', inventories: @inventories.returned %>
   </div>
 </div>
 
@@ -87,7 +87,8 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <%= form_with(url: add_inventories_admin_product_path(@product), local: true) do |form| %>
+      <%= form_with(url: add_inventories_admin_product_path(@product), 
+                    local: true) do |form| %>
       <div class="modal-body">
         <div class="form-group row">
           <%= form.label :amount, class: 'col-sm-2 col-form-label' %>
@@ -133,7 +134,7 @@
         Unsold Inventories: <strong><%= @inventories.unsold.count %></strong>
       </div>
       <%= form_with(url: remove_inventories_admin_product_path(@product),
-                   local: true, method: :patch) do |form| %>
+                   local: true, method: :delete) do |form| %>
         <div class="form-group row">
           <%= form.label :amount, class: 'col-sm-2 col-form-label' %>
           <div class="col-sm-10">
@@ -167,7 +168,7 @@
           Deletable Inventories: <strong><%= @inventories.destroyable.count %></strong>
         </div>
       <%= form_with(url: force_remove_inventories_admin_product_path(@product),
-                   local: true, method: :patch) do |form| %>
+                   local: true, method: :delete) do |form| %>
         <div class="form-group row">
           <%= form.label :amount, class: 'col-sm-2 col-form-label' %>
           <div class="col-sm-10">
