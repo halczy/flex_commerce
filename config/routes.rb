@@ -29,8 +29,8 @@ Rails.application.routes.draw do
       member do
         get    'inventories'
         post   'add_inventories'
-        delete 'remove_inventories'
-        delete 'force_remove_inventories'
+        post 'remove_inventories'
+        post 'force_remove_inventories'
       end
     end
     resources :images, only: [:index, :create, :show, :destroy]   # Images
