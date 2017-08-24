@@ -71,4 +71,12 @@ RSpec.describe Admin::InventoriesController, type: :controller do
     end
   end
 
+  describe 'GET show' do
+    it 'returns a success response' do
+      get :show, params: { id: inventory.id }
+      expect(response).to be_success
+      expect(assigns(:inventory)).to eq(inventory)
+    end
+  end
+
 end
