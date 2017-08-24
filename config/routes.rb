@@ -34,6 +34,6 @@ Rails.application.routes.draw do
       end
     end
     resources :images, only: [:index, :create, :show, :destroy]   # Images
-    resources :inventories, only: [:index, :show]                 # Inventories
+    resources :inventories, only: [:index, :show, :destroy]       # Inventories
   end
 end
