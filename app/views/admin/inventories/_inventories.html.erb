@@ -1,0 +1,28 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th class="w-50">ID</th>
+      <th>Status</th>
+      <th>Product</th>
+      <th>Customer</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% inventories.each do |inventory| %>
+    <tr>
+      <td><%= link_to inventory.id, admin_inventory_path(inventory) %></td>
+      <td><%= inventory.status %></td>
+      <td><%= inventory.product.name %></td>
+      <td>TBI</td>
+      <td>
+        <%= link_to 'Detail', admin_inventory_path(inventory),
+                              class: 'btn btn-sm btn-info' %>
+      </td>
+      <td>
+        DELETE
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

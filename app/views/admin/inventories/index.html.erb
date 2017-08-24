@@ -1,1 +1,18 @@
-<%= @inventories.count %>
+<%= provide :title, 'Inventory' %>
+
+<div class="d-flex justify-content-start mb-3">
+  <div class="p-2">
+    <%= render 'filter' %>
+  </div>
+  <div class="ml-auto p-2">
+  </div>
+</div>
+
+<div class="row">
+  <%= render 'shared/paginate', objects: @inventories if @inventories.present? %>
+  <div class="col-lg-12">
+    <p>Inventory Count: <%= @inventories.total_count %></p>
+    <%= render 'inventories', inventories: @inventories %>
+  </div>
+  <%= render 'shared/paginate', objects: @inventories if @inventories.present? %>
+</div>
