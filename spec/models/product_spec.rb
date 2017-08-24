@@ -262,20 +262,43 @@ RSpec.describe Product, type: :model do
   end
 
   describe 'scope' do
-    it "#in_stock returns product with unsold inventories" do
-      3.times { FactoryGirl.create(:inventory, product: product) }
-      result = Product.in_stock.distinct
-      expect(result).to match_array([product])
-      expect(result.first.inventories.first.status).to eq('unsold')
+    before do |example|
+      unless example.metadata[:skip_before]
+        @product_in_stock = FactoryGirl.create(:product)
+        FactoryGirl.create(:inventory, product: @product_in_stock)
+
+        @product_oos_destroyable = FactoryGirl.create(:product)
+        FactoryGirl.create(:inventory, product: @product_oos_destroyable, status: 1)
+        FactoryGirl.create(:inventory, product: @product_oos_destroyable, status: 2)
+
+        @product_oos_undestroyable = FactoryGirl.create(:product)
+        FactoryGirl.create(:inventory, product: @product_oos_undestroyable, status: 3)
+        FactoryGirl.create(:inventory, product: @product_oos_undestroyable, status: 4)
+        FactoryGirl.create(:inventory, product: @product_oos_undestroyable, status: 5)
+      end
     end
 
-    it "#out_of_stock returns product without unsold inventories" do
-      3.times { FactoryGirl.create(:inventory, product: product, status: 1) }
-      2.times { FactoryGirl.create(:inventory, product: product, status: 5) }
+    context '#in_stock' do
+      it "returns products with unsold inventories" do
+        result = Product.in_stock.distinct
+        expect(result).to match_array([@product_in_stock])
+      end
+    end
 
-      result = Product.out_of_stock.distinct
-      expect(result).to match_array([product])
-      expect(result.first.inventories.count).to eq(5)
+    context '#out_of_stock' do
+      it "returns product that are out of stock" do
+        result = Product.out_of_stock.distinct
+        expect(result).to match_array([@product_oos_destroyable,
+                                       @product_oos_undestroyable])
+      end
+
+      # BUG CASE
+      it 'does not return product with unsold inventories', skip_before: true do
+        FactoryGirl.create(:inventory, product: product)
+        FactoryGirl.create(:inventory, product: product, status: 2)
+        expect(Product.count).to eq(1)
+        expect(Product.out_of_stock).to be_empty
+      end
     end
   end
 

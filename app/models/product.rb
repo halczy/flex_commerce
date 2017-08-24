@@ -14,11 +14,14 @@ class Product < ApplicationRecord
   monetize :price_member_cents, numericality: { greater_than_or_equal_to: 0 }
   monetize :price_reward_cents, numericality: { greater_than_or_equal_to: 0 }
   monetize :cost_cents, numericality: { greater_than_or_equal_to: 0 }
-  
+
   # Scopes
   scope :in_stock, -> { joins(:inventories).merge(Inventory.available) }
-  scope :out_of_stock, -> { joins(:inventories).merge(Inventory.unavailable) }
-  
+  scope :out_of_stock, -> { where.not(id: in_stock) }
+  # scope :in_stock, -> { joins(:inventories).where(inventories: {status: 0}) }
+  # scope :out_of_stock, -> { where.not(id: Inventory.where(status: 0).select(:product_id)) }
+
+
   def associate_images
     return if extract_images.empty?
     image_files = extract_images

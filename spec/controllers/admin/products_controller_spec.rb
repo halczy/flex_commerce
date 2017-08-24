@@ -33,23 +33,29 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
     context 'filter' do
       before do
-        @product_1 = FactoryGirl.create(:product)
-        @product_2 = FactoryGirl.create(:product)
-        3.times { FactoryGirl.create(:inventory, product: @product_1) }
-        2.times { FactoryGirl.create(:inventory, product: @product_2, status: 2) }
-        2.times { FactoryGirl.create(:inventory, product: @product_2, status: 3) }
+        @product_in_stock = FactoryGirl.create(:product)
+        FactoryGirl.create(:inventory, product: @product_in_stock)
+
+        @product_oos_destroyable = FactoryGirl.create(:product)
+        FactoryGirl.create(:inventory, product: @product_oos_destroyable, status: 1)
+        FactoryGirl.create(:inventory, product: @product_oos_destroyable, status: 2)
+
+        @product_oos_undestroyable = FactoryGirl.create(:product)
+        FactoryGirl.create(:inventory, product: @product_oos_undestroyable, status: 3)
+        FactoryGirl.create(:inventory, product: @product_oos_undestroyable, status: 4)
+        FactoryGirl.create(:inventory, product: @product_oos_undestroyable, status: 5)
       end
 
       it "returns products that are in stock" do
         get :index, params: { display: "in_stock" }
-        expect(assigns(:products)).to match_array([@product_1])
+        expect(assigns(:products)).to match_array([@product_in_stock])
       end
 
       it "returns products that are out of stock" do
         get :index, params: { display: "out_of_stock" }
-        expect(assigns(:products)).to match_array([@product_2])
+        expect(assigns(:products)).to match_array([@product_oos_destroyable,
+                                                   @product_oos_undestroyable])
       end
-
     end
   end
 
