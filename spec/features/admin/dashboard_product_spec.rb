@@ -322,9 +322,7 @@ describe 'Admin Dashboard - Product', type: :feature do
       click_on "#{@product_unsold.name}"
       click_on 'Manage Inventories'
       click_on 'Delete Inventories'
-      page.find :css, '#delete_inventories', wait: 10        # <-- Dummy find to
-      click_on 'force delete.'                               #
-      page.find :css, '#force_delete_inventories', wait: 10  # slow down selenium
+      click_on 'force delete.'
       within('#force_delete_inventories') do
         fill_in 'amount', with: 7
       end
@@ -338,9 +336,7 @@ describe 'Admin Dashboard - Product', type: :feature do
       click_on "#{@product_sold.name}"
       click_on 'Manage Inventories'
       click_on 'Delete Inventories'
-      page.find :css, '#delete_inventories', wait: 10
       click_on 'force delete.'
-      page.find :css, '#force_delete_inventories', wait: 10
       within('#force_delete_inventories') do
         fill_in 'amount', with: 5
       end

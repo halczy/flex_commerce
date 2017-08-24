@@ -47,6 +47,8 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem "chromedriver-helper"
+  gem 'poltergeist'
+  gem 'phantomjs', :require => 'phantomjs/poltergeist'
   gem 'database_cleaner'
   gem 'rails-controller-testing'
   gem 'shrine-memory'
