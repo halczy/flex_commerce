@@ -7,14 +7,14 @@ class Admin::ProductsController < Admin::AdminController
   def index
     case params[:display]
     when 'in_stock'
-      @result = Product.in_stock.distinct
+      products = Product.in_stock.distinct
     when 'out_of_stock'
-      @result = Product.out_of_stock.distinct
+      products = Product.out_of_stock.distinct
     else
-      @result = Product.all
+      products = Product.all
     end
 
-    @products = @result.order(updated_at: :desc).page params[:page]
+    @products = products.order(updated_at: :desc).page params[:page]
   end
 
   def new
