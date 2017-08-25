@@ -107,11 +107,18 @@ RSpec.describe User, type: :model do
         expect(user.member_id).not_to eq(old_member_id)
       end
       
-      it "can be changed" do
+      it 'can be changed' do
         expect(user).to be_valid
         user.member_id = 111_111
         user.save
         expect(user.member_id).to eq(111111)
+      end
+      
+      it 'cannot dupliate' do
+        existing_user = FactoryGirl.create(:user)
+        expect {
+          FactoryGirl.create(:user, member_id: existing_user.member_id)
+        }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
   end
