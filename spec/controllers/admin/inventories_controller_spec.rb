@@ -81,17 +81,18 @@ RSpec.describe Admin::InventoriesController, type: :controller do
 
   describe 'DELETE destroy' do
     it 'can be destroy if its status is destroyable' do
-      @unsold = FactoryGirl.create(:inventory)
+      unsold = FactoryGirl.create(:inventory)
       expect {
-        delete :destroy, params: { id: @unsold.id }
+        delete :destroy, params: { id: unsold.id }
       }.to change(Inventory, :count).by(-1)
       expect(flash[:success]).to be_present
+      expect(response).to redirect_to(admin_inventories_path)
     end
 
     it 'cannot be destroy if its status is undestroyable' do
-      @in_checkout = FactoryGirl.create(:inventory, status: 3)
+      in_checkout = FactoryGirl.create(:inventory, status: 3)
       expect {
-        delete :destroy, params: { id: @in_checkout.id }
+        delete :destroy, params: { id: in_checkout.id }
       }.to change(Inventory, :count).by(0)
       expect(flash[:danger]).to be_present
     end

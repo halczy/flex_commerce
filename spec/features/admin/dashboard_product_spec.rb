@@ -345,5 +345,18 @@ describe 'Admin Dashboard - Product', type: :feature do
       expect(page).to have_content('Total (5)')
       expect(page).to have_css('.alert.alert-info')
     end
+
+    it 'can delete individual product', js: true do
+      unsold_inv = FactoryGirl.create(:inventory, product: @product_unsold)
+      visit inventories_admin_product_path(@product_unsold)
+      click_on("btn_del_#{unsold_inv.id}")
+      within("#delete_#{unsold_inv.id}") do
+        click_on('Confirm')
+      end
+
+      expect(page.current_path).to eq(inventories_admin_product_path(@product_unsold))
+      expect(page).not_to have_content(unsold_inv.id)
+
+    end
   end
 end

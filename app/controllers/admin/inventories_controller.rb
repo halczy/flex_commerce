@@ -1,6 +1,7 @@
 class Admin::InventoriesController < Admin::AdminController
   # Filter
   before_action :set_inventory, only: [:show, :destroy]
+  before_action :smart_return, only: [:destroy]
 
   def index
     params[:status] ||= ""
@@ -16,7 +17,7 @@ class Admin::InventoriesController < Admin::AdminController
     if @inventory.status_before_type_cast < 3
       @inventory.destroy
       flash[:success] = "Successfully deleted inventory."
-      redirect_to admin_inventories_path
+      redirect_back_or admin_inventories_path
     else
       flash[:danger] = "This inventory cannot be deleted."
       redirect_to admin_inventory_path(@inventory)

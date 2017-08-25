@@ -1,6 +1,7 @@
 class Admin::ImagesController < Admin::AdminController
   # Filters
   before_action :set_image, only: [:show, :destroy]
+  before_action :smart_return, only: [:destroy]
 
   def index
     @images = Image.order(updated_at: :desc).page params[:page]
@@ -23,12 +24,10 @@ class Admin::ImagesController < Admin::AdminController
   def destroy
     if @image.destroy
       flash[:success] = 'Image was successfully destroyed.'
-      if params['return_loc'].present?
-        redirect_to admin_product_path(params[:return_loc])
-      else
-        redirect_to admin_images_path
-      end
+    else
+      flash[:danger] = "Unable to delete this image."
     end
+    redirect_back_or admin_images_path
   end
 
   private

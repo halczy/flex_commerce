@@ -156,7 +156,7 @@
           <%= link_to 'View', admin_image_path(image),
                               class: 'btn btn-sm btn-info' %>
           <% if image.source_channel == 'attachment' %>
-            <%= link_to 'Delete', admin_image_path(image, return_loc: @product),
+            <%= link_to 'Delete', admin_image_path(image, return_back: true),
                                   method: :delete,
                                   class: 'btn btn-sm btn-danger',
                                   data: { confirm: 'Are you sure?' } %>
@@ -184,7 +184,7 @@
           <%= link_to 'View', admin_image_path(image),
                               class: 'btn btn-sm btn-info' %>
           <% if image.source_channel == 'attachment' %>
-            <%= link_to 'Delete', admin_image_path(image, return_loc: @product),
+            <%= link_to 'Delete', admin_image_path(image, return_back: true),
                                   method: :delete,
                                   class: 'btn btn-sm btn-danger',
                                   data: { confirm: 'Are you sure?' } %>
