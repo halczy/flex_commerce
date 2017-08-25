@@ -78,4 +78,28 @@ describe 'Admin Inventory Dashboard', type: :feature do
       expect(page).to have_content(@returned.product.name)
     end
   end
+
+  describe 'delete inventory' do
+    it 'can delete destoryable inventory', js: true do
+      in_cart_id = @in_cart.id
+      click_on("btn_del_#{@in_cart.id}")
+      within("#delete_#{@in_cart.id}") do
+        click_on('Confirm')
+      end
+
+      expect(page.current_path).to eq(admin_inventories_path)
+      expect(page).not_to have_content(in_cart_id)
+    end
+
+    it 'cannot delete undestroyable inventory' do
+      sold_id = @sold.id
+      click_on("btn_del_#{@sold.id}")
+      within("#delete_#{@sold.id}") do
+        expect(page).not_to have_content('Confirm')
+        expect(page).to have_content('Close')
+      end
+
+      expect(page).to have_content(@sold.id)
+    end
+  end
 end

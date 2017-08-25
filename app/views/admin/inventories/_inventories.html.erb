@@ -15,14 +15,12 @@
       <td><%= inventory.status %></td>
       <td><%= inventory.product.name %></td>
       <td>TBI</td>
-      <td>
-        <%= link_to 'Detail', admin_inventory_path(inventory),
-                              class: 'btn btn-sm btn-info' %>
-      </td>
-      <td>
-        DELETE
-      </td>
+      <%= render 'action_control', inventory: inventory %>
     </tr>
     <% end %>
   </tbody>
 </table>
+
+
+
+
