@@ -88,12 +88,14 @@ ActiveRecord::Schema.define(version: 60) do
     t.string "name"
     t.string "email"
     t.string "cell_number"
+    t.integer "member_id"
     t.string "password_digest"
     t.string "remember_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cell_number"], name: "index_users_on_cell_number", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["member_id"], name: "index_users_on_member_id", unique: true
   end
 
   add_foreign_key "categorizations", "categories"

@@ -98,6 +98,22 @@ RSpec.describe User, type: :model do
         expect(@user_with_email).not_to be_valid
       end
     end
+    
+    describe 'member_id' do
+      it "must be present at all time" do
+        old_member_id = user.member_id
+        user.member_id = nil
+        user.save
+        expect(user.member_id).not_to eq(old_member_id)
+      end
+      
+      it "can be changed" do
+        expect(user).to be_valid
+        user.member_id = 111_111
+        user.save
+        expect(user.member_id).to eq(111111)
+      end
+    end
   end
 
   describe '#create_digest' do
@@ -143,6 +159,14 @@ RSpec.describe User, type: :model do
       expect(user.customer?).to be_truthy
       customer = Customer.find(user.id)
       expect(customer).to be_an_instance_of(Customer)
+    end
+  end
+  
+  describe '#assign_member_id' do
+    it "assigns a six digit member id upon creation" do
+      user = FactoryGirl.create(:user)
+      expect(user.member_id).to be_present
+      expect(user.member_id.to_s.length).to eq(6)
     end
   end
 end
