@@ -1,1 +1,70 @@
-<%= @inventory.inspect %>
+<%= provide :title, 'Inventory Detail' %>
+
+<div class="d-flex justify-content-start mb-3">
+  <div class="p-2">
+    <%= link_to admin_inventories_path, class: 'btn btn-secondary' do %>
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="jumbotron">
+      <h4 class="mb-3 mt-0">Basic Properties</h4>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">ID</th>
+            <td><%= @inventory.id %></td>
+          </tr>
+          <tr>
+            <th scope="row">Status</th>
+            <td><%= @inventory.status %></td>
+          </tr>
+          <tr>
+            <th scope="row">Last Update</th>
+            <td><%= @inventory.updated_at %></td>
+          </tr>
+          <tr>
+            <th scope="row">Created At</th>
+            <td><%= @inventory.created_at %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="jumbotron">
+      <h4 class="mb-3 mt-0">Product Information</h4>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Product ID</th>
+            <td>
+              <%= link_to @inventory.product.id,
+                          admin_product_path(@inventory.product) %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Product Name</th>
+            <td><%= link_to @inventory.product.name, @inventory.product %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="jumbotron">
+      <h4 class="mb-3 mt-0">Customer Information</h4>
+      <table class="table">
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
