@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin Inventory Dashboard', type: :feature do
+describe 'Inventory CURD', type: :feature do
 
   let(:admin) { FactoryGirl.create(:admin) }
 
@@ -92,7 +92,6 @@ describe 'Admin Inventory Dashboard', type: :feature do
     end
 
     it 'cannot delete undestroyable inventory' do
-      sold_id = @sold.id
       click_on("btn_del_#{@sold.id}")
       within("#delete_#{@sold.id}") do
         expect(page).not_to have_content('Confirm')

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Admin Category Dashboard', type: :feature do
+describe 'Category CRUD', type: :feature do
 
   let(:admin) { FactoryGirl.create(:admin) }
 
