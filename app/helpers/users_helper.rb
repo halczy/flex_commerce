@@ -5,25 +5,27 @@ module UsersHelper
   MEMBER_ID = /\A^\d{6}$|^\d{3}-\d{3}$\z/
 
   def convert_ident
+    @ctl = controller.controller_name.singularize.to_sym
+
     if is_email?
-      params[:customer][:email] = params[:customer][:ident]
+      params[@ctl][:email] = params[@ctl][:ident]
     elsif is_cell_number?
-      params[:customer][:cell_number] = params[:customer][:ident]
+      params[@ctl][:cell_number] = params[@ctl][:ident]
     elsif is_member_id?
-      params[:customer][:member_id] = params[:customer][:ident].delete('-')
+      params[@ctl][:member_id] = params[@ctl][:ident].delete('-')
     end
   end
 
   def is_email?
-    EMAIL_REGEX.match?(params[:customer][:ident])
+    EMAIL_REGEX.match?(params[@ctl][:ident])
   end
 
   def is_cell_number?
-    CN_CELLULAR.match?(params[:customer][:ident])
+    CN_CELLULAR.match?(params[@ctl][:ident])
   end
   
   def is_member_id?
-    MEMBER_ID.match?(params[:customer][:ident])
+    MEMBER_ID.match?(params[@ctl][:ident])
   end
 
 end

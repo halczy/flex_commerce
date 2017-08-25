@@ -27,7 +27,14 @@ RSpec.describe CustomersController, type: :controller do
         expect(response).to redirect_to(customer_path(Customer.last))
         expect(assigns(:customer).cell_number).to eq('17612345678')
       end
-
+      
+      it 'does not allow user to create account by member id' do
+        post :create, params: { customer: { ident: '123456',
+                                            password: 'example',
+                                            password_confirmation: 'example' } }
+        expect(response).to render_template(:new)
+      end
+            
       it 'catches invalid ident' do
         post :create, params: { customer: { ident: 'i23ji4of3',
                                             password: '',

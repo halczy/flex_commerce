@@ -25,6 +25,19 @@ RSpec.describe SessionsController, type: :controller do
     
       expect(session[:user_id]).to eq(user.id)
     end
+    
+    it "allows sign in through member id" do
+      post :create, params: { session: { ident: user.member_id,
+                                         password: 'example' } }
+      expect(session[:user_id]).to eq(user.id)
+    end
+    
+    it "allows sign in through dashed member id" do
+      dashed_member_id = user.member_id.to_s.insert(3, '-')
+      post :create, params: { session: { ident: dashed_member_id,
+                                         password: 'example' } }
+      expect(session[:user_id]).to eq(user.id)
+    end
 
     it 'sets cookies and remember_token when remember me is selected' do
       post :create, params: { session: { ident: user.email,

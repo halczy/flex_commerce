@@ -26,6 +26,25 @@ describe 'sign in as customer' do
     expect(page.current_path).to eq(customer_path(customer))
     expect(page).to have_content(customer.cell_number)
   end
+  
+  it 'allows sign in with member id' do
+    fill_in "session[ident]", with: customer.member_id
+    fill_in "session[password]", with: customer.password
+    click_button 'Submit'
+
+    expect(page.current_path).to eq(customer_path(customer))
+    expect(page).to have_content(customer.cell_number)
+  end
+  
+  it 'allows sign in with dashed member id' do
+    dashed_member_id = customer.member_id.to_s.insert(3, '-')
+    fill_in "session[ident]", with: dashed_member_id
+    fill_in "session[password]", with: customer.password
+    click_button 'Submit'
+
+    expect(page.current_path).to eq(customer_path(customer))
+    expect(page).to have_content(customer.cell_number)
+  end
 
   it 'displays error messages when using invalid information' do
     click_button 'Submit'

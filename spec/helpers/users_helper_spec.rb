@@ -2,10 +2,12 @@ require 'rails_helper'
 
 RSpec.describe UsersHelper, type: :helper do
 
+  before { assign(:ctl, :customer) }
+  
   describe '#is_email?' do
     it 'returns true when ident params is an email address' do
       allow(helper).to receive(:params)
-                       .and_return({ customer: { ident: 'example@email.com' } })
+                      .and_return({ customer: { ident: 'example@email.com' } })
       expect(helper.is_email?).to be_truthy
     end
 
@@ -51,6 +53,11 @@ RSpec.describe UsersHelper, type: :helper do
   end
 
   describe '#convert_ident' do
+    
+    before { allow(controller).to receive(:controller_name).and_return('customers')  }
+    
+    # controller.stub(:controller_name).and_return('customers')
+    
     it 'converts ident to email' do
       allow(helper).to receive(:params)
                        .and_return({ customer: { ident: 'example@email.com' } })

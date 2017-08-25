@@ -9,7 +9,7 @@
       <div class="card-body">
         <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
           <div class="form-group">
-            <%= f.text_field :ident, placeholder: 'Email / Cell Phone Number',
+            <%= f.text_field :ident, placeholder: 'Email / Phone Number / Member ID',
                              class: 'form-control' %>
           </div>
 
