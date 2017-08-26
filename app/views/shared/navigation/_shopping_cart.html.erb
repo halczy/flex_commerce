@@ -3,7 +3,7 @@
       <i class="fa fa-shopping-cart fa-lg mr-1" aria-hidden="true"></i>
       <span class="ml-1 badge badge-pill badge-light">
         <% if (current_user && current_user.cart) || session[:cart_id] %>
-          <%= current_cart.inventories.count %> C
+          <%= current_cart.inventories.count %>
         <% else %>
           0
         <% end %>

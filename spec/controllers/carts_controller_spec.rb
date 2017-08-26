@@ -16,12 +16,14 @@ RSpec.describe CartsController, type: :controller do
       post :add, params: { pid: @product.id }
       expect(flash[:success]).to be_present
       expect(response).to redirect_to(cart_path(Cart.last))
+      expect(assigns(:current_cart).inventories.count).to eq(1)
     end
 
     it 'adds product inventories and redirect to cart#show as guest' do
       post :add, params: { pid: @product.id }
       expect(flash[:success]).to be_present
       expect(response).to redirect_to(cart_path(Cart.last))
+      expect(assigns(:current_cart).inventories.count).to eq(1)
     end
 
     it 'returns flash warning if product is requested stock is not available' do
