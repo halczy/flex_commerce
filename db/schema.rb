@@ -10,11 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 60) do
+ActiveRecord::Schema.define(version: 70) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "carts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -98,6 +106,7 @@ ActiveRecord::Schema.define(version: 60) do
     t.index ["member_id"], name: "index_users_on_member_id", unique: true
   end
 
+  add_foreign_key "carts", "users"
   add_foreign_key "categorizations", "categories"
   add_foreign_key "categorizations", "products"
   add_foreign_key "inventories", "products"
