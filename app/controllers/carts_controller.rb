@@ -24,7 +24,7 @@ class CartsController < ApplicationController
     end
 
     def set_product
-      @quantity = params[:quantity].to_i || 1
+      @quantity = params[:quantity].present? ? params[:quantity].to_i : 1
       @product = Product.find_by(id: params[:pid])
       unless @product
         flash[:danger] = "The product you have selected is unavailable."

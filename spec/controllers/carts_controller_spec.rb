@@ -38,6 +38,12 @@ RSpec.describe CartsController, type: :controller do
         expect(flash[:danger]).to be_present
         expect(response).to redirect_to(root_url)
       end
+
+      it 'does not set quantity to zero when it is empty' do
+        post :add, params: { pid: @product.id, quantity: "" }
+        expect(flash[:success]).to be_present
+        expect(Cart.last.inventories.count).to eq(1)
+      end
     end
   end
 
