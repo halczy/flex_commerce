@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   root 'home#index'
 
-  get 'index',  to: 'home#index'
-  get 'signup', to: 'customers#new'
-  get 'signin', to: 'sessions#new'
+  get  'index',     to: 'home#index'
+  get  'signup',    to: 'customers#new'
+  get  'signin',    to: 'sessions#new'
+  get  'cart',      to: 'carts#show'
+  post 'cart/add',  to: 'carts#add',     as: :add_to_cart
 
   resources :customers,  only: [:new, :create, :show]
   resources :sessions,   only: [:new, :create, :destroy]

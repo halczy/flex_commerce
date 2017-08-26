@@ -6,7 +6,10 @@ class User < ApplicationRecord
   # Password & Tokens
   has_secure_password
   has_secure_token :remember_token
-  
+
+  # Realtionships
+  has_one :cart
+
   # Callbacks
   before_save :downcase_email
   before_validation :assign_member_id
@@ -18,7 +21,7 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   validates :cell_number, format: { with: CN_CELLULAR },
                           uniqueness: true, allow_nil: true
-  validates :member_id, presence: true, uniqueness: true, 
+  validates :member_id, presence: true, uniqueness: true,
                         inclusion: { in: 100_000..999_999 }
   validates :password, length: { minimum: 6, maximum: 50 }, allow_blank: true
 
@@ -26,7 +29,7 @@ class User < ApplicationRecord
   attribute :ident, :string
   attribute :remember_token, :string
 
-  
+
   def self.create_digest(token)
     BCrypt::Password.create(token, cost: 10)
   end
@@ -69,16 +72,16 @@ class User < ApplicationRecord
     def downcase_email
       email.downcase! unless email.nil?
     end
-    
+
     def assign_member_id
       return if self.member_id
       begin
         self.member_id = SecureRandom.random_number(1_000_000)
-        raise unless self.member_id >= 100_000 
+        raise unless self.member_id >= 100_000
         raise if User.where(member_id: self.member_id).exists?
       rescue
         retry
       end
     end
-    
+
 end

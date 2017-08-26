@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 70) do
 
   create_table "carts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
-    t.integer "status"
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_carts_on_user_id"
@@ -59,11 +59,13 @@ ActiveRecord::Schema.define(version: 70) do
   create_table "inventories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "product_id"
+    t.uuid "cart_id"
     t.integer "status"
     t.datetime "purchased_at"
     t.datetime "returned_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_inventories_on_cart_id"
     t.index ["product_id"], name: "index_inventories_on_product_id"
     t.index ["user_id"], name: "index_inventories_on_user_id"
   end
@@ -109,6 +111,7 @@ ActiveRecord::Schema.define(version: 70) do
   add_foreign_key "carts", "users"
   add_foreign_key "categorizations", "categories"
   add_foreign_key "categorizations", "products"
+  add_foreign_key "inventories", "carts"
   add_foreign_key "inventories", "products"
   add_foreign_key "inventories", "users"
 end

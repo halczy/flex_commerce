@@ -1,6 +1,8 @@
 puts 'SEED: Seed file is running......'
 
 # CLEAN UP
+Cart.destroy_all
+puts 'CART: Clear old cart data'
 User.destroy_all
 puts 'USER: Clear old user data'
 Inventory.destroy_all
@@ -131,7 +133,7 @@ end
 puts "IMAGE: #{Image.count} images created."
 
 # INVENTORIES
-1000.times do 
+1000.times do
   Product.all.sample.inventories.create(status: Random.rand(0..5))
 end
 puts "INVENTORY: #{Inventory.count} inventories created."

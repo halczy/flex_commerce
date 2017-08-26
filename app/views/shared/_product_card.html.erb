@@ -24,7 +24,8 @@
         <% end %>
       </div>
       <div class="col mb-1 mt-1">
-        <%= link_to '#', class: 'btn btn-success btn-block' do %>
+        <%= link_to add_to_cart_path(pid: product.id), method: :post,
+                    class: 'btn btn-success btn-block' do %>
           <i class="fa fa-cart-plus" aria-hidden="true"></i>
           Add to Cart
         <% end %>
