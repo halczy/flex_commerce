@@ -107,20 +107,20 @@ RSpec.describe Cart, type: :model do
       end
     end
 
-    context '#price_subtotal' do
+    context '#subtotal' do
       it 'returns the selected product subtotal' do
-        expect(@cart.price_subtotal(@product_1)).to eq(@product_1.price_member * 2)
-        expect(@cart.price_subtotal(@product_2)).to eq(@product_2.price_member * 4)
+        expect(@cart.subtotal(@product_1)).to eq(@product_1.price_member * 2)
+        expect(@cart.subtotal(@product_2)).to eq(@product_2.price_member * 4)
       end
     end
 
-    context '#price_total', skip_before: true do
+    context '#total', skip_before: true do
       it 'returns the total price of all products in cart' do
         product_1 = FactoryGirl.create(:product, price_member: 11)
         product_2 = FactoryGirl.create(:product, price_member: 22)
         2.times { FactoryGirl.create(:inventory, cart: cart, product: product_1 ) }
         4.times { FactoryGirl.create(:inventory, cart: cart, product: product_2 ) }
-        expect(cart.price_total.to_i).to eq(110)
+        expect(cart.total.to_i).to eq(110)
       end
     end
   end

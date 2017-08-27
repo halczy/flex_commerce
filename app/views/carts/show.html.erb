@@ -1,9 +1,37 @@
-<h1>Cart#show</h1>
-<p>Find me in app/views/cart/show.html.erb</p>
+<%= provide :title, 'Shopping Cart' %>
+<%= render 'shared/header_breadcrumb', title: yield(:title) %>
 
+<div class="container mt-3">
+  <table class="table table-hover table-responsive">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @current_cart.products.each do |product| %>
+        <%= render 'product', product: product %>
+      <% end %>
+      <tr>
+        <td colspan="2"></td>
+        <td class="text-right">
+          <strong>Total: </strong>
+        </td>
+        <td colspan="2">
+          <%= humanized_money_with_symbol @current_cart.total %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-<%= @current_cart.inspect %>
-<hr>
-<%= current_cart.inspect %>
-<hr>
-<%= session[:cart_id] %>
+  <div class="d-flex justify-content-end mt-5">
+    <div class="p-2">
+      <%= link_to 'Checkout', '#', class: 'btn btn-success btn-lg',
+                                   data: { disable_with: 'Checking Out...'} %>
+    </div>
+  </div>
+</div>

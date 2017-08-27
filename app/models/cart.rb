@@ -36,12 +36,12 @@ class Cart < ApplicationRecord
     inventories.where(object.class.name.downcase => object)
   end
 
-  def price_subtotal(product)
+  def subtotal(product)
     product_inventories(product).count * product.price_member
   end
 
-  def price_total
-    products.inject(0) {|sum, product| sum + price_subtotal(product) }
+  def total
+    products.inject(0) {|sum, product| sum + subtotal(product) }
   end
 
 end
