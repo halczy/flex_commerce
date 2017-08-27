@@ -11,7 +11,7 @@ class CartsController < ApplicationController
     else
       flash[:warning] = "The product you have selected is out of stock"
     end
-    redirect_back_or cart_path(@current_cart)
+    redirect_back_or cart_path
   end
 
   def show
