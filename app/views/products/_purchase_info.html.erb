@@ -19,11 +19,16 @@
 <%= form_with(url: add_to_cart_path, local: true, class: 'form-inline') do |form| %>
   <div class="input-group mr-3" style="width: 8rem;">
     <span class="input-group-btn">
-      <button class="btn btn-secondary" type="button">-</button>
+      <button class="btn btn-secondary" type="button" onclick="decrementValue()">
+        -
+      </button>
     </span>
-    <%= form.text_field :quantity, value: 1, class: 'form-control text-center' %>
+    <%= form.text_field :quantity, value: 1, id: 'quantity',
+                        class: 'form-control text-center' %>
     <span class="input-group-btn">
-      <button class="btn btn-secondary" type="button">+</button>
+      <button class="btn btn-secondary" type="button" onclick="incrementValue()">
+        +
+      </button>
     </span>
   </div>
   <%= form.hidden_field :pid, value: @product.id %>
