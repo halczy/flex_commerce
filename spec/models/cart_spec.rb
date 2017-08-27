@@ -46,7 +46,6 @@ RSpec.describe Cart, type: :model do
       expect(cart.inventories).to be_empty
       expect(@product.inventories.available.count).to eq(3)
     end
-
   end
 
   describe 'migrate session cart to user cart' do

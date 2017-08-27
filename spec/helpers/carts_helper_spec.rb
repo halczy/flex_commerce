@@ -34,7 +34,7 @@ RSpec.describe CartsHelper, type: :helper do
     end
   end
 
-  describe '#temp' do
+  describe '#find_or_create_session_cart' do
     it 'create a new cart if there is no cart session' do
       expect(helper.find_or_create_session_cart).to be_an_instance_of(Cart)
     end
@@ -50,6 +50,27 @@ RSpec.describe CartsHelper, type: :helper do
       expect(new_cart).to be_an_instance_of(Cart)
       expect(new_cart.id).not_to eq(55588154545454)
       expect(session[:cart_id]).to eq(new_cart.id)
+    end
+  end
+
+  describe '#organize_cart' do
+    it 'does not run if session cart_id is not present' do
+      FactoryGirl.create(:cart, user: customer)
+      helper.organize_cart(customer)
+      expect(customer.cart).not_to be_changed
+    end
+
+    it 'runs cart migration is valid session cart id is present' do
+      session[:cart_id] = cart.id
+      FactoryGirl.create(:inventory, cart: cart)
+      expect(organize_cart(customer)).to be_truthy
+      expect(customer.cart.inventories.count).to eq(1)
+    end
+
+    it 'cleans up session cart id' do
+      session[:cart_id] = cart.id
+      organize_cart(customer)
+      expect(session[:cart_id]).to be_nil
     end
   end
 

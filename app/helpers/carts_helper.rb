@@ -14,4 +14,18 @@ module CartsHelper
     cart
   end
 
+  def organize_cart(user)
+    if session[:cart_id]
+      session_cart = Cart.find_by(id: session[:cart_id])
+      session_cart.migrate_to(user) if session_cart
+      session_cart_cleanup
+    end
+  end
+
+  private
+
+    def session_cart_cleanup
+      session.delete(:cart_id)
+    end
+
 end
