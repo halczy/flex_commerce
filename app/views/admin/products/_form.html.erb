@@ -102,7 +102,7 @@
       <%= f.collection_select :category_ids, Category.brand, :id, :name, {},
                               { multiple: true, class: 'form-control',
                                 id: 'brand_cat_sel' } %>
-    </div>    
+    </div>
     <div class="col-sm-4">
       <%= f.label :category_ids, "Select Special Categoies" %>
       <%= f.collection_select :category_ids, Category.special, :id, :name, {},
@@ -125,3 +125,7 @@
                data: { disable_with: "One Moment..." } %>
 
 <% end %>
+
+<%= stylesheet_link_tag    'trix', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'trix', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'product_form', 'data-turbolinks-track': 'reload' %>

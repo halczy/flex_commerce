@@ -15,5 +15,4 @@
 //= require jquery
 //= require popper.js/dist/umd/popper.min
 //= require bootstrap/dist/js/bootstrap.min
-//= require trix
-//= require_tree .
+

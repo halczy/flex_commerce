@@ -12,6 +12,5 @@
  *
  *= require bootstrap/dist/css/bootstrap.min
  *= require_tree .
- *= require trix
- *= require_self
+ *= require theme
  */
