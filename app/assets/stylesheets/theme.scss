@@ -31,6 +31,12 @@ $dark-gray: #444444;
   display: block;
 }
 
+//
+.turbolinks-progress-bar {
+  height: 5px;
+  background-color: green;
+}
+
 // General Styles
 body {
   background-color: #ffffff;
