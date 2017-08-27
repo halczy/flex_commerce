@@ -14,6 +14,7 @@ class CustomersController < UsersController
     if @customer.save
       flash[:success] = 'Your account has been created successfully.'
       helpers.login(@customer)
+      helpers.organize_cart(@customer)
       redirect_to @customer
     else
       render :new

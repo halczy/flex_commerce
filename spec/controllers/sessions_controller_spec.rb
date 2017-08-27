@@ -15,23 +15,23 @@ RSpec.describe SessionsController, type: :controller do
     it 'allows sign in through email' do
       post :create, params: { session: { ident: user.email,
                                          password: 'example' } }
-    
+
       expect(session[:user_id]).to eq(user.id)
     end
 
     it 'allows sign in through cell number' do
       post :create, params: { session: { ident: user.cell_number,
                                          password: 'example' } }
-    
+
       expect(session[:user_id]).to eq(user.id)
     end
-    
+
     it "allows sign in through member id" do
       post :create, params: { session: { ident: user.member_id,
                                          password: 'example' } }
       expect(session[:user_id]).to eq(user.id)
     end
-    
+
     it "allows sign in through dashed member id" do
       dashed_member_id = user.member_id.to_s.insert(3, '-')
       post :create, params: { session: { ident: dashed_member_id,
@@ -43,7 +43,7 @@ RSpec.describe SessionsController, type: :controller do
       post :create, params: { session: { ident: user.email,
                                          password: 'example',
                                          remember_me: '1' }}
-    
+
       expect(cookies.signed['user_id']).to eql(user.id)
       expect(cookies['remember_token']).not_to be_nil
     end
@@ -51,7 +51,7 @@ RSpec.describe SessionsController, type: :controller do
     it 'goes back to login form when invalid ident is provided' do
       post :create, params: { session: { ident: 'wrong ident',
                                          password: 'wrong pass' } }
-    
+
       expect(response).to render_template(:new)
       expect(flash[:warning]).to eq('Incorrect account / password combination.')
       expect(session[:user_id]).to be_nil
@@ -60,10 +60,16 @@ RSpec.describe SessionsController, type: :controller do
     it 'goes back to login form when incorrect password is provided' do
       post :create, params: { session: { ident: user.email,
                                          password: 'wrongpass' } }
-    
+
       expect(response).to render_template(:new)
       expect(flash[:warning]).to eq('Incorrect account / password combination.')
       expect(session[:user_id]).to be_nil
+    end
+
+    it 'cleans up session cart_id' do
+      session[:cart_id] = FactoryGirl.create(:cart).id
+      post :create, params: { session: { ident: user.email, password: 'example' } }
+      expect(session[:cart_id]).to be_nil
     end
   end
 

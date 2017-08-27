@@ -1,14 +1,15 @@
 class SessionsController < ApplicationController
   # Filters
   before_action :ident_finder, only: [:create]
-  
+
   def new
   end
 
   def create
     if @user && @user.authenticate(params[:session][:password])
       helpers.login(@user)
-      params[:session][:remember_me] == '1' ? helpers.remember(@user) : ""
+      helpers.organize_cart(@user)
+      helpers.remember(@user) if params[:session][:remember_me] == '1'
       redirect_by_class(@user)
     else
       flash.now[:warning] = 'Incorrect account / password combination.'
@@ -24,7 +25,7 @@ class SessionsController < ApplicationController
   end
 
   private
-  
+
     def ident_finder
       helpers.convert_ident
       @user = User.find_by(email: params[:session][:email]) ||
