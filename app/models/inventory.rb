@@ -1,6 +1,7 @@
 class Inventory < ApplicationRecord
   # Relationships
   belongs_to :user, touch: true, optional: true
+  belongs_to :cart, touch: true, optional: true
   belongs_to :product, touch: true
 
   # Scope | Enum

@@ -13,4 +13,13 @@ class Cart < ApplicationRecord
     end
   end
 
+  def migrate_to(user)
+    return true if inventories.empty?
+    user_cart = Cart.find_or_create_by(user: user)
+    transfer_invs_to(user_cart)
+  end
+
+  def transfer_invs_to(target_cart)
+    inventories.update(cart: target_cart)
+  end
 end

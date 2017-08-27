@@ -5,6 +5,7 @@ RSpec.describe Cart, type: :model do
   let(:cart)      { FactoryGirl.create(:cart) }
   let(:product)   { FactoryGirl.create(:product) }
   let(:inventory) { FactoryGirl.create(:inventory) }
+  let(:customer)  { FactoryGirl.create(:customer) }
 
   describe 'creation' do
     it 'can be created' do
@@ -46,6 +47,32 @@ RSpec.describe Cart, type: :model do
       expect(@product.inventories.available.count).to eq(3)
     end
 
+  end
+
+  describe 'migrate session cart to user cart' do
+    it 'returns true if session cart is empty' do
+      existing_user_cart = FactoryGirl.build_stubbed(:cart, user: customer)
+      expect(cart.migrate_to(customer)).to be_truthy
+      expect(existing_user_cart).not_to be_changed
+    end
+
+    it 'creates a user cart and transfer inventories' do
+      session_cart = FactoryGirl.create(:cart)
+      3.times { FactoryGirl.create(:inventory, cart: session_cart) }
+      expect(customer.cart).to be_nil
+      expect(session_cart.migrate_to(customer)).to be_truthy
+      expect(customer.cart).to be_truthy
+      expect(customer.cart.inventories.count).to eq(3)
+    end
+
+    it 'transfer inventories to existing user cart with inventories' do
+      session_cart = FactoryGirl.create(:cart)
+      user_cart = FactoryGirl.create(:cart, user: customer)
+      2.times { FactoryGirl.create(:inventory, cart: session_cart) }
+      3.times { FactoryGirl.create(:inventory, cart: user_cart) }
+      expect(session_cart.migrate_to(customer)).to be_truthy
+      expect(customer.cart.inventories.count).to eq(5)
+    end
   end
 
 end
