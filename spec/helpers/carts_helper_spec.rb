@@ -72,5 +72,11 @@ RSpec.describe CartsHelper, type: :helper do
       organize_cart(customer)
       expect(session[:cart_id]).to be_nil
     end
+
+    it 'destroy the session cart' do
+      session[:cart_id] = cart.id
+      expect(organize_cart(customer)).to be_truthy
+      expect{ cart.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
   end
 end

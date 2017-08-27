@@ -18,13 +18,14 @@ module CartsHelper
     if session[:cart_id]
       session_cart = Cart.find_by(id: session[:cart_id])
       session_cart.migrate_to(user) if session_cart
-      session_cart_cleanup
+      cart_session_cleanup
+      session_cart.destroy
     end
   end
 
   private
 
-    def session_cart_cleanup
+    def cart_session_cleanup
       session.delete(:cart_id)
     end
 
