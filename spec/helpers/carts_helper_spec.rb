@@ -73,5 +73,4 @@ RSpec.describe CartsHelper, type: :helper do
       expect(session[:cart_id]).to be_nil
     end
   end
-
 end

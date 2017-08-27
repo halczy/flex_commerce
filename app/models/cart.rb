@@ -22,4 +22,26 @@ class Cart < ApplicationRecord
   def transfer_invs_to(target_cart)
     inventories.update(cart: target_cart)
   end
+
+  def products
+    # @products = inventories.map(&:product).uniq
+    @products = Product.where(id: inventories.pluck(:product_id)).uniq
+  end
+
+  def product_inventories(product)
+    inventories.where(product: product)
+  end
+
+  def inventories_by(object)
+    inventories.where(object.class.name.downcase => object)
+  end
+
+  def price_subtotal(product)
+    product_inventories(product).count * product.price_member
+  end
+
+  def price_total
+    products.inject(0) {|sum, product| sum + price_subtotal(product) }
+  end
+
 end

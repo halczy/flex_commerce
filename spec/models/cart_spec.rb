@@ -74,4 +74,55 @@ RSpec.describe Cart, type: :model do
     end
   end
 
+  describe 'shopping cart display methods' do
+
+    before do |example|
+      unless example.metadata[:skip_before]
+        @cart = cart
+        @product_1 = FactoryGirl.create(:product)
+        @product_2 = FactoryGirl.create(:product)
+        2.times { FactoryGirl.create(:inventory, cart: @cart, product: @product_1 ) }
+        4.times { FactoryGirl.create(:inventory, cart: @cart, product: @product_2 ) }
+        3.times { FactoryGirl.create(:inventory, cart: @cart) }
+      end
+    end
+
+    context '#products' do
+      it 'returns an array of products in cart' do
+        expect(@cart.products.count).to eq(5)
+      end
+    end
+
+    context '#product_inventories' do
+      it 'returns the selected product inventories in cart' do
+        expect(@cart.product_inventories(@product_1).count).to eq(2)
+        expect(@cart.product_inventories(@product_2).count).to eq(4)
+      end
+    end
+
+    context '#inventories_by' do
+      it 'returns the selected product inventories in cart' do
+        expect(@cart.inventories_by(@product_1).count).to eq(2)
+        expect(@cart.inventories_by(@product_2).count).to eq(4)
+      end
+    end
+
+    context '#price_subtotal' do
+      it 'returns the selected product subtotal' do
+        expect(@cart.price_subtotal(@product_1)).to eq(@product_1.price_member * 2)
+        expect(@cart.price_subtotal(@product_2)).to eq(@product_2.price_member * 4)
+      end
+    end
+
+    context '#price_total', skip_before: true do
+      it 'returns the total price of all products in cart' do
+        product_1 = FactoryGirl.create(:product, price_member: 11)
+        product_2 = FactoryGirl.create(:product, price_member: 22)
+        2.times { FactoryGirl.create(:inventory, cart: cart, product: product_1 ) }
+        4.times { FactoryGirl.create(:inventory, cart: cart, product: product_2 ) }
+        expect(cart.price_total.to_i).to eq(110)
+      end
+    end
+  end
+
 end
