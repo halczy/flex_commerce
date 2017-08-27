@@ -5,7 +5,7 @@
 <hr>
 <p>Brand: <%= @product.categories.brands.first.try(:name) %></p>
 <p>SKU: <%= @product.sku %></p>
-<p>Availability: In Stock</p>
+<p>Availability: <%= @product.inventories.available.count %></p>
 <hr>
 <p>
   Market Price:
@@ -16,16 +16,18 @@
   <strong><%= humanized_money_with_symbol(@product.price_member) %></strong>
 </p>
 
-<form class="form-inline">
+<%= form_with(url: add_to_cart_path, local: true, class: 'form-inline') do |form| %>
   <div class="input-group mr-3" style="width: 8rem;">
     <span class="input-group-btn">
       <button class="btn btn-secondary" type="button">-</button>
     </span>
-    <input type="text" class="form-control" value="1">
+    <%= form.text_field :quantity, value: 1, class: 'form-control text-center' %>
     <span class="input-group-btn">
       <button class="btn btn-secondary" type="button">+</button>
     </span>
   </div>
-  <button type="submit" class="btn btn-primary">Add to Cart</button>
-</form>
+  <%= form.hidden_field :pid, value: @product.id %>
+  <%= form.submit 'Add to Cart', class: 'btn btn-primary' %>
+<% end %>
+
 
