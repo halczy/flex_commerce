@@ -46,6 +46,14 @@ RSpec.describe Cart, type: :model do
       expect(cart.inventories).to be_empty
       expect(@product.inventories.available.count).to eq(3)
     end
+
+    it 'adds inventories to cart if product has loose inv. propertiy' do
+      loose_product = FactoryGirl.create(:product, strict_inventory: false)
+      FactoryGirl.create(:inventory, product: loose_product)
+      expect(cart.add(loose_product, 10)).to be_truthy
+      expect(cart.inventories.count).to eq(10)
+      expect(loose_product.inventories.available.count).to eq(0)
+    end
   end
 
   describe 'migrate session cart to user cart' do

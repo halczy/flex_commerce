@@ -10,6 +10,9 @@ class Cart < ApplicationRecord
     inventories = product.inventories.available.limit(quantity.to_i)
     if inventories.count == quantity
       inventories.update(cart_id: id, status: 1)
+    elsif !product.strict_inventory
+      product.add_inventories(quantity - inventories.count)
+      inventories.update(cart_id: id, status: 1)
     end
   end
 
