@@ -72,7 +72,7 @@ RSpec.describe CustomersController, type: :controller do
           expect(assigns(:customer).customer?).to be_truthy
         end
 
-        it 'cleans up session cart_id' do
+        it 'cleans up session cart_id', create_cart: true do
           expect(session[:cart_id]).to be_nil
         end
       end
