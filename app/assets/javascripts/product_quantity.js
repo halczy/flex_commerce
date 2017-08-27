@@ -8,6 +8,6 @@ function incrementValue() {
 function decrementValue() {
   var value = parseInt(document.getElementById('quantity').value, 10);
   value = isNaN(value) ? 0 : value;
-  value--;
+  if (value > 1) { value--; }
   document.getElementById('quantity').value = value;
 }
