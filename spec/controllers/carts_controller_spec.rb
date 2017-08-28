@@ -61,7 +61,7 @@ RSpec.describe CartsController, type: :controller do
     end
 
     it 'removes inventories by product' do
-      delete :remove, params: { pid: @product.id, quantity: '0' }
+      delete :remove, params: { pid: @product.id }
       expect(flash[:success]).to be_present
       expect(response).to redirect_to(cart_path)
       expect(@cart.reload.inventories).to be_empty
@@ -76,6 +76,36 @@ RSpec.describe CartsController, type: :controller do
     it 'redirects back to page that init the delete action' do
       request.env['HTTP_REFERER'] = root_url
       delete :remove, params: { pid: @product.id, return_back: true }
+      expect(response).to redirect_to(root_url)
+    end
+  end
+
+  describe 'PATCH update' do
+
+    before do
+      @product = FactoryGirl.create(:product, strict_inventory: false)
+      @cart = FactoryGirl.create(:cart)
+      5.times { FactoryGirl.create(:inventory, cart: @cart, product: @product,
+                                               status: 1) }
+      session[:cart_id] = @cart.id
+    end
+
+    it 'redirects action to GET add with diff quantity' do
+      patch :update, params: { pid: @product.id, quantity: "7" }
+      expect(flash[:success]).to be_present
+      expect(@cart.inventories.reload.count).to eq(7)
+    end
+
+    it 'redirects action to DELETE remove with diff quantity' do
+      patch :update, params: { pid: @product.id, quantity: "2" }
+      expect(flash[:success]).to be_present
+      expect(@cart.inventories.reload.count).to eq(2)
+    end
+
+    it 'redirects back to the path that init. the request' do
+      request.env['HTTP_REFERER'] = root_url
+      patch :update, params: { pid: @product.id, quantity: "3", return_back: true }
+      expect(@cart.inventories.reload.count).to eq(3)
       expect(response).to redirect_to(root_url)
     end
   end

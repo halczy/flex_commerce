@@ -165,4 +165,20 @@ RSpec.describe Cart, type: :model do
     end
   end
 
+  describe '#product_inventories_diff' do
+    before do
+      @product = FactoryGirl.create(:product)
+      @cart = FactoryGirl.create(:cart)
+      3.times { FactoryGirl.create(:inventory, cart: @cart, product: @product) }
+    end
+
+    it 'returns positive integer if quantity is more than current' do
+      expect(@cart.product_inventories_diff(@product, 5)).to eq(2)
+    end
+
+    it 'returns negative integer if quantity is less than current' do
+      expect(@cart.product_inventories_diff(@product, 1)).to eq(-2)
+    end
+  end
+
 end

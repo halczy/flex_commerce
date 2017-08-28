@@ -1,7 +1,10 @@
 class CartsController < ApplicationController
   # Filters
-  before_action :smart_return, only: [ :add, :remove ]
-  before_action :set_product,  only: [ :add, :remove ]
+  before_action :smart_return,            except: [ :show ]
+  before_action :set_product,             except: [ :show ]
+  after_action  :validate_product,        only: [ :set_product ]
+  before_action :set_quantity_for_add,    only: [ :add ]
+  before_action :set_quantity_for_remove, only: [ :remove ]
   before_action :set_cart
 
 
@@ -20,7 +23,20 @@ class CartsController < ApplicationController
     else
       flash[:danger] = "Fail to remove #{@product.name} from you shopping cart."
     end
+
     redirect_back_or cart_path
+  end
+
+  def update
+    @quantity =  @current_cart
+                    .product_inventories_diff(@product, params[:quantity].to_i)
+
+    if @quantity > 0
+      add
+    elsif @quantity < 0
+      @quantity = -@quantity
+      remove
+    end
   end
 
   def show
@@ -33,13 +49,22 @@ class CartsController < ApplicationController
     end
 
     def set_product
-      @quantity = params[:quantity].present? ? params[:quantity].to_i : 1
       @product = Product.find_by(id: params[:pid])
       unless @product
         flash[:danger] = "The product you have selected is unavailable."
         redirect_to root_url
-      #elsif @product.
-        # TODO: PREVENT USER FROM ADDING DISABLED PRODUCT
       end
+    end
+
+    def validate_product
+      # TODO: PREVENT USER FROM ADDING DISABLED PRODUCT
+    end
+
+    def set_quantity_for_add
+      @quantity = params[:quantity].present? ? params[:quantity].to_i : 1
+    end
+
+    def set_quantity_for_remove
+      @quantity = params[:quantity].to_i
     end
 end

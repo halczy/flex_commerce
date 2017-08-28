@@ -41,6 +41,11 @@ class Cart < ApplicationRecord
     inventories.where(product: product)
   end
 
+  def product_inventories_diff(product, quantity)
+    current_invs_count = product_inventories(product).count
+    quantity - current_invs_count
+  end
+
   def inventories_by(object)
     inventories.where(object.class.name.downcase => object)
   end
