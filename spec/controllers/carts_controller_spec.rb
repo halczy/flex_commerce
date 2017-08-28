@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe CartsController, type: :controller do
 
   let(:customer) { FactoryGirl.create(:customer) }
+  let(:cart) { FactoryGirl.create(:cart) }
 
   describe 'POST add' do
 
@@ -46,6 +47,36 @@ RSpec.describe CartsController, type: :controller do
         expect(flash[:success]).to be_present
         expect(Cart.last.inventories.count).to eq(1)
       end
+    end
+  end
+
+  describe 'DELETE remove' do
+
+    before do
+      @product = FactoryGirl.create(:product)
+      @cart = FactoryGirl.create(:cart)
+      3.times { FactoryGirl.create(:inventory, cart: @cart, product: @product,
+                                               status: 1) }
+      session[:cart_id] = @cart.id
+    end
+
+    it 'removes inventories by product' do
+      delete :remove, params: { pid: @product.id, quantity: '0' }
+      expect(flash[:success]).to be_present
+      expect(response).to redirect_to(cart_path)
+      expect(@cart.reload.inventories).to be_empty
+    end
+
+    it 'removes specified amount of inventories' do
+      delete :remove, params: { pid: @product.id, quantity: '2' }
+      expect(flash[:success]).to be_present
+      expect(@cart.reload.inventories.count).to eq(1)
+    end
+
+    it 'redirects back to page that init the delete action' do
+      request.env['HTTP_REFERER'] = root_url
+      delete :remove, params: { pid: @product.id, return_back: true }
+      expect(response).to redirect_to(root_url)
     end
   end
 

@@ -23,7 +23,9 @@
         </p>
       </div>
       <div class="modal-footer">
-        <%= link_to 'Confirm', '#', method: :delete,
+        <%= link_to 'Confirm', remove_from_cart_path(pid: product.id,
+                                quantity: @current_cart.inventories_by(product).count),
+                               method: :delete,
                                id: "confirm_del_#{product.id}",
                                class: 'btn btn-danger' %>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">

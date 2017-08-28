@@ -1,7 +1,7 @@
 class CartsController < ApplicationController
   # Filters
-  before_action :smart_return, only: [:add]
-  before_action :set_product, only: [:add]
+  before_action :smart_return, only: [ :add, :remove ]
+  before_action :set_product,  only: [ :add, :remove ]
   before_action :set_cart
 
 
@@ -10,6 +10,15 @@ class CartsController < ApplicationController
       flash[:success] = "Successfully added #{@product.name} to your shopping cart."
     else
       flash[:warning] = "The product you have selected is out of stock"
+    end
+    redirect_back_or cart_path
+  end
+
+  def remove
+    if @current_cart.remove(@product, @quantity)
+      flash[:success] = "Successfully removed #{@product.name} from your shopping cart."
+    else
+      flash[:danger] = "Fail to remove #{@product.name} from you shopping cart."
     end
     redirect_back_or cart_path
   end
