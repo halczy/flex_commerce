@@ -23,7 +23,6 @@ class CartsController < ApplicationController
     else
       flash[:danger] = "Fail to remove #{@product.name} from you shopping cart."
     end
-
     redirect_back_or cart_path
   end
 

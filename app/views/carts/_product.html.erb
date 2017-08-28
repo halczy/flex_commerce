@@ -7,7 +7,7 @@
     <%= humanized_money_with_symbol product.price_member %>
   </td>
   <td>
-    <%= @current_cart.inventories_by(product).count %>
+    <%= render 'quantity_control', product: product %>
   </td>
   <td>
     <%= humanized_money_with_symbol @current_cart.subtotal(product) %>

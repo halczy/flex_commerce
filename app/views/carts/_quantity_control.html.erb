@@ -1,0 +1,16 @@
+<div class="input-group mr-3" style="width: 8rem;">
+  <span class="input-group-btn">
+    <%= link_to '-', remove_from_cart_path(pid: product.id, quantity: 1),
+                     class: 'btn btn-sm btn-secondary', method: :delete %>
+  </span>
+  <%= form_with(url: cart_path, local: true, class: 'form-inline', method: :patch) do |form| %>
+      <%= form.text_field :quantity, value: @current_cart.product_inventories(product).count,
+                          id: 'quantity', onchange: "this.form.submit();",
+                          class: 'form-control form-control-sm text-center' %>
+    <%= form.hidden_field :pid, value: product.id %>
+  <% end %>
+  <span class="input-group-btn">
+    <%= button_to '+', add_to_cart_path(pid: product.id),
+                       class: 'btn btn-sm btn-secondary' %>
+  </span>
+</div>
