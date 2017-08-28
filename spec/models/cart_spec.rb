@@ -56,6 +56,38 @@ RSpec.describe Cart, type: :model do
     end
   end
 
+  describe 'remove product inventoires' do
+
+    before do
+      @product = FactoryGirl.create(:product)
+      @cart = FactoryGirl.create(:cart)
+      5.times { FactoryGirl.create(:inventory, status: 1, product: @product,
+                                   cart: @cart) }
+    end
+
+    it 'removes one inventory from proudct' do
+      expect(@cart.remove(@product, 1)).to be_truthy
+      expect(@cart.inventories.count).to eq(4)
+      expect(@product.inventories.count).to eq(5)
+    end
+
+    it 'removes specified inventories from product' do
+      expect(@cart.remove(@product, 3)).to be_truthy
+      expect(@cart.inventories.count).to eq(2)
+    end
+
+    it 'removes all inventories under product by default' do
+      expect(@cart.remove(@product)).to be_truthy
+      expect(@cart.inventories.count).to eq(0)
+      expect(@product.inventories.sample.status).to eq('unsold')
+    end
+
+    it 'removes all inventories when specified inv. is larger than actual inv.' do
+      expect(@cart.remove(@product, 99999)).to be_truthy
+      expect(@cart.inventories.count).to eq(0)
+    end
+  end
+
   describe 'migrate session cart to user cart' do
     it 'returns true if session cart is empty' do
       existing_user_cart = FactoryGirl.build_stubbed(:cart, user: customer)

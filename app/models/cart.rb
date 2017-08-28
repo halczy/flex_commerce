@@ -16,6 +16,12 @@ class Cart < ApplicationRecord
     end
   end
 
+  def remove(product, quantity = 0)
+    invs = product_inventories(product)
+    invs = invs.limit(quantity) if quantity > 0
+    invs.each { |inv| inv.update(cart_id: nil, status: 0) }
+  end
+
   def migrate_to(user)
     return true if inventories.empty?
     user_cart = Cart.find_or_create_by(user: user)
