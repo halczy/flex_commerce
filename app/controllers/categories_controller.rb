@@ -1,13 +1,12 @@
-class CategoriesController < ApplicationController
+  class CategoriesController < ApplicationController
 
   def show
     @category = Category.find(params[:id])
     available_products = @category.products
 
-    if params[:price_sort] && params[:price_sort] == 'asc'
-      available_products = available_products.order(price_member_cents: :asc)
-    elsif params[:price_sort] && params[:price_sort] == 'desc'
-      available_products = available_products.order(price_member_cents: :desc)
+    if params[:price_sort]
+      sort = params[:price_sort] == 'asc' ? 'asc' : 'desc'
+      available_products = available_products.order("price_member_cents #{sort}")
     end
 
     @products = available_products.page(params[:page]).per(6)
