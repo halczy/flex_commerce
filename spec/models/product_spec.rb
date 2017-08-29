@@ -309,4 +309,43 @@ RSpec.describe Product, type: :model do
     end
   end
 
+  describe 'destroy and disable' do
+
+    before do
+      @product = product
+      FactoryGirl.create(:inventory, product: @product)
+      FactoryGirl.create(:inventory, product: @product, status: 1)
+      FactoryGirl.create(:inventory, product: @product, status: 2)
+    end
+
+    context '#destroyable' do
+      it 'returns true if product does not have undestroyable inventories' do
+        expect(product.destroyable?).to be_truthy
+      end
+
+      it 'returns false if product have undestroyable inventories' do
+        FactoryGirl.create(:inventory, product: @product, status: 3)
+        expect(@product.destroyable?).to be_falsey
+      end
+    end
+
+    context '#disable' do
+      it 'disables undestroyable product' do
+        FactoryGirl.create(:inventory, product: @product, status: 3)
+        expect(@product.disable).to be_truthy
+        expect(@product.disabled?).to be_truthy
+      end
+
+      it 'disables destroyable product' do
+        expect(@product.disable).to be_truthy
+        expect(@product.disabled?).to be_truthy
+      end
+
+      it 'removes all destroyable inventoires' do
+        expect(@product.disable).to be_truthy
+        expect(@product.inventories).to be_empty
+      end
+    end
+  end
+
 end

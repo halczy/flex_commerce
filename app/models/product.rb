@@ -63,6 +63,15 @@ class Product < ApplicationRecord
     amount.to_i.times { remove_inventory }
   end
 
+  def destroyable?
+    inventories.undestroyable.count <= 0
+  end
+
+  def disable
+    disabled!
+    force_remove_inventories
+  end
+
   private
 
     def extract_images
