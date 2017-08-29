@@ -141,6 +141,7 @@ RSpec.describe Admin::ProductsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
+
     before { @product = product }
 
     it 'destroys the requested product' do
@@ -152,6 +153,28 @@ RSpec.describe Admin::ProductsController, type: :controller do
     it "redirects to the product list" do
       delete :destroy, params: { id: @product.id }
       expect(response).to redirect_to(admin_products_path)
+    end
+
+    context 'with inventories' do
+      before do
+        FactoryGirl.create(:inventory, product: @product, status: 0)
+        FactoryGirl.create(:inventory, product: @product, status: 2)
+      end
+
+      it 'also destroys inventories by default' do
+        delete :destroy, params: { id: @product.id }
+        expect(Inventory.all).to be_empty
+        expect(flash[:success]).to be_present
+      end
+
+      it 'disables product if undestroyable' do
+        FactoryGirl.create(:inventory, product: @product, status: 3)
+        FactoryGirl.create(:inventory, product: @product, status: 5)
+        delete :destroy, params: { id: @product.id }
+        expect(@product.reload.disabled?).to be_truthy
+        expect(@product.inventories.count).to eq(2)
+        expect(response).to redirect_to(admin_products_path)
+      end
     end
   end
 

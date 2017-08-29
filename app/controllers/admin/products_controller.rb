@@ -51,10 +51,14 @@ class Admin::ProductsController < Admin::AdminController
 
   def destroy
     @product.unassociate_images
-    if @product.destroy
-      flash[:success] = "Product was successfully destroyed."
-      redirect_to admin_products_path
+    if @product.destroyable?
+      @product.destroy
+      flash[:success] = "Successfully destroyed the product."
+    else
+      @product.disable
+      flash[:success] = "Successfully disabled the product."
     end
+    redirect_to admin_products_path
   end
 
   def search
