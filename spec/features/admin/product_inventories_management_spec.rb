@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 describe 'Product Inventories Management' do
-  
+
   let(:admin) { FactoryGirl.create(:admin) }
   before { feature_signin_as(admin) }
-  
+
   describe 'inventory management' do
-    
+
     before do
       @product_unsold = FactoryGirl.create(:product)
       @product_sold = FactoryGirl.create(:product)
@@ -76,8 +76,10 @@ describe 'Product Inventories Management' do
       click_on 'Manage Inventories'
       click_on 'Delete Inventories'
       click_on 'force delete.'
-      within('#force_delete_inventories') do
-        fill_in 'amount', with: 7
+      begin
+        within('#force_delete_inventories') { fill_in 'amount', with: 7 }
+      rescue Capybara::ElementNotFound => e
+        sleep 1
       end
       evaluate_script 'document.getElementById("f_del_inv").submit();'
 
@@ -90,9 +92,7 @@ describe 'Product Inventories Management' do
       click_on 'Manage Inventories'
       click_on 'Delete Inventories'
       click_on 'force delete.'
-      within('#force_delete_inventories') do
-        fill_in 'amount', with: 5
-      end
+      within('#force_delete_inventories') { fill_in 'amount', with: 5 }
       evaluate_script 'document.getElementById("f_del_inv").submit();'
 
       expect(page).to have_content('Total (5)')
