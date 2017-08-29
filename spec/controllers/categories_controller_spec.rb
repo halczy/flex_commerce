@@ -22,6 +22,13 @@ RSpec.describe CategoriesController, type: :controller do
       expect(assigns(:products)).to match_array([product])
     end
 
+    it 'does not reutrn disabled products' do
+      disabled_product = FactoryGirl.create(:product, status: 0)
+      Categorization.create(category: category, product: disabled_product)
+      get :show, params: { id: category.id }
+      expect(assigns(:products)).to be_empty
+    end
+
     context 'sort products' do
       before do
         @p_expensive = FactoryGirl.create(:product, price_member: 99999)
@@ -51,9 +58,11 @@ RSpec.describe CategoriesController, type: :controller do
       @product_1 = FactoryGirl.create(:product, name: 'Red Sun')
       @product_2 = FactoryGirl.create(:product, name: 'Blue Sun')
       @product_3 = FactoryGirl.create(:product, name: 'Green Sun')
+      @product_disabled = FactoryGirl.create(:product, name: 'Disabled Sun', status: 0)
       @category = FactoryGirl.create(:category)
       Categorization.create(category: @category, product: @product_1)
       Categorization.create(category: @category, product: @product_2)
+      Categorization.create(category: @category, product: @product_disabled)
     end
 
     context 'full products quick search' do
