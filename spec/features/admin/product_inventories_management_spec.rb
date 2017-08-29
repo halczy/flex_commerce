@@ -92,7 +92,11 @@ describe 'Product Inventories Management' do
       click_on 'Manage Inventories'
       click_on 'Delete Inventories'
       click_on 'force delete.'
-      within('#force_delete_inventories') { fill_in 'amount', with: 5 }
+      begin
+        within('#force_delete_inventories') { fill_in 'amount', with: 5 }
+      rescue Capybara::ElementNotFound => e
+        sleep 1
+      end
       evaluate_script 'document.getElementById("f_del_inv").submit();'
 
       expect(page).to have_content('Total (5)')
