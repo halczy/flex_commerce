@@ -17,10 +17,14 @@
 
   <div class="row form-group">
     <div class="col-sm-6">
-          <%= f.label :status, 'Status' %>
-          <%= f.select :status, options_for_select([['Active',  'active'],
-                                                    ['Disable', 'disabled']]),
-                                {}, class: 'form-control' %>
+      <%= f.label :status, 'Status' %>
+      <%= f.select :status, options_for_select([['Active',  'active'],
+                                                ['Disable', 'disabled']]),
+                            {}, class: 'form-control' %>
+    </div>
+    <div class="col-sm-6">
+      <%= f.label :weight, 'Weight (KG)' %>
+      <%= f.number_field :weight, step: :any, class: 'form-control' %>
     </div>
   </div>
 

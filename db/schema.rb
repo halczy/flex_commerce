@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 70) do
     t.string "name"
     t.string "tag_line"
     t.string "sku"
+    t.decimal "weight"
     t.text "introduction"
     t.text "description"
     t.text "specification"
@@ -91,7 +92,13 @@ ActiveRecord::Schema.define(version: 70) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_products_on_name"
+    t.index ["price_market_cents"], name: "index_products_on_price_market_cents"
+    t.index ["price_member_cents"], name: "index_products_on_price_member_cents"
+    t.index ["price_reward_cents"], name: "index_products_on_price_reward_cents"
     t.index ["sku"], name: "index_products_on_sku"
+    t.index ["status"], name: "index_products_on_status"
+    t.index ["tag_line"], name: "index_products_on_tag_line"
+    t.index ["weight"], name: "index_products_on_weight"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

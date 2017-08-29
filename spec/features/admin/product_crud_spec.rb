@@ -20,6 +20,7 @@ describe 'Product CRUD', type: :feature do
       fill_in "product[tag_line]", with: "Test Product Tag Line"
       select 'Active', from: 'product[status]'
       fill_in "product[sku]", with: "TESTSKU1234567890"
+      fill_in "product[weight]", with: 12.34
       select "True", from: "product[strict_inventory]"
       select "False", from: "product[digital]"
       first('input#introduction', visible: false).set("Test Introduction")
@@ -36,6 +37,7 @@ describe 'Product CRUD', type: :feature do
       expect(page).to have_content('Test Product Tag Line')
       expect(page).to have_content('Active')
       expect(page).to have_content('TESTSKU1234567890')
+      expect(page).to have_content('12.34')
       expect(page).to have_content('Strict Inventory True')
       expect(page).to have_content('Digital Product False')
       expect(page).to have_content('Test Introduction')
@@ -71,6 +73,7 @@ describe 'Product CRUD', type: :feature do
     it 'can create product with images attached' do
       click_on('New Product')
       fill_in "product[name]", with: "Test Product with Images"
+      fill_in "product[weight]", with: 12.34
       attach_file('product[images_attributes][0][image]', 'spec/support/files/img_1.jpeg')
       fill_in "product[images_attributes][0][title]", with: "Test Image 1"
       click_on('Create Product')
@@ -106,6 +109,7 @@ describe 'Product CRUD', type: :feature do
       fill_in "product[tag_line]", with: "EDIT Product Tag Line"
       select 'Disable', from: 'product[status]'
       fill_in "product[sku]", with: "TESTEDITSKU1234567890"
+      fill_in "product[weight]", with: 56.78
       select "False", from: "product[strict_inventory]"
       select "True", from: "product[digital]"
       first('input#introduction', visible: false).set("EDIT Test Introduction")
@@ -122,6 +126,7 @@ describe 'Product CRUD', type: :feature do
       expect(page).to have_content('EDIT Product Tag Line')
       expect(page).to have_content('Disabled')
       expect(page).to have_content('TESTEDITSKU1234567890')
+      expect(page).to have_content('56.78')
       expect(page).to have_content('Strict Inventory False')
       expect(page).to have_content('Digital Product True')
       expect(page).to have_content('EDIT Test Introduction')
@@ -146,6 +151,7 @@ describe 'Product CRUD', type: :feature do
     it 'can edit existing image properties' do
       click_on('New Product')
       fill_in "product[name]", with: "Test Product with Images"
+      fill_in "product[weight]", with: 12.34
       attach_file('product[images_attributes][0][image]', 'spec/support/files/img_1.jpeg')
       fill_in "product[images_attributes][0][title]", with: "Test Image 1"
       click_on('Create Product')
@@ -218,6 +224,7 @@ describe 'Product CRUD', type: :feature do
         visit admin_products_path
         click_on('New Product')
         fill_in "product[name]", with: "Test Product with Images"
+        fill_in "product[weight]", with: 12.34
         attach_file('product[images_attributes][0][image]', 'spec/support/files/img_1.jpeg')
         fill_in "product[images_attributes][0][title]", with: "Test Image 1"
         click_on('Create Product')

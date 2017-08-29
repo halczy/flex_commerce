@@ -71,6 +71,7 @@ RSpec.describe Admin::ProductsController, type: :controller do
     product_params = { product: { name: 'Name',
                                  tag_line: 'Tag Line',
                                  sku: 'SKU',
+                                 weight: 12.34,
                                  introduction: 'Introduction',
                                  description: 'Description',
                                  specification: 'Specification',

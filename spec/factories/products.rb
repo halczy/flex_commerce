@@ -3,6 +3,7 @@ FactoryGirl.define do
     name { Faker::Commerce.product_name }
     tag_line { Faker::Coffee.origin }
     sku { Faker::Number.unique.number(10) }
+    weight { Faker::Number.decimal(2) }
     introduction { Faker::Coffee.notes }
     description { Faker::Lorem.paragraph }
     specification { Faker::Lorem.paragraph }
