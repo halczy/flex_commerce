@@ -14,6 +14,7 @@ describe 'category_grid' do
     @product_1 = FactoryGirl.create(:product, price_member: 900.01)
     @product_2 = FactoryGirl.create(:product, price_member: 100.02)
     @product_3 = FactoryGirl.create(:product, price_member: 500.03)
+    @product_4 = FactoryGirl.create(:product, price_member: 700.03, status: 0)
     Categorization.create(category: @cat, product: @product_1)
     Categorization.create(category: @cat, product: @product_2)
     Categorization.create(category: @cat, product: @product_3)
@@ -31,6 +32,7 @@ describe 'category_grid' do
       expect(page).to have_content(@product_1.name)
       expect(page).to have_content(@product_2.name)
       expect(page).to have_content(@product_3.name)
+      expect(page).not_to have_content(@product_4.name)
     end
 
     it 'displays products price' do
@@ -39,6 +41,7 @@ describe 'category_grid' do
       expect(page).to have_content(@product_1.price_member)
       expect(page).to have_content(@product_2.price_member)
       expect(page).to have_content(@product_3.price_member)
+      expect(page).not_to have_content(@product_4.price_member)
       expect(page).to have_content('Detail', count: 3)
       expect(page).to have_content('Add to Cart', count: 3)
     end
@@ -67,7 +70,6 @@ describe 'category_grid' do
   context 'side card - refine' do
     it 'displays brands with product count in regular category' do
       visit(category_path(@cat))
-
       expect(page).to have_content("#{@brand.name} (#{@brand.products.count}")
     end
 
