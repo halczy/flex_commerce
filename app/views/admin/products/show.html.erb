@@ -37,6 +37,10 @@
             <td><%= @product.sku %></td>
           </tr>
           <tr>
+            <th scope="row">Status</th>
+            <td><%= @product.status.capitalize %></td>
+          </tr>
+          <tr>
             <th scope="row">Strict Inventory</th>
             <td><%= @product.strict_inventory.to_s.try(:capitalize) %></td>
           </tr>

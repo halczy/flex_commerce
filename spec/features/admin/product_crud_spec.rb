@@ -18,6 +18,7 @@ describe 'Product CRUD', type: :feature do
 
       fill_in "product[name]", with: "Test Product Name"
       fill_in "product[tag_line]", with: "Test Product Tag Line"
+      select 'Active', from: 'product[status]'
       fill_in "product[sku]", with: "TESTSKU1234567890"
       select "True", from: "product[strict_inventory]"
       select "False", from: "product[digital]"
@@ -33,6 +34,7 @@ describe 'Product CRUD', type: :feature do
       expect(page.current_path).to eq(admin_product_path(Product.last))
       expect(page).to have_content('Test Product Name')
       expect(page).to have_content('Test Product Tag Line')
+      expect(page).to have_content('Active')
       expect(page).to have_content('TESTSKU1234567890')
       expect(page).to have_content('Strict Inventory True')
       expect(page).to have_content('Digital Product False')
@@ -102,6 +104,7 @@ describe 'Product CRUD', type: :feature do
 
       fill_in "product[name]", with: "EDIT Product Name"
       fill_in "product[tag_line]", with: "EDIT Product Tag Line"
+      select 'Disable', from: 'product[status]'
       fill_in "product[sku]", with: "TESTEDITSKU1234567890"
       select "False", from: "product[strict_inventory]"
       select "True", from: "product[digital]"
@@ -117,6 +120,7 @@ describe 'Product CRUD', type: :feature do
       expect(page.current_path).to eq(admin_product_path(@product))
       expect(page).to have_content('EDIT Product Name')
       expect(page).to have_content('EDIT Product Tag Line')
+      expect(page).to have_content('Disabled')
       expect(page).to have_content('TESTEDITSKU1234567890')
       expect(page).to have_content('Strict Inventory False')
       expect(page).to have_content('Digital Product True')
@@ -193,6 +197,18 @@ describe 'Product CRUD', type: :feature do
       click_on("btn_del_#{@product.id}")
       click_on("confirm_del_#{@product.id}")
       expect{@image.reload}.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'disables product when delete is not possible' do
+      FactoryGirl.create(:inventory, product: @product, status: 5)
+      visit admin_products_path
+      click_on("btn_del_#{@product.id}")
+      click_on("confirm_del_#{@product.id}")
+      within("#delete_#{@product.id}") do
+        expect(page).to have_content('disable')
+      end
+      expect(@product.reload.disabled?).to be_truthy
+      expect(@product.inventories.reload.count).to eq(1)
     end
   end
 
