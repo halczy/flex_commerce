@@ -1,8 +1,13 @@
 class ProductsController < ApplicationController
-
+  before_action :set_product
+  
   def show
-    @product = Product.find(params[:id])
     @images = @product.images.attachments.order(display_order: :asc)
   end
 
+  private
+    
+    def set_product
+      @product = Product.find(params[:id])
+    end
 end

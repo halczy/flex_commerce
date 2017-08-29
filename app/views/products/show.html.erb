@@ -9,12 +9,12 @@
         <%= render 'images_display', images: @images, cache: true %>
       </div>
       <div class="col-12 col-md-6">
-        <%= render 'purchase_info' %>
+        <%= render 'purchase_info', product: @product %>
       </div>
     </div>
     <div class="row">
       <div class="col-12">
-        <%= render 'descriptions' %>
+        <%= render 'descriptions', product: @product %>
       </div>
     </div>
   </div>

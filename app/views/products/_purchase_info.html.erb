@@ -1,19 +1,19 @@
-<h3><%= @product.name %></h3>
-<h5 class="text-muted"><%= @product.tag_line %></h5>
+<h3><%= product.name %></h3>
+<h5 class="text-muted"><%= product.tag_line %></h5>
 <hr>
-<%= @product.introduction.html_safe %>
+<%= product.introduction.html_safe %>
 <hr>
-<p>Brand: <%= @product.categories.brands.first.try(:name) %></p>
-<p>SKU: <%= @product.sku %></p>
-<p>Availability: <%= @product.inventories.available.count %></p>
+<p>Brand: <%= product.categories.brands.first.try(:name) %></p>
+<p>SKU: <%= product.sku %></p>
+<p>Availability: <%= product.inventories.available.count %></p>
 <hr>
 <p>
   Market Price:
-  <s><%= humanized_money_with_symbol(@product.price_market) %></s>
+  <s><%= humanized_money_with_symbol(product.price_market) %></s>
 </p>
 <p class="font-weight-bold">
   Member Price:
-  <strong><%= humanized_money_with_symbol(@product.price_member) %></strong>
+  <strong><%= humanized_money_with_symbol(product.price_member) %></strong>
 </p>
 
 <%= form_with(url: add_to_cart_path, local: true, class: 'form-inline') do |form| %>
@@ -31,8 +31,8 @@
       </button>
     </span>
   </div>
-  <%= form.hidden_field :pid, value: @product.id %>
-  <% if @product.in_stock? %>
+  <%= form.hidden_field :pid, value: product.id %>
+  <% if product.in_stock? %>
     <%= form.submit 'Add to Cart', class: 'btn btn-primary' %>
   <% else %>
     <%= link_to 'Out of Stock', '#', class: 'btn btn-primary disabled' %>
