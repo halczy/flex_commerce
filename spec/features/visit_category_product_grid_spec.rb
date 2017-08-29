@@ -20,6 +20,9 @@ describe 'category_grid' do
     Categorization.create(category: @cat, product: @product_3)
     Categorization.create(category: @brand, product: @product_1)
     Categorization.create(category: @brand, product: @product_2)
+    FactoryGirl.create(:inventory, product: @product_1)
+    FactoryGirl.create(:inventory, product: @product_2)
+    FactoryGirl.create(:inventory, product: @product_3)
   end
 
   context 'product' do
@@ -84,6 +87,7 @@ describe 'category_grid' do
       20.times do
         product = FactoryGirl.create(:product)
         Categorization.create(category: @cat, product: product)
+        FactoryGirl.create(:inventory, product: product)
       end
     end
 

@@ -73,6 +73,10 @@ class Product < ApplicationRecord
     force_remove_inventories
   end
 
+  def in_stock?
+    inventories.available.count > 0
+  end
+
   private
 
     def extract_images

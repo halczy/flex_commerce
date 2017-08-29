@@ -6,4 +6,10 @@ document.addEventListener("turbolinks:load", function() {
           $("#wrapper").toggleClass("toggled");
   });
 
+  // Enable Tooltip
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
+
 });

@@ -307,6 +307,16 @@ RSpec.describe Product, type: :model do
         expect(Product.out_of_stock).to be_empty
       end
     end
+
+    context 'in_stock?' do
+      it 'returns true if product is in stock' do
+        expect(@product_in_stock.in_stock?).to be_truthy
+      end
+
+      it 'returns false if product is not in stock' do
+        expect(@product_oos_destroyable.in_stock?).to be_falsey
+      end
+    end
   end
 
   describe 'destroy and disable' do

@@ -32,7 +32,11 @@
     </span>
   </div>
   <%= form.hidden_field :pid, value: @product.id %>
-  <%= form.submit 'Add to Cart', class: 'btn btn-primary' %>
+  <% if @product.in_stock? %>
+    <%= form.submit 'Add to Cart', class: 'btn btn-primary' %>
+  <% else %>
+    <%= link_to 'Out of Stock', '#', class: 'btn btn-primary disabled' %>
+  <% end %>
 <% end %>
 
 

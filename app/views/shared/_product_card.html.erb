@@ -24,10 +24,17 @@
         <% end %>
       </div>
       <div class="col mb-1 mt-1">
-        <%= link_to add_to_cart_path(pid: product.id), method: :post,
-                    class: 'btn btn-success btn-block' do %>
-          <i class="fa fa-cart-plus" aria-hidden="true"></i>
-          Add to Cart
+        <% if product.in_stock? %>
+          <%= button_to add_to_cart_path(pid: product.id),
+                      class: 'btn btn-success btn-block' do %>
+            <i class="fa fa-cart-plus" aria-hidden="true"></i>
+            Add to Cart
+          <% end %>
+        <% else %>
+          <%= link_to '#', class: 'btn btn-success btn-block disabled' do %>
+            <i class="fa fa-cart-plus" aria-hidden="true"></i>
+            Out of Stock
+          <% end %>
         <% end %>
       </div>
     </div>

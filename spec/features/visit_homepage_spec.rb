@@ -34,6 +34,8 @@ describe 'frontpage displays feature products' do
     @product_2 = FactoryGirl.create(:product)
     Categorization.create(category: feature_cat, product: @product_1)
     Categorization.create(category: feature_cat, product: @product_2)
+    FactoryGirl.create(:inventory, product: @product_1)
+    FactoryGirl.create(:inventory, product: @product_2)
     Image.create(title: "Placeholder Image",
                  in_use: true,
                  source_channel: 0,
