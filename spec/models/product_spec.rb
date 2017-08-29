@@ -8,6 +8,13 @@ RSpec.describe Product, type: :model do
     it 'can be created' do
       expect(product).to be_valid
     end
+
+    it 'has the correct default properties' do
+      p = FactoryGirl.build_stubbed(:product)
+      expect(p.strict_inventory).to be_truthy
+      expect(p.digital).to be_falsey
+      expect(p.active?).to be_truthy
+    end
   end
 
   describe 'validation' do

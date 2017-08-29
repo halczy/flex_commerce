@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 70) do
     t.string "cost_currency", default: "CNY", null: false
     t.boolean "strict_inventory", default: true
     t.boolean "digital", default: false
+    t.integer "status", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_products_on_name"

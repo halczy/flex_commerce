@@ -10,7 +10,5 @@ FactoryGirl.define do
     price_member { Faker::Number.decimal(3, 2).to_f }
     price_reward { Faker::Number.decimal(2, 2).to_f }
     cost { Faker::Number.decimal(1, 2).to_f }
-    strict_inventory true
-    digital false
   end
 end

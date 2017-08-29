@@ -13,6 +13,7 @@ class CreateProducts < ActiveRecord::Migration[5.1]
       t.monetize :cost
       t.boolean  :strict_inventory, default: true
       t.boolean  :digital,          default: false
+      t.integer  :status,           default: 1
 
       t.timestamps
     end
