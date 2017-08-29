@@ -91,8 +91,8 @@ describe 'Product Inventories Management' do
       click_on "#{@product_sold.name}"
       click_on 'Manage Inventories'
       click_on 'Delete Inventories'
-      click_on 'force delete.'
       begin
+        click_on 'force delete.'
         within('#force_delete_inventories') { fill_in 'amount', with: 5 }
       rescue Capybara::ElementNotFound => e
         sleep 1
