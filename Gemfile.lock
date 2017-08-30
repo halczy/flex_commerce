@@ -82,7 +82,7 @@ GEM
     dotenv-rails (2.2.1)
       dotenv (= 2.2.1)
       railties (>= 3.2, < 5.2)
-    down (4.0.1)
+    down (4.1.0)
     erubi (1.6.1)
     execjs (2.7.0)
     factory_girl (4.8.0)
@@ -212,6 +212,7 @@ GEM
       rspec-mocks (~> 3.6.0)
       rspec-support (~> 3.6.0)
     rspec-support (3.6.0)
+    ruby-progressbar (1.8.1)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
     sass (3.5.1)
@@ -305,6 +306,7 @@ DEPENDENCIES
   rails-controller-testing
   redis
   rspec-rails
+  ruby-progressbar
   sass-rails
   selenium-webdriver
   shrine
