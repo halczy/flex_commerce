@@ -2,7 +2,7 @@ namespace :geo do
   desc 'Import Chinese geographic data into geo model'
   task :import => :environment do
     # Task import progress
-    progressbar = ProgressBar.create(title: 'Importing Geo Data', total: 46177,
+    progressbar = ProgressBar.create(title: 'Importing Geo Data', total: 46180,
                                      format: '%a %B %p%% %t')
 
     # Get json file list from assets folder
