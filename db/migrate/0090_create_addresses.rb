@@ -6,7 +6,7 @@ class CreateAddresses < ActiveRecord::Migration[5.1]
       t.string :province_state
       t.string :city
       t.string :district
-      t.string :street_area
+      t.string :community
       t.string :street
       t.string :full_address
       t.references :addressable, polymorphic: true, index: true

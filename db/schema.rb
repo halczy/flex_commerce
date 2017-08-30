@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 90) do
     t.string "province_state"
     t.string "city"
     t.string "district"
-    t.string "street_area"
+    t.string "community"
     t.string "street"
     t.string "full_address"
     t.string "addressable_type"
