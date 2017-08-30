@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 70) do
+ActiveRecord::Schema.define(version: 80) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,16 @@ ActiveRecord::Schema.define(version: 70) do
     t.bigint "category_id"
     t.index ["category_id"], name: "index_categorizations_on_category_id"
     t.index ["product_id"], name: "index_categorizations_on_product_id"
+  end
+
+  create_table "geos", id: :string, force: :cascade do |t|
+    t.string "parent_id"
+    t.string "name"
+    t.integer "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_geos_on_name"
+    t.index ["parent_id"], name: "index_geos_on_parent_id"
   end
 
   create_table "images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
