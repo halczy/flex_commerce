@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     end
   end
   resources :products,   only: [:show]
+  resources :addresses
 
   namespace :admin do
     resources :dashboard, only: [:index]                          # Dashboard
