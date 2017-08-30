@@ -1,4 +1,4 @@
 namespace :geo do
   desc 'Download and import Chinese geographic data'
-  task :run => %w[ geo:download geo:import ]
+  task :setup => %w[ geo:fetch geo:import ]
 end

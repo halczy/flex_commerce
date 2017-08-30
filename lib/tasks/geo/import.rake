@@ -30,6 +30,8 @@ namespace :geo do
         end
       end
     end
+
+    progressbar.finish
   end
 
 end
