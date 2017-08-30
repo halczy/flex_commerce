@@ -18,8 +18,8 @@ namespace :geo do
     geo_files.each do |geo_file|
       file = File.read(geo_file)
       records = JSON.parse(file)
+      current_level += 1
       records.each do |record|
-        current_level += 1
         Geo.new.tap do |geo|
           geo.id = record['code']
           geo.name = record['name']
