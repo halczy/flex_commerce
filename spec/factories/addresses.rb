@@ -1,11 +1,11 @@
 FactoryGirl.define do
   factory :address do
     name 'Factory'
-    country_region '86'
-    province_state '440000'
-    city "440800"
-    district "440882"
-    street_area ""
+    community { FactoryGirl.create(:community).id }
+    district { Geo.find("#{community}").parent.id }
+    city { Geo.find("#{district}").parent.id }
+    province_state { Geo.find("#{city}").parent.id }
+    country_region { Geo.find("#{province_state}").parent.id }
     street ""
     full_address ""
   end
