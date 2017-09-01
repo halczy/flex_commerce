@@ -18,7 +18,11 @@ Rails.application.routes.draw do
     end
   end
   resources :products,   only: [:show]
-  resources :addresses
+  resources :addresses do
+    collection do
+        get 'update_selector'
+    end
+  end
 
   namespace :admin do
     resources :dashboard, only: [:index]                          # Dashboard

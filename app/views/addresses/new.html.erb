@@ -1,1 +1,29 @@
+<%= form_for @address do |f| %>
 
+  <%= f.select :province_state,
+               options_for_select(
+               @provinces.collect { |province| [province.name, province.id] }),
+               {}, { id: 'provinces_select' } %>
+
+
+  <%= f.select :city,
+               options_for_select(
+               @cities.collect { |city| [city.name, city.id] }),
+               {}, { id: 'cities_select' } %>
+
+  <%= f.select :district,
+               options_for_select(
+               @districts.collect { |district| [district.name, district.id] }),
+               {}, { id: 'districts_select' } %>
+
+  <%= f.select :community,
+               options_for_select(
+               @communities.collect { |community| [community.name, community.id] }),
+               {}, { id: 'communities_select' } %>
+
+  <%= f.submit %>
+
+  <div id="debug">
+    <%= debug(params) %>
+  </div>
+<% end %>

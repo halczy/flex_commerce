@@ -20,4 +20,8 @@ class Geo < ApplicationRecord
                 city:             2,
                 district:         3,
                 community:        4 }
+
+  def self.default_scope
+    order(id: :asc)
+  end
 end
