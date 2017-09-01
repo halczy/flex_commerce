@@ -1,4 +1,0 @@
-$('#districts_select').empty();
-<% @districts.each do |district| %>
-  $('#districts_select').append($('<option value="<%= district.id %>"><%= district.name %></option>'));
-<% end %>

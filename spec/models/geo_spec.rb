@@ -41,7 +41,7 @@ RSpec.describe Geo, type: :model do
     end
 
     it 'returns its children' do
-      expect(@parent.children).to eq([@child_1, @child_2])
+      expect(@parent.children).to match_array([@child_1, @child_2])
     end
   end
 
