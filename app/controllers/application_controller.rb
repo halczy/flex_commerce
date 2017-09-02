@@ -1,8 +1,18 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  # Rescue
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+
   # Filter
   before_action :page_speed
+
+  def render_404
+   respond_to do |format|
+      format.html { render file: "#{Rails.root}/public/404", layout: false, status: :not_found }
+      format.any { head :not_found }
+    end
+  end
 
   def authenticate_user
     unless helpers.signed_in?
