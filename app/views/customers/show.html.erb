@@ -1,1 +1,21 @@
-<%= current_user.inspect %>
+<%= provide :title, 'Dashboard' %>
+
+<%= render 'shared/header_breadcrumb', title: yield(:title) %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <%= render 'shared/navigation/customer/sidenav' %>
+    </div>
+    <div class="col-9">
+      <div class="jumbotron">
+        <%= current_user.inspect %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
