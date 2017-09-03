@@ -1,10 +1,10 @@
 <li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" 
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Account
   </a>
   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-    <a class="dropdown-item" href="#">Dashboard</a>
+    <%= link_to 'Dashboard', dashboard_path(current_user), class: 'dropdown-item' %>
     <a class="dropdown-item" href="#">Orders</a>
     <a class="dropdown-item" href="#">Financials</a>
     <% if current_user.admin? %>
@@ -12,7 +12,7 @@
       <%= link_to 'Admin Dashboard', admin_dashboard_index_path, class: 'dropdown-item' %>
     <% end %>
     <div class="dropdown-divider"></div>
-    <%= link_to 'Sign Out', session_path(current_user), method: :delete, 
+    <%= link_to 'Sign Out', session_path(current_user), method: :delete,
                                                         class: 'dropdown-item' %>
   </div>
 </li>

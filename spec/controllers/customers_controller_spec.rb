@@ -16,7 +16,7 @@ RSpec.describe CustomersController, type: :controller do
         post :create, params: { customer: { ident: 'ident_customer@example.com',
                                             password: 'example',
                                             password_confirmation: 'example' } }
-        expect(response).to redirect_to(customer_path(Customer.last))
+        expect(response).to redirect_to(dashboard_path(Customer.last))
         expect(assigns(:customer).email).to eq('ident_customer@example.com')
       end
 
@@ -24,7 +24,7 @@ RSpec.describe CustomersController, type: :controller do
         post :create, params: { customer: { ident: '17612345678',
                                             password: 'example',
                                             password_confirmation: 'example' } }
-        expect(response).to redirect_to(customer_path(Customer.last))
+        expect(response).to redirect_to(dashboard_path(Customer.last))
         expect(assigns(:customer).cell_number).to eq('17612345678')
       end
 
