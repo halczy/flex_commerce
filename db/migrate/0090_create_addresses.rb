@@ -2,6 +2,7 @@ class CreateAddresses < ActiveRecord::Migration[5.1]
   def change
     create_table :addresses, id: :uuid do |t|
       t.string :name
+      t.string :recipient
       t.string :country_region
       t.string :province_state
       t.string :city
