@@ -1,10 +1,8 @@
-$('#debug').empty();
-$('#debug').append("<%= j debug(params) %>");
-
 $('#cities_select').empty();
 <% @cities.each do |city| %>
   $('#cities_select').append($('<option <%= 'selected' if city == @city %> value="<%= city.id %>"><%= city.name %></option>'));
 <% end %>
+$('#cities_select').append($('<option value=""></option>'));
 
 $('#districts_select').empty();
 <% @districts.each do |district| %>

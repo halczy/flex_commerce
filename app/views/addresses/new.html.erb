@@ -1,29 +1,19 @@
-<%= form_for @address do |f| %>
+<%= provide :title, 'New Address' %>
 
-  <%= f.select :province_state,
-               options_for_select(
-               @provinces.collect { |province| [province.name, province.id] }),
-               {}, { id: 'provinces_select' } %>
+<%= render 'shared/header_breadcrumb', title: yield(:title) %>
 
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <%= render 'shared/navigation/customer/sidenav' %>
+    </div>
+    <div class="col-9">
 
-  <%= f.select :city,
-               options_for_select(
-               @cities.collect { |city| [city.name, city.id] }),
-               {}, { id: 'cities_select' } %>
-
-  <%= f.select :district,
-               options_for_select(
-               @districts.collect { |district| [district.name, district.id] }),
-               {}, { id: 'districts_select' } %>
-
-  <%= f.select :community,
-               options_for_select(
-               @communities.collect { |community| [community.name, community.id] }),
-               {}, { id: 'communities_select' } %>
-
-  <%= f.submit %>
-
-  <div id="debug">
-    <%= debug(params) %>
+      <div class="card">
+        <div class="card-body">
+          <%= render 'form' %>
+        </div>
+      </div>
+    </div>
   </div>
-<% end %>
+</div>

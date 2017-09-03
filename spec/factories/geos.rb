@@ -6,6 +6,13 @@ FactoryGirl.define do
     parent nil
   end
 
+  factory :china, class: Geo do
+    id '86'
+    name 'China'
+    level 0
+    parent nil
+  end
+
   factory :province, class: Geo do
     id { Faker::Number.number }
     name { Faker::Address.state }

@@ -62,7 +62,7 @@ puts "USER: #{Customer.count} customer created"
                   flavor: 1,
                   hide: false)
 end
-puts "CATEGORY: #{Category.brands.count} brand categories created."
+puts "CATEGORY: #{Category.brand.count} brand categories created."
 
 5.times do |n|
   current_cat = Category.create(name: Faker::Space.galaxy,

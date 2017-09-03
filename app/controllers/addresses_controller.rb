@@ -1,5 +1,7 @@
-class AddressesController < ApplicationController
+class AddressesController < UsersController
   # Filters
+  before_action :authenticate_user
+  before_action :set_user
   before_action :populate_selector, only: [:new, :update_selector]
 
   def new

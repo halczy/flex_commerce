@@ -77,11 +77,6 @@ RSpec.describe Category, type: :model do
         expect(Category.no_parent).to eq([@main_cat, @hidden_cat])
       end
 
-      it 'scopes normal categories' do
-        expect(Category.regular).not_to include(@special_cat)
-        expect(Category.regular).to include(@main_cat)
-      end
-
       it 'scopes special categories' do
         expect(Category.special).to eq([@special_cat])
       end
@@ -100,6 +95,11 @@ RSpec.describe Category, type: :model do
       it 'can set category as brand' do
         brand_cat = FactoryGirl.create(:brand)
         expect(brand_cat.flavor).to eq('brand')
+      end
+
+      it 'returns regular categories' do
+        expect(Category.regular).not_to include(@special_cat)
+        expect(Category.regular).to include(@main_cat)
       end
     end
   end

@@ -3,7 +3,7 @@
 <hr>
 <%= product.introduction.html_safe %>
 <hr>
-<p>Brand: <%= product.categories.brands.first.try(:name) %></p>
+<p>Brand: <%= product.categories.brand.first.try(:name) %></p>
 <p>SKU: <%= product.sku %></p>
 <p>Availability: <%= product.inventories.available.count %></p>
 <hr>

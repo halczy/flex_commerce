@@ -22,7 +22,7 @@ describe 'product detail' do
     expect(page).to have_content(@product_1.name)
     expect(page).to have_content(@product_1.tag_line)
     expect(page).to have_content(@product_1.sku)
-    expect(page).to have_content(@product_1.categories.brands.first.name)
+    expect(page).to have_content(@product_1.categories.brand.first.name)
     expect(page).to have_content(@product_1.introduction)
     expect(page).to have_content(@product_1.price_market)
     expect(page).to have_content(@product_1.price_member)

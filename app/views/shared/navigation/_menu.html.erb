@@ -4,7 +4,7 @@
     Brands
   </a>
   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-    <% Category.brands.order(display_order: :asc).each do |brand| %>
+    <% Category.brand.order(display_order: :asc).each do |brand| %>
       <% cache brand do %>
         <%= link_to brand.name, category_path(brand), class: 'dropdown-item' %>
       <% end %>

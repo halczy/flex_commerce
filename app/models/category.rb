@@ -11,8 +11,6 @@ class Category < ApplicationRecord
   validates :display_order, numericality: { greater_than_or_equal_to: 0 }
 
   # Scope / Enum
-  scope :regular,   -> { where(flavor: 0) }
-  scope :brands,    -> { where(flavor: 1) }
   scope :special,   -> { where("flavor >= ?", 2) }
   scope :top_level, -> { where(parent: nil, hide: false, flavor: 0) }
   scope :no_parent, -> { where(parent: nil, flavor: 0) }

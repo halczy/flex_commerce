@@ -63,19 +63,19 @@ RSpec.describe Geo, type: :model do
     end
 
     it '#provinces_states returns all provinces' do
-      expect(Geo.provinces_states).to match_array([@province_1, @province_2])
+      expect(Geo.province_state).to match_array([@province_1, @province_2])
     end
 
     it '#cities returns all cities' do
-      expect(Geo.cities).to match_array([@city_1, @city_2])
+      expect(Geo.city).to match_array([@city_1, @city_2])
     end
 
     it '#districts reutrns all districts' do
-      expect(Geo.districts).to match_array([@district_1, @district_2])
+      expect(Geo.district).to match_array([@district_1, @district_2])
     end
 
     it '#communities returns all communities' do
-      expect(Geo.communities).to match_array([@community_1, @community_2])
+      expect(Geo.community).to match_array([@community_1, @community_2])
     end
 
   end
