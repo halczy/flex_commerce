@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 90) do
 
   create_table "addresses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
+    t.string "recipient"
+    t.string "contact_number"
     t.string "country_region"
     t.string "province_state"
     t.string "city"
