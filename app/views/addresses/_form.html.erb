@@ -26,7 +26,7 @@
         <%= f.select :province_state,
                      options_for_select(
                      @provinces.collect { |province| [province.name, province.id] }),
-                     {}, { id: 'provinces_select', class: 'form-control' } %>
+                     { include_blank: true }, { id: 'provinces_select', class: 'form-control' } %>
       </div>
       <div class="col-md">
         <%= f.select :city,

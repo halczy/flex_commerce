@@ -22,12 +22,12 @@ class AddressesController < UsersController
     @provinces = Geo.cn.children
     @province = Geo.find_by(id: params[:province_id])
 
-    @cities = @province.try(:children) || @provinces.first.children
+    @cities = @province.try(:children) || []
     @city = Geo.find_by(id: params[:city_id])
 
-    @districts = @city.try(:children) || @cities.first.children
+    @districts = @city.try(:children) || []
     @district = Geo.find_by(id: params[:district_id])
 
-    @communities = @district.try(:children) || @districts.first.children
+    @communities = @district.try(:children) || []
   end
 end
