@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post   'cart/add',    to: 'carts#add',    as: :add_to_cart
   delete 'cart/remove', to: 'carts#remove', as: :remove_from_cart
 
+  resources :dashboards, only: [:show]
   resources :customers,  only: [:new, :create, :show]
   resources :sessions,   only: [:new, :create, :destroy]
   resources :images,     only: [:show]
