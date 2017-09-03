@@ -6,7 +6,7 @@ namespace :geo do
                                      format: '%a %B %p%% %t')
 
     # Get json file list from assets folder
-    geo_files = Dir['lib/assets/geo/*.json']
+    geo_files = Dir['lib/assets/geo_data/*.json']
 
     # Create country record
     Geo.create(id: '86', name: '中国', level: 0)

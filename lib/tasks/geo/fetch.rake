@@ -16,7 +16,7 @@ namespace :geo do
     cn_geo_data.each_with_index do |data_url, idx|
       progressbar.increment
       download = open(data_url)
-      IO.copy_stream(download, "lib/assets/geo/#{idx}_#{download.base_uri.to_s.split('/')[-1]}")
+      IO.copy_stream(download, "lib/assets/geo_data/#{idx}_#{download.base_uri.to_s.split('/')[-1]}")
       progressbar.increment
     end
   end
