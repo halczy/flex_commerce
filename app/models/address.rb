@@ -7,10 +7,10 @@ class Address < ApplicationRecord
 
   def build_full_address
     addr = ""
-    addr << Geo.find(province_state).name unless province_state.empty?
-    addr << Geo.find(city).name unless city.empty?
-    addr << Geo.find(district).name unless district.empty?
-    addr << Geo.find(community).name unless community.empty?
+    addr << Geo.find(province_state).name if province_state.present?  
+    addr << Geo.find(city).name if city.present?  
+    addr << Geo.find(district).name if district.present?  
+    addr << Geo.find(community).name if community.present?  
     addr << street
     tap { |address| update(full_address: addr) }
   end
