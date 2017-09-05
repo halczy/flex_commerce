@@ -107,7 +107,7 @@ puts "Categorization: #{Categorization.count} product-feature category relations
 
 100.times do
   product = Product.all.sample
-  product.categorizations.create(category: Category.brands.sample)
+  product.categorizations.create(category: Category.brand.sample)
 end
 puts "Categorization: #{Categorization.count} product-brand relationships created."
 

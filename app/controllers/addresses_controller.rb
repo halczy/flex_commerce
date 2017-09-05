@@ -5,11 +5,18 @@ class AddressesController < UsersController
   before_action :populate_selector, only: [:new, :update_selector]
 
   def new
-    @address =  Address.new
+    @address = Address.new
   end
 
   def create
-    raise
+    @address = @user.addresses.new(address_params)
+    if @address.save
+      flash[:success] = "Successfully created an address"
+      redirect_to root_url
+    else
+      populate_selector
+      render :new
+    end
   end
 
   def update_selector
@@ -18,16 +25,24 @@ class AddressesController < UsersController
     end
   end
 
-  def populate_selector
-    @provinces = Geo.cn.children
-    @province = Geo.find_by(id: params[:province_id])
+  private
 
-    @cities = @province.try(:children) || []
-    @city = Geo.find_by(id: params[:city_id])
+    def populate_selector
+      @provinces = Geo.cn.children
+      @province = Geo.find_by(id: params[:province_id])
 
-    @districts = @city.try(:children) || []
-    @district = Geo.find_by(id: params[:district_id])
+      @cities = @province.try(:children) || []
+      @city = Geo.find_by(id: params[:city_id])
 
-    @communities = @district.try(:children) || []
-  end
+      @districts = @city.try(:children) || []
+      @district = Geo.find_by(id: params[:district_id])
+
+      @communities = @district.try(:children) || []
+    end
+
+    def address_params
+      params.require(:address).permit(:name, :recipient, :contact_number,
+                                      :country_region, :province_state,
+                                      :city, :district, :community, :street)
+    end
 end

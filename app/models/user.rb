@@ -8,7 +8,8 @@ class User < ApplicationRecord
   has_secure_token :remember_token
 
   # Realtionships
-  has_one :cart
+  has_one  :cart
+  has_many :addresses, as: :addressable
 
   # Callbacks
   before_save :downcase_email

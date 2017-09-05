@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 90) do
     t.string "street"
     t.string "full_address"
     t.string "addressable_type"
-    t.bigint "addressable_id"
+    t.uuid "addressable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"

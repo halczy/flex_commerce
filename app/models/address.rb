@@ -3,7 +3,6 @@ class Address < ApplicationRecord
   belongs_to :addressable, polymorphic: true, optional: true
 
   # Validations
-  validates :recipient, presence: true
-  validates :contact_number, presence: true
+  validates_presence_of :recipient, :contact_number, :street
 
 end

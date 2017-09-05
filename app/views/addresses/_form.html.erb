@@ -1,4 +1,6 @@
-<%= form_with model: Address.new, local: true do |f| %>
+<%= form_with model: @address, local: true do |f| %>
+
+  <%= render 'shared/error_messages', object: f.object %>
 
   <div class="form-group row">
     <div class="col">

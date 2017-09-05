@@ -8,7 +8,7 @@ FactoryGirl.define do
     city { Geo.find("#{district}").parent.id }
     province_state { Geo.find("#{city}").parent.id }
     country_region { Geo.find("#{province_state}").parent.id }
-    street ""
+    street '123 Jump Street, Apt. 321'
     full_address ""
   end
 end

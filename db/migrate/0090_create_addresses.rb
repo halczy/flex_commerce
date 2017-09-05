@@ -11,7 +11,7 @@ class CreateAddresses < ActiveRecord::Migration[5.1]
       t.string :community
       t.string :street
       t.string :full_address
-      t.references :addressable, polymorphic: true, index: true
+      t.references :addressable, polymorphic: true, type: :uuid, index: true
 
       t.timestamps
     end
