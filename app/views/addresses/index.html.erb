@@ -1,0 +1,39 @@
+<%= provide :title, 'Addresses' %>
+
+<%= render 'shared/header_breadcrumb', title: yield(:title) %>
+
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <%= render 'shared/navigation/customer/sidenav' %>
+    </div>
+    <div class="col-9">
+
+      <div class="card">
+        <div class="card-header">
+          Addresses
+        </div>
+        <div class="card-body">
+          <% unless @addresses.empty? %>
+            <div class="list-group">
+              <% @addresses.each do |address| %>
+                <%= render 'address', address: address %>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="jumbotron">
+              <div class="h3 text-center">
+                You don't have any address on file.
+              </div>
+              <div class="text-center m-5">
+                <%= link_to 'Create Address', new_address_path,
+                                              class: 'btn btn-info' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

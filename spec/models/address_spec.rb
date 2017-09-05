@@ -2,7 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Address, type: :model do
 
-  let(:address) { FactoryGirl.create(:address) }
+  let(:address)   { FactoryGirl.create(:address) }
+  let(:province)  { FactoryGirl.create(:province) }
+  let(:city)      { FactoryGirl.create(:city) }
+  let(:district)  { FactoryGirl.create(:district) }
+  let(:community) { FactoryGirl.create(:community) }
 
   describe 'creation' do
     it 'can be created' do
@@ -30,6 +34,30 @@ RSpec.describe Address, type: :model do
           FactoryGirl.build(:address, province_state: nil)
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
+    end
+  end
+
+  describe '#build_full_address' do
+    before do
+      @address = FactoryGirl.create(:address, province_state: province.id,
+                                              city: city.id,
+                                              district: district.id,
+                                              community: community.id)
+    end
+
+    it 'builds full address using all geo codes' do
+      @address.build_full_address
+      expect(@address.full_address).to eq(
+        "#{province.name}#{city.name}#{district.name}#{community.name}#{@address.street}"
+      )
+    end
+
+    it 'builds full addreess without full geo codes' do
+      @address.district = nil; @address.community = nil
+      @address.build_full_address
+      expect(@address.full_address).to eq(
+        "#{province.name}#{city.name}#{@address.street}"
+      )
     end
   end
 

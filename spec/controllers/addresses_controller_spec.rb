@@ -8,6 +8,26 @@ RSpec.describe AddressesController, type: :controller do
 
   before { community }  # populate selector
 
+  describe 'GET index' do
+    before do
+      5.times { FactoryGirl.create(:address, addressable_type: 'User',
+                                             addressable_id: customer.id) }
+    end
+
+    it 'returns a success response' do
+      signin_as(customer)
+      get :index
+      expect(response).to be_success
+    end
+
+    it 'only returns current customer addresses' do
+      another_customer = FactoryGirl.create(:customer)
+      signin_as(another_customer)
+      get :index
+      expect(assigns(:addresses)).to be_empty
+    end
+  end
+
   describe 'GET new' do
     it 'response successfully' do
       signin_as(customer)
@@ -38,8 +58,9 @@ RSpec.describe AddressesController, type: :controller do
         expect(Address.last.addressable).to eq(customer)
       end
 
-      xit 'redirects to address index' do
-
+      it 'redirects to address index' do
+        expect post :create, params: { address: valid_attrs }
+        expect(response).to redirect_to(addresses_path)
       end
     end
 

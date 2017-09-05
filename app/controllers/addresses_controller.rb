@@ -4,6 +4,10 @@ class AddressesController < UsersController
   before_action :set_user
   before_action :populate_selector, only: [:new, :update_selector]
 
+  def index
+    @addresses = @user.addresses
+  end
+
   def new
     @address = Address.new
   end
@@ -11,8 +15,9 @@ class AddressesController < UsersController
   def create
     @address = @user.addresses.new(address_params)
     if @address.save
+      @address.build_full_address
       flash[:success] = "Successfully created an address"
-      redirect_to root_url
+      redirect_to addresses_path
     else
       populate_selector
       render :new
@@ -45,4 +50,5 @@ class AddressesController < UsersController
                                       :country_region, :province_state,
                                       :city, :district, :community, :street)
     end
+
 end

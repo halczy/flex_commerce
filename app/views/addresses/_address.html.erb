@@ -1,0 +1,17 @@
+<div class="list-group-item list-group-item-action flex-column">
+  <div class="d-flex justify-content-between">
+    <h5 class="mb-1">
+      <%= address.recipient %>
+    </h5>
+    <div class="actions">
+      <%= link_to edit_address_path(address), class: 'text-muted mr-2' do %>
+        <i class="fa fa-lg fa-pencil-square" aria-hidden="true"></i>
+      <% end %>
+      <%= link_to address, class: 'text-muted', method: :delete do %>
+        <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+      <% end %>
+    </div>
+  </div>
+  <p class="mb-0"><%= address.full_address %></p>
+  <small>Contact Number: <%= address.contact_number %></small>
+</div>

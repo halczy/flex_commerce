@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   # Rescue
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  # rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
   # Filter
   before_action :page_speed
