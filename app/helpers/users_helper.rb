@@ -23,9 +23,14 @@ module UsersHelper
   def is_cell_number?
     CN_CELLULAR.match?(params[@ctl][:ident])
   end
-  
+
   def is_member_id?
     MEMBER_ID.match?(params[@ctl][:ident])
+  end
+
+  def convert_to_dashed_id(integer_id)
+    member_id_str = integer_id.to_s
+    "#{member_id_str[0..2]}-#{member_id_str[-3..-1]}"
   end
 
 end

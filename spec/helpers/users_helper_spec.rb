@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe UsersHelper, type: :helper do
 
   before { assign(:ctl, :customer) }
-  
+
   describe '#is_email?' do
     it 'returns true when ident params is an email address' do
       allow(helper).to receive(:params)
@@ -31,20 +31,20 @@ RSpec.describe UsersHelper, type: :helper do
       expect(helper.is_cell_number?).to be_falsy
     end
   end
-  
+
   describe '#is_member_id?' do
     it "returns true when ident params is a member id" do
       allow(helper).to receive(:params)
                        .and_return( {customer: { ident: '123456'} })
       expect(helper.is_member_id?).to be_truthy
     end
-    
+
     it "returns true when ident params is a dash member id" do
       allow(helper).to receive(:params).
                        and_return({ customer: { ident: '123-456' } })
       expect(helper.is_member_id?).to be_truthy
     end
-    
+
     it "returns false hwen ident params is not a member id" do
       allow(helper).to receive(:params).
                        and_return({ customer: { ident: 'a123987a@gmail.com'} })
@@ -53,11 +53,11 @@ RSpec.describe UsersHelper, type: :helper do
   end
 
   describe '#convert_ident' do
-    
+
     before { allow(controller).to receive(:controller_name).and_return('customers')  }
-    
+
     # controller.stub(:controller_name).and_return('customers')
-    
+
     it 'converts ident to email' do
       allow(helper).to receive(:params)
                        .and_return({ customer: { ident: 'example@email.com' } })
@@ -71,22 +71,22 @@ RSpec.describe UsersHelper, type: :helper do
       helper.convert_ident
       expect(helper.params[:customer][:cell_number]).to eq('17600000000')
     end
-    
+
     it "converts ident to member id" do
       allow(helper).to receive(:params)
                        .and_return({ customer: { ident: '123456' } })
       helper.convert_ident
       expect(helper.params[:customer][:member_id]).to eq('123456')
     end
-    
+
     it "converts dashed ident to member id" do
       allow(helper).to receive(:params)
                        .and_return({ customer: { ident: '123-456' } })
       helper.convert_ident
       expect(helper.params[:customer][:member_id]).to eq('123456')
     end
-    
-    
+
+
 
     it 'does not set any params when ident does not contain email or cell number' do
       allow(helper).to receive(:params)
@@ -94,6 +94,13 @@ RSpec.describe UsersHelper, type: :helper do
       helper.convert_ident
       expect(helper.params[:customer][:email]).to be_nil
       expect(helper.params[:customer][:cell_number]).to be_nil
+    end
+  end
+
+  describe '#convert_to_dashed_id' do
+    it 'returns dash member id' do
+      member_id = 123456
+      expect(helper.convert_to_dashed_id(member_id)).to eq('123-456')
     end
   end
 
