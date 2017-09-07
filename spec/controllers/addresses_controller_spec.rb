@@ -6,15 +6,13 @@ RSpec.describe AddressesController, type: :controller do
   let(:community)   { FactoryGirl.create(:community) }
   let(:valid_attrs) { FactoryGirl.attributes_for(:address) }
   let(:new_attrs)   { FactoryGirl.attributes_for(:address) }
-  let(:address)     { FactoryGirl.create(:address, addressable_type: 'User',
-                                                   addressable_id: customer.id) }
+  let(:address)     { FactoryGirl.create(:address, addressable: customer) }
 
   before { community }  # populate selector
 
   describe 'GET index' do
     before do
-      5.times { FactoryGirl.create(:address, addressable_type: 'User',
-                                             addressable_id: customer.id) }
+      5.times { FactoryGirl.create(:address, addressable: customer) }
     end
 
     it 'returns a success response' do
@@ -151,6 +149,7 @@ RSpec.describe AddressesController, type: :controller do
 
     context 'undestroyable address' do
       it 'renders warning and returns to address list' do
+        # TODO: REFACTOR ONCE ORDER MODEL IS AVAILABLE
         order_address = FactoryGirl.create(:address, addressable_type: 'Order')
         delete :destroy, params: { id: order_address.id }
         expect(flash[:warning]).to be_present
