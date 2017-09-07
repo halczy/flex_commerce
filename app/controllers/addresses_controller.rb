@@ -25,7 +25,7 @@ class AddressesController < UsersController
       render :new
     end
   end
-  
+
   def edit
   end
 
@@ -56,11 +56,11 @@ class AddressesController < UsersController
                                       :country_region, :province_state,
                                       :city, :district, :community, :street)
     end
-    
+
     def set_address
       @address = Address.find(params[:id])
     end
-    
+
     def set_address_params
       params[:province_id] = @address.province_state if @address.province_state.present?
       params[:city_id] = @address.city if @address.city.present?

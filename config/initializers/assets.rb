@@ -14,5 +14,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 Rails.application.config.assets.precompile += %w( product_cart.js trix.js
                                                   product_form.js trix.css
-                                                  dynamic_address.js
-                                                  set_address.js )
+                                                  dynamic_address.js )

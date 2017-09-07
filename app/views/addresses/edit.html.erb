@@ -21,35 +21,7 @@
   </div>
 </div>
 
-<script>
-  // Province
-  $('#provinces_select').empty();
-  $('#provinces_select').append($('<option value=""></option>'));
-  <% @provinces.each do |province| %>
-    $('#provinces_select').append($('<option <%= 'selected' if province == @province %> value="<%= province.id %>"><%= province.name %></option>'));
-  <% end %>
-  
-  
-  // City
-  $('#cities_select').empty();
-  $('#cities_select').append($('<option value=""></option>'));
-  <% @cities.each do |city| %>
-    $('#cities_select').append($('<option <%= 'selected' if city == @city %> value="<%= city.id %>"><%= city.name %></option>'));
-  <% end %>
-  
-  // District
-  $('#districts_select').empty();
-  $('#districts_select').append($('<option value=""></option>'));
-  <% @districts.each do |district| %>
-    $('#districts_select').append($('<option <%= 'selected' if district == @district %> value="<%= district.id %>"><%= district.name %></option>'));
-  <% end %>
-  
-  // Communities
-  $('#communities_select').empty();
-  $('#communities_select').append($('<option value=""></option>'));
-  <% @communities.each do |community| %>
-    $('#communities_select').append($('<option <%= 'selected' if community == @community %> value="<%= community.id %>"><%= community.name %></option>'));
-  <% end %>
-</script>
 
-<% javascript_include_tag 'set_address', 'data-turbolinks-track': 'reload' %>
+<script type="text/javascript">
+  <%= render 'set_address_selector.js.erb' %>
+</script>
