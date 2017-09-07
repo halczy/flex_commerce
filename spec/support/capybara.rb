@@ -20,6 +20,7 @@ Capybara.register_driver :poltergeist do |app|
                                       timeout: 2.minute)
 end
 
+# Capybara.javascript_driver = :chrome
 Capybara.javascript_driver = :poltergeist
 
-Capybara.default_max_wait_time = 60
+Capybara.default_max_wait_time = 15

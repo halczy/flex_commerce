@@ -1,4 +1,4 @@
-document.addEventListener("turbolinks:load", function() {
+// document.addEventListener("turbolinks:load", function() {
 
   $(document).ready(function() {
     return $("#provinces_select").on("change", function() {
@@ -42,6 +42,4 @@ document.addEventListener("turbolinks:load", function() {
     });
   });
 
-
-
-});
+// });

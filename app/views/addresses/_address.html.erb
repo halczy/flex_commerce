@@ -4,7 +4,8 @@
       <%= address.recipient %>
     </h5>
     <div class="actions">
-      <%= link_to edit_address_path(address), class: 'text-muted mr-2' do %>
+      <%= link_to edit_address_path(address), id: "edit_#{address.id}",
+                                              class: 'text-muted mr-2' do %>
         <i class="fa fa-lg fa-pencil-square" aria-hidden="true"></i>
       <% end %>
       <%= link_to '#', id: "btn_del_#{address.id}", class: 'text-muted',

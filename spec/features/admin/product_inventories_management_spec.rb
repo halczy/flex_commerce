@@ -72,15 +72,17 @@ describe 'Product Inventories Management' do
     end
 
     it 'can force remove destroyable inventories', js: true do
-      click_on "#{@product_unsold.name}"
-      click_on 'Manage Inventories'
-      click_on 'Delete Inventories'
       begin
+        click_on "#{@product_unsold.name}"
+        click_on 'Manage Inventories'
+        click_on 'Delete Inventories'
+        sleep 1
         click_on 'force delete.'
+        sleep 1
         within('#force_delete_inventories') { fill_in 'amount', with: 7 }
-        sleep 2
+        sleep 1
       rescue Capybara::ElementNotFound => e
-        sleep 2
+        retry
       end
       evaluate_script 'document.getElementById("f_del_inv").submit();'
 
@@ -89,15 +91,17 @@ describe 'Product Inventories Management' do
     end
 
     it 'cannot remove more than destroyable prodcuts', js: true do
-      click_on "#{@product_sold.name}"
-      click_on 'Manage Inventories'
-      click_on 'Delete Inventories'
       begin
+        click_on "#{@product_sold.name}"
+        click_on 'Manage Inventories'
+        click_on 'Delete Inventories'
+        sleep 1
         click_on 'force delete.'
+        sleep 1
         within('#force_delete_inventories') { fill_in 'amount', with: 5 }
-        sleep 2
+        sleep 1
       rescue Capybara::ElementNotFound => e
-        sleep 2
+        retry
       end
       evaluate_script 'document.getElementById("f_del_inv").submit();'
 
