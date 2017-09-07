@@ -1,7 +1,7 @@
 <ul class="list-group">
   <%= link_to 'Dashbaord', dashboard_path(current_user),
               class: "list-group-item #{active_controller?('dashboards')}" %>
-  <%= link_to 'Profile', current_user,
+  <%= link_to 'Profile', customer_path(current_user),
               class: "list-group-item #{active_controller?('customers')}" %>
   <li class="list-group-item">Order</li>
   <li class="list-group-item">Financial</li>
