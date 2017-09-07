@@ -2,6 +2,7 @@
   <div class="d-flex justify-content-between">
     <h5 class="mb-1">
       <%= address.recipient %>
+      <%= " (#{address.name})" if address.name.present? %>
     </h5>
     <div class="actions">
       <%= link_to edit_address_path(address), id: "edit_#{address.id}",
