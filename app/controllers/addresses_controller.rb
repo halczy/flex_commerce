@@ -2,7 +2,9 @@ class AddressesController < UsersController
   # Filters
   before_action :authenticate_user
   before_action :set_user
-  before_action :populate_selector, only: [:new, :update_selector]
+  before_action :set_address, only: [:edit]
+  before_action :set_address_params, only: [:edit]
+  before_action :populate_selector, only: [:new, :edit, :update_selector]
 
   def index
     @addresses = @user.addresses
@@ -22,6 +24,9 @@ class AddressesController < UsersController
       populate_selector
       render :new
     end
+  end
+  
+  def edit
   end
 
   def update_selector
@@ -43,12 +48,24 @@ class AddressesController < UsersController
       @district = Geo.find_by(id: params[:district_id])
 
       @communities = @district.try(:children) || []
+      @community = Geo.find_by(id: params[:community_id])
     end
 
     def address_params
       params.require(:address).permit(:name, :recipient, :contact_number,
                                       :country_region, :province_state,
                                       :city, :district, :community, :street)
+    end
+    
+    def set_address
+      @address = Address.find(params[:id])
+    end
+    
+    def set_address_params
+      params[:province_id] = @address.province_state if @address.province_state.present?
+      params[:city_id] = @address.city if @address.city.present?
+      params[:district_id] = @address.district if @address.district.present?
+      params[:community_id] = @address.community if @address.community.present?
     end
 
 end

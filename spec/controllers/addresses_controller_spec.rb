@@ -24,7 +24,7 @@ RSpec.describe AddressesController, type: :controller do
       another_customer = FactoryGirl.create(:customer)
       signin_as(another_customer)
       get :index
-      expect(assigns(:addresses)).to be_empty
+    expect(assigns(:addresses)).to be_empty
     end
   end
 
@@ -69,6 +69,34 @@ RSpec.describe AddressesController, type: :controller do
         post :create, params: { address: { name: '' } }
         expect(response).to render_template(:new)
       end
+    end
+  end
+  
+  describe 'GET edit' do
+    
+    before do
+      signin_as(customer)
+      @address = FactoryGirl.create(:address, addressable_type: 'User',
+                                              addressable_id: customer.id)
+      
+    end
+    
+    it "response successfully" do
+      get :edit, params: { id: @address.id }
+      expect(response).to be_success 
+    end
+    
+    it "sets address" do
+      get :edit, params: { id: @address.id }
+      expect(assigns(:address)).to eq(@address)
+    end
+    
+    it "populates address selector" do
+      get :edit, params: { id: @address.id }
+      expect(assigns(:province).id).to eq(@address.province_state)
+      expect(assigns(:city).id).to eq(@address.city)
+      expect(assigns(:district).id).to eq(@address.district)
+      expect(assigns(:community).id).to eq(@address.community)
     end
   end
 
