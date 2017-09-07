@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   # Realtionships
   has_one  :cart
-  has_many :addresses, as: :addressable
+  has_many :addresses, as: :addressable, dependent: :destroy
 
   # Callbacks
   before_save :downcase_email

@@ -112,6 +112,13 @@ RSpec.describe AddressesController, type: :controller do
         patch :update, params: { id: address.id, address: new_attrs }
         expect(response).to redirect_to(addresses_path)
       end
+
+      it 'rebuild the full address with new attributes' do
+        address.build_full_address
+        old_full_address = address.full_address
+        patch :update, params: { id: address.id, address: new_attrs }
+        expect(address.reload.full_address).not_to eq(old_full_address)
+      end
     end
 
     context 'with invalid params' do
@@ -120,6 +127,33 @@ RSpec.describe AddressesController, type: :controller do
         expect(response).to be_success
         expect(response).to render_template(:edit)
 
+      end
+    end
+  end
+
+  describe 'DELETE #destory' do
+    before { signin_as customer }
+    context 'destroyable address' do
+      it 'destorys the requested address' do
+        address
+        expect {
+          delete :destroy, params: { id: address.id }
+        }.to change(Address, :count).by(-1)
+      end
+
+      it 'redirects to address list' do
+        address
+        delete :destroy, params: { id: address.id }
+        expect(response).to redirect_to(addresses_path)
+        expect(flash[:success]).to be_present
+      end
+    end
+
+    context 'undestroyable address' do
+      it 'renders warning and returns to address list' do
+        order_address = FactoryGirl.create(:address, addressable_type: 'Order')
+        delete :destroy, params: { id: order_address.id }
+        expect(flash[:warning]).to be_present
       end
     end
   end

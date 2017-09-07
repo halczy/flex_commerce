@@ -2,7 +2,7 @@ class AddressesController < UsersController
   # Filters
   before_action :authenticate_user
   before_action :set_user
-  before_action :set_address, only: [:edit, :update]
+  before_action :set_address, only: [:edit, :update, :destroy]
   before_action :set_address_params, only: [:edit]
   before_action :populate_selector, only: [:new, :edit, :update_selector]
 
@@ -31,6 +31,7 @@ class AddressesController < UsersController
 
   def update
     if @address.update(address_params)
+      @address.build_full_address
       flash[:success] = "Successfully updated your address!"
       redirect_to addresses_path
     else
@@ -38,6 +39,16 @@ class AddressesController < UsersController
       populate_selector
       render :edit
     end
+  end
+
+  def destroy
+    if @address.destroyable?
+      @address.destroy
+      flash[:success] = "Successfully deleted an address from your account."
+    else
+      flash[:warning] = "The address cannot be deleted."
+    end
+    redirect_to addresses_path
   end
 
   def update_selector
