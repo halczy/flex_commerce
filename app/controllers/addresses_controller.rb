@@ -2,7 +2,7 @@ class AddressesController < UsersController
   # Filters
   before_action :authenticate_user
   before_action :set_user
-  before_action :set_address, only: [:edit]
+  before_action :set_address, only: [:edit, :update]
   before_action :set_address_params, only: [:edit]
   before_action :populate_selector, only: [:new, :edit, :update_selector]
 
@@ -18,7 +18,7 @@ class AddressesController < UsersController
     @address = @user.addresses.new(address_params)
     if @address.save
       @address.build_full_address
-      flash[:success] = "Successfully created an address"
+      flash[:success] = "Successfully added a new address to your account."
       redirect_to addresses_path
     else
       populate_selector
@@ -27,6 +27,17 @@ class AddressesController < UsersController
   end
 
   def edit
+  end
+
+  def update
+    if @address.update(address_params)
+      flash[:success] = "Successfully updated your address!"
+      redirect_to addresses_path
+    else
+      set_address_params
+      populate_selector
+      render :edit
+    end
   end
 
   def update_selector

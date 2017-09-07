@@ -2,9 +2,12 @@ require 'rails_helper'
 
 RSpec.describe AddressesController, type: :controller do
 
-  let(:customer)  { FactoryGirl.create(:customer) }
-  let(:community) { FactoryGirl.create(:community) }
+  let(:customer)    { FactoryGirl.create(:customer) }
+  let(:community)   { FactoryGirl.create(:community) }
   let(:valid_attrs) { FactoryGirl.attributes_for(:address) }
+  let(:new_attrs)   { FactoryGirl.attributes_for(:address) }
+  let(:address)     { FactoryGirl.create(:address, addressable_type: 'User',
+                                                   addressable_id: customer.id) }
 
   before { community }  # populate selector
 
@@ -71,34 +74,54 @@ RSpec.describe AddressesController, type: :controller do
       end
     end
   end
-  
+
   describe 'GET edit' do
-    
-    before do
-      signin_as(customer)
-      @address = FactoryGirl.create(:address, addressable_type: 'User',
-                                              addressable_id: customer.id)
-      
-    end
-    
+    before { signin_as(customer) }
+
     it "response successfully" do
-      get :edit, params: { id: @address.id }
-      expect(response).to be_success 
+      get :edit, params: { id: address.id }
+      expect(response).to be_success
     end
-    
+
     it "sets address" do
-      get :edit, params: { id: @address.id }
-      expect(assigns(:address)).to eq(@address)
+      get :edit, params: { id: address.id }
+      expect(assigns(:address)).to eq(address)
     end
-    
+
     it "populates address selector" do
-      get :edit, params: { id: @address.id }
-      expect(assigns(:province).id).to eq(@address.province_state)
-      expect(assigns(:city).id).to eq(@address.city)
-      expect(assigns(:district).id).to eq(@address.district)
-      expect(assigns(:community).id).to eq(@address.community)
+      get :edit, params: { id: address.id }
+      expect(assigns(:province).id).to eq(address.province_state)
+      expect(assigns(:city).id).to eq(address.city)
+      expect(assigns(:district).id).to eq(address.district)
+      expect(assigns(:community).id).to eq(address.community)
     end
   end
 
+  describe 'PATCH update' do
+    before { signin_as(customer) }
+    context 'with valid params' do
+      it 'updates the requested address' do
+        patch :update, params: { id: address.id, address: new_attrs }
+        address.reload
+        expect(address.recipient).to eq(new_attrs[:recipient])
+        expect(address.province_state).to eq(new_attrs[:province_state])
+        expect(address.community).to eq(new_attrs[:community])
+      end
+
+      it 'redirects to address index' do
+        patch :update, params: { id: address.id, address: new_attrs }
+        expect(response).to redirect_to(addresses_path)
+      end
+    end
+
+    context 'with invalid params' do
+      it 'renders edit tempalte' do
+        patch :update, params: { id: address.id, address: { recipient: '' } }
+        expect(response).to be_success
+        expect(response).to render_template(:edit)
+
+      end
+    end
+  end
 
 end
