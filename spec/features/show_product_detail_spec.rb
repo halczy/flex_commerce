@@ -2,13 +2,7 @@ require 'rails_helper'
 
 describe 'product detail' do
   before do
-    Image.create(title: "Placeholder Image",
-                 in_use: true,
-                 source_channel: 0,
-                 image: Rack::Test::UploadedFile.new(File.join(
-                          Rails.root, 'public', 'placeholder_img',
-                          'no-image-slide.png'), 'image/png'))
-
+    create_placeholder_image
     @cat = FactoryGirl.create(:category)
     @brand = FactoryGirl.create(:brand)
     @product_1 = FactoryGirl.create(:product, price_market: 100.01, price_member: 99.02)

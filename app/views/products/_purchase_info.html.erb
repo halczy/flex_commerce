@@ -16,7 +16,8 @@
   <strong><%= humanized_money_with_symbol(product.price_member) %></strong>
 </p>
 
-<%= form_with(url: add_to_cart_path, local: true, class: 'form-inline') do |form| %>
+<%= form_with(url: add_to_cart_path(return_back: true),
+              local: true, class: 'form-inline') do |form| %>
   <div class="input-group mr-3" style="width: 8rem;">
     <span class="input-group-btn">
       <button class="btn btn-secondary" type="button" onclick="decrementValue()">
@@ -38,5 +39,3 @@
     <%= link_to 'Out of Stock', '#', class: 'btn btn-primary disabled' %>
   <% end %>
 <% end %>
-
-

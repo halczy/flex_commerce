@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
   # Filters
-  before_action :smart_return,            except: [ :show ]
+  before_action :smart_return,            only: [ :remove, :update ]
   before_action :set_product,             except: [ :show ]
   after_action  :validate_product,        only: [ :set_product ]
   before_action :set_quantity_for_add,    only: [ :add ]
@@ -11,10 +11,13 @@ class CartsController < ApplicationController
   def add
     if @current_cart.add(@product, @quantity)
       flash[:success] = "Successfully added #{@product.name} to your shopping cart."
+      redirect_to cart_path
     else
-      flash[:warning] = "The product you have selected is out of stock"
+      smart_return
+      flash[:warning] = 'The product you have selected is out of stock 
+                         or does not have enough stock to fill your request.'
+      redirect_back_or cart_path
     end
-    redirect_back_or cart_path
   end
 
   def remove
