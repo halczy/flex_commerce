@@ -12,7 +12,12 @@
 
       <div class="card">
         <div class="card-header">
-          Addresses
+          <div class="d-flex justify-content-between">
+            Addresses
+            <%= link_to new_address_path, class: 'btn btn-sm btn-info' do %>
+                <i class="fa fa-plus-square" aria-hidden="true"></i> New Address
+            <% end %>
+          </div>
         </div>
         <div class="card-body">
           <% unless @addresses.empty? %>
