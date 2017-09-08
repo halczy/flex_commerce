@@ -51,4 +51,30 @@ RSpec.describe Admin::GeosController, type: :controller do
       end
     end
   end
+
+  describe 'GET search' do
+    before do
+      @city = FactoryGirl.create(:city)
+      @community = FactoryGirl.create(:community)
+    end
+
+    it 'responses with search result' do
+      get :search, params: { search_term: @city.name }
+      expect(responses).to render_template(:serach)
+      expect(assigns(:search_result)).to match_array([@city])
+    end
+
+    it 'responses with empty serach result' do
+      get :search, params: { search_term: 'random random random string' }
+      expect(responses).to be_success
+      expect(flash).not_to be_present
+      expect(assigns(:search_result)).to be_empty
+    end
+
+    it 'renders warning message when empty serach term is provided' do
+      get :search, params: { search_term: '' }
+      expect(response).to render_template(:search)
+      expect(flash[:warning]).to be_present
+    end
+  end
 end

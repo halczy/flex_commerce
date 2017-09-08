@@ -45,6 +45,10 @@ Rails.application.routes.draw do
     end
     resources :images, only: [:index, :create, :show, :destroy]   # Images
     resources :inventories, only: [:index, :show, :destroy]       # Inventories
-    resources :geos, only: [:index]                               # Geos
+    resources :geos, only: [:index] do                            # Geos
+      collection do
+        get 'search'
+      end
+    end
   end
 end
