@@ -60,13 +60,13 @@ RSpec.describe Admin::GeosController, type: :controller do
 
     it 'responses with search result' do
       get :search, params: { search_term: @city.name }
-      expect(responses).to render_template(:serach)
+      expect(response).to render_template(:search)
       expect(assigns(:search_result)).to match_array([@city])
     end
 
     it 'responses with empty serach result' do
       get :search, params: { search_term: 'random random random string' }
-      expect(responses).to be_success
+      expect(response).to be_success
       expect(flash).not_to be_present
       expect(assigns(:search_result)).to be_empty
     end
