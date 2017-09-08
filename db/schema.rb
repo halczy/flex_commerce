@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 90) do
+ActiveRecord::Schema.define(version: 100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,6 +129,21 @@ ActiveRecord::Schema.define(version: 90) do
     t.index ["weight"], name: "index_products_on_weight"
   end
 
+  create_table "products_shipping_methods", id: false, force: :cascade do |t|
+    t.uuid "product_id"
+    t.uuid "shipping_method_id"
+    t.index ["product_id"], name: "index_products_shipping_methods_on_product_id"
+    t.index ["shipping_method_id"], name: "index_products_shipping_methods_on_shipping_method_id"
+  end
+
+  create_table "shipping_methods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "variety"
+    t.uuid "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_shipping_methods_on_product_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type"
     t.string "name"
@@ -150,4 +165,5 @@ ActiveRecord::Schema.define(version: 90) do
   add_foreign_key "inventories", "carts"
   add_foreign_key "inventories", "products"
   add_foreign_key "inventories", "users"
+  add_foreign_key "shipping_methods", "products"
 end
