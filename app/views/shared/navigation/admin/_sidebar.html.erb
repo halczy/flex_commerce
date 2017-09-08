@@ -38,6 +38,12 @@
        <em class="fa fa-picture-o"></em> Images</a>
       <% end %>
     </li>
+    <li class="nav-item">
+      <%= link_to admin_shipping_methods_path,
+                  class: "nav-link #{active_controller?('shipping_methods')}" do %>
+       <em class="fa fa-truck"></em> Shipping Method</a>
+      <% end %>
+    </li>
   </ul>
   <%= link_to root_url, class: 'logout-button hidden-xs-down' do %>
     <em class="fa fa-arrow-left"></em> Front Page</a>

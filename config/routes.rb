@@ -50,5 +50,6 @@ Rails.application.routes.draw do
         get 'search'
       end
     end
+    resources :shipping_methods                                   # Shipping Methods
   end
 end
