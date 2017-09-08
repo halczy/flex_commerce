@@ -49,17 +49,4 @@ RSpec.describe GeoSearchService, type: :model do
     end
   end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 end
