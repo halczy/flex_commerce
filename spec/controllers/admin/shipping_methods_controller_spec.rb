@@ -14,5 +14,11 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
       get :index
       expect(response).to be_success
     end
+
+    it 'returns shipping methods' do
+      delivery; no_shipping; self_pickup
+      get :index
+      expect(assigns(:shipping_methods).count).to eq(3)
+    end
   end
 end

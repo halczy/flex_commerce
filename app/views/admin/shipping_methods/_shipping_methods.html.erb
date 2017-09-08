@@ -1,0 +1,22 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Rate Items</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% shipping_methods.each do |shipping_method| %>
+    <tr>
+      <td>
+        <%= link_to shipping_method.name, admin_shipping_method_path(shipping_method) %>
+      </td>
+      <td><%= shipping_method.variety.titleize %></td>
+      <td><%= shipping_method.shipping_rates.count %></td>
+      <%= render 'action_control', shipping_method: shipping_method %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

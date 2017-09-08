@@ -1,3 +1,22 @@
 <%= provide :title, 'Shipping Method' %>
 
-<%= @shipping_methods.inspect %>
+<div class="d-flex justify-content-start mb-3">
+  <div class="p-2">
+    <%= link_to new_admin_shipping_method_path, class: "btn btn-primary" do %>
+      <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+      New Shipping Method
+    <% end %>
+  </div>
+  <div class="ml-auto p-2">
+    <%= link_to admin_geos_path, class: "btn btn-success" do %>
+      <i class="fa fa-globe fa-lg" aria-hidden="true"></i>
+      Geo Data Reference
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <%= render 'shipping_methods', shipping_methods: @shipping_methods %>
+  </div>
+</div>
