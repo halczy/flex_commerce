@@ -1,9 +1,9 @@
-<%= form_with(url: search_admin_products_path, class: 'form-inline',
+<%= form_with(url: search_admin_geos_path, class: 'form-inline',
               local: true, method: :get) do |form| %>
 
   <%= form.label :search_term, class: 'sr-only' %>
   <%= form.search_field :search_term, value: "#{params[:search_term]}",
-                                      class: "form-control" %>
+                        class: "form-control" %>
 
   <span class="input-group-btn">
     <%= button_tag class: 'btn btn-success', data: { disable_with: "Searching..." } do %>
