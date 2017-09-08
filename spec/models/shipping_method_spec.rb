@@ -55,7 +55,7 @@ RSpec.describe ShippingMethod, type: :model do
       end
 
       it 'returns address that belongs to shipping method' do
-        expect(@shipping_self_pickup.address.first).to eq(@address)
+        expect(@shipping_self_pickup.addresses.first).to eq(@address)
       end
     end
   end
