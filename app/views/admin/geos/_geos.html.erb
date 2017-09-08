@@ -12,8 +12,8 @@
     <tr>
       <td><%= geo.id %></td>
       <td><%= geo.name %></td>
-      <td><%= geo.parent.id %></td>
-      <td><%= geo.parent.name %></td>
+      <td><%= geo.parent.try(:id) %></td>
+      <td><%= geo.parent.try(:name) %></td>
     </tr>
     <% end %>
   </tbody>

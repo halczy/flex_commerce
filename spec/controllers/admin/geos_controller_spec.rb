@@ -16,15 +16,31 @@ RSpec.describe Admin::GeosController, type: :controller do
 
     context 'filters' do
       it 'returns all geos by default' do
-        get :index
+        get :index, params: { geo_filter: '' }
         expect(assigns(:geos).count).to eq(Geo.count)
       end
 
-      it 'returns countries'
-      it 'returns province_state'
-      it 'returns cities'
-      it 'returns districts'
-      it 'returns communities'
+      it 'returns countries' do
+        get :index, params: { geo_filter: 'country_region' }
+        expect(assigns(:geos).count).to eq(Geo.country_region.count)
+      end
+
+      it 'returns province_state' do
+        get :index, params: { geo_filter: 'province_state' }
+        expect(assigns(:geos).count).to eq(Geo.province_state.count)
+      end
+      it 'returns cities' do
+        get :index, params: { geo_filter: 'city' }
+        expect(assigns(:geos).count).to eq(Geo.city.count)
+      end
+      it 'returns districts' do
+        get :index, params: { geo_filter: 'district' }
+        expect(assigns(:geos).count).to eq(Geo.district.count)
+      end
+      it 'returns communities' do
+        get :index, params: { geo_filter: 'community' }
+        expect(assigns(:geos).count).to eq(Geo.community.count)
+      end
     end
 
     context 'access control' do
