@@ -8,6 +8,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
 
   def new
     @shipping_method =  ShippingMethod.new
+    @address = @shipping_method.addresses.build
   end
 
   private

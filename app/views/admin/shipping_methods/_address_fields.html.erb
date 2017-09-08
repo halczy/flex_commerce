@@ -1,0 +1,16 @@
+<div class="row form-group">
+  <div class="col-3">
+    <%= f.label :province_state, 'Province' %>
+    <%= f.select :province_state,
+                 options_for_select(
+                 @provinces.collect { |province| [province.name, province.id] }),
+                 { include_blank: true }, { id: 'provinces_select',
+                                            class: 'form-control' } %>
+  </div>
+  <div class="col-9">
+    <%= f.label :street, 'Address' %>
+    <%= f.text_field :street, class: 'form-control' %>
+  </div>
+
+
+</div>

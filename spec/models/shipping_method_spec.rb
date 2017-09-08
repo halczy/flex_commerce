@@ -21,29 +21,42 @@ RSpec.describe ShippingMethod, type: :model do
   end
 
   describe 'relationships' do
-    before do
-      @product = FactoryGirl.create(:product)
-      @shipping_delivery = FactoryGirl.create(:delivery)
-      @shipping_self_pickup = FactoryGirl.create(:self_pickup)
-      @product.shipping_methods << @shipping_delivery
-      @product.shipping_methods << @shipping_self_pickup
+    context 'product' do
+      before do
+        @product = FactoryGirl.create(:product)
+        @shipping_delivery = FactoryGirl.create(:delivery)
+        @shipping_self_pickup = FactoryGirl.create(:self_pickup)
+        @product.shipping_methods << @shipping_delivery
+        @product.shipping_methods << @shipping_self_pickup
+      end
+
+      it 'returns shipping method from product' do
+        expect(@product.shipping_methods).to match_array([@shipping_delivery,
+                                                          @shipping_self_pickup])
+      end
+
+      it 'returns true if delivery is available to product as a shipping method' do
+        expect(@product.shipping_methods.delivery.present?).to be_truthy
+      end
+
+      it 'returns true if self pickup is available to product as a shipping method' do
+        expect(@product.shipping_methods.self_pickup.present?).to be_truthy
+      end
+
+      it 'returns false if digital delivery is not available to product' do
+        expect(@product.shipping_methods.digital_delivery.present?).to be_falsey
+      end
     end
 
-    it 'returns shipping method from product' do
-      expect(@product.shipping_methods).to match_array([@shipping_delivery,
-                                                        @shipping_self_pickup])
-    end
+    context 'address' do
+      before do
+        @shipping_self_pickup = FactoryGirl.create(:self_pickup)
+        @address = FactoryGirl.create(:address, addressable: @shipping_self_pickup)
+      end
 
-    it 'returns true if delivery is available to product as a shipping method' do
-      expect(@product.shipping_methods.delivery.present?).to be_truthy
-    end
-
-    it 'returns true if self pickup is available to product as a shipping method' do
-      expect(@product.shipping_methods.self_pickup.present?).to be_truthy
-    end
-
-    it 'returns false if digital delivery is not available to product' do
-      expect(@product.shipping_methods.digital_delivery.present?).to be_falsey
+      it 'returns address that belongs to shipping method' do
+        expect(@shipping_self_pickup.address.first).to eq(@address)
+      end
     end
   end
 
