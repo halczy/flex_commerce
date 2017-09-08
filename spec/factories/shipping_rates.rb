@@ -3,6 +3,6 @@ FactoryGirl.define do
     geo_code "*"
     init_rate 0
     add_on_rate 0
-    association :shipping_method, factory: :shipping_method
+    association :shipping_method, factory: :self_pickup
   end
 end

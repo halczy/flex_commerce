@@ -2,16 +2,20 @@ require 'rails_helper'
 
 RSpec.describe ShippingMethod, type: :model do
 
-  let(:shipping_method) { FactoryGirl.create(:shipping_method) }
+  let(:delivery)    { FactoryGirl.create(:delivery) }
+  let(:self_pickup) {FactoryGirl.create(:self_pickup) }
+  let(:no_shipping) { FactoryGirl.create(:no_shipping) }
 
   describe 'creation' do
     it 'can be created' do
-      expect(shipping_method).to be_valid
+      expect(delivery).to be_valid
+      expect(self_pickup).to be_valid
+      expect(no_shipping).to be_valid
     end
 
     it 'cannot be created without variety' do
       expect {
-        FactoryGirl.create(:shipping_method, variety: nil)
+        FactoryGirl.create(:delivery, variety: nil)
       }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
@@ -19,8 +23,8 @@ RSpec.describe ShippingMethod, type: :model do
   describe 'relationships' do
     before do
       @product = FactoryGirl.create(:product)
-      @shipping_delivery = FactoryGirl.create(:shipping_method)
-      @shipping_self_pickup = FactoryGirl.create(:shipping_method, variety: 2)
+      @shipping_delivery = FactoryGirl.create(:delivery)
+      @shipping_self_pickup = FactoryGirl.create(:self_pickup)
       @product.shipping_methods << @shipping_delivery
       @product.shipping_methods << @shipping_self_pickup
     end

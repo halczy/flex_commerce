@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(version: 110) do
   end
 
   create_table "shipping_methods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
     t.integer "variety"
     t.uuid "product_id"
     t.datetime "created_at", null: false
