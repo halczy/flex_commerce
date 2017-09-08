@@ -1,7 +1,10 @@
 class Admin::GeosController < Admin::AdminController
 
   def index
-    @inventories = Inventory.all
+    geo_filter = params[:geo_filter] ||= ""
+    geos = Geo.try(geo_filter) || Geo.all
+    # geos = geos.order(id: :asc)
+    @geos = geos.page params[:page]
   end
 
 end

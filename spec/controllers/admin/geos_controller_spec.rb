@@ -15,6 +15,11 @@ RSpec.describe Admin::GeosController, type: :controller do
     end
 
     context 'filters' do
+      it 'returns all geos by default' do
+        get :index
+        expect(assigns(:geos).count).to eq(Geo.count)
+      end
+
       it 'returns countries'
       it 'returns province_state'
       it 'returns cities'

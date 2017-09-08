@@ -1,1 +1,19 @@
-<%= @geos.inspect %>
+<%= provide :title, 'Geographical Data' %>
+
+<div class="d-flex justify-content-start mb-3">
+  <div class="p-2">
+    <!-- Filter -->
+  </div>
+  <div class="ml-auto p-2">
+    <!-- Search -->
+  </div>
+</div>
+
+<div class="row">
+  <%= render 'shared/paginate', objects: @geos if @geos.present? %>
+  <div class="col-lg-12">
+    <p>Geo Count: <%= @geos.total_count %></p>
+    <%= render 'geos', geos: @geos %>
+  </div>
+  <%= render 'shared/paginate', objects: @geos if @geos.present? %>
+</div>
