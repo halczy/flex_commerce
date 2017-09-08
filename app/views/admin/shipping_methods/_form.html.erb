@@ -1,0 +1,58 @@
+<%= form_with(model: [:admin, shipping_method], local: true) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row form-group">
+        <div class="col">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control' %>
+        </div>
+        <div class="col">
+          <%= f.label :variety, 'Method Type' %>
+          <%= f.select :variety, options_for_select([['No Shipping', 0],
+                                                     ['Delivery', 1],
+                                                     ['Self Pickup', 2]]),
+                                 {}, id: 'method_select', class: 'form-control' %>
+        </div>
+      </div>
+      <div class="jumbotron p-3 m-0 ">
+        <strong>Geo Code Matching Guide:</strong>
+        <p class="mt-3">Geo code <code>*</code> will match all locations</p>
+        <p>Geo code <code>110000</code> will match orders shipping to Beijing</p>
+      </div>
+      <h5 class="mt-3">Shipping Rates</h5>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Geo Code</th>
+            <th>Initial Rate (First KG)</th>
+            <th colspan="2">Add-On Rate (Rate/KG > 1KG)</th>
+          </tr>
+        </thead>
+        <tbody class="shipping_rates">
+          <%= f.fields_for :shipping_rates do |shipping_rate| %>
+            <%= render 'shipping_rate_fields', f: shipping_rate %>
+          <% end %>
+        </tbody>
+      </table>
+      <%= link_to_add_association 'Add Rates', f, :shipping_rates,
+                                  class: 'btn btn-success mb-3',
+                                  data: { association_insertion_node: '.shipping_rates',
+                                          association_insertion_method: :append } %>
+
+      <%= f.submit 'Submit', class: 'btn btn-primary btn-block' %>
+    </div>
+    <div class="col-md-4 jumbotron">
+      <h5>CN Province Geo Code</h5>
+      <% @provinces.each do |province| %>
+        <div>
+          Geo Code: <%= province.id %> | <%= province.name %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+
+
+<% end %>

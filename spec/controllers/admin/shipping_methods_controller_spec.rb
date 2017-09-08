@@ -21,4 +21,14 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
       expect(assigns(:shipping_methods).count).to eq(3)
     end
   end
+
+  describe 'GET new' do
+    it 'response successfully' do
+      FactoryGirl.create(:province)
+      get :new
+      expect(response).to be_success
+      expect(assigns(:shipping_method)).to be_an_instance_of(ShippingMethod)
+      expect(assigns(:provinces)).not_to be_empty
+    end
+  end
 end

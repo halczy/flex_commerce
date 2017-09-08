@@ -1,0 +1,8 @@
+<tr class="nested-fields">
+  <td><%= f.text_field :geo_code, class: 'form-control' %></td>
+  <td><%= f.number_field :init_rate, step: :any, class: 'form-control' %></td>
+  <td><%= f.number_field :add_on_rate, step: :any, class: 'form-control' %></td>
+  <td>
+    <%= link_to_remove_association "Remove", f, class: 'btn btn-danger btn-sm' %>
+  </td>
+</tr>
