@@ -1,6 +1,7 @@
 class ShippingMethod < ApplicationRecord
   # Relationships
   has_and_belongs_to_many :products
+  has_many :shipping_rates, dependent: :destroy
 
   # Validations
   validates :variety, presence: true

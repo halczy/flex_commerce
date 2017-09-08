@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 100) do
+ActiveRecord::Schema.define(version: 110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,19 @@ ActiveRecord::Schema.define(version: 100) do
     t.index ["product_id"], name: "index_shipping_methods_on_product_id"
   end
 
+  create_table "shipping_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "geo_code"
+    t.integer "init_rate_cents", default: 0, null: false
+    t.string "init_rate_currency", default: "CNY", null: false
+    t.integer "add_on_rate_cents", default: 0, null: false
+    t.string "add_on_rate_currency", default: "CNY", null: false
+    t.uuid "shipping_method_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["geo_code"], name: "index_shipping_rates_on_geo_code"
+    t.index ["shipping_method_id"], name: "index_shipping_rates_on_shipping_method_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "type"
     t.string "name"
@@ -166,4 +179,5 @@ ActiveRecord::Schema.define(version: 100) do
   add_foreign_key "inventories", "products"
   add_foreign_key "inventories", "users"
   add_foreign_key "shipping_methods", "products"
+  add_foreign_key "shipping_rates", "shipping_methods"
 end
