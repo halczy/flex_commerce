@@ -3,6 +3,8 @@ puts 'SEED: Seed file is running......'
 # CLEAN UP
 Cart.destroy_all
 puts 'CART: Clear old cart data'
+Address.destroy_all
+puts 'ADDRESS: Clear old address data'
 User.destroy_all
 puts 'USER: Clear old user data'
 Inventory.destroy_all
@@ -14,7 +16,10 @@ Category.destroy_all
 puts 'CATEGORY: Clear old category data'
 Image.destroy_all
 puts 'IMAGE: Clear old image data'
-
+ShippingRate.destroy_all
+puts 'SHIPPING RATE: Clear old shipping rate data'
+ShippingMethod.destroy_all
+puts 'SHIPPING METHOD: Clear old shipping method data'
 
 # ADMIN
 Admin.create(name: 'Admin User',
@@ -40,6 +45,26 @@ Category.create(name: 'Feature Products',
                 flavor: 2,
                 hide: false)
 puts "CATEGORY: #{Category.special.count} special categories created."
+
+# SHIPPING METHODS
+ShippingMethod.create(name: 'No Shipping', variety: 0)
+ShippingMethod.create(name: 'Delivery',    variety: 1)
+ShippingMethod.create(name: 'Self Pickup', variety: 2)
+puts "SHIPPING METHOD: #{ShippingMethod.count} shipping methods created."
+
+# SHIPPING RATE
+if Geo.count == 0
+  raise('Geo data must be available. Run rails geo:setup to resolve is problem.')
+end
+
+shipping_delivery = ShippingMethod.delivery.first
+Geo.province_state.each do |ps|
+  ShippingRate.create(geo_code: ps.id,
+                      init_rate: Faker::Number.decimal(2),
+                      add_on_rate: Faker::Number.decimal(2),
+                      shipping_method: shipping_delivery)
+end
+puts "SHIPPING RATE: #{ShippingRate.count} shipping rates created."
 
 # Production Essential
 ################################################################################
