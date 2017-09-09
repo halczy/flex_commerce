@@ -18,5 +18,8 @@
       <%= render 'action_control', shipping_method: shipping_method %>
     </tr>
     <% end %>
+    <% if shipping_methods.empty? %>
+      <tr><td colspan="5">No Shipping Method Available</td></tr>
+    <% end %>
   </tbody>
 </table>
