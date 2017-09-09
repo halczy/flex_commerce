@@ -5,7 +5,7 @@ describe 'Shipping Method CRUD', type: :feature do
   let(:admin) { FactoryGirl.create(:admin) }
   before { feature_signin_as(admin) }
 
-  xdescribe 'create' do
+  describe 'create' do
     before do
       @province = FactoryGirl.create(:province)
       visit admin_shipping_methods_path
@@ -257,7 +257,14 @@ describe 'Shipping Method CRUD', type: :feature do
   end
 
   describe 'destroy' do
-    it 'can destory shipping method'
+    it 'can destory shipping method' do
+      FactoryGirl.create(:no_shipping, name: 'some name')
+      visit admin_shipping_methods_path
+      click_on 'Delete'
+      click_on 'Confirm'
+      expect(page).to have_css('.alert.alert-success')
+      expect(page).not_to have_content('some name')
+    end
   end
 
 end
