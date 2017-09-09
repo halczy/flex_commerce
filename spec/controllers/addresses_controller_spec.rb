@@ -120,11 +120,10 @@ RSpec.describe AddressesController, type: :controller do
     end
 
     context 'with invalid params' do
-      it 'renders edit tempalte' do
+      it 'renders edit template' do
         patch :update, params: { id: address.id, address: { recipient: '' } }
         expect(response).to be_success
         expect(response).to render_template(:edit)
-
       end
     end
   end
