@@ -1,6 +1,7 @@
 class Admin::ShippingMethodsController < Admin::AdminController
   # Filter
   before_action :populate_form, only: [:new]
+  before_action :set_shipping_method, only: [:show]
 
   def index
     @shipping_methods = ShippingMethod.all
@@ -31,7 +32,16 @@ class Admin::ShippingMethodsController < Admin::AdminController
     end
   end
 
+  def show
+    @shipping_rates = @shipping_method.try(:shipping_rates)
+    @address = @shipping_method.try(:addresses).try(:last)
+  end
+
   private
+
+    def set_shipping_method
+      @shipping_method = ShippingMethod.find(params[:id])
+    end
 
     def populate_form
       @address = @shipping_method.addresses.build if @shipping_method

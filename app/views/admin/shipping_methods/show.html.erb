@@ -1,0 +1,3 @@
+<%= provide :title, 'Shipping Method' %>
+<%= @shipping_method.inspect %>
+<%= @shipping_method.try(:shipping_rates).try(:inspect) %>

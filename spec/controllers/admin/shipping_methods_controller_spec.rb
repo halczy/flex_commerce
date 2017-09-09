@@ -139,4 +139,30 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
       end
     end
   end
+
+  describe 'GET show' do
+    before do
+      @shipping_method = FactoryGirl.create(:delivery)
+      FactoryGirl.create(:shipping_rate, geo_code: province.id,
+                                         init_rate: 10,
+                                         add_on_rate: 2,
+                                         shipping_method: @shipping_method)
+    end
+
+    it 'response successfully' do
+      get :show, params: { id: @shipping_method.id }
+      expect(response).to be_success
+    end
+
+    it 'has shipping rates instance' do
+      get :show, params: { id: @shipping_method.id }
+      expect(assigns(:shipping_rates)).to be_present
+    end
+
+    it 'has address instance' do
+      FactoryGirl.create(:address, addressable: @shipping_method)
+      get :show, params: { id: @shipping_method.id }
+      expect(assigns(:address)).to be_present
+    end
+  end
 end
