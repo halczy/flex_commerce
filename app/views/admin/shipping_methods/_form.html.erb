@@ -10,10 +10,11 @@
         </div>
         <div class="col">
           <%= f.label :variety, 'Method Type' %>
-          <%= f.select :variety, options_for_select([['No Shipping', 0],
-                                                     ['Delivery', 1],
-                                                     ['Self Pickup', 2]]),
-                                 {}, id: 'method_select', class: 'form-control' %>
+          <%= f.select :variety, 
+                       options_for_select([['No Shipping', 'no_shipping'],
+                                           ['Delivery', 'delivery'],
+                                           ['Self Pickup', 'self_pickup']]),
+                       {}, id: 'method_select', class: 'form-control' %>
         </div>
       </div>
       <div class="jumbotron p-3 m-0 ">

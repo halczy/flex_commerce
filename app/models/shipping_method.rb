@@ -4,9 +4,9 @@ class ShippingMethod < ApplicationRecord
   has_many :shipping_rates, dependent: :destroy
   has_many :addresses, as: :addressable, dependent: :destroy
   accepts_nested_attributes_for :shipping_rates, allow_destroy: true,
-                                reject_if: :reject_shipping_rates
+                                reject_if:  proc { |att| att['geo_code'].blank? }
   accepts_nested_attributes_for :addresses, allow_destroy: true,
-                                reject_if:  :all_blank
+                                reject_if: :all_blank
 
   # Validations
   validates :variety, presence: true
