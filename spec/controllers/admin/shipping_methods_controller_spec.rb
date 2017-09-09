@@ -7,6 +7,7 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
   let(:no_shipping) { FactoryGirl.create(:no_shipping) }
   let(:self_pickup) { FactoryGirl.create(:self_pickup) }
   let(:province)    { FactoryGirl.create(:province) }
+  let(:product)     { FactoryGirl.create(:product) }
 
   before { signin_as(admin) }
 
@@ -180,7 +181,7 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
   describe 'PATCH update' do
     before do
       @shipping_method = FactoryGirl.create(:self_pickup)
-      @rate = FactoryGirl.create(:shipping_rate, shipping_method: @shipping_method)
+      FactoryGirl.create(:shipping_rate, shipping_method: @shipping_method)
       FactoryGirl.create(:address, addressable: @shipping_method)
     end
 
@@ -205,6 +206,47 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
           shipping_method: { name: '', variety: @shipping_method.variety } }
         expect(response).to render_template(:edit)
       end
+    end
+  end
+
+  describe 'DELETE destroy' do
+    before do
+      @shipping_method = FactoryGirl.create(:self_pickup)
+      FactoryGirl.create(:shipping_rate, shipping_method: @shipping_method)
+      FactoryGirl.create(:address, addressable: @shipping_method)
+      @shipping_method.products << product
+    end
+
+    context 'destroyable' do
+      it 'can be destroy' do
+        expect {
+          delete :destroy, params: { id: @shipping_method.id }
+        }.to change(ShippingMethod, :count).by(-1)
+        expect(flash[:success]).to be_present
+        expect(response).to redirect_to(admin_shipping_methods_path)
+      end
+
+      it 'removes associated shipping rates' do
+        expect {
+          delete :destroy, params: { id: @shipping_method.id }
+        }.to change(ShippingRate, :count).by(-1)
+      end
+
+      it 'removes associated address' do
+        expect {
+          delete :destroy, params: { id: @shipping_method.id }
+        }.to change(Address, :count).by(-1)
+      end
+
+      it 'does not remove associated product' do
+        expect {
+          delete :destroy, params: { id: @shipping_method.id }
+        }.not_to change(Product, :count)
+      end
+    end
+
+    context 'undestroyable' do
+      # TODO: PREVENT SHIPPING METHOD DELETION IF REF BY ORDER
     end
   end
 end

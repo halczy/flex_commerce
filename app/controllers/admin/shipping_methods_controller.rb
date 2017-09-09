@@ -1,7 +1,7 @@
 class Admin::ShippingMethodsController < Admin::AdminController
   # Filter
   before_action :populate_form, only: [:new, :edit]
-  before_action :set_shipping_method, only: [:show, :edit, :update]
+  before_action :set_shipping_method, only: [:show, :edit, :update, :destroy]
 
   def index
     @shipping_methods = ShippingMethod.all
@@ -58,6 +58,15 @@ class Admin::ShippingMethodsController < Admin::AdminController
       populate_form
       render :edit
     end
+  end
+
+  def destroy
+    if @shipping_method.destroy
+      flash[:success] = "Successfully removed the selected shipping method."
+    else
+      flash[:danger] = "This shipping method cannot be deleted."
+    end
+    redirect_to admin_shipping_methods_path
   end
 
   private
