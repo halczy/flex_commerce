@@ -1,3 +1,101 @@
 <%= provide :title, 'Shipping Method' %>
-<%= @shipping_method.inspect %>
-<%= @shipping_method.try(:shipping_rates).try(:inspect) %>
+
+<div class="d-flex justify-content-start mb-3">
+  <div class="p-2">
+    <%= link_to admin_shipping_methods_path, class: 'btn btn-secondary' do %>
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+    <% end %>
+  </div>
+  <div class="p-2">
+    <%= link_to edit_admin_shipping_method_path(@shipping_method),
+                class: 'btn btn-warning' do %>
+      <i class="fa fa-edit" aria-hidden="true"></i> Edit Shipping Method
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="jumbotron">
+      <h4 class="mb-3 mt-0">Basic Properties</h4>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Name</th>
+            <td><%= @shipping_method.name %></td>
+          </tr>
+          <tr>
+            <th scope="row">Type</th>
+            <td><%= @shipping_method.variety.titleize %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col jumbotron">
+    <h4 class="mb-3 mt-0">Method Data</h4>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Shipping Rates</th>
+            <td><%= @shipping_rates.count %></td>
+          </tr>
+          <tr>
+            <th scope="row">Pickup Address</th>
+            <td><%= (@address.present?).to_s.titleize %></td>
+          </tr>
+          <tr>
+            <th scope="row">Proudcts</th>
+            <td><%= @shipping_method.products.count %></td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="jumbotron">
+      <h4 class="mb-3 mt-0">Shipping Rates</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Geo Code</th>
+            <th>Geo Name</th>
+            <th>Init. Rate</th>
+            <th>Add-On Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @shipping_rates.each do |rate| %>
+          <tr>
+            <td><%= rate.geo_code %></td>
+            <td><%= Geo.find_by(id: rate.geo_code).try(:name) %></td>
+            <td><%= humanized_money_with_symbol rate.init_rate %></td>
+            <td><%= humanized_money_with_symbol rate.add_on_rate %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col jumbotron">
+    <h4 class="mb-3 mt-0">Self Pickup Address</h4>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Pickup Contact</th>
+            <td><%= @address.try(:recipient) %></td>
+          </tr>
+          <tr>
+            <th scope="row">Contact Number</th>
+            <td><%= @address.try(:contact_number) %></td>
+          </tr>
+          <tr>
+            <th scope="row">Address</th>
+            <td><%= @address.try(:full_address) %></td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
