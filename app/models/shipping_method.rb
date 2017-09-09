@@ -4,8 +4,7 @@ class ShippingMethod < ApplicationRecord
   has_many :shipping_rates, dependent: :destroy
   has_many :addresses, as: :addressable, dependent: :destroy
   accepts_nested_attributes_for :shipping_rates, allow_destroy: true
-  accepts_nested_attributes_for :addresses, allow_destroy: true,
-                                reject_if: :all_blank
+  accepts_nested_attributes_for :addresses, allow_destroy: true
 
   # Validations
   validates :name,    presence: true

@@ -25,7 +25,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
     if @shipping_method.save
       flash[:success] = 'Successfully created a shipping method.'
       @shipping_method.try(:addresses).try(:first).try(:build_full_address)
-      redirect_to admin_shipping_methods_path
+      redirect_to admin_shipping_method_path(@shipping_method)
     else
       populate_form
       render :new
@@ -53,7 +53,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
     if update_status
       flash[:success] = 'Successfully edited shipping method.'
       @shipping_method.try(:addresses).try(:first).try(:build_full_address)
-      redirect_to admin_shipping_methods_path
+      redirect_to admin_shipping_method_path(@shipping_method)
     else
       populate_form
       render :edit

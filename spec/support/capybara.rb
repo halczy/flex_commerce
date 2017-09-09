@@ -7,7 +7,7 @@ end
 Capybara.register_driver :headless_chrome do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
     chromeOptions: { args: %w(headless disable-popup-blocking
-                              no-sandbox disable-gpu window-size=1400,900) }
+                              no-sandbox disable-gpu window-size=1920,1080) }
   )
 
   Capybara::Selenium::Driver.new app,

@@ -44,7 +44,8 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
         }.to change(ShippingMethod, :count).by(1)
         expect(ShippingMethod.last.variety).to eq('no_shipping')
         expect(ShippingMethod.last.name).to eq('No Shipping')
-        expect(response).to redirect_to(admin_shipping_methods_path)
+        expect(response).
+          to redirect_to(admin_shipping_method_path(ShippingMethod.last))
       end
 
       it 'creates a delivery shipping method' do
@@ -65,7 +66,8 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
         expect(rate.geo_code).to eq('*')
         expect(rate.init_rate_cents).to eq(2000)
         expect(rate.add_on_rate_cents).to eq(1000)
-        expect(response).to redirect_to(admin_shipping_methods_path)
+        expect(response).
+          to redirect_to(admin_shipping_method_path(ShippingMethod.last))
       end
 
       it 'drops self pickup params if variety is delivery' do
@@ -87,7 +89,8 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
         }
         expect(ShippingMethod.count).to eq(1)
         expect(Address.count).to eq(0)
-        expect(response).to redirect_to(admin_shipping_methods_path)
+        expect(response).
+          to redirect_to(admin_shipping_method_path(ShippingMethod.last))
       end
 
       it 'creates a self pickup method' do
@@ -115,7 +118,8 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
         expect(addr.province_state).to eq(province.id)
         expect(addr.street).to eq('some street')
         expect(addr.full_address).to be_present
-        expect(response).to redirect_to(admin_shipping_methods_path)
+        expect(response).
+          to redirect_to(admin_shipping_method_path(ShippingMethod.last))
       end
     end
 
@@ -190,7 +194,8 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
         patch :update, params: {
           id: @shipping_method.id,
           shipping_method: { name: 'New Name', variety: @shipping_method.variety } }
-        expect(response).to redirect_to(admin_shipping_methods_path)
+        expect(response).
+          to redirect_to(admin_shipping_method_path(ShippingMethod.last))
         expect(@shipping_method.reload.name).to eq('New Name')
         expect(@shipping_method.shipping_rates.count).to eq(1)
         expect(@shipping_method.addresses.count).to eq(1)
