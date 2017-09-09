@@ -14,6 +14,9 @@ describe 'Product CRUD', type: :feature do
     end
 
     it 'can create product' do
+      ship_delivery = FactoryGirl.create(:delivery)
+      ship_pickup = FactoryGirl.create(:self_pickup)
+
       click_on('New Product')
 
       fill_in "product[name]", with: "Test Product Name"
@@ -21,6 +24,8 @@ describe 'Product CRUD', type: :feature do
       select 'Active', from: 'product[status]'
       fill_in "product[sku]", with: "TESTSKU1234567890"
       fill_in "product[weight]", with: 12.34
+      select "#{ship_delivery.name}", from: "shipping_method_select"
+      select "#{ship_pickup.name}", from: "shipping_method_select"
       select "True", from: "product[strict_inventory]"
       select "False", from: "product[digital]"
       first('input#introduction', visible: false).set("Test Introduction")
@@ -38,6 +43,8 @@ describe 'Product CRUD', type: :feature do
       expect(page).to have_content('Active')
       expect(page).to have_content('TESTSKU1234567890')
       expect(page).to have_content('12.34')
+      expect(page).to have_content('Delivery')
+      expect(page).to have_content('Self Pickup')
       expect(page).to have_content('Strict Inventory True')
       expect(page).to have_content('Digital Product False')
       expect(page).to have_content('Test Introduction')

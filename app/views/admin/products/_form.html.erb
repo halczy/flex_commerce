@@ -22,9 +22,16 @@
                                                 ['Disable', 'disabled']]),
                             {}, class: 'form-control' %>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-3">
       <%= f.label :weight, 'Weight (KG)' %>
       <%= f.number_field :weight, step: :any, class: 'form-control' %>
+    </div>
+    <div class="col-sm-3">
+      <%= f.label :shipping_method_ids, 'Select Shipping Methods' %>
+      <%= f.collection_select :shipping_method_ids, ShippingMethod.all,
+                              :id, :name, {},
+                              { multiple: true, class: 'form-control',
+                                id: 'shipping_method_select' } %>
     </div>
   </div>
 
