@@ -152,6 +152,7 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
     it 'response successfully' do
       get :show, params: { id: @shipping_method.id }
       expect(response).to be_success
+      expect(response).to render_template(:show)
     end
 
     it 'has shipping rates instance' do
@@ -163,6 +164,20 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
       FactoryGirl.create(:address, addressable: @shipping_method)
       get :show, params: { id: @shipping_method.id }
       expect(assigns(:address)).to be_present
+    end
+  end
+
+  describe 'GET edit' do
+    before do
+      @shipping_method = FactoryGirl.create(:self_pickup)
+      FactoryGirl.create(:shipping_rate, shipping_method: @shipping_method)
+      FactoryGirl.create(:address, addressable: @shipping_method)
+    end
+
+    it 'response successfully' do
+      get :edit, params: { id: @shipping_method.id }
+      expect(response).to be_success
+      expect(response).to render_template(:edit)
     end
   end
 end

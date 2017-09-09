@@ -13,7 +13,8 @@
     <%= f.label  :province_state, 'Province' %>
     <%= f.select :province_state,
                  options_for_select(
-                 @provinces.collect { |province| [province.name, province.id] }),
+                 @provinces.collect { |province| [province.name, province.id] },
+                 @shipping_method.addresses.first.province_state),
                  { include_blank: true }, { id: 'provinces_select',
                                             class: 'form-control' } %>
   </div>

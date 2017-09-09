@@ -14,8 +14,7 @@ class ShippingMethod < ApplicationRecord
   # Enum
   enum variety: { no_shipping: 0,
                   delivery: 1,
-                  self_pickup: 2,
-                  digital_delivery: 3 }
+                  self_pickup: 2 }
 
   private
 

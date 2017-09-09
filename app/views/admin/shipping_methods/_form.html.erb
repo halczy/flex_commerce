@@ -10,10 +10,11 @@
         </div>
         <div class="col">
           <%= f.label :variety, 'Method Type' %>
-          <%= f.select :variety, 
-                       options_for_select([['No Shipping', 'no_shipping'],
-                                           ['Delivery', 'delivery'],
-                                           ['Self Pickup', 'self_pickup']]),
+          <%= f.select :variety,
+                       options_for_select([['No Shipping', :no_shipping],
+                                           ['Delivery', :delivery],
+                                           ['Self Pickup', 'self_pickup']],
+                                           shipping_method.variety),
                        {}, id: 'method_select', class: 'form-control' %>
         </div>
       </div>
