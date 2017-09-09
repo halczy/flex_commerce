@@ -5,7 +5,7 @@ describe 'Shipping Method CRUD', type: :feature do
   let(:admin) { FactoryGirl.create(:admin) }
   before { feature_signin_as(admin) }
 
-  describe 'create' do
+  xdescribe 'create' do
     before do
       @province = FactoryGirl.create(:province)
       visit admin_shipping_methods_path
@@ -109,13 +109,150 @@ describe 'Shipping Method CRUD', type: :feature do
   end
 
   describe 'edit' do
-    it 'can change no shipping type method name'
-    it 'can add/update/remove shipping rates'
-    it 'can change self pick up address'
+    it 'can change no shipping type method name' do
+      FactoryGirl.create(:no_shipping)
+      visit admin_shipping_methods_path
+      click_on 'Edit'
+      fill_in 'shipping_method[name]', with: 'Test New Name'
+      click_on 'Submit'
+
+      expect(page.current_path).to eq(admin_shipping_method_path(ShippingMethod.last))
+      expect(page).to have_content('Test New Name')
+    end
+
+    it 'can add shipping rates', js: true do
+      offset = 0
+      delivery = FactoryGirl.create(:delivery)
+      FactoryGirl.create(:shipping_rate, geo_code: '1234', init_rate: 12,
+                          add_on_rate: 34, shipping_method: delivery)
+      city = FactoryGirl.create(:city)
+
+      visit admin_shipping_methods_path
+      click_on 'Edit'
+      click_on 'Add Rate'
+      page.all('input[id^="shipping_method_shipping_rates_attributes_"][id$="_geo_code"]').each do |el|
+        el.set(city.id) if offset == 1
+        offset += 1
+      end
+      page.all('input[id^="shipping_method_shipping_rates_attributes_"][id$="_init_rate"]').each do |el|
+        el.set('33') if offset == 3
+        offset += 1
+      end
+      page.all('input[id^="shipping_method_shipping_rates_attributes_"][id$="_add_on_rate"]').each do |el|
+        el.set('7') if offset == 5
+        offset += 1
+      end
+      click_on 'Submit'
+
+      expect(page.current_path).to eq(admin_shipping_method_path(ShippingMethod.last))
+      expect(page).to have_content(city.name)
+      expect(page).to have_content(city.id)
+      expect(page).to have_content('¥33')
+      expect(page).to have_content('¥7')
+      expect(page).to have_content('1234')
+      expect(page).to have_content('¥12')
+      expect(page).to have_content('¥34')
+    end
+
+    it 'can update shipping rates' do
+      delivery = FactoryGirl.create(:delivery)
+      FactoryGirl.create(:shipping_rate, geo_code: '1234', init_rate: 12,
+                          add_on_rate: 34, shipping_method: delivery)
+      city = FactoryGirl.create(:city)
+
+      visit admin_shipping_methods_path
+      click_on 'Edit'
+      fill_in 'shipping_method[shipping_rates_attributes][0][geo_code]', with: city.id
+      fill_in 'shipping_method[shipping_rates_attributes][0][init_rate]', with: 66
+      fill_in 'shipping_method[shipping_rates_attributes][0][add_on_rate]', with: 55
+      click_on 'Submit'
+
+      expect(page.current_path).to eq(admin_shipping_method_path(ShippingMethod.last))
+      expect(page).to have_content(city.id)
+      expect(page).to have_content('¥66')
+      expect(page).to have_content('¥55')
+    end
+
+    it 'can remove shipping rate', js: true do
+      delivery = FactoryGirl.create(:delivery)
+      FactoryGirl.create(:shipping_rate, geo_code: '1234', init_rate: 12,
+                          add_on_rate: 34, shipping_method: delivery)
+
+      visit admin_shipping_methods_path
+      click_on 'Edit'
+      click_on 'Remove'
+      click_on 'Submit'
+
+      expect(page.current_path).to eq(admin_shipping_method_path(ShippingMethod.last))
+      expect(page).not_to have_content('1234')
+      expect(page).not_to have_content('¥12')
+      expect(page).not_to have_content('¥34')
+    end
+
+    it 'can change self pick up address' do
+      province = FactoryGirl.create(:province)
+      self_pickup = FactoryGirl.create(:self_pickup)
+      address = FactoryGirl.create(:address, addressable: self_pickup,
+                                             province_state: province,
+                                             country_region: nil,
+                                             city: nil,
+                                             district: nil,
+                                             community: nil)
+      visit admin_shipping_methods_path
+      click_on 'Edit'
+      fill_in 'shipping_method[addresses_attributes][0][recipient]', with: 'New Recipient'
+      fill_in 'shipping_method[addresses_attributes][0][contact_number]', with: '1234567890'
+      select province.name, from: 'shipping_method[addresses_attributes][0][province_state]'
+      fill_in 'shipping_method[addresses_attributes][0][street]', with: 'Test Street Address'
+      click_on 'Submit'
+
+      expect(page.current_path).to eq(admin_shipping_method_path(ShippingMethod.last))
+      expect(page).to have_content('New Recipient')
+      expect(page).to have_content('1234567890')
+      expect(page).to have_content(province.name)
+      expect(page).to have_content('Test Street Address')
+    end
+
     context 'error scenarios' do
-      it 'renders error when name is removed'
-      it 'renders error when geo code alone is remove'
-      it 'renders error if address is incomplete'
+      it 'renders error when name is removed' do
+        FactoryGirl.create(:no_shipping)
+        visit admin_shipping_methods_path
+        click_on 'Edit'
+        fill_in 'shipping_method[name]', with: ''
+        click_on 'Submit'
+
+        expect(page).to have_css('#error_messages')
+      end
+
+      it 'renders error when geo code alone is remove' do
+        delivery = FactoryGirl.create(:delivery)
+        FactoryGirl.create(:shipping_rate, geo_code: '1234', init_rate: 12,
+                            add_on_rate: 34, shipping_method: delivery)
+
+        visit admin_shipping_methods_path
+        click_on 'Edit'
+        fill_in 'shipping_method[shipping_rates_attributes][0][geo_code]', with: ''
+        click_on 'Submit'
+
+        expect(page).to have_css('#error_messages')
+      end
+
+      it 'renders error if address is incomplete' do
+        province = FactoryGirl.create(:province)
+        self_pickup = FactoryGirl.create(:self_pickup)
+        address = FactoryGirl.create(:address, addressable: self_pickup,
+                                               province_state: province,
+                                               country_region: nil,
+                                               city: nil,
+                                               district: nil,
+                                               community: nil)
+        visit admin_shipping_methods_path
+        click_on 'Edit'
+        fill_in 'shipping_method[addresses_attributes][0][recipient]', with: ''
+        click_on 'Submit'
+
+        expect(page).to have_css('#error_messages')
+      end
     end
   end
 
