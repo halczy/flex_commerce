@@ -1,7 +1,7 @@
 class Admin::ShippingMethodsController < Admin::AdminController
   # Filter
   before_action :populate_form, only: [:new, :edit]
-  before_action :set_shipping_method, only: [:show, :edit]
+  before_action :set_shipping_method, only: [:show, :edit, :update]
 
   def index
     @shipping_methods = ShippingMethod.all
@@ -38,6 +38,26 @@ class Admin::ShippingMethodsController < Admin::AdminController
   end
 
   def edit
+  end
+
+  def update
+    case params[:shipping_method][:variety]
+    when 'no_shipping'
+      update_status = @shipping_method.update(no_shipping_params)
+    when 'delivery'
+      update_status = @shipping_method.update(delivery_params)
+    when 'self_pickup'
+      update_status = @shipping_method.update(self_pickup_params)
+    end
+
+    if update_status
+      flash[:success] = 'Successfully edited shipping method.'
+      @shipping_method.try(:addresses).try(:first).try(:build_full_address)
+      redirect_to admin_shipping_methods_path
+    else
+      populate_form
+      render :edit
+    end
   end
 
   private

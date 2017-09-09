@@ -168,16 +168,43 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
   end
 
   describe 'GET edit' do
-    before do
-      @shipping_method = FactoryGirl.create(:self_pickup)
-      FactoryGirl.create(:shipping_rate, shipping_method: @shipping_method)
-      FactoryGirl.create(:address, addressable: @shipping_method)
-    end
+    before { @shipping_method = FactoryGirl.create(:self_pickup) }
 
     it 'response successfully' do
       get :edit, params: { id: @shipping_method.id }
       expect(response).to be_success
       expect(response).to render_template(:edit)
+    end
+  end
+
+  describe 'PATCH update' do
+    before do
+      @shipping_method = FactoryGirl.create(:self_pickup)
+      @rate = FactoryGirl.create(:shipping_rate, shipping_method: @shipping_method)
+      FactoryGirl.create(:address, addressable: @shipping_method)
+    end
+
+    context 'with valid params' do
+      it 'updates the requested shipping_method' do
+        patch :update, params: {
+          id: @shipping_method.id,
+          shipping_method: { name: 'New Name', variety: @shipping_method.variety } }
+        expect(response).to redirect_to(admin_shipping_methods_path)
+        expect(@shipping_method.reload.name).to eq('New Name')
+        expect(@shipping_method.shipping_rates.count).to eq(1)
+        expect(@shipping_method.addresses.count).to eq(1)
+      end
+
+      # Nested attributes update are tested in shipping method feature spec
+    end
+
+    context 'with invalid params' do
+      it 'renders edit template when name is removed' do
+        patch :update, params: {
+          id: @shipping_method.id,
+          shipping_method: { name: '', variety: @shipping_method.variety } }
+        expect(response).to render_template(:edit)
+      end
     end
   end
 end
