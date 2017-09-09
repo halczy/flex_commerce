@@ -43,9 +43,9 @@ RSpec.describe ShippingMethod, type: :model do
         expect(@product.shipping_methods.self_pickup.present?).to be_truthy
       end
 
-      it 'returns false if digital delivery is not available to product' do
-        expect(@product.shipping_methods.digital_delivery.present?).to be_falsey
-      end
+      # it 'returns false if digital delivery is not available to product' do
+      #   expect(@product.shipping_methods.digital_delivery.present?).to be_falsey
+      # end
     end
 
     context 'address' do
