@@ -10,9 +10,11 @@ FactoryGirl.define do
 
     after(:create) do |new_order|
       3.times do
-        new_order.inventories << FactoryGirl.create(:inventory, status: 2,
-                                                      user: new_order.user)
+        FactoryGirl.create(:inventory, status: 2, user: new_order.user,
+                                                  order: new_order)
       end
+      FactoryGirl.create(:address, addressable: new_order).build_full_address
     end
   end
+
 end

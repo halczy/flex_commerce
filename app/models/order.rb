@@ -2,6 +2,7 @@ class Order < ApplicationRecord
   # Relationships
   belongs_to :user
   has_one    :shipping_method
+  has_one    :address, as: :addressable
   has_many   :inventories
   has_many   :products, through: :inventories
 

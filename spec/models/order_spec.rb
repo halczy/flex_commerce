@@ -27,5 +27,12 @@ RSpec.describe Order, type: :model do
         expect(new_order.inventories).not_to be_empty
       end
     end
+
+    context 'address' do
+      it 'can have one address' do
+        expect(new_order.address).to be_present
+        expect(new_order.address.addressable).to eq(new_order)
+      end
+    end
   end
 end
