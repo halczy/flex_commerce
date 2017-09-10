@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 110) do
+ActiveRecord::Schema.define(version: 120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,20 +85,31 @@ ActiveRecord::Schema.define(version: 110) do
   end
 
   create_table "inventories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
-    t.uuid "product_id"
-    t.uuid "cart_id"
     t.integer "status"
     t.datetime "purchased_at"
     t.datetime "returned_at"
     t.decimal "purchase_weight"
     t.integer "purchase_price_cents", default: 0, null: false
     t.string "purchase_price_currency", default: "CNY", null: false
+    t.uuid "user_id"
+    t.uuid "product_id"
+    t.uuid "cart_id"
+    t.uuid "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cart_id"], name: "index_inventories_on_cart_id"
+    t.index ["order_id"], name: "index_inventories_on_order_id"
     t.index ["product_id"], name: "index_inventories_on_product_id"
     t.index ["user_id"], name: "index_inventories_on_user_id"
+  end
+
+  create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "status"
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_orders_on_status"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -143,8 +154,10 @@ ActiveRecord::Schema.define(version: 110) do
     t.string "name"
     t.integer "variety"
     t.uuid "product_id"
+    t.uuid "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_shipping_methods_on_order_id"
     t.index ["product_id"], name: "index_shipping_methods_on_product_id"
   end
 
@@ -180,8 +193,11 @@ ActiveRecord::Schema.define(version: 110) do
   add_foreign_key "categorizations", "categories"
   add_foreign_key "categorizations", "products"
   add_foreign_key "inventories", "carts"
+  add_foreign_key "inventories", "orders"
   add_foreign_key "inventories", "products"
   add_foreign_key "inventories", "users"
+  add_foreign_key "orders", "users"
+  add_foreign_key "shipping_methods", "orders"
   add_foreign_key "shipping_methods", "products"
   add_foreign_key "shipping_rates", "shipping_methods"
 end
