@@ -14,7 +14,7 @@ class CustomersController < UsersController
       flash[:success] = 'Your account has been created successfully.'
       helpers.login(@customer)
       helpers.organize_cart(@customer)
-      redirect_to dashboard_path(@customer)
+      redirect_back_or dashboard_path(@customer)
     else
       render :new
     end

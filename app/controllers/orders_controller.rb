@@ -1,6 +1,7 @@
 class OrdersController < UsersController
   # Filters
-  before_action :authenticate_user
+  before_action :request_signin, only: [:create]
+  before_action :authenticate_user, except: [:create]
   before_action :set_order, except: [:create, :index]
 
   def create
@@ -23,7 +24,11 @@ class OrdersController < UsersController
       @order = Order.find(params[:id])
     end
 
-
-
+    def request_signin
+      unless helpers.signed_in?
+        helpers.store_return_url
+        redirect_to signin_path
+      end
+    end
 
 end
