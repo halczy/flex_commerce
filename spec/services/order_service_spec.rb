@@ -65,6 +65,8 @@ RSpec.describe OrderService do
     it 'does not create new order for session cart' do
       order_service = OrderService.new(cart_id: cart.id)
       expect(order_service.create).to be_falsey
+      expect(Order.count).to eq(0)
+      expect(order_service.order).to be_nil
     end
   end
 
