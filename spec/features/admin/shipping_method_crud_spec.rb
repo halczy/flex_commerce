@@ -84,7 +84,7 @@ describe 'Shipping Method CRUD', type: :feature do
       expect(page).to have_content('Test Street Addr')
     end
 
-    context 'error scenarios' do
+    context 'failing cases' do
       it 'renders error when name is not filled in' do
         select 'No Shipping', from: 'shipping_method[variety]'
         click_on 'Submit'
@@ -122,7 +122,7 @@ describe 'Shipping Method CRUD', type: :feature do
 
     it 'can add shipping rates', js: true do
       field_num = 0
-      delivery = FactoryGirl.create(:delivery)
+      delivery = FactoryGirl.create(:delivery_sa)
       FactoryGirl.create(:shipping_rate, geo_code: '1234', init_rate: 12,
                           add_on_rate: 34, shipping_method: delivery)
       city = FactoryGirl.create(:city)
@@ -155,7 +155,7 @@ describe 'Shipping Method CRUD', type: :feature do
     end
 
     it 'can update shipping rates' do
-      delivery = FactoryGirl.create(:delivery)
+      delivery = FactoryGirl.create(:delivery_sa)
       FactoryGirl.create(:shipping_rate, geo_code: '1234', init_rate: 12,
                           add_on_rate: 34, shipping_method: delivery)
       city = FactoryGirl.create(:city)
@@ -174,7 +174,7 @@ describe 'Shipping Method CRUD', type: :feature do
     end
 
     it 'can remove shipping rate', js: true do
-      delivery = FactoryGirl.create(:delivery)
+      delivery = FactoryGirl.create(:delivery_sa)
       FactoryGirl.create(:shipping_rate, geo_code: '1234', init_rate: 12,
                           add_on_rate: 34, shipping_method: delivery)
 
@@ -191,7 +191,7 @@ describe 'Shipping Method CRUD', type: :feature do
 
     it 'can change self pick up address' do
       province = FactoryGirl.create(:province)
-      self_pickup = FactoryGirl.create(:self_pickup)
+      self_pickup = FactoryGirl.create(:self_pickup_sa)
       address = FactoryGirl.create(:address, addressable: self_pickup,
                                              province_state: province,
                                              country_region: nil,
@@ -213,7 +213,7 @@ describe 'Shipping Method CRUD', type: :feature do
       expect(page).to have_content('Test Street Address')
     end
 
-    context 'error scenarios' do
+    context 'failing cases' do
       it 'renders error when name is removed' do
         FactoryGirl.create(:no_shipping)
         visit admin_shipping_methods_path
@@ -225,7 +225,7 @@ describe 'Shipping Method CRUD', type: :feature do
       end
 
       it 'renders error when geo code alone is remove' do
-        delivery = FactoryGirl.create(:delivery)
+        delivery = FactoryGirl.create(:delivery_sa)
         FactoryGirl.create(:shipping_rate, geo_code: '1234', init_rate: 12,
                             add_on_rate: 34, shipping_method: delivery)
 

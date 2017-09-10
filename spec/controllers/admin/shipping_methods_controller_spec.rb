@@ -185,12 +185,10 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
   describe 'PATCH update' do
     before do
       @shipping_method = FactoryGirl.create(:self_pickup)
-      FactoryGirl.create(:shipping_rate, shipping_method: @shipping_method)
-      FactoryGirl.create(:address, addressable: @shipping_method)
     end
 
     context 'with valid params' do
-      it 'updates the requested shipping_method' do
+      it 'updates the requested shipping method' do
         patch :update, params: {
           id: @shipping_method.id,
           shipping_method: { name: 'New Name', variety: @shipping_method.variety } }
@@ -217,8 +215,6 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
   describe 'DELETE destroy' do
     before do
       @shipping_method = FactoryGirl.create(:self_pickup)
-      FactoryGirl.create(:shipping_rate, shipping_method: @shipping_method)
-      FactoryGirl.create(:address, addressable: @shipping_method)
       @shipping_method.products << product
     end
 

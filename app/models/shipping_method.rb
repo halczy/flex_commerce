@@ -16,6 +16,10 @@ class ShippingMethod < ApplicationRecord
                   delivery: 1,
                   self_pickup: 2 }
 
+  def address
+    addresses.first
+  end
+
   private
 
     def reject_shipping_rates(attributes)

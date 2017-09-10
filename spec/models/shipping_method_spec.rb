@@ -51,11 +51,10 @@ RSpec.describe ShippingMethod, type: :model do
     context 'address' do
       before do
         @shipping_self_pickup = FactoryGirl.create(:self_pickup)
-        @address = FactoryGirl.create(:address, addressable: @shipping_self_pickup)
       end
 
       it 'returns address that belongs to shipping method' do
-        expect(@shipping_self_pickup.addresses.first).to eq(@address)
+        expect(@shipping_self_pickup.address).to be_present
       end
     end
   end
