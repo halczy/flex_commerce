@@ -24,6 +24,11 @@ Rails.application.routes.draw do
         get 'update_selector'
     end
   end
+  resources :orders, only: [:index, :create, :show, :destroy] do
+    member do
+      get :select_shipping
+    end
+  end
 
   namespace :admin do
     resources :dashboard, only: [:index]                          # Dashboard
