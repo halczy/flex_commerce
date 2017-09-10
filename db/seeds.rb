@@ -1,14 +1,16 @@
 puts 'SEED: Seed file is running......'
 
 # CLEAN UP
+Inventory.destroy_all
+puts 'INVENTORY: Clear old inventory data'
+Order.destroy_all
+puts 'ORDER: Clear old order data'
 Cart.destroy_all
 puts 'CART: Clear old cart data'
 Address.destroy_all
 puts 'ADDRESS: Clear old address data'
 User.destroy_all
 puts 'USER: Clear old user data'
-Inventory.destroy_all
-puts 'INVENTORY: Clear old inventory data'
 Product.destroy_all
 puts 'PRODUCT: Clear old product data'
 Categorization.destroy_all
@@ -47,17 +49,15 @@ Category.create(name: 'Feature Products',
 puts "CATEGORY: #{Category.special.count} special categories created."
 
 # SHIPPING METHODS
-ShippingMethod.create(name: 'No Shipping', variety: 0)
-ShippingMethod.create(name: 'Delivery',    variety: 1)
-ShippingMethod.create(name: 'Self Pickup', variety: 2)
-puts "SHIPPING METHOD: #{ShippingMethod.count} shipping methods created."
+shipping_delivery = ShippingMethod.create(name: 'Delivery',    variety: 1)
+
+puts "SHIPPING METHOD: #{ShippingMethod.count} production shipping methods created."
 
 # SHIPPING RATE
 if Geo.count == 0
   raise('Geo data must be available. Run rails geo:setup to resolve is problem.')
 end
 
-shipping_delivery = ShippingMethod.delivery.first
 Geo.province_state.each do |ps|
   ShippingRate.create(geo_code: ps.id,
                       init_rate: Faker::Number.decimal(2),
@@ -163,3 +163,16 @@ puts "IMAGE: #{Image.count} images created."
   Product.all.sample.inventories.create(status: Random.rand(0..5))
 end
 puts "INVENTORY: #{Inventory.count} inventories created."
+
+# SHIPPING METHOD
+FactoryGirl.create(:no_shipping)
+shipping_pickup = FactoryGirl.create(:self_pickup)
+
+puts 'SHIPPING METHOD: 2 shipping methods created.'
+
+Product.all.each do |product|
+  product.shipping_methods << shipping_delivery
+  product.shipping_methods << shipping_pickup
+end
+
+puts 'SHIPPING METHOD: Added shipping method to all products.'
