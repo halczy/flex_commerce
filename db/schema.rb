@@ -91,6 +91,9 @@ ActiveRecord::Schema.define(version: 110) do
     t.integer "status"
     t.datetime "purchased_at"
     t.datetime "returned_at"
+    t.decimal "purchase_weight"
+    t.integer "purchase_price_cents", default: 0, null: false
+    t.string "purchase_price_currency", default: "CNY", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cart_id"], name: "index_inventories_on_cart_id"

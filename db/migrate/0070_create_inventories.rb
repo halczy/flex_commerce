@@ -7,6 +7,8 @@ class CreateInventories < ActiveRecord::Migration[5.1]
       t.integer    :status
       t.datetime   :purchased_at
       t.datetime   :returned_at
+      t.decimal    :purchase_weight
+      t.monetize   :purchase_price
 
       t.timestamps
     end
