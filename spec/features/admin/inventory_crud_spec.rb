@@ -73,7 +73,7 @@ describe 'Inventory CURD', type: :feature do
       click_on(@returned.id)
 
       expect(page).to have_content(@returned.id)
-      expect(page).to have_content(@returned.status)
+      expect(page).to have_content(@returned.status.titleize)
       expect(page).to have_content(@returned.product.id)
       expect(page).to have_content(@returned.product.name)
     end
