@@ -121,7 +121,7 @@ describe 'Shipping Method CRUD', type: :feature do
     end
 
     it 'can add shipping rates', js: true do
-      offset = 0
+      field_num = 0
       delivery = FactoryGirl.create(:delivery)
       FactoryGirl.create(:shipping_rate, geo_code: '1234', init_rate: 12,
                           add_on_rate: 34, shipping_method: delivery)
@@ -131,16 +131,16 @@ describe 'Shipping Method CRUD', type: :feature do
       click_on 'Edit'
       click_on 'Add Rate'
       page.all('input[id^="shipping_method_shipping_rates_attributes_"][id$="_geo_code"]').each do |el|
-        el.set(city.id) if offset == 1
-        offset += 1
+        el.set(city.id) if field_num == 1
+        field_num += 1
       end
       page.all('input[id^="shipping_method_shipping_rates_attributes_"][id$="_init_rate"]').each do |el|
-        el.set('33') if offset == 3
-        offset += 1
+        el.set('33') if field_num == 3
+        field_num += 1
       end
       page.all('input[id^="shipping_method_shipping_rates_attributes_"][id$="_add_on_rate"]').each do |el|
-        el.set('7') if offset == 5
-        offset += 1
+        el.set('7') if field_num == 5
+        field_num += 1
       end
       click_on 'Submit'
 
