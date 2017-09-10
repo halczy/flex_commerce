@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 120) do
   end
 
   create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "status"
+    t.integer "status", default: 0
     t.uuid "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
