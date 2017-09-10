@@ -20,7 +20,15 @@
           </tr>
           <tr>
             <th scope="row">Status</th>
-            <td><%= @inventory.status %></td>
+            <td><%= @inventory.status.titleize %></td>
+          </tr>
+          <tr>
+            <th scope="row">Purchase At</th>
+            <td><%= @inventory.purchased_at %></td>
+          </tr>
+          <tr>
+            <th scope="row">Returned At</th>
+            <td><%= @inventory.returned_at %></td>
           </tr>
           <tr>
             <th scope="row">Last Update</th>
@@ -50,6 +58,30 @@
           <tr>
             <th scope="row">Product Name</th>
             <td><%= link_to @inventory.product.name, @inventory.product %></td>
+          </tr>
+          <tr>
+            <th scope="row">Product Price</th>
+            <td>
+              <%= humanized_money_with_symbol @inventory.product.price_member %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Purchase Price</th>
+            <td>
+              <%= humanized_money_with_symbol @inventory.try(:purchase_price) %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Product Weight</th>
+            <td>
+              <%= @inventory.product.weight %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Purchase Weight</th>
+            <td>
+              <%= @inventory.purchase_weight %>
+            </td>
           </tr>
         </tbody>
       </table>
