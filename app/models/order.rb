@@ -18,7 +18,4 @@ class Order < ApplicationRecord
     staff_confirmed: 70, pickup_pending: 80, shipped: 90, completed: 100
   }
 
-  # Virtual Attributes
-  attribute :shipping_method, :string
-
 end
