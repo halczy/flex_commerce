@@ -18,4 +18,8 @@ class Order < ApplicationRecord
     staff_confirmed: 70, pickup_pending: 80, shipped: 90, completed: 100
   }
 
+  def quantity(product)
+    inventories.where(product: product)
+  end
+
 end

@@ -34,5 +34,22 @@ RSpec.describe Order, type: :model do
         expect(new_order.address.addressable).to eq(new_order)
       end
     end
+
+    context 'product' do
+      it 'returns product in order' do
+        expect(new_order.products.first).to be_an_instance_of(Product)
+      end
+
+      it 'does not duplicate product returns' do
+        expect(new_order.products.count).to eq(3)
+      end
+
+      context 'quantity' do
+        it 'returns quantity of product inventories in order' do
+          product = new_order.products.sample
+          expect(new_order.quantity(product).count).to eq(1)
+        end
+      end
+    end
   end
 end

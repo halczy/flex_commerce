@@ -1,9 +1,9 @@
 <tr>
   <td><%= f.object.name %></td>
-  <td></td>
+  <td><%= @order.quantity(f.object).count %></td>
   <td>
-    <%= f.select :shipping_methods,
-                  options_for_select(f.object.shipping_methods.collect { |m| [m.name, m.id] }),
+    <%= f.select :shipping_methods, options_for_select(
+                  f.object.shipping_methods.collect { |m| [m.name, m.id] }),
                   {}, class: 'form-control' %>
   </td>
 </tr>
