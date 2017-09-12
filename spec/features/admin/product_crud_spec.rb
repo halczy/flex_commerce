@@ -94,6 +94,18 @@ describe 'Product CRUD', type: :feature do
         click_on('Create Product')
         expect(page).to have_css('#error_messages')
       end
+
+      it 'can only assign one of each variety shipping method to product' do
+        ship_delivery = FactoryGirl.create(:delivery)
+        dup_delivery = FactoryGirl.create(:delivery, name: 'Duplicate Delivery')
+        click_on('New Product')
+        fill_in "product[name]", with: "Test Product with Images"
+        fill_in "product[weight]", with: 12.34
+        select "#{ship_delivery.name}", from: "shipping_method_select"
+        select "#{dup_delivery.name}", from: "shipping_method_select"
+        click_on('Create Product')
+        expect(page).to have_css('#error_messages')
+      end
     end
   end
 

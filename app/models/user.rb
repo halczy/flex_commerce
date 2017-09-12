@@ -17,7 +17,6 @@ class User < ApplicationRecord
   before_validation :assign_member_id
 
   # Validations
-  validates_with IdentificationValidator
   validates :email, length: { maximum: 255 }, allow_nil: true,
                     format: { with: EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
@@ -25,6 +24,7 @@ class User < ApplicationRecord
                           uniqueness: true, allow_nil: true
   validates :member_id, presence: true, uniqueness: true,
                         inclusion: { in: 100_000..999_999 }
+  validates_with IdentificationValidator
   validates :password, length: { minimum: 6, maximum: 50 }, allow_blank: true
 
   # Attributes
