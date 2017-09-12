@@ -4,7 +4,8 @@ class Order < ApplicationRecord
   has_one    :shipping_method
   has_one    :address, as: :addressable
   has_many   :inventories
-  has_many   :products, through: :inventories
+  has_many   :products, -> { distinct }, through: :inventories
+  accepts_nested_attributes_for :products
 
   # Enum
   enum status: {
@@ -17,5 +18,7 @@ class Order < ApplicationRecord
     staff_confirmed: 70, pickup_pending: 80, shipped: 90, completed: 100
   }
 
+  # Virtual Attributes
+  attribute :shipping_method, :string
 
 end

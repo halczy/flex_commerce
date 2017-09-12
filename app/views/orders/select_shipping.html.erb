@@ -1,1 +1,12 @@
-<%= @order.inspect %>
+<%= provide :title, 'Select Shipping' %>
+
+<div class="container">
+  <div class="card mt-5">
+    <div class="card-header">
+      Select Shipping
+    </div>
+    <div class="card-body">
+      <%= render 'shipping_select_form' %>
+    </div>
+  </div>
+</div>

@@ -15,7 +15,10 @@ class OrdersController < UsersController
   end
 
   def select_shipping
+  end
 
+  def set_shipping
+    raise
   end
 
   private

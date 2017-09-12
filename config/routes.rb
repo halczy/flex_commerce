@@ -26,7 +26,8 @@ Rails.application.routes.draw do
   end
   resources :orders, only: [:index, :create, :show, :destroy] do
     member do
-      get :select_shipping
+      get   :select_shipping
+      patch :set_shipping
     end
   end
 

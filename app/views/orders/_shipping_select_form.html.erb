@@ -1,0 +1,23 @@
+<%= form_with(model: @order, url: set_shipping_order_path, local: true) do |f| %>
+  <table class="table table-hover table-responsive">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Shipping Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= f.fields_for :products do |product_form| %>
+        <%= render 'product_fields', f: product_form %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-end">
+    <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
+      Next <i class="fa fa-arrow-right ml-1" aria-hidden="true"></i>
+    <% end %>
+  </div>
+
+<% end %>
