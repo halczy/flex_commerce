@@ -2,6 +2,7 @@ class Cart < ApplicationRecord
   # Relationships
   belongs_to :user, optional: true
   has_many :inventories
+  has_many :products, -> { distinct }, through: :inventories
 
   # Scope / Enum
   enum status: { inactive: 0, active: 1, inv_removed: 2 }
@@ -17,7 +18,7 @@ class Cart < ApplicationRecord
   end
 
   def remove(product, quantity = 0)
-    invs = product_inventories(product)
+    invs = quantity(product)
     invs = invs.limit(quantity) if quantity > 0
     invs.each { |inv| inv.update(cart_id: nil, status: 0) }
   end
@@ -32,18 +33,13 @@ class Cart < ApplicationRecord
     inventories.update(cart: target_cart)
   end
 
-  def products
-    # @products = inventories.map(&:product).uniq
-    @products = Product.where(id: inventories.pluck(:product_id)).uniq
-  end
-
-  def product_inventories(product)
+  def quantity(product)
     inventories.where(product: product)
   end
 
-  def product_inventories_diff(product, quantity)
-    current_invs_count = product_inventories(product).count
-    quantity - current_invs_count
+  def inventories_diff(product, target_quantity)
+    current_invs_count = quantity(product).count
+    target_quantity - current_invs_count
   end
 
   def inventories_by(object)
@@ -51,7 +47,7 @@ class Cart < ApplicationRecord
   end
 
   def subtotal(product)
-    product_inventories(product).count * product.price_member
+    quantity(product).count * product.price_member
   end
 
   def total

@@ -4,7 +4,8 @@
                      class: 'btn btn-sm btn-secondary', method: :delete %>
   </span>
   <%= form_with(url: cart_path, local: true, class: 'form-inline', method: :patch) do |form| %>
-      <%= form.text_field :quantity, value: @current_cart.product_inventories(product).count,
+      <%= form.text_field :quantity,
+                          value: @current_cart.quantity(product).count,
                           id: 'quantity', onchange: "this.form.submit();",
                           class: 'form-control form-control-sm text-center' %>
     <%= form.hidden_field :pid, value: product.id %>

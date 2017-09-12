@@ -14,7 +14,7 @@ class CartsController < ApplicationController
       redirect_to cart_path
     else
       smart_return
-      flash[:warning] = 'The product you have selected is out of stock 
+      flash[:warning] = 'The product you have selected is out of stock
                          or does not have enough stock to fill your request.'
       redirect_back_or cart_path
     end
@@ -30,8 +30,7 @@ class CartsController < ApplicationController
   end
 
   def update
-    @quantity =  @current_cart
-                    .product_inventories_diff(@product, params[:quantity].to_i)
+    @quantity =  @current_cart.inventories_diff(@product, params[:quantity].to_i)
 
     if @quantity > 0
       add

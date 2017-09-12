@@ -133,10 +133,10 @@ RSpec.describe Cart, type: :model do
       end
     end
 
-    context '#product_inventories' do
+    context '#quantity' do
       it 'returns the selected product inventories in cart' do
-        expect(@cart.product_inventories(@product_1).count).to eq(2)
-        expect(@cart.product_inventories(@product_2).count).to eq(4)
+        expect(@cart.quantity(@product_1).count).to eq(2)
+        expect(@cart.quantity(@product_2).count).to eq(4)
       end
     end
 
@@ -165,7 +165,7 @@ RSpec.describe Cart, type: :model do
     end
   end
 
-  describe '#product_inventories_diff' do
+  describe '#inventories_diff' do
     before do
       @product = FactoryGirl.create(:product)
       @cart = FactoryGirl.create(:cart)
@@ -173,11 +173,11 @@ RSpec.describe Cart, type: :model do
     end
 
     it 'returns positive integer if quantity is more than current' do
-      expect(@cart.product_inventories_diff(@product, 5)).to eq(2)
+      expect(@cart.inventories_diff(@product, 5)).to eq(2)
     end
 
     it 'returns negative integer if quantity is less than current' do
-      expect(@cart.product_inventories_diff(@product, 1)).to eq(-2)
+      expect(@cart.inventories_diff(@product, 1)).to eq(-2)
     end
   end
 
