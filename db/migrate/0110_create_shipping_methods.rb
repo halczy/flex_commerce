@@ -3,8 +3,8 @@ class CreateShippingMethods < ActiveRecord::Migration[5.1]
     create_table :shipping_methods, id: :uuid do |t|
       t.string     :name
       t.integer    :variety
-      t.references :product,     index: true,             foreign_key: true, type: :uuid
-      t.references :inventories, index: { unique: true }, foreign_key: true, type: :uuid
+      t.references :product,   foreign_key: true, type: :uuid, index: true
+      t.references :inventory, foreign_key: true, type: :uuid, index: { unique: true }
 
       t.timestamps
     end
