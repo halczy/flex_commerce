@@ -1,10 +1,10 @@
 class Inventory < ApplicationRecord
   # Relationships
-  has_one    :shipping_method
   belongs_to :product, touch: true
-  belongs_to :user,    optional: true, touch: true
-  belongs_to :cart,    optional: true, touch: true
-  belongs_to :order,   optional: true
+  belongs_to :user,            optional: true, touch: true
+  belongs_to :cart,            optional: true, touch: true
+  belongs_to :order,           optional: true
+  belongs_to :shipping_method, optional: true
 
   # Validations
   monetize :purchase_price_cents, numericality: { greater_than_or_equal_to: 0 }

@@ -4,7 +4,6 @@ class CreateShippingMethods < ActiveRecord::Migration[5.1]
       t.string     :name
       t.integer    :variety
       t.references :product,   foreign_key: true, type: :uuid, index: true
-      t.references :inventory, foreign_key: true, type: :uuid, index: { unique: true }
 
       t.timestamps
     end

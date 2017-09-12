@@ -95,11 +95,13 @@ ActiveRecord::Schema.define(version: 120) do
     t.uuid "product_id"
     t.uuid "cart_id"
     t.uuid "order_id"
+    t.uuid "shipping_method_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cart_id"], name: "index_inventories_on_cart_id"
     t.index ["order_id"], name: "index_inventories_on_order_id"
     t.index ["product_id"], name: "index_inventories_on_product_id"
+    t.index ["shipping_method_id"], name: "index_inventories_on_shipping_method_id"
     t.index ["user_id"], name: "index_inventories_on_user_id"
   end
 
@@ -154,10 +156,8 @@ ActiveRecord::Schema.define(version: 120) do
     t.string "name"
     t.integer "variety"
     t.uuid "product_id"
-    t.uuid "inventory_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["inventory_id"], name: "index_shipping_methods_on_inventory_id", unique: true
     t.index ["product_id"], name: "index_shipping_methods_on_product_id"
   end
 
@@ -195,9 +195,9 @@ ActiveRecord::Schema.define(version: 120) do
   add_foreign_key "inventories", "carts"
   add_foreign_key "inventories", "orders"
   add_foreign_key "inventories", "products"
+  add_foreign_key "inventories", "shipping_methods"
   add_foreign_key "inventories", "users"
   add_foreign_key "orders", "users"
-  add_foreign_key "shipping_methods", "inventories"
   add_foreign_key "shipping_methods", "products"
   add_foreign_key "shipping_rates", "shipping_methods"
 end

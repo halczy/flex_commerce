@@ -3,6 +3,7 @@ class ShippingMethod < ApplicationRecord
   has_and_belongs_to_many :products
   has_many :shipping_rates, dependent: :destroy
   has_many :addresses, as: :addressable, dependent: :destroy
+  has_many :inventories
   accepts_nested_attributes_for :shipping_rates, allow_destroy: true
   accepts_nested_attributes_for :addresses, allow_destroy: true
 
