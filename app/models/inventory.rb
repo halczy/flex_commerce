@@ -1,5 +1,6 @@
 class Inventory < ApplicationRecord
   # Relationships
+  has_one    :shipping_method
   belongs_to :product, touch: true
   belongs_to :user,    optional: true, touch: true
   belongs_to :cart,    optional: true, touch: true

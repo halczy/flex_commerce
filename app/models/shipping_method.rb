@@ -1,6 +1,5 @@
 class ShippingMethod < ApplicationRecord
   # Relationships
-  belongs_to :order, optional: true
   has_and_belongs_to_many :products
   has_many :shipping_rates, dependent: :destroy
   has_many :addresses, as: :addressable, dependent: :destroy

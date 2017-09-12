@@ -154,10 +154,10 @@ ActiveRecord::Schema.define(version: 120) do
     t.string "name"
     t.integer "variety"
     t.uuid "product_id"
-    t.uuid "order_id"
+    t.uuid "inventories_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_shipping_methods_on_order_id"
+    t.index ["inventories_id"], name: "index_shipping_methods_on_inventories_id", unique: true
     t.index ["product_id"], name: "index_shipping_methods_on_product_id"
   end
 
@@ -197,7 +197,7 @@ ActiveRecord::Schema.define(version: 120) do
   add_foreign_key "inventories", "products"
   add_foreign_key "inventories", "users"
   add_foreign_key "orders", "users"
-  add_foreign_key "shipping_methods", "orders"
+  add_foreign_key "shipping_methods", "inventories", column: "inventories_id"
   add_foreign_key "shipping_methods", "products"
   add_foreign_key "shipping_rates", "shipping_methods"
 end
