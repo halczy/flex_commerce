@@ -1,9 +1,0 @@
-<%= form_with(url: set_address_order_path, method: :patch, local: true) do |f| %>
-  <%= f.collection_radio_buttons(:address_id, @customer.addresses, :id, :compact_select) do |b| %>
-    <div class="form-check">
-       <%= b.label(class: 'form-check-label') do %>
-         <%= b.radio_button(class: 'form-check-input') + b.text %>
-       <% end %>
-    </div>
-  <% end %>
-<% end %>

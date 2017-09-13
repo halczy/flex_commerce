@@ -9,7 +9,7 @@
     </thead>
     <tbody>
       <%= f.fields_for :products do |product_form| %>
-        <%= render 'product_fields', f: product_form %>
+        <%= render '/orders/shipping/product_fields', f: product_form %>
       <% end %>
     </tbody>
   </table>

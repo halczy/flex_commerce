@@ -6,8 +6,8 @@
       <%= yield(:title) %>
     </div>
     <div class="card-body">
-      <%= render 'self_pickup' if @self_pickups.present? %>
-      <%= render 'address_form' if @deliveries.present? %>
+      <%= render '/orders/address/self_pickup' if @self_pickups.present? %>
+      <%= render '/orders/address/deliveries' if @deliveries.present? %>
       <input type="submit" form="address_form" />
     </div>
   </div>
