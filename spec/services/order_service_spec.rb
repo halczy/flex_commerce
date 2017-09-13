@@ -2,11 +2,15 @@ require 'rails_helper'
 
 RSpec.describe OrderService do
 
-  let(:new_order)   { FactoryGirl.create(:new_order) }
   let(:cart)        { FactoryGirl.create(:cart) }
   let(:customer)    { FactoryGirl.create(:customer) }
   let(:delivery)    { FactoryGirl.create(:delivery) }
   let(:self_pickup) { FactoryGirl.create(:self_pickup) }
+
+  let(:new_order) { FactoryGirl.create(:new_order) }
+  let(:order_pickup_selected) { FactoryGirl.create(:order_pickup_selected) }
+  let(:order_delivery_selected) { FactoryGirl.create(:order_delivery_selected) }
+  let(:order_mix_selected) { FactoryGirl.create(:order_mix_selected) }
 
   describe '#initialize' do
     it 'initializes new order service with cart instance' do
@@ -77,7 +81,7 @@ RSpec.describe OrderService do
       it 'sets shipping method for inventories under product' do
         order_service = OrderService.new(order_id: new_order.id)
         product = new_order.products.first
-        order_service.set_shipping_method(product, delivery)
+        order_service.send(:set_shipping_method, product, delivery)
         product.inventories.each do |inv|
           expect(inv.shipping_method).to eq(delivery)
         end
@@ -97,6 +101,46 @@ RSpec.describe OrderService do
       expect(product_2.inventories.sample.shipping_method).to eq(delivery)
       expect(product_3.inventories.sample.shipping_method).to eq(self_pickup)
     end
+  end
+
+  describe '#get_products' do
+    context 'self pickup' do
+      it 'returns an araay of products marked for self pick-up' do
+        order_service = OrderService.new(order_id: order_pickup_selected.id)
+        expect(order_service.get_products('self_pickup')).
+          to match_array(order_pickup_selected.products)
+      end
+
+      it 'returns an empty array if no products are marked for self pick-up' do
+        order_service = OrderService.new(order_id: order_delivery_selected.id)
+        expect(order_service.get_products('self_pickup')).to be_empty
+      end
+
+      it 'returns only products marked for self pick-up in a mix shipping method order' do
+        order_service = OrderService.new(order_id: order_mix_selected.id)
+        expect(order_service.get_products('self_pickup').count).to eq(1)
+      end
+    end
+
+    context 'delivery' do
+      it 'returns an array of products marked for delivery' do
+        order_service = OrderService.new(order_id: order_delivery_selected.id)
+        expect(order_service.get_products('delivery')).
+          to match_array(order_delivery_selected.products)
+      end
+
+      it 'returns an empty array if no products are marked for delivery' do
+        order_service = OrderService.new(order_id: order_pickup_selected.id)
+        expect(order_service.get_products('delivery')).
+          to be_empty
+      end
+
+      it 'returns only products marked for delivery in a mix shipping methods' do
+        order_service = OrderService.new(order_id: order_mix_selected.id)
+        expect(order_service.get_products('delivery').count).to eq(2)
+      end
+    end
+
   end
 
 end
