@@ -6,6 +6,24 @@
     <div class="text-center mb-2">Delivery</div>
   </div>
   <div class="col-md-9">
-    <%= render '/orders/address/delivery_address' if @customer.addresses.present? %>
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="list-group">
+          <% @deliveries.each do |product| %>
+            <li class="list-group-item">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><%= product.name %></h5>
+                <small>Quantity: <%= @order.quantity(product).count %></small>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-3">
+        <%= render '/orders/address/delivery_address' %>
+      </div>
+    </div>
   </div>
 </div>

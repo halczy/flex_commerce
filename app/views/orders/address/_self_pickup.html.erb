@@ -8,6 +8,20 @@
   <div class="col-md-9">
     <div class="row">
       <div class="col-md-12">
+        <ul class="list-group">
+          <% @self_pickups.each do |product| %>
+            <li class="list-group-item">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><%= product.name %></h5>
+                <small>Quantity: <%= @order.quantity(product).count %></small>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mt-3">
         <div class="d-flex w-100 justify-content-between">
           <div>
             <strong>Customer Contact: </strong>
@@ -22,20 +36,6 @@
       <div class="col-md-12 mt-2">
         <strong>Pickup At: </strong>
         <%= @order.pick_up_address.full_address %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <ul class="list-group mt-3">
-          <% @self_pickups.each do |product| %>
-            <li class="list-group-item">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1"><%= product.name %></h5>
-                <small>Quantity: <%= @order.quantity(product).count %></small>
-              </div>
-            </li>
-          <% end %>
-        </ul>
       </div>
     </div>
   </div>
