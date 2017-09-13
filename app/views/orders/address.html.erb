@@ -1,4 +1,4 @@
-<%= provide :title, 'Select Shipping' %>
+<%= provide :title, 'Address' %>
 
 <div class="container">
   <div class="card mt-5">
@@ -6,7 +6,8 @@
       <%= yield(:title) %>
     </div>
     <div class="card-body">
-      <%= render 'shipping_select_form' %>
+      <%= render 'self_pickup' if @self_pickups.present? %>
+      <%= render 'address_form' if @deliveries.present? %>
     </div>
   </div>
 </div>

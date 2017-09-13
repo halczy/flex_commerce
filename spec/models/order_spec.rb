@@ -4,6 +4,9 @@ RSpec.describe Order, type: :model do
 
   let(:order)     { FactoryGirl.create(:order) }
   let(:new_order) { FactoryGirl.create(:new_order) }
+  let(:order_pickup_selected) { FactoryGirl.create(:order_pickup_selected) }
+  let(:order_delivery_selected) { FactoryGirl.create(:order_delivery_selected) }
+  let(:order_mix_selected) { FactoryGirl.create(:order_mix_selected) }
 
   describe 'creation' do
     it 'can be created' do
@@ -44,11 +47,17 @@ RSpec.describe Order, type: :model do
         expect(new_order.products.count).to eq(3)
       end
 
-      context 'quantity' do
+      context '#quantity' do
         it 'returns quantity of product inventories in order' do
           product = new_order.products.sample
           expect(new_order.quantity(product).count).to eq(1)
         end
+      end
+    end
+
+    context '#pick_up_address' do
+      it 'returns the self pickup address' do
+        expect(order_mix_selected.pick_up_address).to be_an_instance_of Address
       end
     end
   end

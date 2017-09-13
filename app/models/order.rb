@@ -21,4 +21,9 @@ class Order < ApplicationRecord
     inventories.where(product: product)
   end
 
+  def pick_up_address
+    invs = inventories.select { |i| i.shipping_method.variety == 'self_pickup' }
+    invs.sample.shipping_method.address
+  end
+
 end

@@ -14,8 +14,7 @@ class OrdersController < UsersController
     end
   end
 
-  def select_shipping
-  end
+  def select_shipping; end
 
   def set_shipping
     order = OrderService.new(order_id: @order.id)
@@ -28,7 +27,9 @@ class OrdersController < UsersController
   end
 
   def address
-
+    order = OrderService.new(order_id: @order.id)
+    @self_pickups = order.get_products('self_pickup')
+    @deliveries = order.get_products('delivery')
   end
 
   private
