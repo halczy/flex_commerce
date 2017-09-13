@@ -8,12 +8,51 @@ FactoryGirl.define do
     status 0
     association :user, factory: :customer
 
-    after(:create) do |new_order|
+    after(:create) do |order|
       3.times do
-        FactoryGirl.create(:inventory, status: 2, user: new_order.user,
-                                                  order: new_order)
+        FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
       end
-      FactoryGirl.create(:address, addressable: new_order).build_full_address
+    end
+  end
+
+  factory :order_pickup_selected, class: Order do
+    status 0
+    association :user, factory: :customer
+
+    after(:create) do |order|
+      3.times do
+        FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
+      end
+      pickup = FactoryGirl.create(:self_pickup)
+      order.inventories.each { |i| i.update(shipping_method: pickup) }
+    end
+  end
+
+  factory :order_delivery_selected, class: Order do
+    status 0
+    association :user, factory: :customer
+
+    after(:create) do |order|
+      3.times do
+        FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
+      end
+      delivery = FactoryGirl.create(:delivery)
+      order.inventories.each { |i| i.update(shipping_method: delivery) }
+    end
+  end
+
+  factory :order_mix_selected, class: Order do
+    status 0
+    association :user, factory: :customer
+
+    after(:create) do |order|
+      3.times do
+        FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
+      end
+      delivery = FactoryGirl.create(:delivery)
+      pickup = FactoryGirl.create(:self_pickup)
+      order.inventories.each { |i| i.update(shipping_method: delivery) }
+      order.inventories.first.update(shipping_method: pickup)
     end
   end
 
