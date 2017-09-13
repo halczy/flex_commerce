@@ -28,12 +28,12 @@ RSpec.describe Order, type: :model do
       end
     end
 
-    context 'address' do
-      it 'can have one address' do
-        expect(new_order.address).to be_present
-        expect(new_order.address.addressable).to eq(new_order)
-      end
-    end
+    # context 'address' do
+    #   it 'can have one address' do
+    #     expect(new_order.address).to be_present
+    #     expect(new_order.address.addressable).to eq(new_order)
+    #   end
+    # end
 
     context 'product' do
       it 'returns product in order' do
