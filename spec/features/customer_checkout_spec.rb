@@ -24,7 +24,7 @@ describe 'customer checkout process' do
 
       visit cart_path
       click_button 'Checkout'
-      expect(page.current_path).to eq(select_shipping_order_path(Order.last))
+      expect(page.current_path).to eq(shipping_order_path(Order.last))
     end
   end
 
@@ -45,7 +45,7 @@ describe 'customer checkout process' do
       expect(page.current_path).to eq(cart_path)
 
       click_button 'Checkout'
-      expect(page.current_path).to eq(select_shipping_order_path(Order.last))
+      expect(page.current_path).to eq(shipping_order_path(Order.last))
     end
 
     it 'signs in then checkout' do
@@ -62,7 +62,7 @@ describe 'customer checkout process' do
       expect(page.current_path).to eq(cart_path)
 
       click_button 'Checkout'
-      expect(page.current_path).to eq(select_shipping_order_path(Order.last))
+      expect(page.current_path).to eq(shipping_order_path(Order.last))
     end
   end
 end

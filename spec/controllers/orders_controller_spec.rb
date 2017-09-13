@@ -30,7 +30,7 @@ RSpec.describe OrdersController, type: :controller do
         expect {
           post :create, params: { cart_id: @cart.id }
         }.to change(Order, :count).by(1)
-        expect(response).to redirect_to(select_shipping_order_path(Order.last))
+        expect(response).to redirect_to(shipping_order_path(Order.last))
       end
     end
 
@@ -56,11 +56,11 @@ RSpec.describe OrdersController, type: :controller do
     end
   end
 
-  describe 'GET select_shipping' do
+  describe 'GET shipping' do
     it 'response successfully' do
-      get :select_shipping, params: { id: new_order.id }
+      get :shipping, params: { id: new_order.id }
       expect(response).to be_success
-      expect(response).to render_template(:select_shipping)
+      expect(response).to render_template(:shipping)
     end
   end
 

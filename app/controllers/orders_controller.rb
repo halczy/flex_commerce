@@ -3,20 +3,20 @@ class OrdersController < UsersController
   before_action :request_signin, only: [ :create ]
   before_action :authenticate_user, except: [ :create ]
   # before_action :set_order, except: [ :create, :index, :populate_selector, :update_selector ]
-  before_action :set_order, only: [ :select_shipping, :set_shipping, :address ]
+  before_action :set_order, only: [ :shipping, :set_shipping, :address ]
   before_action :populate_selector, only: [:address, :update_selector]
 
   def create
     order = OrderService.new(cart_id: params[:cart_id]).create
     if order
-      redirect_to select_shipping_order_path(order)
+      redirect_to shipping_order_path(order)
     else
       flash[:danger] = 'Unable to create order.'
       redirect_to cart_path
     end
   end
 
-  def select_shipping; end
+  def shipping; end
 
   def set_shipping
     order = OrderService.new(order_id: @order.id)

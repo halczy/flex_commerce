@@ -21,12 +21,12 @@ Rails.application.routes.draw do
   resources :products,   only: [:show]
   resources :addresses do
     collection do
-        get 'update_selector'
+        get :update_selector
     end
   end
   resources :orders, only: [:index, :create, :show, :destroy] do
     member do
-      get   :select_shipping
+      get   :shipping
       patch :set_shipping
       get   :address
       patch :set_address
