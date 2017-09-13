@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     member do
       get   :select_shipping
       patch :set_shipping
+      get   :address
     end
   end
 

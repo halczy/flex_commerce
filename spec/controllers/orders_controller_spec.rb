@@ -2,10 +2,12 @@ require 'rails_helper'
 
 RSpec.describe OrdersController, type: :controller do
 
-  let(:customer)  { FactoryGirl.create(:customer) }
-  let(:cart)      { FactoryGirl.create(:cart) }
-  let(:inventory) { FactoryGirl.create(:inventory) }
-  let(:new_order) { FactoryGirl.create(:new_order) }
+  let(:customer)    { FactoryGirl.create(:customer) }
+  let(:cart)        { FactoryGirl.create(:cart) }
+  let(:inventory)   { FactoryGirl.create(:inventory) }
+  let(:new_order)   { FactoryGirl.create(:new_order) }
+  let(:delivery)    { FactoryGirl.create(:delivery) }
+  let(:self_pickup) { FactoryGirl.create(:self_pickup) }
 
   before do |example|
     unless example.metadata[:skip_before]
@@ -55,6 +57,31 @@ RSpec.describe OrdersController, type: :controller do
       get :select_shipping, params: { id: new_order.id }
       expect(response).to be_success
       expect(response).to render_template(:select_shipping)
+    end
+  end
+
+  describe 'PATCH set_shipping' do
+    before do
+      product_1, product_2, product_3 = new_order.products
+      @attrs = {
+       '0' => { "shipping_methods" => delivery.id, "id" => product_1.id },
+       '1' => { "shipping_methods" => delivery.id, "id" => product_2.id },
+       '2' => { "shipping_methods" => self_pickup, "id" => product_3.id } }
+    end
+
+    context 'with valid params' do
+      it 'sets shipping and redirect to address page' do
+        patch :set_shipping, params: { id: new_order.id,
+                                       order: { products_attributes: @attrs } }
+        expect(response).to redirect_to address_order_path(new_order.id)
+      end
+    end
+
+    context 'with invalid params' do
+      it 'redirects back to set shipping if param is invalid' do
+        patch :set_shipping, params: { id: new_order.id }
+        expect(response).to redirect_to set_shipping_order_path(new_order.id)
+      end
     end
   end
 

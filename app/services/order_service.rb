@@ -30,4 +30,19 @@ class OrderService
     end
   end
 
+  def set_shipping(product_params)
+    return false unless product_params.present?
+    product_params.each do |key, value|
+      shipping_method = ShippingMethod.find_by(id: value['shipping_methods'])
+      product = Product.find_by(id: value['id'])
+      set_shipping_method(product, shipping_method)
+    end
+  end
+
+  def set_shipping_method(product, shipping_method)
+    @order.quantity(product).each do |inv|
+      inv.update(shipping_method: shipping_method)
+    end
+  end
+
 end
