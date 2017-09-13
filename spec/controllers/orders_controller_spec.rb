@@ -96,6 +96,21 @@ RSpec.describe OrdersController, type: :controller do
       expect(assigns(:deliveries)).to be_present
       expect(assigns(:customer)).to eq(order_mix_selected.user)
       expect(assigns(:address)).to be_present
+      expect(response).to be_success
+    end
+
+    it 'responses successfully with pickup exclusive order' do
+      get :address, params: { id: order_pickup_selected.id }
+      expect(assigns(:self_pickups)).to be_present
+      expect(assigns(:deliveries)).to be_empty
+      expect(response).to be_success
+    end
+
+    it 'responses successfully with deliveries exclusive order' do
+      get :address, params: { id: order_delivery_selected.id }
+      expect(assigns(:self_pickups)).to be_empty
+      expect(assigns(:deliveries)).to be_present
+      expect(response).to be_success
     end
   end
 
