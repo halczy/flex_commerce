@@ -25,5 +25,4 @@ class Order < ApplicationRecord
     invs = inventories.select { |i| i.shipping_method.variety == 'self_pickup' }
     invs.sample.shipping_method.address
   end
-
 end

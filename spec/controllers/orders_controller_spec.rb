@@ -9,6 +9,10 @@ RSpec.describe OrdersController, type: :controller do
   let(:delivery)    { FactoryGirl.create(:delivery) }
   let(:self_pickup) { FactoryGirl.create(:self_pickup) }
 
+  let(:order_pickup_selected) { FactoryGirl.create(:order_pickup_selected) }
+  let(:order_delivery_selected) { FactoryGirl.create(:order_delivery_selected) }
+  let(:order_mix_selected) { FactoryGirl.create(:order_mix_selected) }
+
   before do |example|
     unless example.metadata[:skip_before]
       signin_as customer
@@ -82,6 +86,16 @@ RSpec.describe OrdersController, type: :controller do
         patch :set_shipping, params: { id: new_order.id }
         expect(response).to redirect_to set_shipping_order_path(new_order.id)
       end
+    end
+  end
+
+  describe 'GET address' do
+    it 'responses successfully' do
+      get :address, params: { id: order_mix_selected.id }
+      expect(assigns(:self_pickups)).to be_present
+      expect(assigns(:deliveries)).to be_present
+      expect(assigns(:customer)).to eq(order_mix_selected.user)
+      expect(assigns(:address)).to be_present
     end
   end
 

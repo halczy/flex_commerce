@@ -1,0 +1,77 @@
+<%= form_with(model: @address, url: set_address_order_path,
+              method: :patch, local: true, id: 'address_form') do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <div class="mb-2"><strong>Select Shipping Address: </strong></div>
+  <%= f.collection_radio_buttons(:address_id, @customer.addresses, :id, :compact_select) do |b| %>
+    <div class="form-check">
+       <%= b.label(class: 'form-check-label') do %>
+         <%= b.radio_button(class: 'form-check-input') + b.text %>
+       <% end %>
+    </div>
+  <% end %>
+
+  <div class="mb-2"><strong>Ship to New Address: </strong></div>
+
+  <div class="form-group row">
+    <div class="col">
+      <%= f.label :recipient, 'Recipient Name' %>
+      <%= f.text_field :recipient, class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= f.label :contact_number, 'Contact Number' %>
+      <%= f.text_field :contact_number, class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= f.label :name, 'Address Name (Optional)' %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+  </div>
+
+  <%= f.hidden_field :country_region, value: '86' %>
+  <div class="form-group">
+    <div class="row">
+      <div class="col">
+        <%= f.label :province_state, 'Address' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md">
+        <%= f.select :province_state,
+                     options_for_select(
+                     @provinces.collect { |province| [province.name, province.id] }),
+                     { include_blank: true }, { id: 'provinces_select', class: 'form-control' } %>
+      </div>
+      <div class="col-md">
+        <%= f.select :city,
+                     options_for_select(
+                     @cities.collect { |city| [city.name, city.id] }),
+                     { include_blank: true },
+                     { id: 'cities_select', class: 'form-control' } %>
+
+      </div>
+      <div class="col-md">
+        <%= f.select :district,
+                     options_for_select(
+                     @districts.collect { |district| [district.name, district.id] }),
+                     { include_blank: true },
+                     { id: 'districts_select', class: 'form-control' } %>
+      </div>
+      <div class="col-md">
+        <%= f.select :community,
+                     options_for_select(
+                     @communities.collect { |community| [community.name, community.id] }),
+                     { include_blank: true },
+                     { id: 'communities_select', class: 'form-control' } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.text_field :street, placeholder: 'Street Address', class: 'form-control' %>
+  </div>
+<% end %>
+
+
+<%= javascript_include_tag 'order_address', 'data-turbolinks-track': 'reload' %>
+

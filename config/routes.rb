@@ -29,6 +29,10 @@ Rails.application.routes.draw do
       get   :select_shipping
       patch :set_shipping
       get   :address
+      patch :set_address
+    end
+    collection do
+      get   :update_selector
     end
   end
 

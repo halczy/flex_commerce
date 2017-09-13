@@ -5,4 +5,7 @@
     </div>
     <div class="text-center mb-2">Delivery</div>
   </div>
+  <div class="col-md-9">
+    <%= render 'address_selection' if @customer.addresses.present? %>
+  </div>
 </div>

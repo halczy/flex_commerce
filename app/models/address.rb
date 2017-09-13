@@ -19,4 +19,13 @@ class Address < ApplicationRecord
     return false if addressable_type == 'Order'  # TODO: REFACTOR ONCE ORDER MODEL IS AVAILABLE
     return true if addressable.instance_of?(Customer) || addressable.nil?
   end
+
+  def compact_select
+    select_html = ""
+    select_html << "<strong class='ml-1'>#{recipient}</strong>"
+    select_html << " (#{name}) " if name
+    select_html << " | #{full_address} "
+    select_html << " | #{contact_number} "
+    select_html.html_safe
+  end
 end
