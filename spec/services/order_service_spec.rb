@@ -12,6 +12,9 @@ RSpec.describe OrderService do
   let(:order_pickup_selected) { FactoryGirl.create(:order_pickup_selected) }
   let(:order_delivery_selected) { FactoryGirl.create(:order_delivery_selected) }
   let(:order_mix_selected) { FactoryGirl.create(:order_mix_selected) }
+  let(:order_pickup_confirmed) { FactoryGirl.create(:order_pickup_confirmed) }
+  let(:order_delivery_confirmed) { FactoryGirl.create(:order_delivery_confirmed) }
+  let(:order_mix_confirmed) { FactoryGirl.create(:order_mix_confirmed) }
 
   describe '#initialize' do
     it 'initializes new order service with cart instance' do
@@ -188,6 +191,28 @@ RSpec.describe OrderService do
       expect(order_service.confirm_shipping).to be_falsey
       expect(order_service.order.status).to eq('created')
     end
+  end
+
+  describe 'shipping cost' do
+    describe '#billable_weight' do
+      it 'returns sum of inventories weight that are billable' do
+        order_service = OrderService.new(order_id: order_delivery_confirmed)
+        products_weight = Product.all.sum { |p| p.weight }
+        expect(order_service.billable_weight).to eq(products_weight)
+      end
+
+      it 'returns no billable weight for pick up exclusive order' do
+        order_service = OrderService.new(order_id: order_pickup_confirmed)
+        expect(order_service.billable_weight).to eq(0)
+      end
+
+      it 'returns billable weight for mixed order' do
+        order_service = OrderService.new(order_id: order_mix_confirmed)
+        products_weight = Product.all.sum { |p| p.weight }
+        expect(order_service.billable_weight).to be_between(0, products_weight)
+      end
+    end
+
   end
 
 end

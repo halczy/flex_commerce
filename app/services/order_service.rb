@@ -66,6 +66,22 @@ class OrderService
     end
   end
 
+  def set_shipping_cost
+
+  end
+
+  def calculate_shipping_cost
+
+  end
+
+  def billable_weight
+    weight = 0
+    @order.inventories.each do |inv|
+      weight += inv.product.weight if inv.shipping_method.variety == 'delivery'
+    end
+    weight
+  end
+
   private
 
     def set_shipping_method(product, shipping_method)
@@ -79,4 +95,5 @@ class OrderService
         return false unless inv.shipping_method.variety
       end
     end
+
 end
