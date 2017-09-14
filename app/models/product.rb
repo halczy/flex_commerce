@@ -16,7 +16,7 @@ class Product < ApplicationRecord
   monetize :price_market_cents, numericality: { greater_than_or_equal_to: 0 }
   monetize :price_member_cents, numericality: { greater_than_or_equal_to: 0 }
   monetize :price_reward_cents, numericality: { greater_than_or_equal_to: 0 }
-  monetize :cost_cents, numericality: { greater_than_or_equal_to: 0 }
+  monetize :cost_cents,         numericality: { greater_than_or_equal_to: 0 }
 
   # Scopes | Enum
   scope :in_stock, -> { joins(:inventories).merge(Inventory.available) }

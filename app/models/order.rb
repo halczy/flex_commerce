@@ -6,6 +6,9 @@ class Order < ApplicationRecord
   has_many   :products, -> { distinct }, through: :inventories
   accepts_nested_attributes_for :products
 
+  # Validation
+  monetize :shipping_cost_cents, numericality: { greater_than_or_equal_to: 0 }
+
   # Enum
   enum status: {
     # Creation
