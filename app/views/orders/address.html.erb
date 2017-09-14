@@ -15,8 +15,16 @@
           <% end %>
         </div>
         <div class="ml-auto p-2">
-          <%= button_tag type: 'submit', class: 'btn btn-primary', form: 'address_form' do %>
-            Next <i class="fa fa-arrow-right ml-1" aria-hidden="true"></i>
+          <% if @order.shipping_method_mix == 'self_pickup' %>
+            <%= button_to set_address_order_path, method: :patch,
+                                                  class: 'btn btn-primary' do %>
+              Next <i class="fa fa-arrow-right ml-1" aria-hidden="true"></i>
+            <% end %>
+          <% else %>
+            <%= button_tag type: 'submit', class: 'btn btn-primary',
+                                           form: 'address_form' do %>
+              Next <i class="fa fa-arrow-right ml-1" aria-hidden="true"></i>
+            <% end %>
           <% end %>
         </div>
       </div>
