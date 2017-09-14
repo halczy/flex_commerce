@@ -6,6 +6,7 @@ RSpec.describe OrderService do
   let(:customer)    { FactoryGirl.create(:customer) }
   let(:delivery)    { FactoryGirl.create(:delivery) }
   let(:self_pickup) { FactoryGirl.create(:self_pickup) }
+  let(:address)     { FactoryGirl.create(:address) }
 
   let(:new_order) { FactoryGirl.create(:new_order) }
   let(:order_pickup_selected) { FactoryGirl.create(:order_pickup_selected) }
@@ -140,7 +141,53 @@ RSpec.describe OrderService do
         expect(order_service.get_products('delivery').count).to eq(2)
       end
     end
+  end
 
+  describe 'set_address' do
+    before do
+      @order_service = OrderService.new(order_id: order_mix_selected.id)
+      @customer_address = FactoryGirl.create(:address, addressable: customer)
+    end
+
+    it 'duplicates customer address to mixed order' do
+      @order_service.set_address(@customer_address.id)
+      expect(@order_service.order.address.addressable).to eq(@order_service.order)
+      expect(@customer_address.reload.addressable).to eq(customer)
+    end
+  end
+
+  describe 'confirm_shipping' do
+    it 'confirms shipping for self-pickup order' do
+      order_service = OrderService.new(order_id: order_pickup_selected)
+      expect(order_service.confirm_shipping).to be_truthy
+      expect(order_service.order.status).to eq('shipping_confirmed')
+    end
+
+    it 'confirms shipping for delivery order' do
+      FactoryGirl.create(:address, addressable: order_delivery_selected)
+      order_service = OrderService.new(order_id: order_delivery_selected)
+      expect(order_service.confirm_shipping).to be_truthy
+      expect(order_service.order.status).to eq('shipping_confirmed')
+    end
+
+    it 'confirms shipping for mixed order' do
+      FactoryGirl.create(:address, addressable: order_mix_selected)
+      order_service = OrderService.new(order_id: order_mix_selected)
+      expect(order_service.confirm_shipping).to be_truthy
+      expect(order_service.order.status).to eq('shipping_confirmed')
+    end
+
+    it 'does not confirm for delivery order if not address is set' do
+      order_service = OrderService.new(order_id: order_delivery_selected)
+      expect(order_service.confirm_shipping).to be_falsey
+      expect(order_service.order.status).to eq('created')
+    end
+
+    it 'does not confirm for mixed order if not address is set' do
+      order_service = OrderService.new(order_id: order_mix_selected )
+      expect(order_service.confirm_shipping).to be_falsey
+      expect(order_service.order.status).to eq('created')
+    end
   end
 
 end

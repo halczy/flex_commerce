@@ -3,7 +3,7 @@ class OrdersController < UsersController
   before_action :request_signin, only: [ :create ]
   before_action :authenticate_user, except: [ :create ]
   before_action :set_user, except: [ :create ]
-  before_action :set_order, only: [ :shipping, :set_shipping, :create_address, :address, :payment ]
+  before_action :set_order, only: [ :shipping, :set_shipping, :create_address, :address, :set_address, :payment ]
   before_action :populate_selector, only: [:address, :update_selector]
 
   def create
@@ -46,6 +46,8 @@ class OrdersController < UsersController
       @address.build_full_address
       params[:address][:address_id] = @address.id
       set_address
+    elsif params[:address] && params[:address][:address_id]
+      set_address
     else
       set_order
       @self_pickups = @order_service.get_products('self_pickup')
@@ -57,6 +59,13 @@ class OrdersController < UsersController
   end
 
   def set_address
+    if params[:address] && params[:address][:address_id]
+      @order_service.set_address(params[:address][:address_id])
+      @order_service.confirm_shipping
+    else
+      @order_service.confirm_shipping
+    end
+    redirect_to payment_order_path
   end
 
   def payment

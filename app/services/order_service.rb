@@ -49,6 +49,23 @@ class OrderService
     products.uniq
   end
 
+  def set_address(address_id)
+    origin_address = Address.find(address_id)
+    origin_address.copy_to(@order)
+  end
+
+  def confirm_shipping
+    case @order.shipping_method_mix
+    when 'self_pickup'
+      validate_shipping_methods
+      @order.shipping_confirmed!
+    else
+      validate_shipping_methods
+      return false unless @order.address
+      @order.shipping_confirmed!
+    end
+  end
+
   private
 
     def set_shipping_method(product, shipping_method)
@@ -62,5 +79,4 @@ class OrderService
         return false unless inv.shipping_method.variety
       end
     end
-
 end

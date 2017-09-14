@@ -116,21 +116,47 @@ RSpec.describe OrdersController, type: :controller do
 
   describe 'POST create_address' do
     context 'with valid params' do
-      before do
-        @valid_attrs = FactoryGirl.attributes_for(:address, addressable: customer)
-      end
+      context 'create new address' do
+        before do
+          @valid_attrs = FactoryGirl.attributes_for(:address,
+                                                    addressable: customer)
+        end
 
-      it 'creates address for order and user' do
-        expect {
+        it 'creates address for order and user' do
+          expect {
+            post :create_address, params: { id: order_delivery_selected.id,
+                                            address: @valid_attrs }
+          }.to change(Address, :count).by(2)
+          expect(customer.addresses).to be_present
+          expect(controller.params[:address][:address_id]).to be_present
+        end
+
+        it 'redirects to payment action via set_address' do
           post :create_address, params: { id: order_delivery_selected.id,
                                           address: @valid_attrs }
-        }.to change(Address, :count).by(1)
-        expect(customer.addresses).to be_present
-        expect(controller.params[:address][:address_id]).to be_present
+          expect(response).to redirect_to(payment_order_path)
+          expect(order_delivery_selected.reload.status).to eq('shipping_confirmed')
+        end
       end
 
-      xit 'redirects to payment action via set_address' do
+      context 'select existing address' do
+        before do
+          @addr_id = FactoryGirl.create(:address, addressable: customer).id
+        end
 
+        it 'creates address for order' do
+          expect {
+            post :create_address, params: { id: order_delivery_selected.id,
+                                            address: { address_id: @addr_id } }
+          }.to change(Address, :count).by(1)
+        end
+
+        it 'redirects to payment action via set_address' do
+          post :create_address, params: { id: order_delivery_selected.id,
+                                          address: { address_id: @addr_id } }
+          expect(response).to redirect_to(payment_order_path)
+          expect(order_delivery_selected.reload.status).to eq('shipping_confirmed')
+        end
       end
     end
 
@@ -143,6 +169,11 @@ RSpec.describe OrdersController, type: :controller do
     end
   end
 
-
-
+  describe 'PATCH set_address' do
+    it 'response successfully and confirms shipping' do
+      patch :set_address, params: { id: order_pickup_selected }
+      expect(response).to redirect_to(payment_order_path)
+      expect(order_pickup_selected.reload.status).to eq('shipping_confirmed')
+    end
+  end
 end

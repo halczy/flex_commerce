@@ -83,7 +83,8 @@ RSpec.describe Address, type: :model do
   describe '#copy_to' do
     it 'returns duplicated address with belongs to the given object' do
       customer_address = FactoryGirl.create(:address, addressable: customer)
-      order_address = customer_address.copy_to(order_delivery_selected)
+      expect(customer_address.copy_to(order_delivery_selected)).to be_truthy
+      order_address = Address.find_by(addressable_id: order_delivery_selected.id)
       expect(order_address).to be_an_instance_of(Address)
       expect(order_address.full_address).to eq(customer_address.full_address)
       expect(order_address.addressable).to eq(order_delivery_selected)

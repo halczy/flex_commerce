@@ -33,6 +33,5 @@ class Address < ApplicationRecord
     object_address = self.dup
     object_address.addressable = object
     object_address.save
-    object_address
   end
 end
