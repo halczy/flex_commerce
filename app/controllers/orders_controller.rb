@@ -2,7 +2,8 @@ class OrdersController < UsersController
   # Filters
   before_action :request_signin, only: [ :create ]
   before_action :authenticate_user, except: [ :create ]
-  before_action :set_order, only: [ :shipping, :set_shipping, :address ]
+  before_action :set_user, except: [ :create ]
+  before_action :set_order, only: [ :shipping, :set_shipping, :create_address, :address, :payment ]
   before_action :populate_selector, only: [:address, :update_selector]
 
   def create
@@ -18,9 +19,8 @@ class OrdersController < UsersController
   def shipping; end
 
   def set_shipping
-    order = OrderService.new(order_id: @order.id)
     product_params = params['order']['products_attributes'] if params['order']
-    if order.set_shipping(product_params)
+    if @order_service.set_shipping(product_params)
       redirect_to address_order_path(@order)
     else
       redirect_to set_shipping_order_path(@order)
@@ -28,9 +28,8 @@ class OrdersController < UsersController
   end
 
   def address
-    order = OrderService.new(order_id: @order.id)
-    @self_pickups = order.get_products('self_pickup')
-    @deliveries = order.get_products('delivery')
+    @self_pickups = @order_service.get_products('self_pickup')
+    @deliveries = @order_service.get_products('delivery')
     @customer = @order.user
     @address = Address.new
   end
@@ -41,14 +40,34 @@ class OrdersController < UsersController
     end
   end
 
+  def create_address
+    @address = @user.addresses.new(address_params)
+    if @address.save
+      @address.build_full_address
+      @order_address = @address.copy_to(@order)
+      params[:address][:address_id] = @order_address.id
+      set_address
+    else
+      set_order
+      @self_pickups = @order_service.get_products('self_pickup')
+      @deliveries = @order_service.get_products('delivery')
+      @customer = @order.user
+      populate_selector
+      render :address
+    end
+  end
+
   def set_address
-    raise
+  end
+
+  def payment
   end
 
   private
 
     def set_order
       @order = Order.find(params[:id])
+      @order_service = OrderService.new(order_id: @order.id)
     end
 
     def request_signin
@@ -70,5 +89,11 @@ class OrdersController < UsersController
 
       @communities = @district.try(:children) || []
       @community = Geo.find_by(id: params[:community_id])
+    end
+
+    def address_params
+      params.require(:address).permit(:name, :recipient, :contact_number,
+                                      :country_region, :province_state,
+                                      :city, :district, :community, :street)
     end
 end

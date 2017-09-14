@@ -1,6 +1,5 @@
-<%= form_with(model: @address, url: set_address_order_path,
-              method: :patch, local: true, id: 'address_form') do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
+<%= form_with(model: @address, url: create_address_order_path,
+              local: true, id: 'address_form') do |f| %>
 
   <% if @customer.addresses.present? %>
     <div class="mb-2"><strong>Select Shipping Address: </strong></div>
@@ -14,6 +13,7 @@
   <% end %>
 
   <div class="mb-2"><strong>Ship to New Address: </strong></div>
+  <%= render 'shared/error_messages', object: f.object %>
 
   <div class="form-group row">
     <div class="col">

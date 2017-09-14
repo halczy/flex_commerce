@@ -114,4 +114,33 @@ RSpec.describe OrdersController, type: :controller do
     end
   end
 
+  describe 'POST create_address' do
+    context 'with valid params' do
+      before do
+        @valid_attrs = FactoryGirl.attributes_for(:address, addressable: customer)
+      end
+
+      it 'creates address for order and user' do
+        expect {
+          post :create_address, params: { id: order_delivery_selected.id,
+                                          address: @valid_attrs }
+        }.to change(Address, :count).by(2)
+        expect(order_delivery_selected  .address).to be_present
+        expect(customer.addresses).to be_present
+      end
+
+      xit 'redirects to payment action via set_address' do
+
+      end
+    end
+
+    context 'with invalid params' do
+      it 'renders error messages' do
+        post :create_address, params: { id: order_delivery_selected.id,
+                                        address: { recipient: '' } }
+        expect(response).to render_template(:address)
+      end
+    end
+  end
+
 end

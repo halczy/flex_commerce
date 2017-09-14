@@ -29,7 +29,9 @@ Rails.application.routes.draw do
       get   :shipping
       patch :set_shipping
       get   :address
+      post  :create_address
       patch :set_address
+      get   :payment
     end
     collection do
       get   :update_selector
