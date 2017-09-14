@@ -8,6 +8,9 @@ RSpec.describe Address, type: :model do
   let(:district)  { FactoryGirl.create(:district) }
   let(:community) { FactoryGirl.create(:community) }
   let(:customer)  { FactoryGirl.create(:customer) }
+
+  let(:order_delivery_selected) { FactoryGirl.create(:order_delivery_selected) }
+
   describe 'creation' do
     it 'can be created' do
       expect(address).to be_valid
@@ -74,6 +77,17 @@ RSpec.describe Address, type: :model do
     it 'returns false if address is associated with order' do
       order_address = FactoryGirl.create(:address, addressable_type: 'Order')
       expect(order_address.destroyable?).to be_falsey
+    end
+  end
+
+  describe '#copy_to' do
+    it 'returns duplicated address with belongs to the given object' do
+      customer_address = FactoryGirl.create(:address, addressable: customer)
+      order_address = customer_address.copy_to(order_delivery_selected)
+      expect(order_address).to be_an_instance_of(Address)
+      expect(order_address.full_address).to eq(customer_address.full_address)
+      expect(order_address.addressable).to eq(order_delivery_selected)
+      expect(customer_address.addressable).to eq(customer)
     end
   end
 

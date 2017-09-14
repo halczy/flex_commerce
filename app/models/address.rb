@@ -28,4 +28,11 @@ class Address < ApplicationRecord
     select_html << " | #{contact_number} "
     select_html.html_safe
   end
+
+  def copy_to(object)
+    object_address = self.dup
+    object_address.addressable = object
+    object_address.save
+    object_address
+  end
 end
