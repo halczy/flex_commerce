@@ -124,9 +124,9 @@ RSpec.describe OrdersController, type: :controller do
         expect {
           post :create_address, params: { id: order_delivery_selected.id,
                                           address: @valid_attrs }
-        }.to change(Address, :count).by(2)
-        expect(order_delivery_selected  .address).to be_present
+        }.to change(Address, :count).by(1)
         expect(customer.addresses).to be_present
+        expect(controller.params[:address][:address_id]).to be_present
       end
 
       xit 'redirects to payment action via set_address' do
@@ -142,5 +142,7 @@ RSpec.describe OrdersController, type: :controller do
       end
     end
   end
+
+
 
 end

@@ -44,8 +44,7 @@ class OrdersController < UsersController
     @address = @user.addresses.new(address_params)
     if @address.save
       @address.build_full_address
-      @order_address = @address.copy_to(@order)
-      params[:address][:address_id] = @order_address.id
+      params[:address][:address_id] = @address.id
       set_address
     else
       set_order
