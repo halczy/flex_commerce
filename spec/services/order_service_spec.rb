@@ -107,9 +107,26 @@ RSpec.describe OrderService do
     end
   end
 
+  describe '#get_inventories' do
+    it 'returns an array of self pickup inventories' do
+      order_service = OrderService.new(order_id: order_mix_selected.id)
+      expect(order_service.get_products('self_pickup').count).to eq(1)
+    end
+
+    it 'returns an array of inventories marked for delivery' do
+      order_service = OrderService.new(order_id: order_mix_selected.id)
+      expect(order_service.get_products('delivery').count).to eq(2)
+    end
+
+    it 'returns an empty array if shipping method is not set' do
+      order_service = OrderService.new(order_id: new_order.id)
+      expect(order_service.get_products('delivery')).to be_empty
+    end
+  end
+
   describe '#get_products' do
     context 'self pickup' do
-      it 'returns an araay of products marked for self pick-up' do
+      it 'returns an array of products marked for self pick-up' do
         order_service = OrderService.new(order_id: order_pickup_selected.id)
         expect(order_service.get_products('self_pickup')).
           to match_array(order_pickup_selected.products)

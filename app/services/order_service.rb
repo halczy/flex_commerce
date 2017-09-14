@@ -39,6 +39,14 @@ class OrderService
     end
   end
 
+  def get_inventories(shipping_method)
+    invs = []
+    return invs unless validate_shipping_methods
+    invs = @order.inventories.select do |inv|
+      inv.shipping_method.variety == shipping_method
+    end
+  end
+
   def get_products(shipping_method)
     products = []
     return products unless validate_shipping_methods
@@ -92,7 +100,7 @@ class OrderService
 
     def validate_shipping_methods
       @order.inventories.each do |inv|
-        return false unless inv.shipping_method.variety
+        return false unless inv.try(:shipping_method).try(:variety)
       end
     end
 
