@@ -50,9 +50,7 @@ class OrderService
   def get_products(shipping_method)
     products = []
     return products unless validate_shipping_methods
-    invs = @order.inventories.select do |inv|
-      inv.shipping_method.variety == shipping_method
-    end
+    invs = get_inventories(shipping_method)
     invs.each { |inv| products << inv.product }
     products.uniq
   end
