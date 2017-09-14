@@ -2,7 +2,6 @@ class OrdersController < UsersController
   # Filters
   before_action :request_signin, only: [ :create ]
   before_action :authenticate_user, except: [ :create ]
-  # before_action :set_order, except: [ :create, :index, :populate_selector, :update_selector ]
   before_action :set_order, only: [ :shipping, :set_shipping, :address ]
   before_action :populate_selector, only: [:address, :update_selector]
 

@@ -55,10 +55,31 @@ RSpec.describe Order, type: :model do
       end
     end
 
-    context '#pick_up_address' do
+    describe '#pick_up_address' do
       it 'returns the self pickup address' do
         expect(order_mix_selected.pick_up_address).to be_an_instance_of Address
       end
     end
+
+    describe '#shipping_method_mix' do
+      it 'returns self_pickup when all inventories are marked for self pickup' do
+        expect(order_pickup_selected.shipping_method_mix).to eq('self_pickup')
+      end
+
+      it 'returns delivery when all inventories are marked for delivery' do
+        expect(order_delivery_selected.shipping_method_mix).to eq('delivery')
+      end
+
+      it 'reutrns mix when inventories have mixed shipping method' do
+        expect(order_mix_selected.shipping_method_mix).to eq('mix')
+      end
+
+      it 'returns false when inventories does not have shipping method' do
+        expect(new_order.shipping_method_mix).to be_falsey
+      end
+    end
+
+
+
   end
 end

@@ -25,4 +25,14 @@ class Order < ApplicationRecord
     invs = inventories.select { |i| i.shipping_method.variety == 'self_pickup' }
     invs.sample.shipping_method.address
   end
+
+  def shipping_method_mix
+    varieties = []
+    inventories.each do |inv|
+      return false unless inv.shipping_method
+      varieties << inv.shipping_method.variety
+    end
+    varieties.uniq!
+    varieties.length == 1 ? varieties[0] : 'mix'
+  end
 end
