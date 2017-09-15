@@ -217,24 +217,6 @@ RSpec.describe OrderService do
   end
 
   describe 'shipping cost' do
-    # describe '#billable_weight' do
-    #   it 'returns sum of inventories weight that are billable' do
-    #     order_service = OrderService.new(order_id: order_delivery_confirmed)
-    #     products_weight = Product.all.sum { |p| p.weight }
-    #     expect(order_service.billable_weight).to eq(products_weight)
-    #   end
-
-    #   it 'returns no billable weight for pick up exclusive order' do
-    #     order_service = OrderService.new(order_id: order_pickup_confirmed)
-    #     expect(order_service.billable_weight).to eq(0)
-    #   end
-
-    #   it 'returns billable weight for mixed order' do
-    #     order_service = OrderService.new(order_id: order_mix_confirmed)
-    #     products_weight = Product.all.sum { |p| p.weight }
-    #     expect(order_service.billable_weight).to be_between(0, products_weight)
-    #   end
-
     describe '#compatible_shipping_rate' do
       it 'returns the lowest compatible shipping rate with order address' do
         test_rate = ShippingRate.new(geo_code: FactoryGirl.create(:community).id,
@@ -256,7 +238,22 @@ RSpec.describe OrderService do
       end
     end
 
+    describe '#billable_weight' do
+      it 'returns sum of inventories weight under the given shipping method' do
+        order_service = OrderService.new(order_id: order_delivery_confirmed)
+        products_weight = Product.all.sum { |p| p.weight }
+        shipping_method = order_delivery_confirmed.shipping_methods.first
+        expect(order_service.billable_weight(shipping_method)).to eq(products_weight)
+      end
 
+      it 'returns billable weight for mixed order' do
+        order_service = OrderService.new(order_id: order_mix_confirmed)
+        products_weight = Product.all.sum { |p| p.weight }
+        shipping_method = order_delivery_confirmed.shipping_methods.last
+        expect(order_service.billable_weight(shipping_method))
+          .to be_between(0, products_weight)
+      end
+    end
   end
 
 end

@@ -99,6 +99,11 @@ class OrderService
     false
   end
 
+  def billable_weight(shipping_method)
+    invs = get_inventories(shipping_method)
+    invs.sum { |inv| inv.product.weight }
+  end
+
   # def billable_weight
   #   weight = 0
   #   @order.inventories.each do |inv|
