@@ -12,6 +12,10 @@ RSpec.describe OrdersController, type: :controller do
   let(:order_pickup_selected) { FactoryGirl.create(:order_pickup_selected) }
   let(:order_delivery_selected) { FactoryGirl.create(:order_delivery_selected) }
   let(:order_mix_selected) { FactoryGirl.create(:order_mix_selected) }
+  let(:order_pickup_set) { FactoryGirl.create(:order_pickup_set) }
+  let(:order_delivery_set) { FactoryGirl.create(:order_delivery_set) }
+  let(:order_mix_set) { FactoryGirl.create(:order_mix_set) }
+  let(:order_no_shipping_set) { FactoryGirl.create(:order_no_shipping_set) }
 
   before do |example|
     unless example.metadata[:skip_before]
@@ -174,6 +178,14 @@ RSpec.describe OrdersController, type: :controller do
       patch :set_address, params: { id: order_pickup_selected }
       expect(response).to redirect_to(payment_order_path)
       expect(order_pickup_selected.reload.status).to eq('shipping_confirmed')
+    end
+  end
+
+  describe 'GET payment' do
+    it 'responses successfully and confirms order' do
+      get :payment, params: { id: order_mix_set }
+      expect(response).to be_success
+      expect(order_mix_set.reload.confirmed?).to be_truthy
     end
   end
 end

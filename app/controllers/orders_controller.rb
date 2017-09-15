@@ -69,7 +69,10 @@ class OrdersController < UsersController
   end
 
   def payment
-
+    if @order_service.confirm
+    else
+      raise
+    end
   end
 
   private
