@@ -217,6 +217,18 @@ RSpec.describe OrderService do
   end
 
   describe 'shipping cost' do
+    before do |example|
+      if example.metadata[:require_before]
+        @mix_order = order_mix_confirmed
+        @method_pickup = ShippingMethod.find_by(variety: 2)
+        @method_delivery = ShippingMethod.find_by(variety: 1)
+        @rate = ShippingRate.find_by(geo_code: @mix_order.address.community)
+        @weight = @method_delivery.inventories.sum {|i| i.product.weight }
+        @add_on_weight = @weight - 1 > 0 ? @weight - 1 : 0
+        @delivery_cost = @rate.init_rate + @add_on_weight * @rate.add_on_rate
+      end
+    end
+
     describe '#compatible_shipping_rate' do
       it 'returns the lowest compatible shipping rate with order address' do
         test_rate = ShippingRate.new(geo_code: FactoryGirl.create(:community).id,
@@ -252,6 +264,44 @@ RSpec.describe OrderService do
         shipping_method = order_delivery_confirmed.shipping_methods.last
         expect(order_service.billable_weight(shipping_method))
           .to be_between(0, products_weight)
+      end
+    end
+
+    describe '#calculate_shipping' do
+      describe '#delivery_cost' do
+        it 'returns shipping cost', require_before: true do
+          order_service = OrderService.new(order_id: @mix_order)
+          result = order_service.delivery_cost(@method_delivery)
+          expect(result).to eq(@delivery_cost)
+        end
+      end
+
+      describe '#pickup_cost' do
+        it 'returns zero if method init_rate is zero', require_before: true do
+          order_service = OrderService.new(order_id: @mix_order)
+          result = order_service.pickup_cost(@method_pickup)
+          expect(result).to eq(0)
+        end
+
+        it 'returns method init_rate as shipping cost', require_before: true do
+          rate = @method_pickup.shipping_rates.sample
+          rate.update(init_rate_cents: 12345)
+          order_service = OrderService.new(order_id: @mix_order)
+          result = order_service.pickup_cost(@method_pickup)
+          expect(result).to eq(Money.new(12345))
+        end
+      end
+
+      it 'calls delivery_cost', require_before: true do
+        order_service = OrderService.new(order_id: @mix_order)
+        result = order_service.calculate_shipping(@method_delivery)
+        expect(result).to eq(@delivery_cost)
+      end
+
+      it 'calls pickup_cost', require_before: true do
+        order_service = OrderService.new(order_id: @mix_order)
+        result = order_service.calculate_shipping(@method_pickup)
+        expect(result).to eq(0)
       end
     end
   end

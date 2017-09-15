@@ -104,13 +104,26 @@ class OrderService
     invs.sum { |inv| inv.product.weight }
   end
 
-  # def billable_weight
-  #   weight = 0
-  #   @order.inventories.each do |inv|
-  #     weight += inv.product.weight if inv.shipping_method.variety == 'delivery'
-  #   end
-  #   weight
-  # end
+  def calculate_shipping(shipping_method)
+    case shipping_method.variety
+    when 'delivery' then delivery_cost(shipping_method)
+    when 'self_pickup' then pickup_cost(shipping_method)
+    end
+  end
+
+  def delivery_cost(shipping_method)
+    weight = billable_weight(shipping_method)
+    add_on_weight = weight - 1 > 0 ? weight - 1 : 0
+    rate = compatible_shipping_rate(shipping_method)
+    cost = rate.init_rate
+    cost += rate.add_on_rate * add_on_weight
+  end
+
+  def pickup_cost(shipping_method)
+    rates = shipping_method.shipping_rates
+    rate = rates.where(geo_code: '*').first || rates.first
+    rate.init_rate + rate.add_on_rate
+  end
 
   private
 
