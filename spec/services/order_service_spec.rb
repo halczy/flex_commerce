@@ -122,6 +122,12 @@ RSpec.describe OrderService do
       order_service = OrderService.new(order_id: new_order.id)
       expect(order_service.get_products('delivery')).to be_empty
     end
+
+    it 'returns an array of inventories given the shipping method instance' do
+      order_service = OrderService.new(order_id: order_delivery_selected)
+      shipping_method = order_delivery_selected.shipping_methods.first
+      expect(order_service.get_products(shipping_method).count).to eq(3)
+    end
   end
 
   describe '#get_products' do
@@ -228,6 +234,7 @@ RSpec.describe OrderService do
     #     products_weight = Product.all.sum { |p| p.weight }
     #     expect(order_service.billable_weight).to be_between(0, products_weight)
     #   end
+
     describe '#compatible_shipping_rate' do
       it 'returns the lowest compatible shipping rate with order address' do
         test_rate = ShippingRate.new(geo_code: FactoryGirl.create(:community).id,

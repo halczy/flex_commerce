@@ -43,7 +43,11 @@ class OrderService
     invs = []
     return invs unless validate_shipping_methods
     invs = @order.inventories.select do |inv|
-      inv.shipping_method.variety == shipping_method
+      if shipping_method.class == ShippingMethod
+        inv.shipping_method == shipping_method
+      else
+        inv.shipping_method.variety == shipping_method
+      end
     end
   end
 

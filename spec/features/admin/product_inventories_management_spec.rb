@@ -81,7 +81,7 @@ describe 'Product Inventories Management' do
         sleep 1
         within('#force_delete_inventories') { fill_in 'amount', with: 7 }
         sleep 1
-      rescue Capybara::ElementNotFound => e
+      rescue Capybara::ElementNotFound
         retry
       end
       evaluate_script 'document.getElementById("f_del_inv").submit();'
@@ -100,7 +100,7 @@ describe 'Product Inventories Management' do
         sleep 1
         within('#force_delete_inventories') { fill_in 'amount', with: 5 }
         sleep 1
-      rescue Capybara::ElementNotFound => e
+      rescue Capybara::ElementNotFound
         retry
       end
       evaluate_script 'document.getElementById("f_del_inv").submit();'

@@ -44,14 +44,18 @@ describe 'Customer Address CRUD' do
     end
 
     it 'can create address using dynamic address selector', js: true do
-      fill_in 'address[recipient]', with: 'Test Recipient'
-      fill_in 'address[contact_number]', with: '17612344321'
-      select(@province.name, from: 'provinces_select')
-      select(@city.name, from: 'cities_select')
-      select(@district.name, from: 'districts_select')
-      select(@community.name, from: 'communities_select')
-      fill_in 'address[street]', with: 'Test Street'
-      click_on 'Save Address'
+      begin
+        fill_in 'address[recipient]', with: 'Test Recipient'
+        fill_in 'address[contact_number]', with: '17612344321'
+        select(@province.name, from: 'provinces_select')
+        select(@city.name, from: 'cities_select')
+        select(@district.name, from: 'districts_select')
+        select(@community.name, from: 'communities_select')
+        fill_in 'address[street]', with: 'Test Street'
+        click_on 'Save Address'
+      rescue Capybara::ElementNotFound
+        retry
+      end
 
       expect(page.current_path).to eq(addresses_path)
       expect(page).to have_content('TEST RECIPIENT')
@@ -79,14 +83,18 @@ describe 'Customer Address CRUD' do
     end
 
     it 'can edit address', js: true do
-      visit addresses_path
-      visit edit_address_path(@address)
-      fill_in 'address[recipient]', with: 'Test Recipient'
-      fill_in 'address[contact_number]', with: '17612344321'
-      select(@province.name, from: 'provinces_select')
-      select(@city.name, from: 'cities_select')
-      fill_in 'address[street]', with: 'Test Street'
-      click_on 'Save Address'
+      begin
+        visit addresses_path
+        visit edit_address_path(@address)
+        fill_in 'address[recipient]', with: 'Test Recipient'
+        fill_in 'address[contact_number]', with: '17612344321'
+        select(@province.name, from: 'provinces_select')
+        select(@city.name, from: 'cities_select')
+        fill_in 'address[street]', with: 'Test Street'
+        click_on 'Save Address'
+      rescue Capybara::ElementNotFound
+        retry
+      end
 
       expect(page.current_path).to eq(addresses_path)
       expect(page).to have_content('TEST RECIPIENT')
