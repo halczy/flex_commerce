@@ -36,12 +36,9 @@ class Address < ApplicationRecord
   end
 
   def geo_codes
-    geo_codes = Array.new
-    attributes.each_value do |value|
-      if Geo.find_by(id: value)
-        geo_codes << value
-      end
+    Array.new.tap do |codes|
+      attributes.each_value { |value| codes << value if Geo.find_by(id: value) }
+      codes.reverse!
     end
-    geo_codes.reverse
   end
 end
