@@ -38,6 +38,12 @@ RSpec.describe Order, type: :model do
     #   end
     # end
 
+    context 'shipping methods' do
+      it 'returns shipping methods used in order' do
+        expect(order_mix_selected.shipping_methods.count).to eq(2)
+      end
+    end
+
     context 'product' do
       it 'returns product in order' do
         expect(new_order.products.first).to be_an_instance_of(Product)
