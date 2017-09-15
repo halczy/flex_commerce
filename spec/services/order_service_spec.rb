@@ -218,14 +218,31 @@ RSpec.describe OrderService do
 
   describe 'shipping cost' do
     before do |example|
-      if example.metadata[:require_before]
+      if example.metadata[:require_mix]
         @mix_order = order_mix_confirmed
         @method_pickup = ShippingMethod.find_by(variety: 2)
         @method_delivery = ShippingMethod.find_by(variety: 1)
-        @rate = ShippingRate.find_by(geo_code: @mix_order.address.community)
-        @weight = @method_delivery.inventories.sum {|i| i.product.weight }
-        @add_on_weight = @weight - 1 > 0 ? @weight - 1 : 0
-        @delivery_cost = @rate.init_rate + @add_on_weight * @rate.add_on_rate
+        rate = ShippingRate.find_by(geo_code: @mix_order.address.community)
+        weight = @method_delivery.inventories.sum {|i| i.product.weight }
+        add_on_weight = weight - 1 > 0 ? weight - 1 : 0
+        @delivery_cost = rate.init_rate + add_on_weight * rate.add_on_rate
+      end
+
+      if example.metadata[:require_delivery]
+        @delivery_order = order_delivery_confirmed
+        @method_delivery = ShippingMethod.find_by(variety: 1)
+        rate = ShippingRate.find_by(geo_code: @delivery_order.address.community)
+        weight = @method_delivery.inventories.sum {|i| i.product.weight }
+        add_on_weight = weight - 1 > 0 ? weight - 1 : 0
+        @delivery_cost = rate.init_rate + add_on_weight * rate.add_on_rate
+      end
+
+      if example.metadata[:require_pickup]
+        @pickup_order = order_pickup_confirmed
+        @method_pickup = ShippingMethod.find_by(variety: 2)
+        rate = @method_pickup.shipping_rates.first
+        rate.update(init_rate_cents: 11111)
+        @pickup_cost = Money.new(11111)
       end
     end
 
@@ -269,7 +286,7 @@ RSpec.describe OrderService do
 
     describe '#calculate_shipping' do
       describe '#delivery_cost' do
-        it 'returns shipping cost', require_before: true do
+        it 'returns shipping cost', require_mix: true do
           order_service = OrderService.new(order_id: @mix_order)
           result = order_service.delivery_cost(@method_delivery)
           expect(result).to eq(@delivery_cost)
@@ -277,13 +294,13 @@ RSpec.describe OrderService do
       end
 
       describe '#pickup_cost' do
-        it 'returns zero if method init_rate is zero', require_before: true do
+        it 'returns zero if method init_rate is zero', require_mix: true do
           order_service = OrderService.new(order_id: @mix_order)
           result = order_service.pickup_cost(@method_pickup)
           expect(result).to eq(0)
         end
 
-        it 'returns method init_rate as shipping cost', require_before: true do
+        it 'returns method init_rate as shipping cost', require_mix: true do
           rate = @method_pickup.shipping_rates.sample
           rate.update(init_rate_cents: 12345)
           order_service = OrderService.new(order_id: @mix_order)
@@ -292,18 +309,44 @@ RSpec.describe OrderService do
         end
       end
 
-      it 'calls delivery_cost', require_before: true do
+      it 'calls delivery_cost', require_mix: true do
         order_service = OrderService.new(order_id: @mix_order)
         result = order_service.calculate_shipping(@method_delivery)
         expect(result).to eq(@delivery_cost)
       end
 
-      it 'calls pickup_cost', require_before: true do
+      it 'calls pickup_cost', require_mix: true do
         order_service = OrderService.new(order_id: @mix_order)
         result = order_service.calculate_shipping(@method_pickup)
         expect(result).to eq(0)
       end
     end
-  end
 
+    describe '#total_shipping_cost' do
+      it 'returns order shipping cost with mixed shipping method',
+          require_mix: true do
+        order_service = OrderService.new(order_id: @mix_order)
+        expect(order_service.total_shipping_cost).to eq(@delivery_cost)
+      end
+
+      it 'returns order shipping cost for order with singular delivery method',
+         require_delivery: true do
+        order_service = OrderService.new(order_id: @delivery_order)
+        expect(order_service.total_shipping_cost).to eq(@delivery_cost)
+      end
+
+      it 'returns order shipping cost for order with singular pickup method',
+         require_pickup: true do
+        order_service = OrderService.new(order_id: @pickup_order)
+        expect(order_service.total_shipping_cost).to eq(@pickup_cost)
+      end
+
+      it 'saves total_shipping_cost to order', require_mix: true do
+        order_service = OrderService.new(order_id: @mix_order)
+        order_service.total_shipping_cost
+        expect(@mix_order.reload.shipping_cost).to eq(@delivery_cost)
+      end
+    end
+
+  end
 end

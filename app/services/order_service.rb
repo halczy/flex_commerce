@@ -125,6 +125,14 @@ class OrderService
     rate.init_rate + rate.add_on_rate
   end
 
+  def total_shipping_cost
+    cost = Money.new(0)
+    @order.shipping_methods.each do |shipping_method|
+      cost += calculate_shipping(shipping_method)
+    end
+    cost.tap { |cost| @order.update(shipping_cost: cost) }
+  end
+
   private
 
     def set_shipping_method(product, shipping_method)
