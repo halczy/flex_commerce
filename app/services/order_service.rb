@@ -94,6 +94,7 @@ class OrderService
     case shipping_method.variety
     when 'delivery' then delivery_cost(shipping_method)
     when 'self_pickup' then pickup_cost(shipping_method)
+    when 'no_shipping' then Money.new(0)
     end
   end
 

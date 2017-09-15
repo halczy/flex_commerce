@@ -97,7 +97,7 @@ RSpec.describe Order, type: :model do
       order_service.confirm
       order_total = order_service.total_shipping_cost +
                     order_service.total_inventories_cost
-      expect(order_mix_set.total).to eq(order_total)
+      expect(order_mix_set.reload.total).to eq(order_total)
     end
 
 

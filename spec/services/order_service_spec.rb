@@ -15,6 +15,8 @@ RSpec.describe OrderService do
   let(:order_pickup_set) { FactoryGirl.create(:order_pickup_set) }
   let(:order_delivery_set) { FactoryGirl.create(:order_delivery_set) }
   let(:order_mix_set) { FactoryGirl.create(:order_mix_set) }
+  let(:order_no_shipping_set) { FactoryGirl.create(:order_no_shipping_set) }
+
 
   describe '#initialize' do
     it 'initializes new order service with cart instance' do
@@ -320,6 +322,13 @@ RSpec.describe OrderService do
         result = order_service.calculate_shipping(@method_pickup)
         expect(result).to eq(0)
       end
+
+      it 'returns zero if shipping method is no shipping' do
+        order_service = OrderService.new(order_id: order_no_shipping_set)
+        shipping_method = order_no_shipping_set.shipping_methods.first
+        result = order_service.calculate_shipping(shipping_method)
+        expect(result).to eq(0)
+      end
     end
 
     describe '#total_shipping_cost' do
@@ -339,6 +348,11 @@ RSpec.describe OrderService do
          require_pickup: true do
         order_service = OrderService.new(order_id: @pickup_order)
         expect(order_service.total_shipping_cost).to eq(@pickup_cost)
+      end
+
+      it 'returns order shipping cost for order with singular no shipping method' do
+        order_service = OrderService.new(order_id: order_no_shipping_set)
+        expect(order_service.total_shipping_cost).to eq(0)
       end
 
       it 'saves total_shipping_cost to order', require_mix: true do
@@ -372,6 +386,12 @@ RSpec.describe OrderService do
       order_service = OrderService.new(order_id: order_mix_set)
       expect(order_service.confirm).to be_truthy
       expect(order_mix_set.reload.status).to eq('confirmed')
+    end
+
+    it 'confirms order with no shipping method set' do
+      order_service = OrderService.new(order_id: order_no_shipping_set)
+      expect(order_service.confirm).to be_truthy
+      expect(order_no_shipping_set.reload.status).to eq('confirmed')
     end
 
     it 'returns false and does not set shipping cost and status on failure' do

@@ -88,7 +88,7 @@ FactoryGirl.define do
   end
 
   factory :order_mix_set, class: Order do
-    status 20
+    status 10
     association :user, factory: :customer
 
     after(:create) do |order|
@@ -104,6 +104,19 @@ FactoryGirl.define do
                                          init_rate: 999.99,
                                          add_on_rate: 111.11,
                                          shipping_method: delivery)
+    end
+  end
+
+  factory :order_no_shipping_set, class: Order do
+    status 10
+    association :user, factory: :customer
+
+    after(:create) do |order|
+      3.times do
+        FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
+      end
+      no_shipping = FactoryGirl.create(:no_shipping)
+      order.inventories.each { |i| i.update(shipping_method: no_shipping) }
     end
   end
 end
