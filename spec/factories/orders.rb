@@ -56,7 +56,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :order_pickup_confirmed, class: Order do
+  factory :order_pickup_set, class: Order do
     status 10
     association :user, factory: :customer
 
@@ -69,7 +69,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :order_delivery_confirmed, class: Order do
+  factory :order_delivery_set, class: Order do
     status 10
     association :user, factory: :customer
 
@@ -87,7 +87,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :order_mix_confirmed, class: Order do
+  factory :order_mix_set, class: Order do
     status 20
     association :user, factory: :customer
 

@@ -12,9 +12,9 @@ RSpec.describe OrderService do
   let(:order_pickup_selected) { FactoryGirl.create(:order_pickup_selected) }
   let(:order_delivery_selected) { FactoryGirl.create(:order_delivery_selected) }
   let(:order_mix_selected) { FactoryGirl.create(:order_mix_selected) }
-  let(:order_pickup_confirmed) { FactoryGirl.create(:order_pickup_confirmed) }
-  let(:order_delivery_confirmed) { FactoryGirl.create(:order_delivery_confirmed) }
-  let(:order_mix_confirmed) { FactoryGirl.create(:order_mix_confirmed) }
+  let(:order_pickup_set) { FactoryGirl.create(:order_pickup_set) }
+  let(:order_delivery_set) { FactoryGirl.create(:order_delivery_set) }
+  let(:order_mix_set) { FactoryGirl.create(:order_mix_set) }
 
   describe '#initialize' do
     it 'initializes new order service with cart instance' do
@@ -219,7 +219,7 @@ RSpec.describe OrderService do
   describe 'shipping cost' do
     before do |example|
       if example.metadata[:require_mix]
-        @mix_order = order_mix_confirmed
+        @mix_order = order_mix_set
         @method_pickup = ShippingMethod.find_by(variety: 2)
         @method_delivery = ShippingMethod.find_by(variety: 1)
         rate = ShippingRate.find_by(geo_code: @mix_order.address.community)
@@ -229,7 +229,7 @@ RSpec.describe OrderService do
       end
 
       if example.metadata[:require_delivery]
-        @delivery_order = order_delivery_confirmed
+        @delivery_order = order_delivery_set
         @method_delivery = ShippingMethod.find_by(variety: 1)
         rate = ShippingRate.find_by(geo_code: @delivery_order.address.community)
         weight = @method_delivery.inventories.sum {|i| i.product.weight }
@@ -238,7 +238,7 @@ RSpec.describe OrderService do
       end
 
       if example.metadata[:require_pickup]
-        @pickup_order = order_pickup_confirmed
+        @pickup_order = order_pickup_set
         @method_pickup = ShippingMethod.find_by(variety: 2)
         rate = @method_pickup.shipping_rates.first
         rate.update(init_rate_cents: 11111)
@@ -250,35 +250,35 @@ RSpec.describe OrderService do
       it 'returns the lowest compatible shipping rate with order address' do
         test_rate = ShippingRate.new(geo_code: FactoryGirl.create(:community).id,
                                      init_rate: 999.99, add_on_rate: 111.11)
-        shipping_method = order_delivery_confirmed.shipping_methods.first
+        shipping_method = order_delivery_set.shipping_methods.first
         shipping_method.shipping_rates << test_rate
-        order_delivery_confirmed.address.update(community: test_rate.geo_code)
+        order_delivery_set.address.update(community: test_rate.geo_code)
 
-        order_service = OrderService.new(order_id: order_delivery_confirmed)
+        order_service = OrderService.new(order_id: order_delivery_set)
         result = order_service.compatible_shipping_rate(shipping_method)
         expect(result).to eq(test_rate)
       end
 
       it 'returns false if there is no compatible shipping rate' do
-        order_delivery_confirmed.address.update(community: nil)
-        shipping_method = order_delivery_confirmed.shipping_methods.first
-        order_service = OrderService.new(order_id: order_delivery_confirmed)
+        order_delivery_set.address.update(community: nil)
+        shipping_method = order_delivery_set.shipping_methods.first
+        order_service = OrderService.new(order_id: order_delivery_set)
         expect(order_service.compatible_shipping_rate(shipping_method)).to be_falsey
       end
     end
 
     describe '#billable_weight' do
       it 'returns sum of inventories weight under the given shipping method' do
-        order_service = OrderService.new(order_id: order_delivery_confirmed)
+        order_service = OrderService.new(order_id: order_delivery_set)
         products_weight = Product.all.sum { |p| p.weight }
-        shipping_method = order_delivery_confirmed.shipping_methods.first
+        shipping_method = order_delivery_set.shipping_methods.first
         expect(order_service.billable_weight(shipping_method)).to eq(products_weight)
       end
 
       it 'returns billable weight for mixed order' do
-        order_service = OrderService.new(order_id: order_mix_confirmed)
+        order_service = OrderService.new(order_id: order_mix_set)
         products_weight = Product.all.sum { |p| p.weight }
-        shipping_method = order_delivery_confirmed.shipping_methods.last
+        shipping_method = order_delivery_set.shipping_methods.last
         expect(order_service.billable_weight(shipping_method))
           .to be_between(0, products_weight)
       end
@@ -352,26 +352,26 @@ RSpec.describe OrderService do
   describe '#confirm' do
     describe '#confirm_inventories' do
       it 'sets all inventories status to in checkout' do
-        order_service = OrderService.new(order_id: order_delivery_confirmed)
+        order_service = OrderService.new(order_id: order_delivery_set)
         order_service.send(:confirm_inventories)
-        order_delivery_confirmed.inventories.each do |inv|
+        order_delivery_set.inventories.each do |inv|
           expect(inv.reload.status).to eq('in_checkout')
         end
       end
 
       it 'assigns product price to inventory' do
-        order_service = OrderService.new(order_id: order_mix_confirmed)
+        order_service = OrderService.new(order_id: order_mix_set)
         order_service.send(:confirm_inventories)
-        order_mix_confirmed.inventories.each do |inv|
+        order_mix_set.inventories.each do |inv|
           expect(inv.reload.purchase_price).to eq(inv.product.price_member)
         end
       end
     end
 
     it 'returns true and changes order status if confirmed' do
-      order_service = OrderService.new(order_id: order_mix_confirmed)
+      order_service = OrderService.new(order_id: order_mix_set)
       expect(order_service.confirm).to be_truthy
-      expect(order_mix_confirmed.reload.status).to eq('confirmed')
+      expect(order_mix_set.reload.status).to eq('confirmed')
     end
 
     it 'returns false and does not set shipping cost and status on failure' do
@@ -383,7 +383,7 @@ RSpec.describe OrderService do
 
   describe '#total_inventories_cost' do
     it 'returns total inventories cost in order' do
-      order_service = OrderService.new(order_id: order_mix_confirmed)
+      order_service = OrderService.new(order_id: order_mix_set)
       order_service.confirm
       products_cost = Product.all.sum { |p| p.price_member}
       expect(order_service.total_inventories_cost).to eq(products_cost)

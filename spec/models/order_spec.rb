@@ -7,9 +7,9 @@ RSpec.describe Order, type: :model do
   let(:order_pickup_selected) { FactoryGirl.create(:order_pickup_selected) }
   let(:order_delivery_selected) { FactoryGirl.create(:order_delivery_selected) }
   let(:order_mix_selected) { FactoryGirl.create(:order_mix_selected) }
-  let(:order_pickup_confirmed) { FactoryGirl.create(:order_pickup_confirmed) }
-  let(:order_delivery_confirmed) { FactoryGirl.create(:order_delivery_confirmed) }
-  let(:order_mix_confirmed) { FactoryGirl.create(:order_mix_confirmed) }
+  let(:order_pickup_set) { FactoryGirl.create(:order_pickup_set) }
+  let(:order_delivery_set) { FactoryGirl.create(:order_delivery_set) }
+  let(:order_mix_set) { FactoryGirl.create(:order_mix_set) }
 
   describe 'creation' do
     it 'can be created' do
@@ -36,9 +36,9 @@ RSpec.describe Order, type: :model do
 
     context 'address' do
       it 'can have one address' do
-        expect(order_delivery_confirmed.address).to be_present
-        expect(order_delivery_confirmed.address.addressable)
-          .to eq(order_delivery_confirmed)
+        expect(order_delivery_set.address).to be_present
+        expect(order_delivery_set.address.addressable)
+          .to eq(order_delivery_set)
       end
     end
 
@@ -93,16 +93,16 @@ RSpec.describe Order, type: :model do
 
   describe '#total' do
     it 'reutrns inventories and shipping cost' do
-      order_service = OrderService.new(order_id: order_mix_confirmed)
+      order_service = OrderService.new(order_id: order_mix_set)
       order_service.confirm
       order_total = order_service.total_shipping_cost +
                     order_service.total_inventories_cost
-      expect(order_mix_confirmed.total).to eq(order_total)
+      expect(order_mix_set.total).to eq(order_total)
     end
 
 
     it 'returns false if order is not confrimed' do
-      expect(order_delivery_confirmed.total).to be_falsey
+      expect(order_delivery_set.total).to be_falsey
     end
   end
 end
