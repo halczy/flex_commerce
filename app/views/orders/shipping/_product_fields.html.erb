@@ -1,6 +1,6 @@
 <tr>
   <td><%= f.object.name %></td>
-  <td><%= @order.quantity(f.object).count %></td>
+  <td><%= @order.inventories_by(f.object).count %></td>
   <td>
     <%= f.select :shipping_methods, options_for_select(
                   f.object.shipping_methods.collect { |m| [m.name, m.id] }),

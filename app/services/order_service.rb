@@ -137,7 +137,7 @@ class OrderService
   private
 
     def set_shipping_method(product, shipping_method)
-      @order.quantity(product).each do |inv|
+      @order.inventories_by(product).each do |inv|
         inv.update(shipping_method: shipping_method)
       end
     end

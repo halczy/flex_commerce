@@ -57,10 +57,10 @@ RSpec.describe Order, type: :model do
         expect(new_order.products.count).to eq(3)
       end
 
-      context '#quantity' do
-        it 'returns quantity of product inventories in order' do
+      context '#inventories_by' do
+        it 'returns product inventories in order' do
           product = new_order.products.sample
-          expect(new_order.quantity(product).count).to eq(1)
+          expect(new_order.inventories_by(product).count).to eq(1)
         end
       end
     end

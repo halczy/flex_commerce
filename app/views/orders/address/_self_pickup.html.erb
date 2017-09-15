@@ -13,7 +13,9 @@
             <li class="list-group-item">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1"><%= product.name %></h5>
-                <small>Quantity: <%= @order.quantity(product).count %></small>
+                <small>
+                  Quantity: <%= @order.inventories_by(product).count %>
+                </small>
               </div>
             </li>
           <% end %>
