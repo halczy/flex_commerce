@@ -34,4 +34,14 @@ class Address < ApplicationRecord
     object_address.addressable = object
     object_address.save
   end
+
+  def geo_codes
+    geo_codes = Array.new
+    attributes.each_value do |value|
+      if Geo.find_by(id: value)
+        geo_codes << value
+      end
+    end
+    geo_codes.reverse
+  end
 end

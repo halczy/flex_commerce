@@ -92,4 +92,24 @@ RSpec.describe Address, type: :model do
     end
   end
 
+  describe '#geo_codes' do
+    it 'returns geo code from detail to broad' do
+      result = address.geo_codes
+      expect(result[0]).to eq(address.community)
+      expect(result[1]).to eq(address.district)
+      expect(result[2]).to eq(address.city)
+      expect(result[3]).to eq(address.province_state)
+    end
+
+    it 'omits broken address chain' do
+      broken_address = address.tap do |addr|
+        addr.community = nil
+        addr.city = nil
+      end
+      result = broken_address.geo_codes
+      expect(result[0]).to eq(broken_address.district)
+      expect(result[1]).to eq(broken_address.province_state)
+    end
+  end
+
 end
