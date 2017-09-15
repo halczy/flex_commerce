@@ -10,4 +10,9 @@ module OrdersHelper
     invs.sample.shipping_method.variety
   end
 
+  def purchase_price_by(order, product)
+    invs = order.inventories_by(product)
+    invs.sample.purchase_price
+  end
+
 end
