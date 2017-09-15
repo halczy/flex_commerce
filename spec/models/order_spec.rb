@@ -90,4 +90,19 @@ RSpec.describe Order, type: :model do
       expect(new_order.shipping_method_mix).to be_falsey
     end
   end
+
+  describe '#total' do
+    it 'reutrns inventories and shipping cost' do
+      order_service = OrderService.new(order_id: order_mix_confirmed)
+      order_service.confirm
+      order_total = order_service.total_shipping_cost +
+                    order_service.total_inventories_cost
+      expect(order_mix_confirmed.total).to eq(order_total)
+    end
+
+
+    it 'returns false if order is not confrimed' do
+      expect(order_delivery_confirmed.total).to be_falsey
+    end
+  end
 end

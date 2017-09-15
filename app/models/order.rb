@@ -39,4 +39,10 @@ class Order < ApplicationRecord
     varieties.uniq!
     varieties.length == 1 ? varieties[0] : 'mix'
   end
+
+  def total
+    return false unless confirmed?
+    order_service = OrderService.new(order_id: id)
+    order_service.total_shipping_cost + order_service.total_inventories_cost
+  end
 end
