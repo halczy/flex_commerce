@@ -7,6 +7,9 @@ RSpec.describe Order, type: :model do
   let(:order_pickup_selected) { FactoryGirl.create(:order_pickup_selected) }
   let(:order_delivery_selected) { FactoryGirl.create(:order_delivery_selected) }
   let(:order_mix_selected) { FactoryGirl.create(:order_mix_selected) }
+  let(:order_pickup_confirmed) { FactoryGirl.create(:order_pickup_confirmed) }
+  let(:order_delivery_confirmed) { FactoryGirl.create(:order_delivery_confirmed) }
+  let(:order_mix_confirmed) { FactoryGirl.create(:order_mix_confirmed) }
 
   describe 'creation' do
     it 'can be created' do
@@ -31,12 +34,13 @@ RSpec.describe Order, type: :model do
       end
     end
 
-    # context 'address' do
-    #   it 'can have one address' do
-    #     expect(new_order.address).to be_present
-    #     expect(new_order.address.addressable).to eq(new_order)
-    #   end
-    # end
+    context 'address' do
+      it 'can have one address' do
+        expect(order_delivery_confirmed.address).to be_present
+        expect(order_delivery_confirmed.address.addressable)
+          .to eq(order_delivery_confirmed)
+      end
+    end
 
     context 'shipping methods' do
       it 'returns shipping methods used in order' do
