@@ -72,21 +72,36 @@ class OrderService
     end
   end
 
-  def set_shipping_cost
+  # GROUP ORDER INVENTORIES BY SHIPPING METHODS
+    # GET SHIPPING METHODS FROM ORDER
+      # LOOP THROUGH EACH DELIVERY METHOD FOR SHIPPING COST
+      # LOOP THROUGH EACH SELF PICKUP METHOD FOR SHIPPING COST
 
-  end
+  # DELIVERY - SHIPPING COST
+    # INVENTORIES - GET BILLABLE WEIGHT
+    # FIND COMPATABLE SHIPPING RATE
+    # CALCULATE SHIPPING COST FOR THE METHOD
 
-  def calculate_shipping_cost
+  # SELF PICKUP
+    # GET SHIPPING RATE WITH * MATCHER
+    # USE INIT RATE AS SHIPPING COST
 
-  end
-
-  def billable_weight
-    weight = 0
-    @order.inventories.each do |inv|
-      weight += inv.product.weight if inv.shipping_method.variety == 'delivery'
+  def compatible_shipping_rate(shipping_method)
+    @order.address.geo_codes.each do |addr_code|
+      shipping_method.shipping_rates.each do |rate|
+        return rate if rate.geo_code == addr_code
+      end
     end
-    weight
+    false
   end
+
+  # def billable_weight
+  #   weight = 0
+  #   @order.inventories.each do |inv|
+  #     weight += inv.product.weight if inv.shipping_method.variety == 'delivery'
+  #   end
+  #   weight
+  # end
 
   private
 

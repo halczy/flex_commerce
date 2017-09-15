@@ -211,24 +211,44 @@ RSpec.describe OrderService do
   end
 
   describe 'shipping cost' do
-    describe '#billable_weight' do
-      it 'returns sum of inventories weight that are billable' do
+    # describe '#billable_weight' do
+    #   it 'returns sum of inventories weight that are billable' do
+    #     order_service = OrderService.new(order_id: order_delivery_confirmed)
+    #     products_weight = Product.all.sum { |p| p.weight }
+    #     expect(order_service.billable_weight).to eq(products_weight)
+    #   end
+
+    #   it 'returns no billable weight for pick up exclusive order' do
+    #     order_service = OrderService.new(order_id: order_pickup_confirmed)
+    #     expect(order_service.billable_weight).to eq(0)
+    #   end
+
+    #   it 'returns billable weight for mixed order' do
+    #     order_service = OrderService.new(order_id: order_mix_confirmed)
+    #     products_weight = Product.all.sum { |p| p.weight }
+    #     expect(order_service.billable_weight).to be_between(0, products_weight)
+    #   end
+    describe '#compatible_shipping_rate' do
+      it 'returns the lowest compatible shipping rate with order address' do
+        test_rate = ShippingRate.new(geo_code: FactoryGirl.create(:community).id,
+                                     init_rate: 999.99, add_on_rate: 111.11)
+        shipping_method = order_delivery_confirmed.shipping_methods.first
+        shipping_method.shipping_rates << test_rate
+        order_delivery_confirmed.address.update(community: test_rate.geo_code)
+
         order_service = OrderService.new(order_id: order_delivery_confirmed)
-        products_weight = Product.all.sum { |p| p.weight }
-        expect(order_service.billable_weight).to eq(products_weight)
+        result = order_service.compatible_shipping_rate(shipping_method)
+        expect(result).to eq(test_rate)
       end
 
-      it 'returns no billable weight for pick up exclusive order' do
-        order_service = OrderService.new(order_id: order_pickup_confirmed)
-        expect(order_service.billable_weight).to eq(0)
-      end
-
-      it 'returns billable weight for mixed order' do
-        order_service = OrderService.new(order_id: order_mix_confirmed)
-        products_weight = Product.all.sum { |p| p.weight }
-        expect(order_service.billable_weight).to be_between(0, products_weight)
+      it 'returns false if there is no compatible shipping rate' do
+        order_delivery_confirmed.address.update(community: nil)
+        shipping_method = order_delivery_confirmed.shipping_methods.first
+        order_service = OrderService.new(order_id: order_delivery_confirmed)
+        expect(order_service.compatible_shipping_rate(shipping_method)).to be_falsey
       end
     end
+
 
   end
 

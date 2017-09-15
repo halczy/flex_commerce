@@ -79,7 +79,11 @@ FactoryGirl.define do
       end
       delivery = FactoryGirl.create(:delivery)
       order.inventories.each { |i| i.update(shipping_method: delivery) }
-      FactoryGirl.create(:address, addressable: order)
+      address = FactoryGirl.create(:address, addressable: order)
+      FactoryGirl.create(:shipping_rate, geo_code: address.community,
+                                         init_rate: 999.99,
+                                         add_on_rate: 111.11,
+                                         shipping_method: delivery)
     end
   end
 
@@ -95,7 +99,11 @@ FactoryGirl.define do
       pickup = FactoryGirl.create(:self_pickup)
       order.inventories.each { |i| i.update(shipping_method: delivery) }
       order.inventories.first.update(shipping_method: pickup)
-      FactoryGirl.create(:address, addressable: order)
+      address = FactoryGirl.create(:address, addressable: order)
+      FactoryGirl.create(:shipping_rate, geo_code: address.community,
+                                         init_rate: 999.99,
+                                         add_on_rate: 111.11,
+                                         shipping_method: delivery)
     end
   end
 end
