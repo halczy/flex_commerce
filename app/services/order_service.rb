@@ -76,20 +76,6 @@ class OrderService
     end
   end
 
-  # GROUP ORDER INVENTORIES BY SHIPPING METHODS
-    # GET SHIPPING METHODS FROM ORDER
-      # LOOP THROUGH EACH DELIVERY METHOD FOR SHIPPING COST
-      # LOOP THROUGH EACH SELF PICKUP METHOD FOR SHIPPING COST
-
-  # DELIVERY - SHIPPING COST
-    # INVENTORIES - GET BILLABLE WEIGHT
-    # FIND COMPATABLE SHIPPING RATE
-    # CALCULATE SHIPPING COST FOR THE METHOD
-
-  # SELF PICKUP
-    # GET SHIPPING RATE WITH * MATCHER
-    # USE INIT RATE AS SHIPPING COST
-
   def compatible_shipping_rate(shipping_method)
     @order.address.geo_codes.each do |addr_code|
       shipping_method.shipping_rates.each do |rate|
@@ -126,10 +112,7 @@ class OrderService
   end
 
   def total_shipping_cost
-    cost = Money.new(0)
-    @order.shipping_methods.each do |shipping_method|
-      cost += calculate_shipping(shipping_method)
-    end
+    cost = @order.shipping_methods.sum { |m| calculate_shipping(m) }
     cost.tap { |cost| @order.update(shipping_cost: cost) }
   end
 
