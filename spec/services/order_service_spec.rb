@@ -380,4 +380,14 @@ RSpec.describe OrderService do
       expect(new_order.reload.status).to eq('created')
     end
   end
+
+  describe '#total_inventories_cost' do
+    it 'returns total inventories cost in order' do
+      order_service = OrderService.new(order_id: order_mix_confirmed)
+      order_service.confirm
+      products_cost = Product.all.sum { |p| p.price_member}
+      expect(order_service.total_inventories_cost).to eq(products_cost)
+    end
+  end
+
 end

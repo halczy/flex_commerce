@@ -130,9 +130,8 @@ class OrderService
   end
 
   def total_inventories_cost
+    @order.inventories.sum { |i| i.purchase_price }
   end
-
-
 
   private
 
