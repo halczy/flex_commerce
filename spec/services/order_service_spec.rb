@@ -347,6 +347,25 @@ RSpec.describe OrderService do
         expect(@mix_order.reload.shipping_cost).to eq(@delivery_cost)
       end
     end
+  end
 
+  describe '#confirm_order' do
+    describe '#confirm_inventories' do
+      it 'sets all inventories status to in checkout' do
+        order_service = OrderService.new(order_id: order_delivery_confirmed)
+        order_service.confirm_inventories
+        order_delivery_confirmed.inventories.each do |inv|
+          expect(inv.reload.status).to eq('in_checkout')
+        end
+      end
+
+      it 'assigns product price to inventory' do
+        order_service = OrderService.new(order_id: order_mix_confirmed)
+        order_service.confirm_inventories
+        order_mix_confirmed.inventories.each do |inv|
+          expect(inv.reload.purchase_price).to eq(inv.product.price_member)
+        end
+      end
+    end
   end
 end

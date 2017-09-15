@@ -116,6 +116,20 @@ class OrderService
     cost.tap { |cost| @order.update(shipping_cost: cost) }
   end
 
+  def confirm_inventories
+    @order.inventories.each do |inv|
+      inv.update(status: 3, purchase_price: inv.product.price_member)
+    end
+  end
+
+  def confirm_order
+  end
+
+  def total_inventories_cost
+  end
+
+
+
   private
 
     def set_shipping_method(product, shipping_method)

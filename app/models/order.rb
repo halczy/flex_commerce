@@ -13,7 +13,7 @@ class Order < ApplicationRecord
   # Enum
   enum status: {
     # Creation
-    created: 0, shipping_confirmed: 10, customer_confirmed: 20,
+    created: 0, shipping_confirmed: 10, confirmed: 20,
     # Payment
     payment_pending: 30, partial_payment: 40, payment_fail: 50,
     payment_success: 60,
