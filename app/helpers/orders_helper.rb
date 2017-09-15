@@ -15,4 +15,12 @@ module OrdersHelper
     invs.sample.purchase_price
   end
 
+  def get_delivery_method(order)
+    order.shipping_methods.select { |m| m.variety == 'delivery' }.first
+  end
+
+  def get_self_pickup_method(order)
+    order.shipping_methods.select { |m| m.variety == 'self_pickup' }.first
+  end
+
 end
