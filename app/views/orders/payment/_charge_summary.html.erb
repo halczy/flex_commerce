@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-md-12">
+    <h5>Order Charge Summary</h5>
+    <table class="table table-hover table-responsive">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+          <th>Shipping Method</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td>
+            <%= humanized_money_with_symbol purchase_price_by(@order, product) %>
+          </td>
+          <td>
+            <%= @order.inventories_by(product).count %>
+          </td>
+          <td>
+            <%= humanized_money_with_symbol subtotal_by(@order, product) %>
+          </td>
+          <td>
+            <%= shipping_method_by(@order, product).titleize %>
+          </td>
+        </tr>
+        <% end %>
+        <tr>
+          <td colspan="2"></td>
+          <td class="text-right">
+            <strong>Shipping Cost: </strong>
+          </td>
+          <td colspan="2">
+            <%= humanized_money_with_symbol @order.shipping_cost %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2"></td>
+          <td class="text-right">
+            <strong>Total: </strong>
+          </td>
+          <td colspan="2">
+            <%= humanized_money_with_symbol @order.total %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

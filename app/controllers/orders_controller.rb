@@ -4,7 +4,8 @@ class OrdersController < UsersController
   before_action :authenticate_user, except: [ :create ]
   before_action :set_user, except: [ :create ]
   before_action :set_order, except: [ :create, :update_selector ]
-  before_action :populate_selector, only: [:address, :update_selector]
+  before_action :populate_selector, only: [ :address, :update_selector ]
+  before_action :confirm_order, only: [ :payment ]
 
   def create
     order = OrderService.new(cart_id: params[:cart_id]).create
@@ -69,10 +70,8 @@ class OrdersController < UsersController
   end
 
   def payment
-    if @order_service.confirm
-    else
-      raise
-    end
+    @self_pickup = helpers.get_self_pickup_method(@order)
+    @delivery = helpers.get_delivery_method(@order)
   end
 
   private
@@ -107,5 +106,9 @@ class OrdersController < UsersController
       params.require(:address).permit(:name, :recipient, :contact_number,
                                       :country_region, :province_state,
                                       :city, :district, :community, :street)
+    end
+
+    def confirm_order
+      @order_service.confirm
     end
 end
