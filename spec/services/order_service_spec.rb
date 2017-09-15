@@ -349,11 +349,11 @@ RSpec.describe OrderService do
     end
   end
 
-  describe '#confirm_order' do
+  describe '#confirm' do
     describe '#confirm_inventories' do
       it 'sets all inventories status to in checkout' do
         order_service = OrderService.new(order_id: order_delivery_confirmed)
-        order_service.confirm_inventories
+        order_service.send(:confirm_inventories)
         order_delivery_confirmed.inventories.each do |inv|
           expect(inv.reload.status).to eq('in_checkout')
         end
@@ -361,11 +361,23 @@ RSpec.describe OrderService do
 
       it 'assigns product price to inventory' do
         order_service = OrderService.new(order_id: order_mix_confirmed)
-        order_service.confirm_inventories
+        order_service.send(:confirm_inventories)
         order_mix_confirmed.inventories.each do |inv|
           expect(inv.reload.purchase_price).to eq(inv.product.price_member)
         end
       end
+    end
+
+    it 'returns true and changes order status if confirmed' do
+      order_service = OrderService.new(order_id: order_mix_confirmed)
+      expect(order_service.confirm).to be_truthy
+      expect(order_mix_confirmed.reload.status).to eq('confirmed')
+    end
+
+    it 'returns false and does not set shipping cost and status on failure' do
+      order_service = OrderService.new(order_id: new_order.id)
+      expect(order_service.confirm).to be_falsey
+      expect(new_order.reload.status).to eq('created')
     end
   end
 end

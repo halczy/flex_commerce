@@ -13,7 +13,7 @@ class OrderService
         transfer_inventories
         @order
       end
-    rescue Exception => e
+    rescue Exception
       @order = nil
       false
     end
@@ -112,17 +112,21 @@ class OrderService
   end
 
   def total_shipping_cost
+    raise unless validate_shipping_methods
     cost = @order.shipping_methods.sum { |m| calculate_shipping(m) }
     cost.tap { |cost| @order.update(shipping_cost: cost) }
   end
 
-  def confirm_inventories
-    @order.inventories.each do |inv|
-      inv.update(status: 3, purchase_price: inv.product.price_member)
+  def confirm
+    begin
+      Order.transaction do
+        total_shipping_cost
+        confirm_inventories
+        @order.confirmed!
+      end
+    rescue Exception
+      false
     end
-  end
-
-  def confirm_order
   end
 
   def total_inventories_cost
@@ -141,6 +145,12 @@ class OrderService
     def validate_shipping_methods
       @order.inventories.each do |inv|
         return false unless inv.try(:shipping_method).try(:variety)
+      end
+    end
+
+    def confirm_inventories
+      @order.inventories.each do |inv|
+        inv.update(status: 3, purchase_price: inv.product.price_member)
       end
     end
 
