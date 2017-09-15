@@ -3,7 +3,7 @@ class OrdersController < UsersController
   before_action :request_signin, only: [ :create ]
   before_action :authenticate_user, except: [ :create ]
   before_action :set_user, except: [ :create ]
-  before_action :set_order, only: [ :shipping, :set_shipping, :create_address, :address, :set_address, :payment ]
+  before_action :set_order, except: [ :create, :update_selector ]
   before_action :populate_selector, only: [:address, :update_selector]
 
   def create
@@ -69,6 +69,7 @@ class OrdersController < UsersController
   end
 
   def payment
+
   end
 
   private
