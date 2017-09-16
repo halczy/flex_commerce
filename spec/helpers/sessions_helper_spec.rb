@@ -41,12 +41,14 @@ RSpec.describe SessionsHelper, type: :helper do
     context 'invalid user_id in session or cookies' do
       it 'resets user session when given invalid user_id in session' do
         helper.login(user)
+        user.wallet.delete
         User.delete(user)
         expect(helper.current_user).to be_nil
       end
 
       it 'resets user session when given invalid user_id in cookies' do
         helper.remember(user)
+        user.wallet.delete
         User.delete(user)
         expect(helper.current_user).to be_nil
       end
@@ -75,11 +77,11 @@ RSpec.describe SessionsHelper, type: :helper do
       expect(helper.signed_in?).to be_falsy
     end
   end
-  
+
   describe '#store_location' do
     # See requests/friendly_forwarding_spec
   end
-  
+
   describe '#redirect_back_or' do
     # See requests/friendly_forwarding_spec
   end

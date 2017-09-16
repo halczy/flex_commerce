@@ -19,6 +19,7 @@ describe 'visit homepage as guest' do
     end
 
     it 'does not generate error when session user_id is invalid' do
+      customer.wallet.delete
       User.delete(customer)
       visit root_path
       expect(page).to have_content('Sign In')
