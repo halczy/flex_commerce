@@ -10,8 +10,13 @@ RSpec.describe Wallet, type: :model do
     end
 
     it 'cannot be standalone' do
-      expect{ Wallet.create! }.to raise_error(ActiveRecord::RecordInvalid)
+      expect { Wallet.create! }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 
+  describe 'deletion' do
+    it 'cannot be deleted from user' do
+      expect(customer.wallet.destroy).to be_falsey
+    end
+  end
 end

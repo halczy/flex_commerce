@@ -8,8 +8,8 @@ class User < ApplicationRecord
   has_secure_token :remember_token
 
   # Realtionships
-  has_one  :wallet
   has_one  :cart
+  has_one  :wallet
   has_many :orders
   has_many :addresses, as: :addressable, dependent: :destroy
 
