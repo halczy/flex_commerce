@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 140) do
     t.boolean "status"
     t.string "encrypted_value"
     t.string "encrypted_value_iv"
+    t.string "plain"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_application_configurations_on_name"

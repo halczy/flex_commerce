@@ -10,7 +10,7 @@ module ApplicationHelper
 
   def page_title(title = "")
     application_title = ApplicationConfiguration.
-                          find_by(name: 'application_title').try(:value) ||
+                          find_by(name: 'application_title').try(:plain) ||
                         'Flex Commerce'
 
     unless title.empty?

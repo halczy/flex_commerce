@@ -5,6 +5,7 @@ class CreateApplicationConfigurations < ActiveRecord::Migration[5.1]
       t.boolean :status
       t.string  :encrypted_value
       t.string  :encrypted_value_iv
+      t.string  :plain
 
       t.timestamps
     end

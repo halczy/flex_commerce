@@ -16,7 +16,7 @@ RSpec.describe ApplicationHelper, :type => :helper do
 
     it 'returns base title from database' do
       ApplicationConfiguration.create(name: 'application_title',
-                                      value: 'Flex Shop')
+                                      plain: 'Flex Shop')
       expect(helper.page_title).to eq('Flex Shop')
     end
   end
