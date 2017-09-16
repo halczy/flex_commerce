@@ -1,6 +1,6 @@
-class CreateAppConfigurations < ActiveRecord::Migration[5.1]
+class CreateApplicationConfigurations < ActiveRecord::Migration[5.1]
   def change
-    create_table :app_configurations, id: :uuid do |t|
+    create_table :application_configurations, id: :uuid do |t|
       t.string  :name, index: true
       t.boolean :status
       t.string  :encrypted_value
