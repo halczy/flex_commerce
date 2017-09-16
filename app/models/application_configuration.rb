@@ -5,6 +5,16 @@ class ApplicationConfiguration < ApplicationRecord
   # Attributes
   attribute :value
 
-  # Validations
+  # Callbacks
+  before_save :downcase_name
 
+  # Validations
+  validates :name, presence: true, uniqueness: true
+
+
+  private
+
+    def downcase_name
+      name.downcase!
+    end
 end
