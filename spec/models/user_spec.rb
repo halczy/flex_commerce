@@ -98,7 +98,7 @@ RSpec.describe User, type: :model do
         expect(@user_with_email).not_to be_valid
       end
     end
-    
+
     describe 'member_id' do
       it "must be present at all time" do
         old_member_id = user.member_id
@@ -106,14 +106,14 @@ RSpec.describe User, type: :model do
         user.save
         expect(user.member_id).not_to eq(old_member_id)
       end
-      
+
       it 'can be changed' do
         expect(user).to be_valid
         user.member_id = 111_111
         user.save
         expect(user.member_id).to eq(111111)
       end
-      
+
       it 'cannot dupliate' do
         existing_user = FactoryGirl.create(:user)
         expect {
@@ -168,12 +168,24 @@ RSpec.describe User, type: :model do
       expect(customer).to be_an_instance_of(Customer)
     end
   end
-  
+
   describe '#assign_member_id' do
     it "assigns a six digit member id upon creation" do
       user = FactoryGirl.create(:user)
       expect(user.member_id).to be_present
       expect(user.member_id.to_s.length).to eq(6)
+    end
+  end
+
+  describe '#create_wallet' do
+    it 'creates a wallet for user upon creation' do
+      expect(user.wallet).to be_present
+    end
+
+    it 'cannot overwrite existing wallet' do
+      wallet_id = user.wallet.id
+      expect { user.create_wallet }.to raise_error(ActiveRecord::RecordNotSaved)
+      expect(user.wallet.reload.id).to eq(wallet_id)
     end
   end
 end

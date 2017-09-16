@@ -16,6 +16,7 @@ class User < ApplicationRecord
   # Callbacks
   before_save :downcase_email
   before_validation :assign_member_id
+  after_create :create_wallet
 
   # Validations
   validates :email, length: { maximum: 255 }, allow_nil: true,
