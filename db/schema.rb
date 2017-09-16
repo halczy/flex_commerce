@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 120) do
+ActiveRecord::Schema.define(version: 130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -191,6 +191,17 @@ ActiveRecord::Schema.define(version: 120) do
     t.index ["member_id"], name: "index_users_on_member_id", unique: true
   end
 
+  create_table "wallets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "balance_cents", default: 0, null: false
+    t.string "balance_currency", default: "CNY", null: false
+    t.integer "pending_cents", default: 0, null: false
+    t.string "pending_currency", default: "CNY", null: false
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_wallets_on_user_id"
+  end
+
   add_foreign_key "carts", "users"
   add_foreign_key "categorizations", "categories"
   add_foreign_key "categorizations", "products"
@@ -202,4 +213,5 @@ ActiveRecord::Schema.define(version: 120) do
   add_foreign_key "orders", "users"
   add_foreign_key "shipping_methods", "products"
   add_foreign_key "shipping_rates", "shipping_methods"
+  add_foreign_key "wallets", "users"
 end
