@@ -13,6 +13,12 @@ RSpec.describe ApplicationHelper, :type => :helper do
     it 'returns only base title when no instance variable is provided' do
       expect(helper.page_title).to eql("#{base_title}")
     end
+
+    it 'returns base title from database' do
+      ApplicationConfiguration.create(name: 'application_title',
+                                      value: 'Flex Shop')
+      expect(helper.page_title).to eq('Flex Shop')
+    end
   end
 
 end
