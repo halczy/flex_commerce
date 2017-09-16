@@ -1,6 +1,8 @@
 puts 'SEED: Seed file is running......'
 
 # CLEAN UP
+ApplicationConfiguration.destroy_all
+puts 'APPLICATIONCONFIGURATION: Clear old config data.'
 Inventory.destroy_all
 puts 'INVENTORY: Clear old inventory data'
 Order.destroy_all
@@ -22,6 +24,9 @@ ShippingRate.destroy_all
 puts 'SHIPPING RATE: Clear old shipping rate data'
 ShippingMethod.destroy_all
 puts 'SHIPPING METHOD: Clear old shipping method data'
+
+# Application Name
+ApplicationConfiguration.create(name: 'application_title', plain: 'Flex Commerce')
 
 # ADMIN
 Admin.create(name: 'Admin User',

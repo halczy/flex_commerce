@@ -1,5 +1,5 @@
 class ApplicationConfiguration < ApplicationRecord
-  # ATTR_ENCRYPTED
+  # Encryption
   attr_encrypted :value, key: ENV.fetch('APP_CONFIGURATION_SECRET')
 
   # Attributes
