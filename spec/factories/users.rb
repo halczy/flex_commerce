@@ -26,6 +26,19 @@ FactoryGirl.define do
     password_confirmation 'example'
   end
 
+  factory :wealthy_customer, class: Customer do
+    type 'Customer'
+    name 'Wealthy Customer'
+    email { generate :email }
+    cell_number { "186#{Faker::Number.number(8)}" }
+    password 'example'
+    password_confirmation 'example'
+
+    after(:create) do |customer|
+      customer.wallet.update(balance: 999999)
+    end
+  end
+
   factory :admin do
     type "Admin"
     name "Sample Admin"
