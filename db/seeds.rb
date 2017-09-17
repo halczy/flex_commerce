@@ -27,6 +27,7 @@ puts 'SHIPPING METHOD: Clear old shipping method data'
 
 # Application Name
 ApplicationConfiguration.create(name: 'application_title', plain: 'Flex Commerce')
+puts 'APPLICATIONCONFIGURATION: Created application title.'
 
 # ADMIN
 Admin.create(name: 'Admin User',
