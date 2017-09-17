@@ -46,14 +46,16 @@ class OrdersController < UsersController
       @address.build_full_address
       params[:address][:address_id] = @address.id
       set_address
-    elsif params[:address] && params[:address][:address_id]
+    elsif params[:address][:address_id].present?
       set_address
     else
-      set_order
       @self_pickups = @order_service.get_products('self_pickup')
       @deliveries = @order_service.get_products('delivery')
       @customer = @order.user
+      set_address_params
       populate_selector
+      flash.now[:warning] = "Please select an existing address or enter a valid
+                             new address"
       render :address
     end
   end
@@ -110,4 +112,12 @@ class OrdersController < UsersController
     def confirm_order
       @order_service.confirm
     end
+
+    def set_address_params
+      params[:province_id] = @address.province_state if @address.province_state.present?
+      params[:city_id] = @address.city if @address.city.present?
+      params[:district_id] = @address.district if @address.district.present?
+      params[:community_id] = @address.community if @address.community.present?
+    end
+
 end

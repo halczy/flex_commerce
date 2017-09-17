@@ -23,7 +23,7 @@ class Address < ApplicationRecord
   def compact_select
     select_html = ""
     select_html << "<strong class='ml-1'>#{recipient}</strong>"
-    select_html << " (#{name}) " if name
+    select_html << " (#{name}) " if name.present?
     select_html << " | #{full_address} "
     select_html << " | #{contact_number} "
     select_html.html_safe
