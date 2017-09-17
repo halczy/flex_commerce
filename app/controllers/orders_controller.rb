@@ -59,7 +59,7 @@ class OrdersController < UsersController
       set_address_params
       populate_selector
       flash.now[:warning] = "Please select an existing address or enter a valid
-                             new address"
+                             new address!"
       render :address
     end
   end

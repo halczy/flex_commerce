@@ -1,33 +1,15 @@
 <%= provide :title, 'Address' %>
 
 <div class="container">
-  <div class="card mt-5">
+  <%= render 'progress', steps: ['success', 'info']  %>
+  <div class="card mt-3">
     <div class="card-header">
       <%= yield(:title) %>
     </div>
     <div class="card-body">
       <%= render '/orders/address/self_pickup' if @self_pickups.present? %>
       <%= render '/orders/address/deliveries' if @deliveries.present? %>
-      <div class="d-flex justify-content-start">
-        <div class="p-2">
-          <%= link_to shipping_order_path, class: 'btn btn-dark' do %>
-            <i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> Return
-          <% end %>
-        </div>
-        <div class="ml-auto p-2">
-          <% if @order.shipping_method_mix == 'self_pickup' %>
-            <%= button_to set_address_order_path, method: :patch,
-                                                  class: 'btn btn-primary' do %>
-              Next <i class="fa fa-arrow-right ml-1" aria-hidden="true"></i>
-            <% end %>
-          <% else %>
-            <%= button_tag type: 'submit', class: 'btn btn-primary',
-                                           form: 'address_form' do %>
-              Next <i class="fa fa-arrow-right ml-1" aria-hidden="true"></i>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
+      <%= render '/orders/address/action_control' %>
     </div>
   </div>
 </div>

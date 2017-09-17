@@ -23,17 +23,14 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12 mt-3">
-        <div class="d-flex w-100 justify-content-between">
-          <div>
-            <strong>Customer Contact: </strong>
-            <%= @order.pick_up_address.recipient %>
-          </div>
-          <div>
-            <strong>Contact Number: </strong>
-            <%= @order.pick_up_address.contact_number %>
-          </div>
-        </div>
+      <div class="col-md-12 mt-5">
+        <strong>Customer Contact: </strong>
+        <%= @order.pick_up_address.recipient %>
+      </div>
+
+      <div class="col-md-12 mt-2">
+        <strong>Contact Number: </strong>
+        <%= @order.pick_up_address.contact_number %>
       </div>
       <div class="col-md-12 mt-2">
         <strong>Pickup At: </strong>
