@@ -2,14 +2,22 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
 
-  let(:order)     { FactoryGirl.create(:order) }
-  let(:new_order) { FactoryGirl.create(:new_order) }
-  let(:order_pickup_selected) { FactoryGirl.create(:order_pickup_selected) }
-  let(:order_delivery_selected) { FactoryGirl.create(:order_delivery_selected) }
-  let(:order_mix_selected) { FactoryGirl.create(:order_mix_selected) }
-  let(:order_pickup_set) { FactoryGirl.create(:order_pickup_set) }
-  let(:order_delivery_set) { FactoryGirl.create(:order_delivery_set) }
-  let(:order_mix_set) { FactoryGirl.create(:order_mix_set) }
+  let(:order)           { FactoryGirl.create(:order) }
+
+  let(:order_selected)  { FactoryGirl.create(:order, selected: true) }
+  let(:order_set)       { FactoryGirl.create(:order, set: true) }
+  let(:order_confrimed) { FactoryGirl.create(:order, confirmed: true) }
+
+  let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
+                                                             only_pickup: true) }
+  let(:order_pickup_set)        { FactoryGirl.create(:order, set: true,
+                                                             only_pickup: true) }
+  let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true,
+                                                             only_delivery: true) }
+  let(:order_delivery_set)      { FactoryGirl.create(:order, set:true,
+                                                             only_delivery: true) }
+  let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true,
+                                                             no_shipping: true) }
 
   describe 'creation' do
     it 'can be created' do
@@ -29,8 +37,8 @@ RSpec.describe Order, type: :model do
   describe 'relationships' do
     context 'inventory' do
       it 'can have inventories' do
-        expect(new_order).to be_valid
-        expect(new_order.inventories).not_to be_empty
+        expect(order).to be_valid
+        expect(order.inventories).not_to be_empty
       end
     end
 
@@ -44,23 +52,23 @@ RSpec.describe Order, type: :model do
 
     context 'shipping methods' do
       it 'returns shipping methods used in order' do
-        expect(order_mix_selected.shipping_methods.count).to eq(2)
+        expect(order_selected.shipping_methods.count).to eq(2)
       end
     end
 
     context 'product' do
       it 'returns product in order' do
-        expect(new_order.products.first).to be_an_instance_of(Product)
+        expect(order.products.first).to be_an_instance_of(Product)
       end
 
       it 'does not duplicate product returns' do
-        expect(new_order.products.count).to eq(3)
+        expect(order.products.count).to eq(3)
       end
 
       context '#inventories_by' do
         it 'returns product inventories in order' do
-          product = new_order.products.sample
-          expect(new_order.inventories_by(product).count).to eq(1)
+          product = order.products.sample
+          expect(order.inventories_by(product).count).to eq(1)
         end
       end
     end
@@ -69,7 +77,7 @@ RSpec.describe Order, type: :model do
 
   describe '#pick_up_address' do
     it 'returns the self pickup address' do
-      expect(order_mix_selected.pick_up_address).to be_an_instance_of Address
+      expect(order_selected.pick_up_address).to be_an_instance_of Address
     end
   end
 
@@ -83,21 +91,21 @@ RSpec.describe Order, type: :model do
     end
 
     it 'reutrns mix when inventories have mixed shipping method' do
-      expect(order_mix_selected.shipping_method_mix).to eq('mix')
+      expect(order_selected.shipping_method_mix).to eq('mix')
     end
 
     it 'returns false when inventories does not have shipping method' do
-      expect(new_order.shipping_method_mix).to be_falsey
+      expect(order.shipping_method_mix).to be_falsey
     end
   end
 
   describe '#total' do
     it 'reutrns inventories and shipping cost' do
-      order_service = OrderService.new(order_id: order_mix_set)
+      order_service = OrderService.new(order_id: order_set)
       order_service.confirm
       order_total = order_service.total_shipping_cost +
                     order_service.total_inventories_cost
-      expect(order_mix_set.reload.total).to eq(order_total)
+      expect(order_set.reload.total).to eq(order_total)
     end
 
 

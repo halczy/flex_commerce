@@ -9,7 +9,8 @@ RSpec.describe Address, type: :model do
   let(:community) { FactoryGirl.create(:community) }
   let(:customer)  { FactoryGirl.create(:customer) }
 
-  let(:order_delivery_selected) { FactoryGirl.create(:order_delivery_selected) }
+  let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true,
+                                                             only_delivery: true) }
 
   describe 'creation' do
     it 'can be created' do

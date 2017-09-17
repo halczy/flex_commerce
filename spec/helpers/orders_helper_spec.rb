@@ -2,19 +2,21 @@ require 'rails_helper'
 
 RSpec.describe OrdersHelper, type: :helper do
 
-  let(:order_delivery_selected) { FactoryGirl.create(:order_delivery_selected) }
-  let(:order_pickup_selected) { FactoryGirl.create(:order_pickup_selected) }
+  let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true,
+                                                             only_delivery: true) }
+  let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
+                                                             only_pickup: true) }
 
   before do
-    @order_mix = FactoryGirl.create(:order_mix_set)
-    order_service = OrderService.new(order_id: @order_mix)
+    @order = FactoryGirl.create(:order, set: true)
+    order_service = OrderService.new(order_id: @order)
     order_service.confirm
   end
 
   describe '#subtotal_by' do
     it 'reutrns to total purchase price of given product in order' do
-      sample_product = @order_mix.products.sample
-      result = helper.subtotal_by(@order_mix, sample_product)
+      sample_product = @order.products.sample
+      result = helper.subtotal_by(@order, sample_product)
       expect(result).to eq(sample_product.price_member)
     end
   end
@@ -29,15 +31,15 @@ RSpec.describe OrdersHelper, type: :helper do
 
   describe '#purchase_price_by' do
     it 'returns the purchase price of inventories by product' do
-      sample_product = @order_mix.products.sample
-      result = helper.purchase_price_by(@order_mix, sample_product)
+      sample_product = @order.products.sample
+      result = helper.purchase_price_by(@order, sample_product)
       expect(result).to eq(sample_product.price_member)
     end
   end
 
   describe '#get_self_pickup_method' do
     it 'reutrns self pickup method from order' do
-      result = helper.get_self_pickup_method(@order_mix)
+      result = helper.get_self_pickup_method(@order)
       expect(result.variety).to eq('self_pickup')
     end
 

@@ -8,14 +8,21 @@ RSpec.describe OrderService do
   let(:self_pickup) { FactoryGirl.create(:self_pickup) }
   let(:address)     { FactoryGirl.create(:address) }
 
-  let(:new_order) { FactoryGirl.create(:new_order) }
-  let(:order_pickup_selected) { FactoryGirl.create(:order_pickup_selected) }
-  let(:order_delivery_selected) { FactoryGirl.create(:order_delivery_selected) }
-  let(:order_mix_selected) { FactoryGirl.create(:order_mix_selected) }
-  let(:order_pickup_set) { FactoryGirl.create(:order_pickup_set) }
-  let(:order_delivery_set) { FactoryGirl.create(:order_delivery_set) }
-  let(:order_mix_set) { FactoryGirl.create(:order_mix_set) }
-  let(:order_no_shipping_set) { FactoryGirl.create(:order_no_shipping_set) }
+  let(:order)           { FactoryGirl.create(:order) }
+  let(:order_selected)  { FactoryGirl.create(:order, selected: true) }
+  let(:order_set)       { FactoryGirl.create(:order, set: true) }
+  let(:order_confrimed) { FactoryGirl.create(:order, confirmed: true) }
+
+  let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
+                                                             only_pickup: true) }
+  let(:order_pickup_set)        { FactoryGirl.create(:order, set: true,
+                                                             only_pickup: true) }
+  let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true,
+                                                             only_delivery: true) }
+  let(:order_delivery_set)      { FactoryGirl.create(:order, set:true,
+                                                             only_delivery: true) }
+  let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true,
+                                                             no_shipping: true) }
 
 
   describe '#initialize' do
@@ -26,8 +33,8 @@ RSpec.describe OrderService do
     end
 
     it 'initializes new order service with order instance' do
-      order_service = OrderService.new(order_id: new_order.id)
-      expect(order_service.order).to eq(new_order)
+      order_service = OrderService.new(order_id: order.id)
+      expect(order_service.order).to eq(order)
       expect(order_service.cart).to be_nil
     end
   end
@@ -85,8 +92,8 @@ RSpec.describe OrderService do
   describe '#set_shipping' do
     context 'set_shipping_method' do
       it 'sets shipping method for inventories under product' do
-        order_service = OrderService.new(order_id: new_order.id)
-        product = new_order.products.first
+        order_service = OrderService.new(order_id: order.id)
+        product = order.products.first
         order_service.send(:set_shipping_method, product, delivery)
         product.inventories.each do |inv|
           expect(inv.shipping_method).to eq(delivery)
@@ -95,8 +102,8 @@ RSpec.describe OrderService do
     end
 
     it 'assigns shipping method to inventories' do
-      order_service = OrderService.new(order_id: new_order.id)
-      product_1, product_2, product_3 = new_order.products
+      order_service = OrderService.new(order_id: order.id)
+      product_1, product_2, product_3 = order.products
       params = {
                  '0' => { "shipping_methods" => delivery.id, "id" => product_1.id },
                  '1' => { "shipping_methods" => delivery.id, "id" => product_2.id },
@@ -111,17 +118,17 @@ RSpec.describe OrderService do
 
   describe '#get_inventories' do
     it 'returns an array of self pickup inventories' do
-      order_service = OrderService.new(order_id: order_mix_selected.id)
+      order_service = OrderService.new(order_id: order_selected.id)
       expect(order_service.get_products('self_pickup').count).to eq(1)
     end
 
     it 'returns an array of inventories marked for delivery' do
-      order_service = OrderService.new(order_id: order_mix_selected.id)
+      order_service = OrderService.new(order_id: order_selected.id)
       expect(order_service.get_products('delivery').count).to eq(2)
     end
 
     it 'returns an empty array if shipping method is not set' do
-      order_service = OrderService.new(order_id: new_order.id)
+      order_service = OrderService.new(order_id: order.id)
       expect(order_service.get_products('delivery')).to be_empty
     end
 
@@ -146,7 +153,7 @@ RSpec.describe OrderService do
       end
 
       it 'returns only products marked for self pick-up in a mix shipping method order' do
-        order_service = OrderService.new(order_id: order_mix_selected.id)
+        order_service = OrderService.new(order_id: order_selected.id)
         expect(order_service.get_products('self_pickup').count).to eq(1)
       end
     end
@@ -165,7 +172,7 @@ RSpec.describe OrderService do
       end
 
       it 'returns only products marked for delivery in a mix shipping methods' do
-        order_service = OrderService.new(order_id: order_mix_selected.id)
+        order_service = OrderService.new(order_id: order_selected.id)
         expect(order_service.get_products('delivery').count).to eq(2)
       end
     end
@@ -173,7 +180,7 @@ RSpec.describe OrderService do
 
   describe 'set_address' do
     before do
-      @order_service = OrderService.new(order_id: order_mix_selected.id)
+      @order_service = OrderService.new(order_id: order_selected.id)
       @customer_address = FactoryGirl.create(:address, addressable: customer)
     end
 
@@ -199,8 +206,8 @@ RSpec.describe OrderService do
     end
 
     it 'confirms shipping for mixed order' do
-      FactoryGirl.create(:address, addressable: order_mix_selected)
-      order_service = OrderService.new(order_id: order_mix_selected)
+      FactoryGirl.create(:address, addressable: order_selected)
+      order_service = OrderService.new(order_id: order_selected)
       expect(order_service.confirm_shipping).to be_truthy
       expect(order_service.order.status).to eq('shipping_confirmed')
     end
@@ -212,7 +219,7 @@ RSpec.describe OrderService do
     end
 
     it 'does not confirm for mixed order if not address is set' do
-      order_service = OrderService.new(order_id: order_mix_selected )
+      order_service = OrderService.new(order_id: order_selected )
       expect(order_service.confirm_shipping).to be_falsey
       expect(order_service.order.status).to eq('created')
     end
@@ -221,7 +228,7 @@ RSpec.describe OrderService do
   describe 'shipping cost' do
     before do |example|
       if example.metadata[:require_mix]
-        @mix_order = order_mix_set
+        @mix_order = order_set
         @method_pickup = ShippingMethod.find_by(variety: 2)
         @method_delivery = ShippingMethod.find_by(variety: 1)
         rate = ShippingRate.find_by(geo_code: @mix_order.address.community)
@@ -278,7 +285,7 @@ RSpec.describe OrderService do
       end
 
       it 'returns billable weight for mixed order' do
-        order_service = OrderService.new(order_id: order_mix_set)
+        order_service = OrderService.new(order_id: order_set)
         products_weight = Product.all.sum { |p| p.weight }
         shipping_method = order_delivery_set.shipping_methods.last
         expect(order_service.billable_weight(shipping_method))
@@ -374,18 +381,18 @@ RSpec.describe OrderService do
       end
 
       it 'assigns product price to inventory' do
-        order_service = OrderService.new(order_id: order_mix_set)
+        order_service = OrderService.new(order_id: order_set)
         order_service.send(:confirm_inventories)
-        order_mix_set.inventories.each do |inv|
+        order_set.inventories.each do |inv|
           expect(inv.reload.purchase_price).to eq(inv.product.price_member)
         end
       end
     end
 
     it 'returns true and changes order status if confirmed' do
-      order_service = OrderService.new(order_id: order_mix_set)
+      order_service = OrderService.new(order_id: order_set)
       expect(order_service.confirm).to be_truthy
-      expect(order_mix_set.reload.status).to eq('confirmed')
+      expect(order_set.reload.status).to eq('confirmed')
     end
 
     it 'confirms order with no shipping method set' do
@@ -395,15 +402,15 @@ RSpec.describe OrderService do
     end
 
     it 'returns false and does not set shipping cost and status on failure' do
-      order_service = OrderService.new(order_id: new_order.id)
+      order_service = OrderService.new(order_id: order.id)
       expect(order_service.confirm).to be_falsey
-      expect(new_order.reload.status).to eq('created')
+      expect(order.reload.status).to eq('created')
     end
   end
 
   describe '#total_inventories_cost' do
     it 'returns total inventories cost in order' do
-      order_service = OrderService.new(order_id: order_mix_set)
+      order_service = OrderService.new(order_id: order_set)
       order_service.confirm
       products_cost = Product.all.sum { |p| p.price_member}
       expect(order_service.total_inventories_cost).to eq(products_cost)
