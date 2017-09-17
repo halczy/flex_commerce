@@ -262,7 +262,7 @@ describe 'Shipping Method CRUD', type: :feature do
       visit admin_shipping_methods_path
       click_on 'Delete'
       click_on 'Confirm'
-      expect(page).to have_css('.alert.alert-success')
+      expect(page).to have_css('.alert-success')
       expect(page).not_to have_content('some name')
     end
   end

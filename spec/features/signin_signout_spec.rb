@@ -49,7 +49,7 @@ describe 'sign in as customer' do
   it 'displays error messages when using invalid information' do
     click_button 'Submit'
 
-    expect(page).to have_css('.alert.alert-warning')
+    expect(page).to have_css('.alert-warning')
   end
 
   # TODO Switch to a better requested address
@@ -101,7 +101,7 @@ describe 'sign out' do
     click_link 'Sign Out'
 
     expect(page.current_path).to eq(root_path)
-    expect(page).to have_css('.alert.alert-info')
+    expect(page).to have_css('.alert-info')
     expect(page).to have_link('Sign In')
   end
 
@@ -114,7 +114,7 @@ describe 'sign out' do
     click_link 'Sign Out'
 
     expect(page.current_path).to eq(root_path)
-    expect(page).to have_css('.alert.alert-info')
+    expect(page).to have_css('.alert-info')
     expect(page).to have_link('Sign Up')
   end
 end

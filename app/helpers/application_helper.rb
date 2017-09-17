@@ -28,6 +28,8 @@ module ApplicationHelper
     case message_type
     when 'success'
       'fa-check-circle'
+    when 'info'
+      'fa-info-circle'
     when 'warning'
       'fa-warning'
     when 'danger'

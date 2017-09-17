@@ -38,7 +38,7 @@ describe 'Product Inventories Management' do
       end
 
       expect(page).to have_content('Total (15)')
-      expect(page).to have_css(".alert.alert-success")
+      expect(page).to have_css(".alert-success")
     end
 
     it "can remove inventories", js: true do
@@ -53,7 +53,7 @@ describe 'Product Inventories Management' do
       # element = find_by_id('del_inv')
       # Capybara::RackTest::Form.new(page.driver, element.native).submit(el: nil)
 
-      expect(page).to have_css(".alert.alert-success")
+      expect(page).to have_css(".alert-success")
       expect(page).to have_content('Total (3)')
       expect(page).to have_content('Returned (3)')
     end
@@ -68,7 +68,7 @@ describe 'Product Inventories Management' do
       evaluate_script 'document.getElementById("del_inv").submit();'
 
       expect(page).to have_content('Total (7)')
-      expect(page).to have_css(".alert.alert-danger")
+      expect(page).to have_css(".alert-danger")
     end
 
     it 'can force remove destroyable inventories', js: true do
@@ -87,7 +87,7 @@ describe 'Product Inventories Management' do
       evaluate_script 'document.getElementById("f_del_inv").submit();'
 
       expect(page).to have_content('Total (0)')
-      expect(page).to have_css('.alert.alert-info')
+      expect(page).to have_css('.alert-info')
     end
 
     it 'cannot remove more than destroyable prodcuts', js: true do
@@ -106,7 +106,7 @@ describe 'Product Inventories Management' do
       evaluate_script 'document.getElementById("f_del_inv").submit();'
 
       expect(page).to have_content('Total (5)')
-      expect(page).to have_css('.alert.alert-info')
+      expect(page).to have_css('.alert-info')
     end
 
     it 'can delete individual product', js: true do
