@@ -13,7 +13,7 @@
       <% inventories.each do |inventory| %>
       <tr>
         <td><%= link_to inventory.id, '#' %></td>
-        <td><%= inventory.status %></td>
+        <td><%= inventory.status.titleize %></td>
         <td></td>
         <td></td>
         <td>
