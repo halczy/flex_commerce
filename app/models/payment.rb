@@ -1,3 +1,4 @@
 class Payment < ApplicationRecord
-  belongs_to :order
+  # Relationships
+  belongs_to :order, optional: true
 end

@@ -1,10 +1,11 @@
 class Order < ApplicationRecord
   # Relationships
   belongs_to :user
-  has_one    :address, as: :addressable
-  has_many   :inventories
-  has_many   :products, -> { distinct }, through: :inventories
-  has_many   :shipping_methods, -> { distinct }, through: :inventories
+  has_one   :address, as: :addressable
+  has_many  :inventories
+  has_many  :orders
+  has_many  :products,         -> { distinct }, through: :inventories
+  has_many  :shipping_methods, -> { distinct }, through: :inventories
   accepts_nested_attributes_for :products
 
   # Validation
