@@ -99,6 +99,21 @@ RSpec.describe Order, type: :model do
     end
   end
 
+  describe 'pre_confirm_total' do
+    it 'returns order total cost' do
+      result = order_set.pre_confirm_total
+      order_service = OrderService.new(order_id: order_set)
+      order_service.confirm
+      expect(result).to eq(order_set.reload.total)
+    end
+
+    it 'does not require to be confirmed to confrims order' do
+      result = order_set.pre_confirm_total
+      expect(result).to be > 0
+      expect(order_set.reload.status).to eq('shipping_confirmed')
+    end
+  end
+
   describe '#total' do
     it 'reutrns inventories and shipping cost' do
       order_service = OrderService.new(order_id: order_set)
@@ -107,7 +122,6 @@ RSpec.describe Order, type: :model do
                     order_service.total_inventories_cost
       expect(order_set.reload.total).to eq(order_total)
     end
-
 
     it 'returns false if order is not confrimed' do
       expect(order_delivery_set.total).to be_falsey

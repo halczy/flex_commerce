@@ -41,6 +41,13 @@ class Order < ApplicationRecord
     varieties.length == 1 ? varieties[0] : 'mix'
   end
 
+  def pre_confirm_total
+    return false unless shipping_confirmed?
+    order_service = OrderService.new(order_id: id)
+    invs_cost = inventories.sum { |i| i.product.price_member }
+    order_service.total_shipping_cost + invs_cost
+  end
+
   def total
     return false unless confirmed?
     order_service = OrderService.new(order_id: id)
