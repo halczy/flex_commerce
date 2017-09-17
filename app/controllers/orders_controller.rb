@@ -21,9 +21,13 @@ class OrdersController < UsersController
   def set_shipping
     product_params = params['order']['products_attributes'] if params['order']
     if @order_service.set_shipping(product_params)
-      redirect_to address_order_path(@order)
+      if @order.shipping_method_mix == 'no_shipping'
+        redirect_to review_order_path(@order)
+      else
+        redirect_to address_order_path(@order)
+      end
     else
-      redirect_to set_shipping_order_path(@order)
+      redirect_to shipping_order_path(@order)
     end
   end
 

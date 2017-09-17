@@ -7,6 +7,7 @@ RSpec.describe OrdersController, type: :controller do
   let(:inventory)   { FactoryGirl.create(:inventory) }
   let(:delivery)    { FactoryGirl.create(:delivery) }
   let(:self_pickup) { FactoryGirl.create(:self_pickup) }
+  let(:no_shipping) { FactoryGirl.create(:no_shipping) }
 
   let(:order)           { FactoryGirl.create(:order) }
 
@@ -80,23 +81,33 @@ RSpec.describe OrdersController, type: :controller do
     before do
       product_1, product_2, product_3 = order.products
       @attrs = {
-       '0' => { "shipping_methods" => delivery.id, "id" => product_1.id },
-       '1' => { "shipping_methods" => delivery.id, "id" => product_2.id },
-       '2' => { "shipping_methods" => self_pickup, "id" => product_3.id } }
+       '0' => { "shipping_methods" => delivery.id,    "id" => product_1.id },
+       '1' => { "shipping_methods" => delivery.id,    "id" => product_2.id },
+       '2' => { "shipping_methods" => self_pickup.id, "id" => product_3.id } }
+      @ns_attr = {
+       '0' => { "shipping_methods" => no_shipping.id, "id" => product_1.id },
+       '1' => { "shipping_methods" => no_shipping.id, "id" => product_2.id },
+       '2' => { "shipping_methods" => no_shipping.id, "id" => product_3.id } }
     end
 
     context 'with valid params' do
       it 'sets shipping and redirect to address page' do
         patch :set_shipping, params: { id: order.id,
                                        order: { products_attributes: @attrs } }
-        expect(response).to redirect_to address_order_path(order.id)
+        expect(response).to redirect_to(address_order_path(order.id))
+      end
+
+      it 'sets shipping and redirect to review page if no shipping is selected' do
+        patch :set_shipping, params: { id: order.id,
+                                       order: { products_attributes: @ns_attr} }
+        expect(response).to redirect_to(review_order_path(order.id))
       end
     end
 
     context 'with invalid params' do
-      it 'redirects back to set shipping if param is invalid' do
+      it 'redirects back to shipping select page if param is invalid' do
         patch :set_shipping, params: { id: order.id }
-        expect(response).to redirect_to set_shipping_order_path(order.id)
+        expect(response).to redirect_to(shipping_order_path(order.id))
       end
     end
   end
