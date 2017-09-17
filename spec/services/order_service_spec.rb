@@ -361,10 +361,12 @@ RSpec.describe OrderService do
         order_service = OrderService.new(order_id: order_no_shipping_set)
         expect(order_service.total_shipping_cost).to eq(0)
       end
+    end
 
-      it 'saves total_shipping_cost to order', require_mix: true do
+    describe '#confirm_shipping_cost' do
+      it 'saves shipping cost to order', require_mix: true do
         order_service = OrderService.new(order_id: @mix_order)
-        order_service.total_shipping_cost
+        order_service.send(:confirm_shipping_cost)
         expect(@mix_order.reload.shipping_cost).to eq(@delivery_cost)
       end
     end

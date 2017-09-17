@@ -113,25 +113,23 @@ class OrderService
   end
 
   def total_shipping_cost
-    raise unless validate_shipping_methods
-    cost = @order.shipping_methods.sum { |m| calculate_shipping(m) }
-    cost.tap { |cost| @order.update(shipping_cost: cost) }
+    @order.shipping_methods.sum { |m| calculate_shipping(m) }
+  end
+
+  def total_inventories_cost
+    @order.inventories.sum { |i| i.purchase_price }
   end
 
   def confirm
     begin
       Order.transaction do
-        total_shipping_cost
+        confirm_shipping_cost
         confirm_inventories
         @order.confirmed!
       end
     rescue Exception
       false
     end
-  end
-
-  def total_inventories_cost
-    @order.inventories.sum { |i| i.purchase_price }
   end
 
   private
@@ -154,4 +152,9 @@ class OrderService
       end
     end
 
+    def confirm_shipping_cost
+      raise unless validate_shipping_methods
+      cost = total_shipping_cost
+      @order.update(shipping_cost: cost)
+    end
 end
