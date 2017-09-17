@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       get   :address
       post  :create_address
       patch :set_address
+      get   :review
       get   :payment
     end
     collection do

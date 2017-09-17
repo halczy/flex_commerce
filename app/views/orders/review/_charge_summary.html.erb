@@ -16,7 +16,7 @@
         <tr>
           <td><%= product.name %></td>
           <td>
-            <%= humanized_money_with_symbol purchase_price_by(@order, product) %>
+            <%= humanized_money_with_symbol product.price_member %>
           </td>
           <td>
             <%= @order.inventories_by(product).count %>
@@ -35,7 +35,7 @@
             <strong>Shipping Cost: </strong>
           </td>
           <td colspan="2">
-            <%= humanized_money_with_symbol @order.shipping_cost %>
+            <%= humanized_money_with_symbol @order_service.total_shipping_cost %>
           </td>
         </tr>
         <tr>
@@ -44,7 +44,7 @@
             <strong>Total: </strong>
           </td>
           <td colspan="2">
-            <%= humanized_money_with_symbol @order.total %>
+            <%= humanized_money_with_symbol @order.pre_confirm_total %>
           </td>
         </tr>
       </tbody>

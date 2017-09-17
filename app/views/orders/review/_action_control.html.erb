@@ -1,0 +1,18 @@
+<div class="d-flex justify-content-start">
+  <div class="p-2">
+    <% if @order.shipping_method_mix == 'delivery' %>
+      <%= link_to address_order_path, class: 'btn btn-dark' do %>
+        <i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> Modify Address
+      <% end %>
+    <% else %>
+      <%= link_to shipping_order_path, class: 'btn btn-dark' do %>
+        <i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> Modify Shipping
+      <% end %>
+    <% end %>
+  </div>
+  <div class="ml-auto p-2">
+    <%= link_to '#', class: 'btn btn-primary' do %>
+      Next <i class="fa fa-arrow-right ml-1" aria-hidden="true"></i>
+    <% end %>
+  </div>
+</div>

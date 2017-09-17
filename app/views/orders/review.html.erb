@@ -1,0 +1,14 @@
+<%= provide :title, 'Review Order' %>
+
+<div class="container">
+  <div class="card mt-5">
+    <div class="card-header">
+      <%= yield(:title) %>
+    </div>
+    <div class="card-body">
+      <%= render '/orders/review/charge_summary' %>
+      <%= render '/orders/review/shipping_summary' %>
+      <%= render '/orders/review/action_control' %>
+    </div>
+  </div>
+</div>

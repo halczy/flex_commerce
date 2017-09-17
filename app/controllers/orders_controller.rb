@@ -5,7 +5,6 @@ class OrdersController < UsersController
   before_action :set_user, except: [ :create ]
   before_action :set_order, except: [ :create, :update_selector ]
   before_action :populate_selector, only: [ :address, :update_selector ]
-  before_action :confirm_order, only: [ :payment ]
 
   def create
     order = OrderService.new(cart_id: params[:cart_id]).create
@@ -66,10 +65,10 @@ class OrdersController < UsersController
     else
       @order_service.confirm_shipping
     end
-    redirect_to payment_order_path
+    redirect_to review_order_path
   end
 
-  def payment
+  def review
     @self_pickup = helpers.get_self_pickup_method(@order)
     @delivery = helpers.get_delivery_method(@order)
   end
