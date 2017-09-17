@@ -21,6 +21,7 @@ class AddressesController < UsersController
       flash[:success] = "Successfully added a new address to your account."
       redirect_to addresses_path
     else
+      set_address_params
       populate_selector
       render :new
     end

@@ -28,13 +28,15 @@
       <div class="col-md">
         <%= f.select :province_state,
                      options_for_select(
-                     @provinces.collect { |province| [province.name, province.id] }),
+                     @provinces.collect { |province| [province.name, province.id] },
+                     @province.try(:id)),
                      { include_blank: true }, { id: 'provinces_select', class: 'form-control' } %>
       </div>
       <div class="col-md">
         <%= f.select :city,
                      options_for_select(
-                     @cities.collect { |city| [city.name, city.id] }),
+                     @cities.collect { |city| [city.name, city.id] },
+                     @city.try(:id)),
                      { include_blank: true },
                      { id: 'cities_select', class: 'form-control' } %>
 
@@ -42,14 +44,16 @@
       <div class="col-md">
         <%= f.select :district,
                      options_for_select(
-                     @districts.collect { |district| [district.name, district.id] }),
+                     @districts.collect { |district| [district.name, district.id] },
+                     @district.try(:id)),
                      { include_blank: true },
                      { id: 'districts_select', class: 'form-control' } %>
       </div>
       <div class="col-md">
         <%= f.select :community,
                      options_for_select(
-                     @communities.collect { |community| [community.name, community.id] }),
+                     @communities.collect { |community| [community.name, community.id] },
+                     @community.try(:id)),
                      { include_blank: true },
                      { id: 'communities_select', class: 'form-control' } %>
       </div>
