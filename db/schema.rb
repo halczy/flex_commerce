@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 140) do
+ActiveRecord::Schema.define(version: 20170917032425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,22 @@ ActiveRecord::Schema.define(version: 140) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "amount_cents", default: 0, null: false
+    t.string "amount_currency", default: "CNY", null: false
+    t.integer "status"
+    t.integer "processor"
+    t.integer "variety"
+    t.uuid "order_id"
+    t.jsonb "processor_response"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_payments_on_order_id"
+    t.index ["processor"], name: "index_payments_on_processor"
+    t.index ["status"], name: "index_payments_on_status"
+    t.index ["variety"], name: "index_payments_on_variety"
+  end
+
   create_table "products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "tag_line"
@@ -194,11 +210,11 @@ ActiveRecord::Schema.define(version: 140) do
     t.integer "status"
     t.text "note"
     t.jsonb "metadata"
-    t.string "gateway_type"
-    t.uuid "gateway_id"
+    t.string "transactable_type"
+    t.uuid "transactable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["gateway_type", "gateway_id"], name: "index_transactions_on_gateway_type_and_gateway_id"
+    t.index ["transactable_type", "transactable_id"], name: "index_transactions_on_transactable_type_and_transactable_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -236,6 +252,7 @@ ActiveRecord::Schema.define(version: 140) do
   add_foreign_key "inventories", "shipping_methods"
   add_foreign_key "inventories", "users"
   add_foreign_key "orders", "users"
+  add_foreign_key "payments", "orders"
   add_foreign_key "shipping_methods", "products"
   add_foreign_key "shipping_rates", "shipping_methods"
   add_foreign_key "wallets", "users"

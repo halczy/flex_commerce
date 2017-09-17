@@ -6,7 +6,7 @@ class CreateTransactions < ActiveRecord::Migration[5.1]
       t.integer    :status
       t.text       :note
       t.jsonb      :metadata
-      t.references :gateway, polymorphic: true, type: :uuid, index: true
+      t.references :transactable, polymorphic: true, type: :uuid, index: true
 
       t.timestamps
     end
