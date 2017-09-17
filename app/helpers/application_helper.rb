@@ -24,4 +24,15 @@ module ApplicationHelper
     controller.controller_path.match?(/admin/)
   end
 
+  def alert_icon(message_type)
+    case message_type
+    when 'success'
+      'fa-check-circle'
+    when 'warning'
+      'fa-warning'
+    when 'danger'
+      'fa-exclamation-circle'
+    end
+  end
+
 end

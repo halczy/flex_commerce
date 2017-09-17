@@ -21,4 +21,14 @@ RSpec.describe ApplicationHelper, :type => :helper do
     end
   end
 
+  describe '#alert_icon' do
+    it 'returns success icon class' do
+      expect(helper.alert_icon('success')).to eq('fa-check-circle')
+    end
+
+    it 'returns nothing if message_type is not declared' do
+      expect(helper.alert_icon('random')).to be_nil
+    end
+  end
+
 end
