@@ -146,7 +146,7 @@ RSpec.describe OrdersController, type: :controller do
         it 'redirects to payment action via set_address' do
           post :create_address, params: { id: order_delivery_selected.id,
                                           address: @valid_attrs }
-          expect(response).to redirect_to(payment_order_path)
+          expect(response).to redirect_to(review_order_path)
           expect(order_delivery_selected.reload.status).to eq('shipping_confirmed')
         end
       end
@@ -166,7 +166,7 @@ RSpec.describe OrdersController, type: :controller do
         it 'redirects to payment action via set_address' do
           post :create_address, params: { id: order_delivery_selected.id,
                                           address: { address_id: @addr_id } }
-          expect(response).to redirect_to(payment_order_path)
+          expect(response).to redirect_to(review_order_path)
           expect(order_delivery_selected.reload.status).to eq('shipping_confirmed')
         end
       end
@@ -184,16 +184,15 @@ RSpec.describe OrdersController, type: :controller do
   describe 'PATCH set_address' do
     it 'response successfully and confirms shipping' do
       patch :set_address, params: { id: order_pickup_selected }
-      expect(response).to redirect_to(payment_order_path)
+      expect(response).to redirect_to(review_order_path)
       expect(order_pickup_selected.reload.status).to eq('shipping_confirmed')
     end
   end
 
-  describe 'GET payment' do
-    it 'responses successfully and confirms order' do
-      get :payment, params: { id: order_set }
+  describe 'GET review' do
+    it 'responses successfully' do
+      get :review, params: { id: order_set }
       expect(response).to be_success
-      expect(order_set.reload.confirmed?).to be_truthy
     end
   end
 end
