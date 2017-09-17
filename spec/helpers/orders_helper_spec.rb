@@ -6,6 +6,7 @@ RSpec.describe OrdersHelper, type: :helper do
                                                              only_delivery: true) }
   let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
                                                              only_pickup: true) }
+  let(:order_confrimed)         { FactoryGirl.create(:order, confirmed: true) }
 
   before do
     @order = FactoryGirl.create(:order, set: true)
@@ -14,11 +15,22 @@ RSpec.describe OrdersHelper, type: :helper do
   end
 
   describe '#subtotal_by' do
-    it 'reutrns to total purchase price of given product in order' do
-      sample_product = @order.products.sample
-      result = helper.subtotal_by(@order, sample_product)
-      expect(result).to eq(sample_product.price_member)
+    context 'shipping_confirmed_order' do
+      it 'reutrns sum up purchase price of inventories given the product' do
+        sample_product = order_delivery_selected.products.sample
+        result = helper.subtotal_by(order_delivery_selected, sample_product)
+        expect(result).to eq(sample_product.price_member)
+      end
     end
+
+    context 'confirmed order' do
+      it 'returns sums up product price of inventories given the product' do
+        sample_product = order_confrimed.products.sample
+        result = helper.subtotal_by(order_confrimed, sample_product)
+        expect(result).to eq(sample_product.price_member)
+      end
+    end
+
   end
 
   describe '#shipping_method_by' do

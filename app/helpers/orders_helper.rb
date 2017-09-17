@@ -2,7 +2,12 @@ module OrdersHelper
 
   def subtotal_by(order, product)
     invs = order.inventories_by(product)
-    subtotal = invs.sum { |i| i.purchase_price }
+    case order.status
+    when 'confirmed'
+      invs.sum { |i| i.purchase_price }
+    else
+      invs.sum { |i| i.product.price_member }
+    end
   end
 
   def shipping_method_by(order, product)
