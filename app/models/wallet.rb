@@ -9,6 +9,14 @@ class Wallet < ApplicationRecord
   # Callbacks
   before_destroy :prevent_destroy
 
+  def available_fund
+    balance - pending
+  end
+
+  def sufficient_fund?(amount)
+    available_fund >= amount
+  end
+
 
   private
 

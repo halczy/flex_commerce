@@ -35,7 +35,7 @@ FactoryGirl.define do
     password_confirmation 'example'
 
     after(:create) do |customer|
-      customer.wallet.update(balance: 999999)
+      customer.wallet.update(balance: 99999)
     end
   end
 
