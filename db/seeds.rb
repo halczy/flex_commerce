@@ -180,7 +180,7 @@ pickup_address = Address.new(province_state: Geo.province_state.sample.id,
                              contact_number: '18000000000')
 pickup_address.build_full_address
 shipping_pickup.shipping_rates << pickup_rate
-shipping_pickup.addresses << pickup_address
+shipping_pickup.address << pickup_address
 
 puts 'SHIPPING METHOD: 2 shipping methods created.'
 

@@ -11,49 +11,54 @@
         <div class="col">
           <%= f.label :variety, 'Method Type' %>
           <%= f.select :variety,
-                       options_for_select([['No Shipping', :no_shipping],
-                                           ['Delivery', :delivery],
+                       options_for_select([['No Shipping', 'no_shipping'],
+                                           ['Delivery', 'delivery'],
                                            ['Self Pickup', 'self_pickup']],
                                            shipping_method.variety),
                        {}, id: 'method_select', class: 'form-control' %>
         </div>
       </div>
-      <div class="jumbotron p-3 m-0 ">
-        <strong>Geo Code Matching Guide:</strong>
-        <p class="mt-3">Geo code <code>*</code> will match all locations.</p>
-        <p>Geo code <code>110000</code> will match orders shipping to Beijing.</p>
+      <div id="shipping_rates_section">
+        <div class="jumbotron p-3 m-0">
+          <strong>Geo Code Matching Guide:</strong>
+          <p class="mt-3">Geo code <code>*</code> will match all locations.</p>
+          <p>Geo code <code>110000</code> will match orders shipping to Beijing.</p>
+        </div>
+        <h5 class="mt-3">Shipping Rates</h5>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Geo Code</th>
+              <th>Initial Rate (First KG)</th>
+              <th colspan="2">Add-On Rate (Rate/KG > 1KG)</th>
+            </tr>
+          </thead>
+          <tbody class="shipping_rates">
+            <%= f.fields_for :shipping_rates do |shipping_rate| %>
+              <%= render 'shipping_rate_fields', f: shipping_rate %>
+            <% end %>
+          </tbody>
+        </table>
+        <%= link_to_add_association 'Add Rate', f, :shipping_rates,
+                                    class: 'btn btn-success mb-3',
+                                    data: { association_insertion_node: '.shipping_rates',
+                                            association_insertion_method: :append } %>
       </div>
-      <h5 class="mt-3">Shipping Rates</h5>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Geo Code</th>
-            <th>Initial Rate (First KG)</th>
-            <th colspan="2">Add-On Rate (Rate/KG > 1KG)</th>
-          </tr>
-        </thead>
-        <tbody class="shipping_rates">
-          <%= f.fields_for :shipping_rates do |shipping_rate| %>
-            <%= render 'shipping_rate_fields', f: shipping_rate %>
-          <% end %>
-        </tbody>
-      </table>
-      <%= link_to_add_association 'Add Rate', f, :shipping_rates,
-                                  class: 'btn btn-success mb-3',
-                                  data: { association_insertion_node: '.shipping_rates',
-                                          association_insertion_method: :append } %>
 
-      <h5 class="mt-3">Self Pickup Address</h5>
-      <p>Please only fill this address if method type is self pickup.</p>
-      <div class="addresses">
-        <%= f.fields_for :addresses do |address| %>
-          <%= render 'address_fields', f: address %>
-        <% end %>
+      <div id="address_section">
+        <h5 class="mt-3">Self Pickup Address</h5>
+        <p>Please only fill this address if method type is self pickup.</p>
+        <div class="address">
+          <%= f.fields_for :address do |address| %>
+            <%= render 'address_fields', f: address %>
+          <% end %>
+        </div>
       </div>
 
 
       <%= f.submit 'Submit', class: 'btn btn-primary btn-block mt-5' %>
     </div>
+
     <div class="col-md-4 jumbotron">
       <h5>CN Province Geo Code</h5>
       <% @provinces.each do |province| %>
@@ -63,7 +68,6 @@
       <% end %>
     </div>
   </div>
-
-
-
 <% end %>
+
+<%= javascript_include_tag 'shipping_form', 'data-turbolinks-track': 'reload' %>

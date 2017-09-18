@@ -57,25 +57,13 @@ describe 'Shipping Method CRUD', type: :feature do
     it 'can create self pick up type shipping method', js: true do
       fill_in 'shipping_method[name]', with: 'Test Self Pickup'
       select 'Self Pickup', from: 'shipping_method[variety]'
-      click_on 'Add Rate'
-      page.all('input[id^="shipping_method_shipping_rates_attributes_"][id$="_geo_code"]').each do |el|
-        el.set('*')
-      end
-      page.all('input[id^="shipping_method_shipping_rates_attributes_"][id$="_init_rate"]').each do |el|
-        el.set('0')
-      end
-      page.all('input[id^="shipping_method_shipping_rates_attributes_"][id$="_add_on_rate"]').each do |el|
-        el.set('0')
-      end
-      fill_in 'shipping_method[addresses_attributes][0][recipient]', with: 'Test Recipient'
-      fill_in 'shipping_method[addresses_attributes][0][contact_number]', with: '1234567890'
-      select @province.name, from: 'shipping_method[addresses_attributes][0][province_state]'
-      fill_in 'shipping_method[addresses_attributes][0][street]', with: 'Test Street Addr'
+      fill_in 'shipping_method[address_attributes][recipient]', with: 'Test Recipient'
+      fill_in 'shipping_method[address_attributes][contact_number]', with: '1234567890'
+      select @province.name, from: 'shipping_method[address_attributes][province_state]'
+      fill_in 'shipping_method[address_attributes][street]', with: 'Test Street Addr'
       click_on 'Submit'
 
       expect(page.current_path).to eq(admin_shipping_method_path(ShippingMethod.last))
-      expect(page).to have_content('*')
-      expect(page).to have_content('¥0')
       expect(page).to have_content('Successfully created')
       expect(page).to have_content('Test Self Pickup')
       expect(page).to have_content('Test Recipient')
@@ -189,7 +177,7 @@ describe 'Shipping Method CRUD', type: :feature do
       expect(page).not_to have_content('¥34')
     end
 
-    it 'can change self pick up address' do
+    it 'can change self pick up address', js: true do
       province = FactoryGirl.create(:province)
       self_pickup = FactoryGirl.create(:self_pickup_sa)
       address = FactoryGirl.create(:address, addressable: self_pickup,
@@ -200,10 +188,10 @@ describe 'Shipping Method CRUD', type: :feature do
                                              community: nil)
       visit admin_shipping_methods_path
       click_on 'Edit'
-      fill_in 'shipping_method[addresses_attributes][0][recipient]', with: 'New Recipient'
-      fill_in 'shipping_method[addresses_attributes][0][contact_number]', with: '1234567890'
-      select province.name, from: 'shipping_method[addresses_attributes][0][province_state]'
-      fill_in 'shipping_method[addresses_attributes][0][street]', with: 'Test Street Address'
+      fill_in 'shipping_method[address_attributes][recipient]', with: 'New Recipient'
+      fill_in 'shipping_method[address_attributes][contact_number]', with: '1234567890'
+      select province.name, from: 'shipping_method[address_attributes][province_state]'
+      fill_in 'shipping_method[address_attributes][street]', with: 'Test Street Address'
       click_on 'Submit'
 
       expect(page.current_path).to eq(admin_shipping_method_path(ShippingMethod.last))
@@ -248,7 +236,7 @@ describe 'Shipping Method CRUD', type: :feature do
                                                community: nil)
         visit admin_shipping_methods_path
         click_on 'Edit'
-        fill_in 'shipping_method[addresses_attributes][0][recipient]', with: ''
+        fill_in 'shipping_method[address_attributes][recipient]', with: ''
         click_on 'Submit'
 
         expect(page).to have_css('#error_messages')

@@ -206,14 +206,14 @@ ActiveRecord::Schema.define(version: 150) do
     t.text "note"
     t.string "transactable_type"
     t.uuid "transactable_id"
-    t.string "origin_type"
-    t.uuid "origin_id"
-    t.string "processor_type"
-    t.uuid "processor_id"
+    t.string "originable_type"
+    t.uuid "originable_id"
+    t.string "processable_type"
+    t.uuid "processable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["origin_type", "origin_id"], name: "index_transactions_on_origin_type_and_origin_id"
-    t.index ["processor_type", "processor_id"], name: "index_transactions_on_processor_type_and_processor_id"
+    t.index ["originable_type", "originable_id"], name: "index_transactions_on_originable_type_and_originable_id"
+    t.index ["processable_type", "processable_id"], name: "index_transactions_on_processable_type_and_processable_id"
     t.index ["transactable_type", "transactable_id"], name: "index_transactions_on_transactable_type_and_transactable_id"
   end
 

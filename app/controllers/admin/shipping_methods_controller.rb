@@ -9,7 +9,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
 
   def new
     @shipping_method =  ShippingMethod.new
-    @address = @shipping_method.addresses.build
+    @address = @shipping_method.build_address
   end
 
   def create
@@ -24,7 +24,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
 
     if @shipping_method.save
       flash[:success] = 'Successfully created a shipping method.'
-      @shipping_method.try(:addresses).try(:first).try(:build_full_address)
+      @shipping_method.try(:address).try(:build_full_address)
       redirect_to admin_shipping_method_path(@shipping_method)
     else
       populate_form
@@ -34,7 +34,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
 
   def show
     @shipping_rates = @shipping_method.try(:shipping_rates)
-    @address = @shipping_method.try(:addresses).try(:last)
+    @address = @shipping_method.try(:address)
   end
 
   def edit
@@ -52,7 +52,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
 
     if update_status
       flash[:success] = 'Successfully edited shipping method.'
-      @shipping_method.try(:addresses).try(:first).try(:build_full_address)
+      @shipping_method.try(:address).try(:build_full_address)
       redirect_to admin_shipping_method_path(@shipping_method)
     else
       populate_form
@@ -76,7 +76,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
     end
 
     def populate_form
-      @address = @shipping_method.addresses.build if @shipping_method
+      @address = @shipping_method.build_address if @shipping_method
       @provinces = Geo.province_state
     end
 
@@ -96,7 +96,12 @@ class Admin::ShippingMethodsController < Admin::AdminController
         :name, :variety,
         shipping_rates_attributes: [:id, :geo_code, :init_rate, :add_on_rate,
                                     :_destroy],
-        addresses_attributes: [:id, :province_state, :street, :recipient,
-                               :contact_number, :addressable_id, :addressable_type])
+        address_attributes: [:id, :province_state, :street, :recipient,
+                    :contact_number, :addressable_id, :addressable_type])
     end
+
+    # def self_pickup_params
+    #   params.require(:shipping_method).permit(:name, :variety, :addresses)
+
+    # end
 end

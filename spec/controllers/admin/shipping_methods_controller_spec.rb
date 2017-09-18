@@ -79,7 +79,7 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
                 geo_code: province.id, init_rate: '1.00', add_on_rate: '0'
               }
             },
-            addresses_attributes: {
+            address_attributes: {
               '0': {
                 province_state: province.id, street: 'some street',
                 recipient: 'Admin', contact_number: '1234567890'
@@ -102,11 +102,9 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
                 geo_code: '*', init_rate: '1.00', add_on_rate: '0'
               }
             },
-            addresses_attributes: {
-              '0': {
-                province_state: province.id, street: 'some street',
-                recipient: 'Admin', contact_number: '1234567890'
-              }
+            address_attributes: {
+              province_state: province.id, street: 'some street',
+              recipient: 'Admin', contact_number: '1234567890'
             }
           }
         }
@@ -114,7 +112,7 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
         expect(ShippingMethod.count).to eq(1)
         expect(ShippingRate.count).to eq(1)
         expect(Address.count).to eq(1)
-        addr = ShippingMethod.first.addresses.first
+        addr = ShippingMethod.first.address
         expect(addr.province_state).to eq(province.id)
         expect(addr.street).to eq('some street')
         expect(addr.full_address).to be_present
@@ -196,7 +194,7 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
           to redirect_to(admin_shipping_method_path(ShippingMethod.last))
         expect(@shipping_method.reload.name).to eq('New Name')
         expect(@shipping_method.shipping_rates.count).to eq(1)
-        expect(@shipping_method.addresses.count).to eq(1)
+        expect(@shipping_method.address).to be_present
       end
 
       # Nested attributes update are tested in shipping method feature spec
