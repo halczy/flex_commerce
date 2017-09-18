@@ -15,18 +15,9 @@ class PaymentService
     end
   end
 
-  def create
-    begin
-      Payment.transaction do
-        build
-        validate_order_status
-        validate_amount
-        @payment
-      end
-    rescue Exception
-      @payment = nil
-      false
-    end
+  def validate_amount
+    validate_amount_with_order
+    validate_customer_fund if @payment.processor == 'wallet'
   end
 
   def build
@@ -38,10 +29,25 @@ class PaymentService
                                amount: @amount)
   end
 
-  def validate_amount
-    validate_amount_with_order
-    validate_customer_fund if @payment.processor == 'wallet'
+  def create
+    begin
+      Payment.transaction do
+        build
+        validate_order_status
+        validate_amount
+        @order.payment_pending!
+        @payment
+      end
+    rescue Exception
+      @payment = nil
+      false
+    end
   end
+
+  def charge
+
+  end
+
 
   private
 

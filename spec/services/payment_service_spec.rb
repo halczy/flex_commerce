@@ -102,6 +102,7 @@ RSpec.describe PaymentService, type: :model do
           expect(result).to be_an_instance_of(Payment)
           expect(result.status).to eq('created')
           expect(result.order).to eq(order)
+          expect(result.order.status).to eq('payment_pending')
         end
       end
 
@@ -117,8 +118,6 @@ RSpec.describe PaymentService, type: :model do
           expect(payment_service.create).to be_falsey
         end
       end
-
-
     end
   end
 end
