@@ -16,9 +16,17 @@ class PaymentService
   end
 
   def create
-    # build
-    # validate order status
-    # validate user fund by payment amount
+    begin
+      Payment.transaction do
+        build
+        validate_order_status
+        validate_amount
+        @payment
+      end
+    rescue Exception
+      @payment = nil
+      false
+    end
   end
 
   def build
@@ -32,7 +40,7 @@ class PaymentService
 
   def validate_amount
     validate_amount_with_order
-    validate_customer_fund if @pyament.processor == 'wallet'
+    validate_customer_fund if @payment.processor == 'wallet'
   end
 
   private

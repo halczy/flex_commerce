@@ -6,7 +6,7 @@ RSpec.describe PaymentService, type: :model do
   let(:order_set)       { FactoryGirl.create(:order, set: true) }
   let(:order_confrimed) { FactoryGirl.create(:order, confirmed: true) }
 
-  describe 'create wallet payment' do
+  describe 'create payment' do
     describe '#validate_order_status' do
       it 'returns true if order is confirmed' do
         payment_service = PaymentService.new(order_id: order_confrimed.id)
@@ -91,6 +91,34 @@ RSpec.describe PaymentService, type: :model do
           payment_service.send(:validate_customer_fund)
         }.to raise_error(StandardError)
       end
+    end
+
+    describe '#create' do
+      context 'with validate arguments' do
+        it 'creates wallet payment' do
+          order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
+          payment_service = PaymentService.new(order_id: order, processor: 'wallet')
+          result = payment_service.create
+          expect(result).to be_an_instance_of(Payment)
+          expect(result.status).to eq('created')
+          expect(result.order).to eq(order)
+        end
+      end
+
+      context 'with invalid arguments' do
+        it 'does not create payment with unconfirmed order' do
+          payment_service = PaymentService.new(order_id: order_set)
+          expect(payment_service.create).to be_falsey
+        end
+
+        it 'does not create wallet payment when user does not have sufficient fund' do
+          payment_service = PaymentService.new(order_id: order_confrimed,
+                                               processor: 'wallet')
+          expect(payment_service.create).to be_falsey
+        end
+      end
+
+
     end
   end
 end
