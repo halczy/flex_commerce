@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 150) do
   create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "amount_cents", default: 0, null: false
     t.string "amount_currency", default: "CNY", null: false
-    t.integer "status"
+    t.integer "status", default: 0
     t.integer "processor"
     t.integer "variety"
     t.uuid "order_id"

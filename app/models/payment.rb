@@ -9,6 +9,6 @@ class Payment < ApplicationRecord
   # Enum
   enum processor: { wallet: 0, alipay: 1 }
   enum variety:   { charge: 0, refund: 1, transfer: 2 }
-  enum status:    { created: 0, client_confirmed: 1, processor_confirmed: 2 }
+  enum status:    { created: 0, client_site_confirmed: 1, processor_confirmed: 2 }
 
 end
