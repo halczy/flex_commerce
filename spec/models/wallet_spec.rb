@@ -48,4 +48,42 @@ RSpec.describe Wallet, type: :model do
       expect(customer.wallet.sufficient_fund?(Money.new(1))).to be_falsey
     end
   end
+
+  describe '#credit' do
+    it 'adds fund to user balance' do
+      customer.wallet.credit(Money.new(100))
+      expect(customer.wallet.balance).to eq(Money.new(100))
+    end
+
+    context 'invalid credit amount' do
+      it 'rejects negative credit amount' do
+        result = wealthy_customer.wallet.credit(Money.new(-100))
+        expect(result).to be_falsey
+      end
+
+      it 'rejects zero credit' do
+        result = customer.wallet.credit(Money.new(0))
+        expect(result).to be_falsey
+      end
+    end
+  end
+
+  describe '#debit' do
+    it 'deducts fund from wallet' do
+      result = wealthy_customer.wallet.debit(Money.new(100))
+      expect(wealthy_customer.wallet.balance).to eq(Money.new(9999800))
+    end
+
+    context 'invalid debit amount' do
+      it 'rejects negative deduction' do
+        result = customer.wallet.debit(Money.new(-100))
+        expect(result).to be_falsey
+      end
+
+      it 'rejects deduction more than available fund' do
+        result = customer.wallet.debit(Money.new(100))
+        expect(result).to be_falsey
+      end
+    end
+  end
 end

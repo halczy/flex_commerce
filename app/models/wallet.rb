@@ -17,6 +17,15 @@ class Wallet < ApplicationRecord
     available_fund >= amount
   end
 
+  def credit(amount)
+    return false if amount <= 0
+    self.balance += amount
+  end
+
+  def debit(amount)
+    return false if ( amount < 0 || !sufficient_fund?(amount) )
+    self.balance -= amount
+  end
 
   private
 
