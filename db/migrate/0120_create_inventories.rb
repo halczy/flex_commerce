@@ -14,5 +14,7 @@ class CreateInventories < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+
+    change_column :inventories, :purchase_price_cents, :integer, limit: 8
   end
 end

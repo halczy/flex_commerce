@@ -46,8 +46,8 @@ ActiveRecord::Schema.define(version: 150) do
   end
 
   create_table "carts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
     t.integer "status", default: 1
+    t.uuid "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_carts_on_user_id"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 150) do
     t.datetime "purchased_at"
     t.datetime "returned_at"
     t.decimal "purchase_weight"
-    t.integer "purchase_price_cents", default: 0, null: false
+    t.bigint "purchase_price_cents", default: 0, null: false
     t.string "purchase_price_currency", default: "CNY", null: false
     t.uuid "user_id"
     t.uuid "product_id"
@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 150) do
 
   create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "status", default: 0
-    t.integer "shipping_cost_cents", default: 0, null: false
+    t.bigint "shipping_cost_cents", default: 0, null: false
     t.string "shipping_cost_currency", default: "CNY", null: false
     t.uuid "user_id"
     t.datetime "created_at", null: false
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 150) do
   end
 
   create_table "payments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "amount_cents", default: 0, null: false
+    t.bigint "amount_cents", default: 0, null: false
     t.string "amount_currency", default: "CNY", null: false
     t.integer "status", default: 0
     t.integer "processor"
@@ -151,11 +151,11 @@ ActiveRecord::Schema.define(version: 150) do
     t.text "introduction"
     t.text "description"
     t.text "specification"
-    t.integer "price_market_cents", default: 0, null: false
+    t.bigint "price_market_cents", default: 0, null: false
     t.string "price_market_currency", default: "CNY", null: false
-    t.integer "price_member_cents", default: 0, null: false
+    t.bigint "price_member_cents", default: 0, null: false
     t.string "price_member_currency", default: "CNY", null: false
-    t.integer "price_reward_cents", default: 0, null: false
+    t.bigint "price_reward_cents", default: 0, null: false
     t.string "price_reward_currency", default: "CNY", null: false
     t.integer "cost_cents", default: 0, null: false
     t.string "cost_currency", default: "CNY", null: false
@@ -165,9 +165,6 @@ ActiveRecord::Schema.define(version: 150) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_products_on_name"
-    t.index ["price_market_cents"], name: "index_products_on_price_market_cents"
-    t.index ["price_member_cents"], name: "index_products_on_price_member_cents"
-    t.index ["price_reward_cents"], name: "index_products_on_price_reward_cents"
     t.index ["sku"], name: "index_products_on_sku"
     t.index ["status"], name: "index_products_on_status"
     t.index ["tag_line"], name: "index_products_on_tag_line"
@@ -192,9 +189,9 @@ ActiveRecord::Schema.define(version: 150) do
 
   create_table "shipping_rates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "geo_code"
-    t.integer "init_rate_cents", default: 0, null: false
+    t.bigint "init_rate_cents", default: 0, null: false
     t.string "init_rate_currency", default: "CNY", null: false
-    t.integer "add_on_rate_cents", default: 0, null: false
+    t.bigint "add_on_rate_cents", default: 0, null: false
     t.string "add_on_rate_currency", default: "CNY", null: false
     t.uuid "shipping_method_id"
     t.datetime "created_at", null: false
@@ -204,16 +201,19 @@ ActiveRecord::Schema.define(version: 150) do
   end
 
   create_table "transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "amount_cents", default: 0, null: false
+    t.bigint "amount_cents", default: 0, null: false
     t.string "amount_currency", default: "CNY", null: false
-    t.integer "variety"
-    t.integer "status"
     t.text "note"
-    t.jsonb "metadata"
     t.string "transactable_type"
     t.uuid "transactable_id"
+    t.string "origin_type"
+    t.uuid "origin_id"
+    t.string "processor_type"
+    t.uuid "processor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["origin_type", "origin_id"], name: "index_transactions_on_origin_type_and_origin_id"
+    t.index ["processor_type", "processor_id"], name: "index_transactions_on_processor_type_and_processor_id"
     t.index ["transactable_type", "transactable_id"], name: "index_transactions_on_transactable_type_and_transactable_id"
   end
 
@@ -233,9 +233,9 @@ ActiveRecord::Schema.define(version: 150) do
   end
 
   create_table "wallets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "balance_cents", default: 0, null: false
+    t.bigint "balance_cents", default: 0, null: false
     t.string "balance_currency", default: "CNY", null: false
-    t.integer "pending_cents", default: 0, null: false
+    t.bigint "pending_cents", default: 0, null: false
     t.string "pending_currency", default: "CNY", null: false
     t.uuid "user_id"
     t.datetime "created_at", null: false

@@ -10,5 +10,7 @@ class CreatePayments < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+
+    change_column :payments, :amount_cents, :integer, limit: 8
   end
 end
