@@ -49,7 +49,7 @@ class Order < ApplicationRecord
   end
 
   def total
-    return false unless confirmed?
+    return false unless status_before_type_cast >= 20
     order_service = OrderService.new(order_id: id)
     order_service.total_shipping_cost + order_service.total_inventories_cost
   end
