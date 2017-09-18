@@ -6,6 +6,8 @@ class Order < ApplicationRecord
   has_many  :orders
   has_many  :products,         -> { distinct }, through: :inventories
   has_many  :shipping_methods, -> { distinct }, through: :inventories
+  has_many  :payments
+  has_many  :transactions, as: :transactable
   accepts_nested_attributes_for :products
 
   # Validation

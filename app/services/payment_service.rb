@@ -2,17 +2,11 @@ class PaymentService
   attr_accessor :order, :payment, :processor, :amount, :user
 
   def initialize(order_id: nil, payment_id: nil, processor: nil, amount: nil)
-    @order = Order.find_by(id: order_id)
     @payment = Payment.find_by(id: payment_id)
+    @order = Order.find_by(id: order_id) || @payment.order
     @processor = processor
-    @amount = amount
-    @user = set_user
-  end
-
-  def set_user
-    if @order
-      @order.user
-    end
+    @amount = amount || @payment.try(:amount) || @order.try(:amount)
+    @user = @order.user
   end
 
   def validate_amount
@@ -44,10 +38,60 @@ class PaymentService
     end
   end
 
-  def charge
+  def mark_success
+    @payment.processor_confirmed!
+    Transaction.create(amount: @amount, originable: @payment,
+                                        transactable: @order,
+                                        processable: @user.wallet)
+  end
+
+  def mark_failure
+    @payment.insufficient_fund!
+  end
+
+  def process_result
+    if order_paid_in_full?
+      @order.payment_success!
+    elsif @payment.client_side_confirmed? || @payment.processor_confirmed?
+      @order.partial_payment!
+    else
+      @order.payment_fail! unless @order.partial_payment?
+    end
+  end
+
+  def order_paid_in_full?
+    payment_total = @order.payments.sum do |payment|
+      payment.status_before_type_cast.between?(1, 2) ? payment.amount : 0
+    end
+    payment_total == @order.total
+  end
+
+  def charge_wallet
+    begin
+      Payment.transaction do
+        validate_customer_fund
+        @user.wallet.debit(@amount)
+        mark_success
+        process_result
+        true
+      end
+    rescue Exception
+      mark_failure
+      process_result
+      false
+    end
+  end
+
+  def charge_alipay
 
   end
 
+  def charge
+    case @payment.processor
+    when 'wallet' then charge_wallet
+    when 'alipay' then charge_alipay
+    end
+  end
 
   private
 
@@ -65,5 +109,4 @@ class PaymentService
       return true if @user.wallet.sufficient_fund?(@payment.amount)
       raise(StandardError, 'Insufficient fund')
     end
-
 end

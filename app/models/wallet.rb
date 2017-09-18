@@ -1,6 +1,7 @@
 class Wallet < ApplicationRecord
   # Relationships
   belongs_to :user
+  has_many   :transactionslogs, as: :processable
 
   # Validation
   monetize :balance_cents, numericality: { greater_than_or_equal_to: 0 }
@@ -20,11 +21,13 @@ class Wallet < ApplicationRecord
   def credit(amount)
     return false if amount <= 0
     self.balance += amount
+    save
   end
 
   def debit(amount)
     return false if ( amount < 0 || !sufficient_fund?(amount) )
     self.balance -= amount
+    save
   end
 
   private

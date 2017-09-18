@@ -52,7 +52,7 @@ RSpec.describe Wallet, type: :model do
   describe '#credit' do
     it 'adds fund to user balance' do
       customer.wallet.credit(Money.new(100))
-      expect(customer.wallet.balance).to eq(Money.new(100))
+      expect(customer.reload.wallet.balance).to eq(Money.new(100))
     end
 
     context 'invalid credit amount' do
@@ -71,7 +71,7 @@ RSpec.describe Wallet, type: :model do
   describe '#debit' do
     it 'deducts fund from wallet' do
       result = wealthy_customer.wallet.debit(Money.new(100))
-      expect(wealthy_customer.wallet.balance).to eq(Money.new(9999800))
+      expect(wealthy_customer.reload.wallet.balance).to eq(Money.new(9999800))
     end
 
     context 'invalid debit amount' do
