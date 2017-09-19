@@ -71,6 +71,7 @@ class PaymentService
       Payment.transaction do
         validate_customer_fund
         @user.wallet.debit(@amount)
+        @payment.update(amount: @amount)
         mark_success
         process_result
         true
