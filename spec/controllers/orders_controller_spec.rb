@@ -216,7 +216,7 @@ RSpec.describe OrdersController, type: :controller do
 
       it 'redirects to payment page' do
         patch :confirm, params: { id: order_set.id }
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to payment_order_path
       end
     end
 

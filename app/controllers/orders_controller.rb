@@ -81,7 +81,7 @@ class OrdersController < UsersController
 
   def confirm
     if @order_service.confirm
-      redirect_to root_url
+      redirect_to payment_order_path
     else
       flash[:warning] = "Unable to confirm order. Please re-enter your
                          shipping information."
