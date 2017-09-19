@@ -6,7 +6,7 @@ RSpec.describe Order, type: :model do
 
   let(:order_selected)  { FactoryGirl.create(:order, selected: true) }
   let(:order_set)       { FactoryGirl.create(:order, set: true) }
-  let(:order_confrimed) { FactoryGirl.create(:order, confirmed: true) }
+  let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true) }
 
   let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
                                                              only_pickup: true) }
@@ -18,6 +18,12 @@ RSpec.describe Order, type: :model do
                                                              only_delivery: true) }
   let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true,
                                                              no_shipping: true) }
+
+  let(:payment_wallet)   { FactoryGirl.create(:payment) }
+  let(:payment_alipay)   { FactoryGirl.create(:payment, processor: 1) }
+
+  let(:wallet_created)   { PaymentService.new(payment_id: payment_wallet.id) }
+  let(:alipay_created)   { PaymentService.new(payment_id: payment_alipay.id) }
 
   describe 'creation' do
     it 'can be created' do
@@ -125,6 +131,49 @@ RSpec.describe Order, type: :model do
 
     it 'returns false if order is not confrimed' do
       expect(order_delivery_set.total).to be_falsey
+    end
+  end
+
+  describe '#amount paid' do
+    it 'reutrns zero is no confrimed payment is available' do
+      expect(order_confirmed.amount_paid).to eq(0)
+    end
+
+    it 'returns the partial amount paid' do
+      payment = FactoryGirl.create(:payment, order: order_confirmed,
+                                             amount: Money.new(100))
+      service = PaymentService.new(payment_id: payment.id)
+      service.user.wallet.update(balance: 9999999)
+      service.charge
+      expect(order_confirmed.reload.amount_paid).to eq(Money.new(100))
+    end
+
+    it 'returns the full amount paid' do
+      wallet_created.user.wallet.update(balance: wallet_created.amount)
+      wallet_created.charge
+      expect(wallet_created.order.amount_paid).to eq(wallet_created.order.total)
+    end
+  end
+
+  describe '#amount_unpaid' do
+    it 'returns order total if no payment exist' do
+      expect(order_confirmed.amount_unpaid).to eq(order_confirmed.total)
+    end
+
+    it 'returns unpaid balance if partial payment exist' do
+      payment = FactoryGirl.create(:payment, order: order_confirmed,
+                                             amount: Money.new(100))
+      service = PaymentService.new(payment_id: payment.id)
+      service.user.wallet.update(balance: 9999999)
+      service.charge
+      expected_unpaid = order_confirmed.total - Money.new(100)
+      expect(order_confirmed.reload.amount_unpaid).to eq(expected_unpaid)
+    end
+
+    it 'returns zero if order is paid in full' do
+      wallet_created.user.wallet.update(balance: wallet_created.amount)
+      wallet_created.charge
+      expect(wallet_created.order.amount_unpaid).to eq(0)
     end
   end
 end

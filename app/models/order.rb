@@ -55,4 +55,14 @@ class Order < ApplicationRecord
     order_service = OrderService.new(order_id: id)
     order_service.total_shipping_cost + order_service.total_inventories_cost
   end
+
+  def amount_paid
+    payments.sum do |payment|
+      payment.status_before_type_cast.between?(1, 2) ? payment.amount : 0
+    end
+  end
+
+  def amount_unpaid
+    total - amount_paid
+  end
 end
