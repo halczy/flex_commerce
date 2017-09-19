@@ -1,28 +1,30 @@
 puts 'SEED: Seed file is running......'
 
 # CLEAN UP
-ApplicationConfiguration.destroy_all
+ApplicationConfiguration.delete_all
 puts 'APPLICATIONCONFIGURATION: Clear old config data.'
-Inventory.destroy_all
+Inventory.delete_all
 puts 'INVENTORY: Clear old inventory data'
-Order.destroy_all
+Order.delete_all
 puts 'ORDER: Clear old order data'
-Cart.destroy_all
+Cart.delete_all
 puts 'CART: Clear old cart data'
-Address.destroy_all
+Address.delete_all
 puts 'ADDRESS: Clear old address data'
-User.destroy_all
+Wallet.delete_all
+puts 'WALLET: Clear users wallets'
+User.delete_all
 puts 'USER: Clear old user data'
-Product.destroy_all
+Product.delete_all
 puts 'PRODUCT: Clear old product data'
-Categorization.destroy_all
-Category.destroy_all
+Categorization.delete_all
+Category.delete_all
 puts 'CATEGORY: Clear old category data'
-Image.destroy_all
+Image.delete_all
 puts 'IMAGE: Clear old image data'
-ShippingRate.destroy_all
+ShippingRate.delete_all
 puts 'SHIPPING RATE: Clear old shipping rate data'
-ShippingMethod.destroy_all
+ShippingMethod.delete_all
 puts 'SHIPPING METHOD: Clear old shipping method data'
 
 # Application Name
@@ -173,14 +175,12 @@ puts "INVENTORY: #{Inventory.count} inventories created."
 # SHIPPING METHOD
 FactoryGirl.create(:no_shipping)
 shipping_pickup = FactoryGirl.create(:self_pickup_sa)
-pickup_rate = ShippingRate.new(geo_code: '*', init_rate: '0', add_on_rate: '0')
 pickup_address = Address.new(province_state: Geo.province_state.sample.id,
                              street: ' Sample Street',
                              recipient: 'John Doe',
-                             contact_number: '18000000000')
+                             contact_number: '18000000000',
+                             addressable: shipping_pickup)
 pickup_address.build_full_address
-shipping_pickup.shipping_rates << pickup_rate
-shipping_pickup.address << pickup_address
 
 puts 'SHIPPING METHOD: 2 shipping methods created.'
 
