@@ -1,1 +1,13 @@
-<%= @order.inspect %>
+<%= provide :title, 'Payment' %>
+
+<div class="container">
+  <%= render 'progress', steps: ['success', 'success', 'success', 'info']  %>
+  <div class="card mt-3">
+    <div class="card-header">
+      <%= yield(:title) %>
+    </div>
+    <div class="card-body">
+      <%= render '/orders/payment/status' %>
+    </div>
+  </div>
+</div>
