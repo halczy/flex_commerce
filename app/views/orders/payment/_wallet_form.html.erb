@@ -15,6 +15,6 @@
   </div>
 
   <%= f.submit 'Pay with Wallet', class: 'btn btn-success btn-lg',
-                                  disabled: @current_user.wallet.balance == 0 %>
+                                  disabled: @current_user.wallet.available_fund == 0 %>
 
 <% end %>

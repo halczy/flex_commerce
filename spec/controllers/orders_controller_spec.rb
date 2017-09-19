@@ -9,22 +9,27 @@ RSpec.describe OrdersController, type: :controller do
   let(:self_pickup) { FactoryGirl.create(:self_pickup) }
   let(:no_shipping) { FactoryGirl.create(:no_shipping) }
 
-  let(:order)           { FactoryGirl.create(:order) }
+  let(:order)           { FactoryGirl.create(:order, user: customer) }
 
-  let(:order_selected)  { FactoryGirl.create(:order, selected: true) }
-  let(:order_set)       { FactoryGirl.create(:order, set: true) }
-  let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true) }
+  let(:order_selected)  { FactoryGirl.create(:order, selected: true, user: customer) }
+  let(:order_set)       { FactoryGirl.create(:order, set: true, user: customer) }
+  let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true, user: customer) }
 
   let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
-                                                             only_pickup: true) }
+                                                             only_pickup: true,
+                                                             user: customer) }
   let(:order_pickup_set)        { FactoryGirl.create(:order, set: true,
-                                                             only_pickup: true) }
+                                                             only_pickup: true,
+                                                             user: customer) }
   let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true,
-                                                             only_delivery: true) }
+                                                             only_delivery: true,
+                                                             user: customer) }
   let(:order_delivery_set)      { FactoryGirl.create(:order, set:true,
-                                                             only_delivery: true) }
+                                                             only_delivery: true,
+                                                             user: customer) }
   let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true,
-                                                             no_shipping: true) }
+                                                             no_shipping: true,
+                                                             user: customer) }
 
   before do |example|
     unless example.metadata[:skip_before]
@@ -74,6 +79,16 @@ RSpec.describe OrdersController, type: :controller do
       get :shipping, params: { id: order.id }
       expect(response).to be_success
       expect(response).to render_template(:shipping)
+    end
+
+    context 'access control' do
+      it 'only allows user to view their own order' do
+        another_customer = FactoryGirl.create(:customer)
+        signin_as another_customer
+        get :shipping, params: { id: order.id }
+        expect(flash[:danger]).to be_present
+        expect(response).to redirect_to(root_url)
+      end
     end
   end
 

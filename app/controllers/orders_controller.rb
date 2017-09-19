@@ -101,6 +101,7 @@ class OrdersController < UsersController
     def set_order
       @order = Order.find(params[:id])
       @order_service = OrderService.new(order_id: @order.id)
+      validate_access
     end
 
     def friendly_signin
@@ -139,6 +140,13 @@ class OrdersController < UsersController
       params[:city_id] = @address.city if @address.city.present?
       params[:district_id] = @address.district if @address.district.present?
       params[:community_id] = @address.community if @address.community.present?
+    end
+
+    def validate_access
+      unless helpers.current_user?(@order.user) || helpers.current_user.admin?
+        flash[:danger] = "You do not have access to view that order!"
+        redirect_to root_url
+      end
     end
 
 end
