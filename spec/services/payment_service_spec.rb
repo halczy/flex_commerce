@@ -4,17 +4,17 @@ RSpec.describe PaymentService, type: :model do
 
   let(:wealthy_customer) { FactoryGirl.create(:wealthy_customer) }
   let(:order_set)        { FactoryGirl.create(:order, set: true) }
-  let(:order_confrimed)  { FactoryGirl.create(:order, confirmed: true) }
+  let(:order_confirmed)  { FactoryGirl.create(:order, confirmed: true) }
   let(:payment_wallet)   { FactoryGirl.create(:payment) }
   let(:payment_alipay)   { FactoryGirl.create(:payment, processor: 1) }
 
-  let(:wallet_created)   { PaymentService.new(payment_id: payment_wallet) }
-  let(:alipay_created)   { PaymentService.new(payment_id: payment_alipay) }
+  let(:wallet_created)   { PaymentService.new(payment_id: payment_wallet.id) }
+  let(:alipay_created)   { PaymentService.new(payment_id: payment_alipay.id) }
 
   describe 'create payment' do
     describe '#validate_order_status' do
       it 'returns true if order is confirmed' do
-        payment_service = PaymentService.new(order_id: order_confrimed.id)
+        payment_service = PaymentService.new(order_id: order_confirmed.id)
         expect(payment_service.send(:validate_order_status)).to be_truthy
       end
 
@@ -28,7 +28,7 @@ RSpec.describe PaymentService, type: :model do
 
     describe '#build' do
       it 'creates payment for confirmed order' do
-        payment_service = PaymentService.new(order_id: order_confrimed.id,
+        payment_service = PaymentService.new(order_id: order_confirmed.id,
                                              processor: 'wallet',
                                              amount: Money.new(100))
         payment_service.build
@@ -36,18 +36,18 @@ RSpec.describe PaymentService, type: :model do
         expect(payment_service.payment.variety).to eq('charge')
         expect(payment_service.payment.amount).to eq(Money.new(100))
         expect(payment_service.payment.status).to eq('created')
-        expect(payment_service.payment.order).to eq(order_confrimed)
+        expect(payment_service.payment.order).to eq(order_confirmed)
       end
 
       it 'defaults amount to the order amount is the figure is not given' do
-        payment_service = PaymentService.new(order_id: order_confrimed.id,
+        payment_service = PaymentService.new(order_id: order_confirmed.id,
                                              processor: 'wallet')
         payment_service.build
-        expect(payment_service.payment.amount).to eq(order_confrimed.total)
+        expect(payment_service.payment.amount).to eq(order_confirmed.total)
       end
 
       it 'does not create payment if processor is missing' do
-        payment_service = PaymentService.new(order_id: order_confrimed.id,
+        payment_service = PaymentService.new(order_id: order_confirmed.id,
                                              amount: Money.new(100))
         expect { payment_service.build }.to raise_error(ActiveRecord::RecordInvalid)
       end
@@ -55,14 +55,14 @@ RSpec.describe PaymentService, type: :model do
 
     describe '#set_user' do
       it 'returns user if order is present' do
-        payment_service = PaymentService.new(order_id: order_confrimed.id)
+        payment_service = PaymentService.new(order_id: order_confirmed.id)
         expect(payment_service.user).to be_present
       end
     end
 
     describe '#validate_amount_with_order' do
       it 'returns true if payment amount is within order total' do
-        payment_service = PaymentService.new(order_id: order_confrimed.id,
+        payment_service = PaymentService.new(order_id: order_confirmed.id,
                                              processor: 'wallet',
                                              amount: Money.new(100))
         payment_service.build
@@ -70,7 +70,7 @@ RSpec.describe PaymentService, type: :model do
       end
 
       it 'raises error if payment amount exceeds order total' do
-        payment_service = PaymentService.new(order_id: order_confrimed.id,
+        payment_service = PaymentService.new(order_id: order_confirmed.id,
                                              processor: 'wallet',
                                              amount: Money.new(9999999))
         payment_service.build
@@ -89,7 +89,7 @@ RSpec.describe PaymentService, type: :model do
       end
 
       it 'raises error if customer does not have enough fund to make the payment' do
-        payment_service = PaymentService.new(order_id: order_confrimed.id,
+        payment_service = PaymentService.new(order_id: order_confirmed.id,
                                                        processor: 'wallet')
         payment_service.build
         expect {
@@ -118,7 +118,7 @@ RSpec.describe PaymentService, type: :model do
         end
 
         it 'does not create wallet payment when user does not have sufficient fund' do
-          payment_service = PaymentService.new(order_id: order_confrimed,
+          payment_service = PaymentService.new(order_id: order_confirmed,
                                                processor: 'wallet')
           expect(payment_service.create).to be_falsey
         end
@@ -168,11 +168,11 @@ RSpec.describe PaymentService, type: :model do
 
     describe '#order_paid_in_full?' do
       before do
-        order_confrimed.user.wallet.update(balance: 9999999999)
-        total_minus_1 = order_confrimed.total - Money.new(100)
-        @payment_1 = FactoryGirl.create(:payment, order: order_confrimed,
+        order_confirmed.user.wallet.update(balance: 9999999999)
+        total_minus_1 = order_confirmed.total - Money.new(100)
+        @payment_1 = FactoryGirl.create(:payment, order: order_confirmed,
                                                   amount: total_minus_1)
-        @payment_2 = FactoryGirl.create(:payment, order: order_confrimed,
+        @payment_2 = FactoryGirl.create(:payment, order: order_confirmed,
                                                   amount: Money.new(100))
       end
 
@@ -194,7 +194,7 @@ RSpec.describe PaymentService, type: :model do
       end
 
       it 'sets order status to partial payment if some amount paid' do
-        payment = FactoryGirl.create(:payment, order: order_confrimed,
+        payment = FactoryGirl.create(:payment, order: order_confirmed,
                                                amount: Money.new(100))
         payment.order.user.wallet.update(balance: 9999999)
         payment_service = PaymentService.new(payment_id: payment.id)

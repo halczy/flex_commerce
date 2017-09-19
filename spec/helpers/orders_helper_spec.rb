@@ -6,7 +6,7 @@ RSpec.describe OrdersHelper, type: :helper do
                                                              only_delivery: true) }
   let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
                                                              only_pickup: true) }
-  let(:order_confrimed)         { FactoryGirl.create(:order, confirmed: true) }
+  let(:order_confirmed)         { FactoryGirl.create(:order, confirmed: true) }
 
   before do
     @order = FactoryGirl.create(:order, set: true)
@@ -25,8 +25,8 @@ RSpec.describe OrdersHelper, type: :helper do
 
     context 'confirmed order' do
       it 'returns sums up product price of inventories given the product' do
-        sample_product = order_confrimed.products.sample
-        result = helper.subtotal_by(order_confrimed, sample_product)
+        sample_product = order_confirmed.products.sample
+        result = helper.subtotal_by(order_confirmed, sample_product)
         expect(result).to eq(sample_product.price_member)
       end
     end

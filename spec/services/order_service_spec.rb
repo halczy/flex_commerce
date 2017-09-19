@@ -11,7 +11,7 @@ RSpec.describe OrderService do
   let(:order)           { FactoryGirl.create(:order) }
   let(:order_selected)  { FactoryGirl.create(:order, selected: true) }
   let(:order_set)       { FactoryGirl.create(:order, set: true) }
-  let(:order_confrimed) { FactoryGirl.create(:order, confirmed: true) }
+  let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true) }
 
   let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
                                                              only_pickup: true) }
