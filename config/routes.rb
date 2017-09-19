@@ -34,7 +34,10 @@ Rails.application.routes.draw do
       get   :review
       patch :confirm
       get   :payment
-      post  :create_payment
+      post  :create_wallet_payment
+      post  :create_alipay_payment
+      get   :success
+      get   :failure
     end
     collection do
       get   :update_selector

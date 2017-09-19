@@ -15,7 +15,7 @@ class PaymentService
   end
 
   def build
-    variety = 0 if @order.confirmed?
+    variety = 0 if @order.status_before_type_cast.between?(20, 59)
     @amount = @order.total unless @amount.present?
     @payment = Payment.create!(order: @order,
                                processor: @processor,
@@ -95,7 +95,7 @@ class PaymentService
   private
 
     def validate_order_status
-      return true if @order.confirmed?
+      return true if @order.status_before_type_cast.between?(20, 59)
       raise(StandardError, 'Invalid order status.')
     end
 

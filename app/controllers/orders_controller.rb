@@ -5,6 +5,7 @@ class OrdersController < UsersController
   before_action :set_user, except: [ :create ]
   before_action :set_order, except: [ :create, :update_selector ]
   before_action :populate_selector, only: [ :address, :update_selector ]
+  before_action :set_payment, only: [ :success, :failure ]
 
   def create
     order = OrderService.new(cart_id: params[:cart_id]).create
@@ -92,8 +93,29 @@ class OrdersController < UsersController
   def payment
   end
 
-  def create_payment
-    raise
+  def create_wallet_payment
+    unless validate_payment_params
+      flash[:warning] = 'Invalid payment amount. Please try again.'
+      redirect_to payment_order_path and return
+    end
+
+    payment_service = create_payment_service
+    charge_result = payment_service.charge
+    if @order.reload.payment_success?
+      redirect_to success_order_path(id: @order.id,
+                                     payment_id: payment_service.payment.id)
+    elsif charge_result && @order.reload.partial_payment?
+      flash[:success] = "Partial payment successful!"
+      redirect_to payment_order_path
+    else
+      flash[:danger] = 'Payment fail. Please check your wallet balance or contact
+                        customer service.'
+      redirect_to payment_order_path
+    end
+  end
+
+  def success
+
   end
 
   private
@@ -147,6 +169,35 @@ class OrdersController < UsersController
         flash[:danger] = "You do not have access to view that order!"
         redirect_to root_url
       end
+    end
+
+    def validate_payment_params
+      return false if helpers.current_user.wallet.available_fund == 0
+      reutrn false unless (params[:amount].present? || params[:custom_amount].present?)
+
+      if params[:amount].present? && params[:custom_amount].blank?
+        amount = Money.new(params[:amount].to_f * 100)
+      elsif params[:custom_amount].present?
+        amount = Money.new(params[:custom_amount].to_f * 100)
+      end
+
+      return false unless amount.between?(Money.new(1), @order.amount_unpaid)
+      true
+    end
+
+    def create_payment_service
+      amount = params[:custom_amount].present? ? params[:custom_amount] : params[:amount]
+      amount = Money.new(amount.to_f * 100)
+      payment_service = PaymentService.new(order_id: @order.id, amount: amount,
+                                           processor: 'wallet')
+      payment = payment_service.create
+      payment_service = PaymentService.new(payment_id: payment.id, amount: amount,
+                                           processor: 'wallet')
+
+    end
+
+    def set_payment
+      @payment = Payment.find(params[:payment_id])
     end
 
 end

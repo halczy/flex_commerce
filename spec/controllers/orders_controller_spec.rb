@@ -243,4 +243,90 @@ RSpec.describe OrdersController, type: :controller do
       end
     end
   end
+
+  describe 'POST create_wallet_payment' do
+    it 'creates payment and charge customer wallet with full amount' do
+      order_confirmed.user.wallet.update(balance: 999999)
+      post :create_wallet_payment, params: { id: order_confirmed.id,
+                                             amount: order_confirmed.total }
+      payment = Payment.last
+      expect(response).to redirect_to(success_order_path(payment_id: payment.id))
+    end
+
+    it 'creates payment and charge customer wallet with custom amount' do
+      order_confirmed.user.wallet.update(balance: 999999)
+      post :create_wallet_payment, params: { id: order_confirmed.id,
+                                             amount: order_confirmed.total,
+                                             custom_amount: 1 }
+      payment = Payment.last
+      expect(flash[:success]).to be_present
+      expect(response).to redirect_to(payment_order_path)
+      expect(order_confirmed.reload.partial_payment?).to be_truthy
+    end
+
+    context 'invalid params' do
+      it 'flashes error message if customer wallet balance is zero' do
+        post :create_wallet_payment, params: { id: order_confirmed.id,
+                                               amount: order_confirmed.total }
+        expect(flash[:warning]).to be_present
+        expect(response).to redirect_to(payment_order_path)
+      end
+
+      it 'flashes error msg if amount is larger than order total' do
+        order_confirmed.user.wallet.update(balance: 999999)
+        post :create_wallet_payment, params: { id: order_confirmed.id,
+                                               amount: 999999 }
+        expect(flash[:warning]).to be_present
+        expect(response).to redirect_to(payment_order_path)
+      end
+
+      it 'flashes error msg if custom_amount is larger than order total' do
+        order_confirmed.user.wallet.update(balance: 999999)
+        post :create_wallet_payment, params: { id: order_confirmed.id,
+                                               custom_amount: 999999 }
+        expect(flash[:warning]).to be_present
+        expect(response).to redirect_to(payment_order_path)
+      end
+
+      it 'flashes error message if amount is zero' do
+        order_confirmed.user.wallet.update(balance: 999999)
+        post :create_wallet_payment, params: { id: order_confirmed.id,
+                                               amount: 0 }
+        expect(flash[:warning]).to be_present
+        expect(response).to redirect_to(payment_order_path)
+      end
+
+      it 'flashes error message if custom_amount is zero' do
+        order_confirmed.user.wallet.update(balance: 999999)
+        post :create_wallet_payment, params: { id: order_confirmed.id,
+                                               amount: order_confirmed.total,
+                                               custom_amount: 0 }
+        expect(flash[:warning]).to be_present
+        expect(response).to redirect_to(payment_order_path)
+      end
+
+      it 'flashes error message if amount is negative' do
+        order_confirmed.user.wallet.update(balance: 999999)
+        post :create_wallet_payment, params: { id: order_confirmed.id,
+                                               amount: -10 }
+        expect(flash[:warning]).to be_present
+        expect(response).to redirect_to(payment_order_path)
+      end
+
+      it 'flashes error message if custom_amount is negative' do
+        order_confirmed.user.wallet.update(balance: 999999)
+        post :create_wallet_payment, params: { id: order_confirmed.id,
+                                               amount: order_confirmed.total,
+                                               custom_amount: -100 }
+        expect(flash[:warning]).to be_present
+        expect(response).to redirect_to(payment_order_path)
+      end
+
+      it 'flashes' do
+
+      end
+    end
+
+
+  end
 end
