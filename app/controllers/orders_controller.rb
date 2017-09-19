@@ -79,6 +79,20 @@ class OrdersController < UsersController
     @delivery = helpers.get_delivery_method(@order)
   end
 
+  def confirm
+    if @order_service.confirm
+      redirect_to root_url
+    else
+      flash[:warning] = "Unable to confirm order. Please re-enter your
+                         shipping information."
+      redirect_to review_order_path
+    end
+  end
+
+  def payment
+
+  end
+
   private
 
     def set_order

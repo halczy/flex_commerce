@@ -194,7 +194,7 @@ RSpec.describe OrdersController, type: :controller do
 
   describe 'PATCH set_address' do
     it 'response successfully and confirms shipping' do
-      patch :set_address, params: { id: order_pickup_selected }
+      patch :set_address, params: { id: order_pickup_selected.id }
       expect(response).to redirect_to(review_order_path)
       expect(order_pickup_selected.reload.status).to eq('shipping_confirmed')
     end
@@ -202,8 +202,30 @@ RSpec.describe OrdersController, type: :controller do
 
   describe 'GET review' do
     it 'responses successfully' do
-      get :review, params: { id: order_set }
+      get :review, params: { id: order_set.id }
       expect(response).to be_success
+    end
+  end
+
+  describe 'PATCH confirm' do
+    context 'with valid params' do
+      it 'confirms order' do
+        patch :confirm, params: { id: order_set.id }
+        expect(order_set.reload.confirmed?).to be_truthy
+      end
+
+      it 'redirects to payment page' do
+        patch :confirm, params: { id: order_set.id }
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context 'with invalid params' do
+      it 'redirects to reivew_order_path if order fails to confirm' do
+        patch :confirm, params: { id: order.id }
+        expect(flash[:warning]).to be_present
+        expect(response).to redirect_to(review_order_path)
+      end
     end
   end
 end
