@@ -90,7 +90,10 @@ class OrdersController < UsersController
   end
 
   def payment
+  end
 
+  def create_payment
+    raise
   end
 
   private

@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       get   :review
       patch :confirm
       get   :payment
+      post  :create_payment
     end
     collection do
       get   :update_selector
