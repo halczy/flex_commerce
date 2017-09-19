@@ -60,9 +60,7 @@ class PaymentService
   end
 
   def order_paid_in_full?
-    payment_total = @order.payments.sum do |payment|
-      payment.status_before_type_cast.between?(1, 2) ? payment.amount : 0
-    end
+    payment_total = @order.amount_paid
     payment_total == @order.total
   end
 
