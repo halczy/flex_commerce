@@ -1,6 +1,6 @@
 class OrdersController < UsersController
   # Filters
-  before_action :request_signin, only: [ :create ]
+  before_action :friendly_signin, only: [ :create ]
   before_action :authenticate_user, except: [ :create ]
   before_action :set_user, except: [ :create ]
   before_action :set_order, except: [ :create, :update_selector ]
@@ -86,7 +86,7 @@ class OrdersController < UsersController
       @order_service = OrderService.new(order_id: @order.id)
     end
 
-    def request_signin
+    def friendly_signin
       unless helpers.signed_in?
         helpers.store_return_url
         redirect_to signin_path
