@@ -1,3 +1,27 @@
-<%= @order.inspect %>
+<%= provide :title, 'Success' %>
 
-<%= @payment.inspect %>
+<div class="container">
+  <div class="card mt-3">
+    <div class="card-header">
+      <%= yield(:title) %>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="d-flex justify-content-center alert-success p-3">
+            <i class="fa fa-check fa-2x" aria-hidden="true"></i>
+            <h3 class="ml-3">Successful Payment</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <% if @payment.processor == 'wallet' %>
+          <%= render '/orders/success/wallet' %>
+        <% else %>
+          <!-- ALIPAY -->
+        <% end %>
+        <%= render '/orders/success/nav' %>
+      </div>
+    </div>
+  </div>
+</div>

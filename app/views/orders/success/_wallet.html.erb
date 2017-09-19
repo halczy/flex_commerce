@@ -1,0 +1,25 @@
+<div class="col-md-6">
+  <div class="jumbotron">
+    <h5>Order and Payment Detail</h5>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">Payment Amount</th>
+          <td><%= humanized_money_with_symbol @payment.amount %></td>
+        </tr>
+        <tr>
+          <th scope="row">Payment Type</th>
+          <td><%= @payment.variety.titleize %></td>
+        </tr>
+        <tr>
+          <th scope="row">Payment Processor</th>
+          <td><%= @payment.processor.titleize %></td>
+        </tr>
+        <tr>
+          <th scope="row">Order Status</th>
+          <td><%= @order.status.titleize %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
