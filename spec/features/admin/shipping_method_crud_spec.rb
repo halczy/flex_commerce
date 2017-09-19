@@ -57,6 +57,16 @@ describe 'Shipping Method CRUD', type: :feature do
     it 'can create self pick up type shipping method', js: true do
       fill_in 'shipping_method[name]', with: 'Test Self Pickup'
       select 'Self Pickup', from: 'shipping_method[variety]'
+      click_on 'Add Rate'
+      page.all('input[id^="shipping_method_shipping_rates_attributes_"][id$="_geo_code"]').each do |el|
+        el.set('*')
+      end
+      page.all('input[id^="shipping_method_shipping_rates_attributes_"][id$="_init_rate"]').each do |el|
+        el.set('0')
+      end
+      page.all('input[id^="shipping_method_shipping_rates_attributes_"][id$="_add_on_rate"]').each do |el|
+        el.set('0')
+      end
       fill_in 'shipping_method[address_attributes][recipient]', with: 'Test Recipient'
       fill_in 'shipping_method[address_attributes][contact_number]', with: '1234567890'
       select @province.name, from: 'shipping_method[address_attributes][province_state]'
@@ -65,6 +75,8 @@ describe 'Shipping Method CRUD', type: :feature do
 
       expect(page.current_path).to eq(admin_shipping_method_path(ShippingMethod.last))
       expect(page).to have_content('Successfully created')
+      expect(page).to have_content('*')
+      expect(page).to have_content('¥0')
       expect(page).to have_content('Test Self Pickup')
       expect(page).to have_content('Test Recipient')
       expect(page).to have_content('1234567890')
