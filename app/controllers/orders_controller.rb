@@ -90,8 +90,7 @@ class OrdersController < UsersController
     end
   end
 
-  def payment
-  end
+  def payment;end
 
   def create_wallet_payment
     unless validate_payment_params
@@ -114,9 +113,17 @@ class OrdersController < UsersController
     end
   end
 
-  def success
-
+  def create_alipay_payment
+    payment_service = PaymentService.new(order_id: @order.id, processor: 'alipay')
+    if payment_service.create
+      redirect_to payment_service.charge
+    else
+      flash[:wanring] = 'Unable to create alipay payment at this time.'
+      redirect_to payment_order_path
+    end
   end
+
+  def success; end
 
   private
 

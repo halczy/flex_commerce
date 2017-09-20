@@ -11,7 +11,7 @@ class Payment < ApplicationRecord
   enum processor: { wallet: 0, alipay: 1 }
   enum variety:   { charge: 0, refund: 1, transfer: 2 }
   enum status:    { created: 0,
-                    client_side_confirmed: 1, processor_confirmed: 2,
-                    insufficient_fund: 3, timeout: 4, expired: 5 }
+                    client_side_confirmed: 1, processor_confirmed: 2, confirmed: 3,
+                    insufficient_fund: 4, timeout: 5, expired: 6 }
 
 end

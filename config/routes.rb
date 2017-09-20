@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   root 'home#index'
 
-  get    'index',       to: 'home#index'
-  get    'signup',      to: 'customers#new'
-  get    'signin',      to: 'sessions#new'
-  get    'cart',        to: 'carts#show'
-  patch  'cart',        to: 'carts#update'
-  post   'cart/add',    to: 'carts#add',    as: :add_to_cart
-  delete 'cart/remove', to: 'carts#remove', as: :remove_from_cart
+  get    'index',         to: 'home#index'
+  get    'signup',        to: 'customers#new'
+  get    'signin',        to: 'sessions#new'
+  get    'cart',          to: 'carts#show'
+  patch  'cart',          to: 'carts#update'
+  post   'cart/add',      to: 'carts#add',    as: :add_to_cart
+  delete 'cart/remove',   to: 'carts#remove', as: :remove_from_cart
 
   resources :dashboards, only: [:show]
   resources :customers,  only: [:new, :create, :show]
@@ -41,6 +41,14 @@ Rails.application.routes.draw do
     end
     collection do
       get   :update_selector
+    end
+  end
+  resources :payments, only: [] do
+    member do
+      get  :alipay_return
+    end
+    collection do
+      post :alipay_notify
     end
   end
 

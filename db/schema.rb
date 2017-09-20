@@ -135,7 +135,8 @@ ActiveRecord::Schema.define(version: 150) do
     t.integer "variety"
     t.uuid "order_id"
     t.jsonb "processor_request"
-    t.jsonb "processor_response"
+    t.jsonb "processor_response_return"
+    t.jsonb "processor_response_notify"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_payments_on_order_id"

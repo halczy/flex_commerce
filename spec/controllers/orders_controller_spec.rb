@@ -322,8 +322,11 @@ RSpec.describe OrdersController, type: :controller do
         expect(response).to redirect_to(payment_order_path)
       end
 
-      it 'flashes' do
-
+      it 'flashes error message if no amount params are given' do
+        order_confirmed.user.wallet.update(balance: 999999)
+        post :create_wallet_payment, params: { id: order_confirmed.id }
+        expect(flash[:warning]).to be_present
+        expect(response).to redirect_to(payment_order_path)
       end
     end
 

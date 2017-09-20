@@ -5,6 +5,5 @@ FactoryGirl.define do
     status 0
     processor 0
     variety 0
-    processor_response nil
   end
 end
