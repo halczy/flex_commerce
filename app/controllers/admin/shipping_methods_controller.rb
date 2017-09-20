@@ -100,8 +100,4 @@ class Admin::ShippingMethodsController < Admin::AdminController
                     :contact_number, :addressable_id, :addressable_type])
     end
 
-    # def self_pickup_params
-    #   params.require(:shipping_method).permit(:name, :variety, :addresses)
-
-    # end
 end
