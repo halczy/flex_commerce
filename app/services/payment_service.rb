@@ -1,5 +1,5 @@
 class PaymentService
-  attr_accessor :order, :payment, :processor, :amount, :user
+  attr_accessor :order, :payment, :amount, :user, :processor, :processor_client
 
   def initialize(order_id: nil, payment_id: nil, processor: nil, amount: nil)
     @payment = Payment.find_by(id: payment_id)
@@ -16,11 +16,35 @@ class PaymentService
 
   def build
     variety = 0 if @order.status_before_type_cast.between?(20, 59)
-    @amount = @order.total unless @amount.present?
     @payment = Payment.create!(order: @order,
                                processor: @processor,
                                variety: variety,
                                amount: @amount)
+    build_processor
+    @processor_client = create_processor_client if @payment.alipay?
+  end
+
+  def create_processor_client
+    Alipay::Client.new(url: ENV['ALIPAY_GATEWAY'],
+                       app_id: ENV['ALIPAY_APP_ID'],
+                       app_private_key: ENV['ALIPAY_APP_PRIVATE_KEY'],
+                       alipay_public_key: ENV['ALIPAY_PUBLIC_KEY'])
+  end
+
+  def create_processor_request
+    biz_content = Hash.new.tap do |h|
+      h[:out_trade_no] = @payment.id
+      h[:product_code] = 'FAST_INSTANT_TRADE_PAY'
+      h[:total_amount] = @payment.amount.to_f
+      h[:subject] = "[#{app_name}] Payment for order: #{@payment.order.id}"
+    end
+    @payment.update(processor_request: biz_content.to_json)
+  end
+
+  def build_processor
+    return unless @payment.alipay?
+    @processor_client = create_processor_client
+    create_processor_request
   end
 
   def create
@@ -106,5 +130,10 @@ class PaymentService
     def validate_customer_fund
       return true if @user.wallet.sufficient_fund?(@payment.amount)
       raise(StandardError, 'Insufficient fund')
+    end
+
+    def app_name
+      ApplicationConfiguration.find_by(name: 'application_title').try(:plain) ||
+                               'Flex Commerce'
     end
 end

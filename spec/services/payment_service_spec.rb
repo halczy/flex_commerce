@@ -26,8 +26,28 @@ RSpec.describe PaymentService, type: :model do
       end
     end
 
+    describe '#create_processor_client' do
+      it 'creates an alipay client' do
+        client = alipay_created.create_processor_client
+        expect(client).to be_an_instance_of Alipay::Client
+      end
+    end
+
+    describe '#create_processor_request' do
+      it 'creates processor_request with payment and order detail' do
+        alipay_created.create_processor_request
+        request_json = alipay_created.payment.processor_request
+        request_obj = ActiveSupport::JSON.decode(request_json)
+        expect(request_json).to be_present
+        expect(request_obj['out_trade_no']).to eq(alipay_created.payment.id)
+        expect(request_obj['product_code']).to eq('FAST_INSTANT_TRADE_PAY')
+        expect(request_obj['total_amount']).to eq(alipay_created.payment.amount.to_f)
+        expect(request_obj['subject']).to be_present
+      end
+    end
+
     describe '#build' do
-      it 'creates payment for confirmed order' do
+      it 'creates a wallet payment for confirmed order' do
         payment_service = PaymentService.new(order_id: order_confirmed.id,
                                              processor: 'wallet',
                                              amount: Money.new(100))
@@ -37,6 +57,19 @@ RSpec.describe PaymentService, type: :model do
         expect(payment_service.payment.amount).to eq(Money.new(100))
         expect(payment_service.payment.status).to eq('created')
         expect(payment_service.payment.order).to eq(order_confirmed)
+      end
+
+      it 'creates an alipay payment for confirmed order' do
+        payment_service = PaymentService.new(order_id: order_confirmed.id,
+                                             processor: 'alipay',
+                                             amount: order_confirmed.total)
+        payment_service.build
+        expect(payment_service.payment).to be_present
+        expect(payment_service.payment.variety).to eq('charge')
+        expect(payment_service.payment.amount).to eq(order_confirmed.total)
+        expect(payment_service.payment.status).to eq('created')
+        expect(payment_service.payment.order).to eq(order_confirmed)
+        expect(payment_service.processor_client).to be_an_instance_of Alipay::Client
       end
 
       it 'defaults amount to the order amount is the figure is not given' do
@@ -104,7 +137,7 @@ RSpec.describe PaymentService, type: :model do
           order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
           payment_service = PaymentService.new(order_id: order, processor: 'wallet')
           result = payment_service.create
-          expect(result).to be_an_instance_of(Payment)
+          expect(result).to be_an_instance_of Payment
           expect(result.status).to eq('created')
           expect(result.order).to eq(order)
           expect(result.order.status).to eq('payment_pending')

@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 150) do
     t.integer "processor"
     t.integer "variety"
     t.uuid "order_id"
+    t.jsonb "processor_request"
     t.jsonb "processor_response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
