@@ -250,9 +250,9 @@ RSpec.describe PaymentService, type: :model do
         payment_service.create
         payment_url = payment_service.charge
         expect(payment_url).to include('http')
-        expect(payment_url).to include(payment_service.payment.id)
-        expect(payment_url).to include(payment_service.payment.amount.to_s)
-        expect(payment_url).to include('alipay_return')
+        expect(payment_url).to match(payment_service.payment.id)
+        expect(payment_url).to match(payment_service.payment.amount.to_s)
+        expect(payment_url).to match(/alipay_return/)
       end
     end
 
