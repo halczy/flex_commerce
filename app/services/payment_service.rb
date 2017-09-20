@@ -5,7 +5,7 @@ class PaymentService
     @payment = Payment.find_by(id: payment_id)
     @order = Order.find_by(id: order_id) || @payment.order
     @processor = processor
-    @amount = amount || @payment.try(:amount) || @order.try(:amount)
+    @amount = amount || @payment.try(:amount) || @order.try(:total)
     @user = @order.user
   end
 

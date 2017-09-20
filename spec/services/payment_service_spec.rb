@@ -109,6 +109,10 @@ RSpec.describe PaymentService, type: :model do
           expect(result.order).to eq(order)
           expect(result.order.status).to eq('payment_pending')
         end
+
+        it 'creates alipay payment' do
+
+        end
       end
 
       context 'with invalid arguments' do

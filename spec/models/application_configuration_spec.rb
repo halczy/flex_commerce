@@ -26,7 +26,5 @@ RSpec.describe ApplicationConfiguration, type: :model do
       dup_sample = ApplicationConfiguration.create(name: 'sitenAme', value: 'X')
       expect(dup_sample).not_to be_valid
     end
-
-
   end
 end
