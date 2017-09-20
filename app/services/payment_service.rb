@@ -151,7 +151,14 @@ class PaymentService
       rsp_json = @payment.processor_response_return ||
                  @payment.processor_response_notify
       rsp = ActiveSupport::JSON.decode(rsp_json)
-      rsp['total_amount'] == @payment.amount.to_s
+
+      if rsp['out_trade_no'] != @payment.id
+        raise(StandardError, 'Invalid out_trade_no')
+      elsif rsp['total_amount'] != @payment.amount.to_s
+        raise(StandardError, 'Invalid total_amount')
+      else
+        true
+      end
     end
 
     def confirm_payment_and_order

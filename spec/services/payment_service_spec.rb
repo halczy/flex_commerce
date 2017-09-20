@@ -285,58 +285,59 @@ RSpec.describe PaymentService, type: :model do
       order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
       @payment_service = PaymentService.new(order_id: order, processor: 'alipay')
       @payment_service.create
+      @res = {
+        "total_amount"=>"#{@payment_service.amount}",
+        "out_trade_no"=>"#{@payment_service.payment.id}"
+      }
     end
 
     context '#validate_processor_response' do
-      it 'validates amount returned from processor return response' do
-        res = {"total_amount"=>"#{@payment_service.amount}"}
-        @payment_service.payment.update(processor_response_return: res.to_json)
+      it 'validates params returned from processor return response' do
+        @payment_service.payment.update(processor_response_return: @res.to_json)
         expect(@payment_service.send(:validate_processor_response)).to be_truthy
       end
 
-      it 'validates amount returned from processor notify response' do
-        res = {"total_amount"=>"#{@payment_service.amount}"}
-        @payment_service.payment.update(processor_response_notify: res.to_json)
+      it 'validates params returned from processor notify response' do
+        @payment_service.payment.update(processor_response_notify: @res.to_json)
         expect(@payment_service.send(:validate_processor_response)).to be_truthy
       end
 
       it 'returns false if amount returned does not match order total' do
-        res = {"total_amount"=>"#{100}"}
+        res = { "total_amount"=>"#{100}",
+                "out_trade_no"=>"#{@payment_service.payment.id}" }
         @payment_service.payment.update(processor_response_return: res.to_json)
-        expect(@payment_service.send(:validate_processor_response)).to be_falsey
+        expect {
+          @payment_service.send(:validate_processor_response)
+        }.to raise_error(StandardError)
       end
     end
 
     context '#confirm_payment_and_order' do
       it 'sets payment status to client_side_confirmed and confirms order' do
-        res = {"total_amount"=>"#{@payment_service.amount}"}
-        @payment_service.payment.update(processor_response_return: res.to_json)
+        @payment_service.payment.update(processor_response_return: @res.to_json)
         @payment_service.send(:confirm_payment_and_order)
         expect(@payment_service.payment.client_side_confirmed?).to be_truthy
         expect(@payment_service.order.payment_success?).to be_truthy
       end
 
       it 'sets payment status to processor_confirmed and confirms order' do
-        res = {"total_amount"=>"#{@payment_service.amount}"}
-        @payment_service.payment.update(processor_response_notify: res.to_json)
+        @payment_service.payment.update(processor_response_notify: @res.to_json)
         @payment_service.send(:confirm_payment_and_order)
         expect(@payment_service.payment.processor_confirmed?).to be_truthy
         expect(@payment_service.order.payment_success?).to be_truthy
       end
 
       it 'sets payment status to confirmed is processor previously confirmed' do
-        res = {"total_amount"=>"#{@payment_service.amount}"}
-        @payment_service.payment.update(processor_response_return: res.to_json)
-        @payment_service.payment.update(processor_response_notify: res.to_json)
+        @payment_service.payment.update(processor_response_return: @res.to_json)
+        @payment_service.payment.update(processor_response_notify: @res.to_json)
         @payment_service.payment.processor_confirmed!
         @payment_service.send(:confirm_payment_and_order)
         expect(@payment_service.payment.confirmed?).to be_truthy
       end
 
       it 'sets payment status to confirmed if client side previously confirmed' do
-        res = {"total_amount"=>"#{@payment_service.amount}"}
-        @payment_service.payment.update(processor_response_notify: res.to_json)
-        @payment_service.payment.update(processor_response_return: res.to_json)
+        @payment_service.payment.update(processor_response_notify: @res.to_json)
+        @payment_service.payment.update(processor_response_return: @res.to_json)
         @payment_service.payment.client_side_confirmed!
         @payment_service.send(:confirm_payment_and_order)
         expect(@payment_service.payment.confirmed?).to be_truthy
@@ -363,9 +364,8 @@ RSpec.describe PaymentService, type: :model do
       end
     end
 
-    it 'returns true if confrimation process is successfully' do
-      res = {"total_amount"=>"#{@payment_service.amount}"}
-      @payment_service.payment.update(processor_response_return: res.to_json)
+    it 'returns true if confrimation process is successful' do
+      @payment_service.payment.update(processor_response_return: @res.to_json)
       expect(@payment_service.alipay_confirm).to be_truthy
     end
 
