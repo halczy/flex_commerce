@@ -81,8 +81,7 @@ class PaymentService
     end
   end
 
-  def charge_alipay
-
+  def create_alipay
   end
 
   def charge
