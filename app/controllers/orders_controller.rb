@@ -180,7 +180,7 @@ class OrdersController < UsersController
 
     def validate_payment_params
       return false if helpers.current_user.wallet.available_fund == 0
-      reutrn false unless (params[:amount].present? || params[:custom_amount].present?)
+      return false unless (params[:amount].present? || params[:custom_amount].present?)
 
       if params[:amount].present? && params[:custom_amount].blank?
         amount = Money.new(params[:amount].to_f * 100)
