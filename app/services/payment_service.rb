@@ -4,7 +4,7 @@ class PaymentService
   def initialize(order_id: nil, payment_id: nil, processor: nil, amount: nil)
     @payment = Payment.find_by(id: payment_id)
     @order = Order.find_by(id: order_id) || @payment.order
-    @processor = processor
+    @processor = processor || @payment.try(:processor)
     @amount = amount || @payment.try(:amount) || @order.try(:total)
     @user = @order.user
   end
@@ -21,7 +21,6 @@ class PaymentService
                                variety: variety,
                                amount: @amount)
     build_processor
-    @processor_client = create_processor_client if @payment.alipay?
   end
 
   def create_processor_client
@@ -64,9 +63,7 @@ class PaymentService
 
   def mark_success
     @payment.processor_confirmed!
-    Transaction.create(amount: @amount, originable: @payment,
-                                        transactable: @order,
-                                        processable: @user.wallet)
+    create_transaction
   end
 
   def mark_failure
@@ -105,13 +102,31 @@ class PaymentService
     end
   end
 
-  def create_alipay
+  def charge_alipay
+    @processor_client.page_execute_url(
+      method: 'alipay.trade.page.pay',
+      return_url: "#{ENV['API_RETURN_ROOT']}/payments/#{@payment.id}/alipay_return",
+      biz_content: @payment.processor_request,
+    )
   end
 
   def charge
     case @payment.processor
     when 'wallet' then charge_wallet
     when 'alipay' then charge_alipay
+    end
+  end
+
+  def alipay_confirm
+    begin
+      Payment.transaction do
+        validate_processor_response
+        confirm_payment_and_order
+        create_transaction
+        true
+      end
+    rescue Exception
+      false
     end
   end
 
@@ -130,6 +145,36 @@ class PaymentService
     def validate_customer_fund
       return true if @user.wallet.sufficient_fund?(@payment.amount)
       raise(StandardError, 'Insufficient fund')
+    end
+
+    def validate_processor_response
+      rsp_json = @payment.processor_response_return ||
+                 @payment.processor_response_notify
+      rsp = ActiveSupport::JSON.decode(rsp_json)
+      rsp['total_amount'] == @payment.amount.to_s
+    end
+
+    def confirm_payment_and_order
+      if @payment.processor_response_return.present? &&
+            @payment.processor_response_notify.present?
+        @payment.confirmed!
+      elsif @payment.processor_response_return.present?
+        @payment.client_side_confirmed!
+      elsif @payment.processor_response_notify.present?
+        @payment.processor_confirmed!
+      end
+      @payment.order.payment_success!
+    end
+
+    def create_transaction
+      unless @payment.transaction_log
+        processable = @payment.wallet? ? @user.wallet : nil
+        Transaction.create(
+         amount: @amount,
+         originable: @payment,
+         transactable: @order,
+         processable: processable)
+      end
     end
 
     def app_name

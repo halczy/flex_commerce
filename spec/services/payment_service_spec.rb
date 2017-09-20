@@ -144,7 +144,15 @@ RSpec.describe PaymentService, type: :model do
         end
 
         it 'creates alipay payment' do
-
+          order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
+          payment_service = PaymentService.new(order_id: order, processor: 'alipay')
+          result = payment_service.create
+          expect(result).to be_an_instance_of Payment
+          expect(result.status).to eq('created')
+          expect(result.order).to eq(order)
+          expect(result.order.status).to eq('payment_pending')
+          expect(result.processor_request).to be_present
+          expect(payment_service.processor_client).to be_an_instance_of Alipay::Client
         end
       end
 
@@ -169,16 +177,6 @@ RSpec.describe PaymentService, type: :model do
         wallet_created.user.wallet.update(balance: wallet_created.amount)
         wallet_created.charge_wallet
         expect(wallet_created.payment.status).to eq('processor_confirmed')
-      end
-
-      it 'logs a transaction' do
-        wallet_created.user.wallet.update(balance: wallet_created.amount)
-        expect {
-          wallet_created.charge_wallet
-        }.to change(Transaction, :count).by(1)
-        transaction = wallet_created.payment.transaction_log
-        expect(transaction.transactable).to eq(wallet_created.order)
-        expect(transaction.processable).to eq(wallet_created.user.wallet)
       end
     end
 
@@ -245,19 +243,134 @@ RSpec.describe PaymentService, type: :model do
       end
     end
 
+    describe '#charge_alipay' do
+      it 'returns a payment url with payment info encoded' do
+        order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
+        payment_service = PaymentService.new(order_id: order, processor: 'alipay')
+        payment_service.create
+        payment_url = payment_service.charge
+        expect(payment_url).to include('http')
+        expect(payment_url).to include(payment_service.payment.id)
+        expect(payment_url).to include(payment_service.payment.amount.to_s)
+        expect(payment_url).to include('alipay_return')
+      end
+    end
+
     describe '#charge' do
-      it 'returns true if charge is successfully' do
+      it 'returns true if wallet charge is successfully' do
         wallet_created.user.wallet.update(balance: wallet_created.amount)
         expect(wallet_created.charge).to be_truthy
         expect(wallet_created.payment.processor_confirmed?).to be_truthy
         expect(wallet_created.order.payment_success?).to be_truthy
       end
 
-      it 'returns false if charge fail' do
+      it 'returns false if wallet charge fail' do
         expect(wallet_created.charge).to be_falsey
         expect(wallet_created.payment.insufficient_fund?).to be_truthy
         expect(wallet_created.order.payment_fail?).to be_truthy
       end
+
+      it 'calls #charge_aliapy if alipay type payment is called' do
+        order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
+        payment_service = PaymentService.new(order_id: order, processor: 'alipay')
+        payment_service.create
+        expect(payment_service).to receive(:charge_alipay)
+        payment_service.charge
+      end
+    end
+  end
+
+  describe '#alipay_confirm' do
+    before do
+      order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
+      @payment_service = PaymentService.new(order_id: order, processor: 'alipay')
+      @payment_service.create
+    end
+
+    context '#validate_processor_response' do
+      it 'validates amount returned from processor return response' do
+        res = {"total_amount"=>"#{@payment_service.amount}"}
+        @payment_service.payment.update(processor_response_return: res.to_json)
+        expect(@payment_service.send(:validate_processor_response)).to be_truthy
+      end
+
+      it 'validates amount returned from processor notify response' do
+        res = {"total_amount"=>"#{@payment_service.amount}"}
+        @payment_service.payment.update(processor_response_notify: res.to_json)
+        expect(@payment_service.send(:validate_processor_response)).to be_truthy
+      end
+
+      it 'returns false if amount returned does not match order total' do
+        res = {"total_amount"=>"#{100}"}
+        @payment_service.payment.update(processor_response_return: res.to_json)
+        expect(@payment_service.send(:validate_processor_response)).to be_falsey
+      end
+    end
+
+    context '#confirm_payment_and_order' do
+      it 'sets payment status to client_side_confirmed and confirms order' do
+        res = {"total_amount"=>"#{@payment_service.amount}"}
+        @payment_service.payment.update(processor_response_return: res.to_json)
+        @payment_service.send(:confirm_payment_and_order)
+        expect(@payment_service.payment.client_side_confirmed?).to be_truthy
+        expect(@payment_service.order.payment_success?).to be_truthy
+      end
+
+      it 'sets payment status to processor_confirmed and confirms order' do
+        res = {"total_amount"=>"#{@payment_service.amount}"}
+        @payment_service.payment.update(processor_response_notify: res.to_json)
+        @payment_service.send(:confirm_payment_and_order)
+        expect(@payment_service.payment.processor_confirmed?).to be_truthy
+        expect(@payment_service.order.payment_success?).to be_truthy
+      end
+
+      it 'sets payment status to confirmed is processor previously confirmed' do
+        res = {"total_amount"=>"#{@payment_service.amount}"}
+        @payment_service.payment.update(processor_response_return: res.to_json)
+        @payment_service.payment.update(processor_response_notify: res.to_json)
+        @payment_service.payment.processor_confirmed!
+        @payment_service.send(:confirm_payment_and_order)
+        expect(@payment_service.payment.confirmed?).to be_truthy
+      end
+
+      it 'sets payment status to confirmed if client side previously confirmed' do
+        res = {"total_amount"=>"#{@payment_service.amount}"}
+        @payment_service.payment.update(processor_response_notify: res.to_json)
+        @payment_service.payment.update(processor_response_return: res.to_json)
+        @payment_service.payment.client_side_confirmed!
+        @payment_service.send(:confirm_payment_and_order)
+        expect(@payment_service.payment.confirmed?).to be_truthy
+      end
+    end
+
+    context '#create_transaction' do
+      it 'logs a wallet transaction' do
+        wallet_created.user.wallet.update(balance: wallet_created.amount)
+        expect {
+          wallet_created.charge_wallet
+        }.to change(Transaction, :count).by(1)
+        transaction = wallet_created.payment.reload.transaction_log
+        expect(transaction.transactable).to eq(wallet_created.order)
+        expect(transaction.processable).to eq(wallet_created.user.wallet)
+      end
+
+      it 'logs an alipay payment transaction' do
+        expect {
+          @payment_service.send(:create_transaction)
+        }.to change(Transaction, :count).by(1)
+        transaction = @payment_service.payment.reload.transaction_log
+        expect(transaction.transactable).to eq(@payment_service.order)
+      end
+    end
+
+    it 'returns true if confrimation process is successfully' do
+      res = {"total_amount"=>"#{@payment_service.amount}"}
+      @payment_service.payment.update(processor_response_return: res.to_json)
+      expect(@payment_service.alipay_confirm).to be_truthy
+    end
+
+    it 'returns false if it cannot complete the confirmation process' do
+      expect(@payment_service.alipay_confirm).to be_falsey
     end
   end
 end
