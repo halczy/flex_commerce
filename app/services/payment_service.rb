@@ -100,7 +100,7 @@ class PaymentService
   def charge_alipay
     @processor_client.page_execute_url(
       method: 'alipay.trade.page.pay',
-      return_url: "#{ENV['API_RETURN_ROOT']}/payments/#{@payment.id}/alipay_return",
+      return_url: ENV['API_RETURN_ROOT'] + "/payments/#{@payment.id}/alipay_return",
       biz_content: @payment.processor_request,
     )
   end

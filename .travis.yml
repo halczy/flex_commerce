@@ -16,10 +16,7 @@ cache:
 addons:
   postgresql: "9.6"
   apt:
-    sources:
-      - google-chrome
     packages:
-      - google-chrome-stable
       - imagemagick
       - libmagickcore-dev
       - libmagickwand-dev
@@ -32,3 +29,5 @@ before_script:
 before_install:
   - gem update bundler
   - yarn install
+env:
+  - API_RETURN_ROOT=https://example.com
