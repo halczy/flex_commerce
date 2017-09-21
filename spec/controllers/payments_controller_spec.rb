@@ -11,8 +11,8 @@ RSpec.describe PaymentsController, type: :controller do
   end
 
   describe 'GET alipay_return' do
-    context 'with success params' do
-      it 'saves returned params to payment_response' do
+    context 'with valid params' do
+      it 'saves returned params to payment response' do
         get :alipay_return, params: {
           id: payment_alipay,
           total_amount: payment_alipay.amount,
@@ -44,7 +44,7 @@ RSpec.describe PaymentsController, type: :controller do
       end
     end
 
-    context 'with failure params' do
+    context 'with invalid params' do
       it 'rejects unsigned params', skip_before: true do
         get :alipay_return, params: {
           id: payment_alipay,
@@ -78,5 +78,55 @@ RSpec.describe PaymentsController, type: :controller do
   end
 
   describe 'POST alipay_notify' do
+    context 'with valid params' do
+      it 'saves returned params to payment response' do
+        post :alipay_notify, params: {
+          id: payment_alipay,
+          total_amount: payment_alipay.amount,
+          out_trade_no: payment_alipay.id
+        }
+
+        expect(payment_alipay.reload.processor_response_notify).to be_present
+      end
+
+      it 'confirms payment and order' do
+        post :alipay_notify, params: {
+          id: payment_alipay,
+          total_amount: payment_alipay.amount,
+          out_trade_no: payment_alipay.id
+        }
+        expect(payment_alipay.reload.processor_confirmed?).to be_truthy
+        expect(payment_alipay.order.payment_success?).to be_truthy
+      end
+    end
+
+    context 'with invalid params' do
+      it 'rejects unsigned params', skip_before: true do
+        post :alipay_notify, params: {
+          id: payment_alipay,
+          total_amount: payment_alipay.amount,
+          out_trade_no: payment_alipay.id
+        }
+        expect(response.body).to eq('fail')
+      end
+
+      it 'returns false if amount paid is incorrect' do
+        post :alipay_notify, params: {
+          id: payment_alipay,
+          total_amount: '0.01',
+          out_trade_no: payment_alipay.id
+        }
+        expect(payment_alipay.order.reload.payment_success?).to be_falsey
+      end
+
+      it 'returns false if payment id is incorrect' do
+        post :alipay_notify, params: {
+          id: payment_alipay,
+          total_amount: payment_alipay.amount,
+          out_trade_no: '65432147'
+        }
+        expect(payment_alipay.order.reload.payment_success?).to be_falsey
+      end
+    end
   end
 end

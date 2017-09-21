@@ -118,7 +118,7 @@ class OrdersController < UsersController
     if payment_service.create
       redirect_to payment_service.charge
     else
-      flash[:wanring] = 'Unable to create alipay payment at this time.'
+      flash[:warning] = 'Unable to create Alipay payment at this time.'
       redirect_to payment_order_path
     end
   end

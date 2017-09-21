@@ -46,8 +46,6 @@ Rails.application.routes.draw do
   resources :payments, only: [] do
     member do
       get  :alipay_return
-    end
-    collection do
       post :alipay_notify
     end
   end
