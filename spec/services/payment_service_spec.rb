@@ -222,6 +222,8 @@ RSpec.describe PaymentService, type: :model do
     end
 
     describe '#charge_alipay' do
+      before { set_alipay_env }
+
       it 'returns a payment url with payment info encoded' do
         payment_service = PaymentService.new(order_id: order_confirmed,
                                              processor: 'alipay')
