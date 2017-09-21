@@ -1,33 +1,35 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.4.1
-  - 2.4.2
-  - ruby-head
+- 2.4.1
+- 2.4.2
+- ruby-head
 matrix:
   allow_failures:
-    - rvm: 2.4.2
-    - rvm: ruby-head
+  - rvm: 2.4.2
+  - rvm: ruby-head
 cache:
   bundler: true
   yarn: true
   directories:
   - node_modules
 addons:
-  postgresql: "9.6"
+  postgresql: '9.6'
   apt:
     packages:
-      - imagemagick
-      - libmagickcore-dev
-      - libmagickwand-dev
-      - graphicsmagick
+    - imagemagick
+    - libmagickcore-dev
+    - libmagickwand-dev
+    - graphicsmagick
 services:
-  - postgresql
+- postgresql
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
-  - cp config/database.yml.travis config/database.yml
+- psql -c 'create database travis_ci_test;' -U postgres
+- cp config/database.yml.travis config/database.yml
 before_install:
-  - gem update bundler
-  - yarn install
+- gem update bundler
+- yarn install
 env:
-  - API_RETURN_ROOT=https://example.com
+  global:
+  - secure: AkcYlqp+FKxrQu8Cy+2DC9P5lEg+QTLFKMGcM8io6Soi7K1d5JfUQaZceQWWdhqh3stJi5A7ZXzKSz6Xg854IxFohdeeP7sJmoJiRkUeGnWY+fRkonXlDH+ByMWQmSZywwceboEKSyLKEMXF2m5iO3jZpTFRltNbfln55+72omIQyKWVN95iIYFqFNQqjnjDUnfV98PXg3/kklKnTp2V0t4D9Km+DUHOcCws8/m4E2KdToDmh7uyXW+MKZh8BH1IgJoxIwRxEjxyYvFCFRvCvxthHvkdhYuTxSOcfq3+w+CZZQX8SVSvlIe+Cjkeo35BnyCgoykAG0nH/N7jd+ooVEc4vFzaRx0BCiO620JptSQaag2zU3EFPEBmDN+5N4FYRJiUU791hFLmPxaRYY4TApzv20tuhPuQZZ9KrbUCAFXfqCsVNi3w+3+hYOfvH7I/yyxHxjPbQUGIsqGxePfexXOU87dsX6cX64BgplLM36FAIu3zInD9nBQLfLlGkG4h9mq1PTjA9HK4KCQfYU6h1eFrWQ76fNhwU4S9rTClmOeYayWvWdU8HlZZoiD7ltJrs8CEne4EqXZ11j+BP9xZgsmkAoxoh+QCUK+YH1Hua97gSuB99WMNDnydxftdZzxPMqCCN7+R2d1z/1LJDRbgMWMD2VT/94OIF6KmrYiwilk=
+  - secure: UJcTGIzCRKExRnD6CPEL3ynC/qgb/4e76RoA9TQfb1AT+CJhpXySQKW+9IRRKx1Fjb9gJYh33PFqAHrZVBkx2U9uD1H5dn6JsSEoXU4X6l3nsN85t9cST3a9rbCRey2+Pkck4oGsae0U5ZFxTE2H8SOxHNaq3E/IZxgGnohQP9Pt3sMcqnQSXaL0ow3VDtOOmfILFMUO3wFudot4yVlzB20stTXZnxQ9sl78COzkCcqsb0ybhOlRRwwSYJwgArBIFTvECVL5adcqTM1CBiXb9VlYs3cV+dWZru3wsGjA8A2SD7o8yj5jP7Ipe8iu+uVVohML079MuAkaZ3srzcVeLCEFgYb5mj3cmKpfE3Ua8sCrxg4offuFn/ZtsqeZnnM3NkxjjMU5U1ecQzovXM58tYIIfeX95m5h95nqZhRfDG/HezrcH16/UTMccXhiSoto7iV/1VU1sjS0rBNoj3/QGJ6DGrFKPbCIwRKL9KPMT16Hfi7HMw1K9N5vErGk/eVllSr/TWQgKfOKJgp1Vgbj5pVZRtkpW+0hHk70yfxnyvbYy6jtatF1HWkjRmq9iT9LKxW83YPX8V7iB9nGxLsZNqi34JDWrjWziRrGSUzrXyte4McbF/9XdtKIfkq2DaVNXcCeHLZQpoELHaDIhpFFzyMPXzzq5vtJq4r4yZI5124=
