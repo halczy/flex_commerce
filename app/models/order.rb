@@ -58,11 +58,11 @@ class Order < ApplicationRecord
 
   def amount_paid
     payments.sum do |payment|
-      payment.status_before_type_cast.between?(1, 2) ? payment.amount : 0
+      payment.status_before_type_cast.between?(1, 3) ? payment.amount : 0
     end
   end
 
   def amount_unpaid
-    total - amount_paid
+    total ? total - amount_paid : pre_confirm_total - amount_paid
   end
 end

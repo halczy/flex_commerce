@@ -140,9 +140,8 @@ RSpec.describe Order, type: :model do
     end
 
     it 'returns the partial amount paid' do
-      payment = FactoryGirl.create(:payment, order: order_confirmed,
-                                             amount: Money.new(100))
-      service = PaymentService.new(payment_id: payment.id)
+      payment = FactoryGirl.create(:payment, order: order_confirmed)
+      service = PaymentService.new(payment_id: payment.id, amount: Money.new(100))
       service.user.wallet.update(balance: 9999999)
       service.charge
       expect(order_confirmed.reload.amount_paid).to eq(Money.new(100))
@@ -161,9 +160,8 @@ RSpec.describe Order, type: :model do
     end
 
     it 'returns unpaid balance if partial payment exist' do
-      payment = FactoryGirl.create(:payment, order: order_confirmed,
-                                             amount: Money.new(100))
-      service = PaymentService.new(payment_id: payment.id)
+      payment = FactoryGirl.create(:payment, order: order_confirmed)
+      service = PaymentService.new(payment_id: payment.id, amount: Money.new(100))
       service.user.wallet.update(balance: 9999999)
       service.charge
       expected_unpaid = order_confirmed.total - Money.new(100)

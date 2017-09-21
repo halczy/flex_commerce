@@ -5,7 +5,7 @@ class PaymentService
     @payment = Payment.find_by(id: payment_id)
     @order = Order.find_by(id: order_id) || @payment.order
     @processor = processor || @payment.try(:processor)
-    @amount = amount || @payment.try(:amount) || @order.try(:total)
+    @amount = amount || @order.try(:amount_unpaid) || @payment.try(:amount)
     @user = @order.user
   end
 
@@ -34,7 +34,7 @@ class PaymentService
     biz_content = Hash.new.tap do |h|
       h[:out_trade_no] = @payment.id
       h[:product_code] = 'FAST_INSTANT_TRADE_PAY'
-      h[:total_amount] = @payment.amount.to_f
+      h[:total_amount] = @payment.order.amount_unpaid.to_f
       h[:subject] = "[#{app_name}] Payment for order: #{@payment.order.id}"
     end
     @payment.update(processor_request: biz_content.to_json)
@@ -71,18 +71,13 @@ class PaymentService
   end
 
   def process_result
-    if order_paid_in_full?
+    if @order.reload.amount_unpaid == 0
       @order.payment_success!
-    elsif @payment.client_side_confirmed? || @payment.processor_confirmed?
+    elsif @payment.status_before_type_cast.between?(1, 3)
       @order.partial_payment!
     else
       @order.payment_fail! unless @order.partial_payment?
     end
-  end
-
-  def order_paid_in_full?
-    payment_total = @order.amount_paid
-    payment_total == @order.total
   end
 
   def charge_wallet

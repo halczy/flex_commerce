@@ -20,9 +20,7 @@ RSpec.describe PaymentService, type: :model do
 
       it 'returns raise error is order is not confirmed' do
         payment_service = PaymentService.new(order_id: order_set.id)
-        expect {
-          payment_service.send(:validate_order_status)
-        }.to raise_error(StandardError)
+        expect(payment_service.create).to be_falsey
       end
     end
 
@@ -72,7 +70,7 @@ RSpec.describe PaymentService, type: :model do
         expect(payment_service.processor_client).to be_an_instance_of Alipay::Client
       end
 
-      it 'defaults amount to the order amount is the figure is not given' do
+      it 'defaults amount to the order unpaid balance if the figure is not given' do
         payment_service = PaymentService.new(order_id: order_confirmed.id,
                                              processor: 'wallet')
         payment_service.build
@@ -201,26 +199,6 @@ RSpec.describe PaymentService, type: :model do
       end
     end
 
-    describe '#order_paid_in_full?' do
-      before do
-        order_confirmed.user.wallet.update(balance: 9999999999)
-        total_minus_1 = order_confirmed.total - Money.new(100)
-        @payment_1 = FactoryGirl.create(:payment, order: order_confirmed,
-                                                  amount: total_minus_1)
-        @payment_2 = FactoryGirl.create(:payment, order: order_confirmed,
-                                                  amount: Money.new(100))
-      end
-
-      it 'returns true if order is paid in full' do
-        service_1 = PaymentService.new(payment_id: @payment_1.id)
-        service_2 = PaymentService.new(payment_id: @payment_2.id)
-        service_1.charge_wallet
-        expect(service_1.order_paid_in_full?).to be_falsey
-        service_2.charge_wallet
-        expect(service_2.order_paid_in_full?).to be_truthy
-      end
-    end
-
     describe '#process_result' do
       it 'sets order status to payment success if order paid in full' do
         wallet_created.user.wallet.update(balance: wallet_created.amount)
@@ -229,10 +207,10 @@ RSpec.describe PaymentService, type: :model do
       end
 
       it 'sets order status to partial payment if some amount paid' do
-        payment = FactoryGirl.create(:payment, order: order_confirmed,
-                                               amount: Money.new(100))
+        payment = FactoryGirl.create(:payment, order: order_confirmed)
         payment.order.user.wallet.update(balance: 9999999)
-        payment_service = PaymentService.new(payment_id: payment.id)
+        payment_service = PaymentService.new(payment_id: payment.id,
+                                             amount: Money.new(100))
         payment_service.charge_wallet
         expect(payment_service.order.partial_payment?).to be_truthy
       end
@@ -245,14 +223,12 @@ RSpec.describe PaymentService, type: :model do
 
     describe '#charge_alipay' do
       it 'returns a payment url with payment info encoded' do
-        order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
-        payment_service = PaymentService.new(order_id: order, processor: 'alipay')
+        payment_service = PaymentService.new(order_id: order_confirmed,
+                                             processor: 'alipay')
         payment_service.create
         payment_url = payment_service.charge
         expect(payment_url).to include('http')
-        expect(payment_url).to match(payment_service.payment.id)
-        expect(payment_url).to match(payment_service.payment.amount.to_s)
-        expect(payment_url).to match(/alipay_return/)
+        expect(payment_url).to include('alipay.trade.page.pay')
       end
     end
 
@@ -271,7 +247,7 @@ RSpec.describe PaymentService, type: :model do
       end
 
       it 'calls #charge_aliapy if alipay type payment is called' do
-        order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
+        order = FactoryGirl.create(:order, confirmed: true)
         payment_service = PaymentService.new(order_id: order, processor: 'alipay')
         payment_service.create
         expect(payment_service).to receive(:charge_alipay)
