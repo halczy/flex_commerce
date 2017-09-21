@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="jumbotron">
+      <h5>Pay with Alipay</h5>
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <th scope="row" class="w-50">Alipay Payment: </th>
+                <td class="text-left">
+                  <%= humanized_money_with_symbol @order.amount_unpaid %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <%= image_tag '/site_imgs/alipay.png', class: 'mb-3' %>
+          <%= button_to 'Pay with Alipay', create_alipay_payment_order_path,
+                            class: 'btn btn-lg btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -15,11 +15,7 @@
         </div>
       </div>
       <div class="row mt-3">
-        <% if @payment.processor == 'wallet' %>
-          <%= render '/orders/success/wallet' %>
-        <% else %>
-          <!-- ALIPAY -->
-        <% end %>
+        <%= render '/orders/success/payment_order' %>
         <%= render '/orders/success/nav' %>
       </div>
     </div>
