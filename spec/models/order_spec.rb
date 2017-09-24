@@ -25,6 +25,8 @@ RSpec.describe Order, type: :model do
   let(:wallet_created)   { PaymentService.new(payment_id: payment_wallet.id) }
   let(:alipay_created)   { PaymentService.new(payment_id: payment_alipay.id) }
 
+  let(:customer)         { FactoryGirl.create(:customer) }
+
   describe 'creation' do
     it 'can be created' do
       expect(order).to be_valid
@@ -172,6 +174,39 @@ RSpec.describe Order, type: :model do
       wallet_created.user.wallet.update(balance: wallet_created.amount)
       wallet_created.charge
       expect(wallet_created.order.amount_unpaid).to eq(0)
+    end
+  end
+
+  describe '#scope' do
+    before do
+      @customer = customer
+      @orders_in_creation = [order, order_selected, order_set, order_confirmed]
+      @orders_in_creation.each { |o| o.update(user: @customer)}
+      @orders_in_payment = []
+      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 30)
+      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 40)
+      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 50)
+      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 60)
+      @orders_in_service = []
+      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 70)
+      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 80)
+      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 90)
+      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 100)
+    end
+
+    it 'returns orders in creation process' do
+      expect(Order.creation_process(@customer).count).to eq(4)
+      expect(Order.creation_process(@customer)).to match_array(@orders_in_creation)
+    end
+
+    it 'returns orders in payment process' do
+      expect(Order.payment_process(@customer).count).to eq(4)
+      expect(Order.payment_process(@customer)).to match_array(@orders_in_payment)
+    end
+
+    it 'returns orders in service process' do
+      expect(Order.service_process(@customer).count).to eq(4)
+      expect(Order.service_process(@customer)).to match_array(@orders_in_service)
     end
   end
 end

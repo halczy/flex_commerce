@@ -24,6 +24,11 @@ class Order < ApplicationRecord
     staff_confirmed: 70, pickup_pending: 80, shipped: 90, completed: 100
   }
 
+  # Scope
+  scope :creation_process, -> (user) { user.orders.where(status: 0..20) }
+  scope :payment_process,  -> (user) { user.orders.where(status: 30..60) }
+  scope :service_process,  -> (user) { user.orders.where(status: 70..100) }
+
   def inventories_by(product)
     inventories.where(product: product)
   end
