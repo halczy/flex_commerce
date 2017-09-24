@@ -61,7 +61,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
   end
 
   def destroy
-    if @shipping_method.destroy
+    if @shipping_method.destroyable? && @shipping_method.destroy
       flash[:success] = "Successfully removed the selected shipping method."
     else
       flash[:danger] = "This shipping method cannot be deleted."

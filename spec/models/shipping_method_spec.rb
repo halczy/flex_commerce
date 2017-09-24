@@ -3,8 +3,10 @@ require 'rails_helper'
 RSpec.describe ShippingMethod, type: :model do
 
   let(:delivery)    { FactoryGirl.create(:delivery) }
-  let(:self_pickup) {FactoryGirl.create(:self_pickup) }
+  let(:self_pickup) { FactoryGirl.create(:self_pickup) }
   let(:no_shipping) { FactoryGirl.create(:no_shipping) }
+  let(:product)     { FactoryGirl.create(:product) }
+  let(:inventory)   { FactoryGirl.create(:inventory) }
 
   describe 'creation' do
     it 'can be created' do
@@ -56,6 +58,22 @@ RSpec.describe ShippingMethod, type: :model do
       it 'returns address that belongs to shipping method' do
         expect(@shipping_self_pickup.address).to be_present
       end
+    end
+  end
+
+  describe '#destroyable?' do
+    it 'returns true if it is not referred by any product or inventory' do
+      expect(delivery.destroyable?).to be_truthy
+    end
+
+    it 'returns false if it is being referred by any products' do
+      product.shipping_methods << delivery
+      expect(delivery.destroyable?).to be_falsey
+    end
+
+    it 'return false if it is being referred to by any inventories' do
+      FactoryGirl.create(:inventory, shipping_method: self_pickup)
+      expect(self_pickup.destroyable?).to be_falsey
     end
   end
 

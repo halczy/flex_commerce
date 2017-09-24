@@ -211,16 +211,17 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
-    before do
-      @shipping_method = FactoryGirl.create(:self_pickup)
-      @shipping_method.products << product
-    end
 
     context 'destroyable' do
+      before { @shipping_method = FactoryGirl.create(:self_pickup) }
       it 'can be destroy' do
         expect {
           delete :destroy, params: { id: @shipping_method.id }
         }.to change(ShippingMethod, :count).by(-1)
+      end
+
+      it 'redirects to shipping method index with success flash message' do
+        delete :destroy, params: { id: @shipping_method.id }
         expect(flash[:success]).to be_present
         expect(response).to redirect_to(admin_shipping_methods_path)
       end
@@ -236,16 +237,29 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
           delete :destroy, params: { id: @shipping_method.id }
         }.to change(Address, :count).by(-1)
       end
-
-      it 'does not remove associated product' do
-        expect {
-          delete :destroy, params: { id: @shipping_method.id }
-        }.not_to change(Product, :count)
-      end
     end
 
     context 'undestroyable' do
-      # TODO: PREVENT SHIPPING METHOD DELETION IF REF BY ORDER
+      it 'does not destroy shipping method referred by product' do
+        delivery.products << product
+        expect {
+          delete :destroy, params: { id: delivery }
+        }.not_to change(ShippingMethod, :count)
+      end
+
+      it 'does not destroy shipping method referred by inventory' do
+        FactoryGirl.create(:inventory, shipping_method: self_pickup)
+        expect {
+          delete :destroy, params: { id: self_pickup }
+        }.not_to change(ShippingMethod, :count)
+      end
+
+      it 'redirects to shipping method index with danger flash message' do
+        delivery.products << product
+        delete :destroy, params: { id: delivery }
+        expect(flash[:danger]).to be_present
+        expect(response).to redirect_to(admin_shipping_methods_path)
+      end
     end
   end
 end

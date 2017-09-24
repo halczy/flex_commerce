@@ -11,7 +11,7 @@ class ShippingMethod < ApplicationRecord
   validates :name,    presence: true
   validates :variety, presence: true
 
-  #
+  # Virtual Attributes
   attribute :addresses
 
   # Enum
@@ -19,9 +19,10 @@ class ShippingMethod < ApplicationRecord
                   delivery: 1,
                   self_pickup: 2 }
 
-  # def address
-  #   addresses.first
-  # end
+  def destroyable?
+    products.empty? && inventories.empty?
+  end
+
 
   private
 
