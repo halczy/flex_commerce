@@ -19,15 +19,15 @@ class Order < ApplicationRecord
     created: 0, shipping_confirmed: 10, confirmed: 20,
     # Payment
     payment_pending: 30, partial_payment: 40, payment_fail: 50,
-    payment_success: 60,
     # Service
-    staff_confirmed: 70, pickup_pending: 80, shipped: 90, completed: 100
+    payment_success: 60, staff_confirmed: 70, pickup_pending: 80, shipped: 90,
+    completed: 100
   }
 
   # Scope
   scope :creation_process, -> (user) { user.orders.where(status: 0..20) }
-  scope :payment_process,  -> (user) { user.orders.where(status: 30..60) }
-  scope :service_process,  -> (user) { user.orders.where(status: 70..100) }
+  scope :payment_process,  -> (user) { user.orders.where(status: 30..50) }
+  scope :service_process,  -> (user) { user.orders.where(status: 60..100) }
 
   def inventories_by(product)
     inventories.where(product: product)

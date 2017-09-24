@@ -186,8 +186,8 @@ RSpec.describe Order, type: :model do
       @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 30)
       @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 40)
       @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 50)
-      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 60)
       @orders_in_service = []
+      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 60)
       @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 70)
       @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 80)
       @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 90)
@@ -200,12 +200,12 @@ RSpec.describe Order, type: :model do
     end
 
     it 'returns orders in payment process' do
-      expect(Order.payment_process(@customer).count).to eq(4)
+      expect(Order.payment_process(@customer).count).to eq(3)
       expect(Order.payment_process(@customer)).to match_array(@orders_in_payment)
     end
 
     it 'returns orders in service process' do
-      expect(Order.service_process(@customer).count).to eq(4)
+      expect(Order.service_process(@customer).count).to eq(5)
       expect(Order.service_process(@customer)).to match_array(@orders_in_service)
     end
   end
