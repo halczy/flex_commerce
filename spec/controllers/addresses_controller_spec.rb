@@ -148,9 +148,8 @@ RSpec.describe AddressesController, type: :controller do
 
     context 'undestroyable address' do
       it 'renders warning and returns to address list' do
-        # TODO: REFACTOR ONCE ORDER MODEL IS AVAILABLE
-        order_address = FactoryGirl.create(:address, addressable_type: 'Order')
-        delete :destroy, params: { id: order_address.id }
+        order = FactoryGirl.create(:order, set: true)
+        delete :destroy, params: { id: order.address.id }
         expect(flash[:warning]).to be_present
       end
     end

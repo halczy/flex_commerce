@@ -16,8 +16,8 @@ class Address < ApplicationRecord
   end
 
   def destroyable?
-    return false if addressable_type == 'Order'  # TODO: REFACTOR ONCE ORDER MODEL IS AVAILABLE
-    return true if addressable.instance_of?(Customer) || addressable.nil?
+    return false if addressable.instance_of?(Order)
+    return true  if addressable.instance_of?(Customer) || addressable.nil?
   end
 
   def compact_select
