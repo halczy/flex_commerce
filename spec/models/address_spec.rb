@@ -8,6 +8,7 @@ RSpec.describe Address, type: :model do
   let(:district)  { FactoryGirl.create(:district) }
   let(:community) { FactoryGirl.create(:community) }
   let(:customer)  { FactoryGirl.create(:customer) }
+  let(:order)     { FactoryGirl.create(:order) }
 
   let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true,
                                                              only_delivery: true) }
@@ -76,7 +77,7 @@ RSpec.describe Address, type: :model do
     end
 
     it 'returns false if address is associated with order' do
-      order_address = FactoryGirl.create(:address, addressable_type: 'Order')
+      order_address = FactoryGirl.create(:address, addressable: order)
       expect(order_address.destroyable?).to be_falsey
     end
   end
