@@ -37,6 +37,55 @@ RSpec.describe OrdersController, type: :controller do
     end
   end
 
+  describe 'GET index' do
+    before do
+      @customer = customer
+      @orders_in_creation = [order, order_selected, order_set, order_confirmed]
+      @orders_in_creation.each { |o| o.update(user: @customer)}
+      @orders_in_payment = []
+      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 30)
+      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 40)
+      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 50)
+      @orders_in_service = []
+      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 60)
+      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 70)
+      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 80)
+      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 90)
+      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 100)
+    end
+
+    context 'completed orders' do
+      it 'returns completed orders without providing filter params' do
+        get :index
+        expect(response).to be_success
+        expect(assigns(:orders).count).to eq(5)
+        expect(assigns(:orders)).to match_array(@orders_in_service)
+      end
+
+      it 'returns completed orders when given orders_in_service filter' do
+        get :index, params: { filter: 'service_process' }
+        expect(assigns(:orders).count).to eq(5)
+        expect(assigns(:orders)).to match_array(@orders_in_service)
+      end
+    end
+
+    context 'pending payment' do
+      it 'returns orders pending payments when given the' do
+        get :index, params: { filter: 'payment_process' }
+        expect(assigns(:orders).count).to eq(3)
+        expect(assigns(:orders)).to match_array(@orders_in_payment)
+      end
+    end
+
+    context 'incomplete orders' do
+      it 'returns orders that are incomplete' do
+        get :index, params: { filter: 'creation_process' }
+        expect(assigns(:orders).count).to eq(4)
+        expect(assigns(:orders)).to match_array(@orders_in_creation)
+      end
+    end
+  end
+
   describe 'POST create' do
     context 'with valid attributes' do
       before do

@@ -3,9 +3,16 @@ class OrdersController < UsersController
   before_action :friendly_signin, only: [ :create ]
   before_action :authenticate_user, except: [ :create ]
   before_action :set_user, except: [ :create ]
-  before_action :set_order, except: [ :create, :update_selector ]
+  before_action :set_order, except: [ :index, :create, :update_selector ]
   before_action :populate_selector, only: [ :address, :update_selector ]
   before_action :set_payment, only: [ :success, :failure ]
+
+  def index
+    filter = params[:filter] || ""
+    orders = Order.try(filter, @user) || Order.service_process(@user)
+    orders = orders.order(updated_at: :desc)
+    @orders = orders.page params[:page]
+  end
 
   def create
     order = OrderService.new(cart_id: params[:cart_id]).create
