@@ -72,4 +72,36 @@ RSpec.describe OrdersHelper, type: :helper do
       expect(result).to be_nil
     end
   end
+
+  describe 'tab?' do
+    describe '#completed_tab?' do
+      it 'returns active when no filter is provided' do
+        expect(helper.completed_tab?({})).to eq('active')
+      end
+
+      it 'returns active when service_process filter is provided' do
+        expect(helper.completed_tab?({filter: 'service_process'})).to eq('active')
+      end
+    end
+
+    describe '#pending_tab?' do
+      it 'returns nil when no filter is provided' do
+        expect(helper.pending_tab?({})).to be_nil
+      end
+
+      it 'returns active when payment_process filter is provided' do
+        expect(helper.pending_tab?({filter: 'payment_process'})).to eq('active')
+      end
+    end
+
+    describe '#incomplete_tab?' do
+      it 'returns nil when no filter is provided' do
+        expect(helper.incomplete_tab?({})).to be_nil
+      end
+
+      it 'returns active when creation_process fitler is provided' do
+        expect(helper.incomplete_tab?({filter: 'creation_process'})).to eq('active')
+      end
+    end
+  end
 end

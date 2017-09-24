@@ -1,0 +1,39 @@
+<%= provide :title, 'Orders' %>
+
+<%= render 'shared/header_breadcrumb', title: yield(:title) %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <%= render 'shared/navigation/customer/sidenav' %>
+    </div>
+    <div class="col-9">
+      <div class="card text-center">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <%= link_to 'Completed', orders_path(filter: :service_process),
+                   class: "nav-link #{completed_tab?(request.query_parameters)}" %>
+              </a>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Pending Payment', orders_path(filter: :payment_process),
+                    class: "nav-link #{pending_tab?(request.query_parameters)}" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Incomplete', orders_path(filter: :creation_process),
+                   class: "nav-link #{incomplete_tab?(request.query_parameters)}" %>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <%= @orders.inspect %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

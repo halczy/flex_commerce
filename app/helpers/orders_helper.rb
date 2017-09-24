@@ -28,4 +28,15 @@ module OrdersHelper
     order.shipping_methods.select { |m| m.variety == 'self_pickup' }.first
   end
 
+  def completed_tab?(params)
+    'active' if (!params[:filter].present? || params[:filter] == 'service_process')
+  end
+
+  def pending_tab?(params)
+    'active' if ( params[:filter] && params[:filter] == 'payment_process' )
+  end
+
+  def incomplete_tab?(params)
+    'active' if ( params[:filter] && params[:filter] == 'creation_process' )
+  end
 end
