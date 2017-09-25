@@ -1,0 +1,17 @@
+<% if @order.transactions %>
+  <h4>Transactions</h4>
+  <div class="list-group">
+    <% @order.transactions.each do |transcation| %>
+      <div class="list-group-item flex-column">
+        <div class="d-flex justify-content-between">
+          <h6>Amount: <%= humanized_money_with_symbol transcation.amount %></h6>
+          <h6>Source: <%= transcation.processable_type %></h6>
+        </div>
+        <div class="d-flex justify-content-between">
+          <small class="text-muted">Transcation ID: <%= transcation.id %></small>
+          <small><%= transcation.created_at.strftime("Paid at: %Y/%m/%d") %></small>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
