@@ -18,7 +18,6 @@ describe 'add product to shopping cart' do
   end
 
   describe 'front page' do
-
     context 'product in stock' do
       it 'adds to cart and redirects to shopping cart page as guest' do
         visit root_url

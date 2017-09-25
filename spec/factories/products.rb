@@ -11,5 +11,19 @@ FactoryGirl.define do
     price_member { Faker::Number.decimal(3, 2).to_f }
     price_reward { Faker::Number.decimal(2, 2).to_f }
     cost { Faker::Number.decimal(1, 2).to_f }
+    
+    transient do
+      purchase_ready false
+    end
+    
+    after(:create) do |product, evaluator|
+      if evaluator.purchase_ready
+        3.times { FactoryGirl.create(:inventory, product: product) }
+        product.shipping_methods << FactoryGirl.create(:delivery)
+        product.shipping_methods << FactoryGirl.create(:self_pickup)
+        product.shipping_methods << FactoryGirl.create(:no_shipping)
+        product.images << FactoryGirl.create(:image)
+      end
+    end
   end
 end
