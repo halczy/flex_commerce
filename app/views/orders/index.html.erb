@@ -8,7 +8,7 @@
       <%= render 'shared/navigation/customer/sidenav' %>
     </div>
     <div class="col-9">
-      <div class="card text-center">
+      <div class="card">
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
@@ -27,13 +27,9 @@
           </ul>
         </div>
         <div class="card-body">
-          <%= @orders.inspect %>
+          <%= render '/orders/index/orders' %>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
-

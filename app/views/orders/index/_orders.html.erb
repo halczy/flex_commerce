@@ -1,0 +1,30 @@
+<div class="list-group">
+  <% @orders.each do |order|  %>
+    <%= link_to order, class: 'list-group-item list-group-item-action flex-column
+                               align-items-start' do %>
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mt-1"><%= order.status.titleize %></h5>
+        <small class="text-muted">Order ID: <%= order.id %></small>
+      </div>
+      <% order.products.each do |product| %>
+        <div class="d-flex w-100 justify-content-between">
+          <p class="name"><%= product.name %></p>
+          <p class="quantity">x <%= order.inventories_by(product).count %></p>
+          <p class="subtotal">
+            <%= humanized_money_with_symbol subtotal_by(order, product) %>
+          </p>
+        </div>
+      <% end %>
+      <div class="d-flex w-100 justify-content-between">
+        <% if order.status_before_type_cast <= 10 %>
+          <small>Total: <%= humanized_money_with_symbol order.pre_confirm_total %></small>
+        <% else %>
+          <small>Total: <%= humanized_money_with_symbol order.total %></small>
+        <% end %>
+        <small>
+          <%= order.created_at.strftime("Created: %Y/%m/%d") %>
+        </small>
+      </div>
+    <% end %>
+  <% end %>
+</div>
