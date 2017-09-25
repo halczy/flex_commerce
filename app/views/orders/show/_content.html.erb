@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-between">
+  <h5>Order Status: <%= @order.status.titleize %></h5>
+  <h6>Order ID: <%= @order.id %></h6>
+</div>
+<table class="table table-hover table-responsive">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+      <th>Shipping Method</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.products.each do |product| %>
+    <tr>
+      <td><%= product.name %></td>
+      <td>
+        <%= humanized_money_with_symbol product.price_member %>
+      </td>
+      <td>
+        <%= @order.inventories_by(product).count %>
+      </td>
+      <td>
+        <%= humanized_money_with_symbol subtotal_by(@order, product) %>
+      </td>
+      <td>
+        <% unless @order.status_before_type_cast <= 10 %>
+          <%= shipping_method_by(@order, product).titleize %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+    <tr>
+      <td colspan="2"></td>
+      <td class="text-right">
+        <strong>Shipping Cost: </strong>
+      </td>
+      <td colspan="2">
+        <% if @order.status_before_type_cast >= 10 %>
+          <%= humanized_money_with_symbol @order_service.total_shipping_cost %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2"></td>
+      <td class="text-right">
+        <strong>Total: </strong>
+      </td>
+      <td colspan="2">
+        <% if @order.status_before_type_cast <= 10 %>
+          <%= humanized_money_with_symbol @order.pre_confirm_total %>
+        <% else %>
+          <%= humanized_money_with_symbol @order.total %>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>

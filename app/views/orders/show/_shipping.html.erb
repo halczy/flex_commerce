@@ -1,0 +1,28 @@
+<% unless @order.shipping_method_mix == 'no_shipping' %>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <% if @self_pickup.present? %>
+          <div class="col-md">
+            <div class="jumbotron">
+              <div class="mb-2"><strong>Self Pickup</strong></div>
+              <h6>Address: <%= @self_pickup.address.full_address %></h6>
+              <h6>Contact Name: <%= @self_pickup.address.recipient %></h6>
+              <h6>Contact Number: <%= @self_pickup.address.contact_number %></h6>
+            </div>
+          </div>
+        <% end %>
+        <% if @delivery.present? %>
+          <div class="col-md">
+            <div class="jumbotron">
+              <div class="mb-2"><strong>Ship To</strong></div>
+              <h6>Address: <%= @order.address.full_address %></h6>
+              <h6>Recipient: <%= @order.address.recipient %></h6>
+              <h6>Contact Number: <%= @order.address.contact_number %></h6>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

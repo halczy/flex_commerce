@@ -1,1 +1,23 @@
-<%= @order.inspect %>
+<%= provide :title, 'Order Detail' %>
+
+<%= render 'shared/header_breadcrumb', title: yield(:title) %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <%= render 'shared/navigation/customer/sidenav' %>
+    </div>
+    <div class="col-9">
+      <div class="card">
+        <div class="card-header">
+          <%= yield(:title) %>
+        </div>
+        <div class="card-body">
+          <%= render '/orders/show/action_control' %>
+          <%= render '/orders/show/content' %>
+          <%= render '/orders/show/shipping' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

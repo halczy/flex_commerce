@@ -14,7 +14,10 @@ class OrdersController < UsersController
     @orders = orders.page params[:page]
   end
 
-  def show; end
+  def show
+    @self_pickup = helpers.get_self_pickup_method(@order)
+    @delivery = helpers.get_delivery_method(@order)
+  end
 
   def create
     order = OrderService.new(cart_id: params[:cart_id]).create
