@@ -86,6 +86,15 @@ RSpec.describe OrdersController, type: :controller do
     end
   end
 
+
+  describe 'GET show' do
+    it 'responses with order' do
+      get :show, params: { id: order.id }
+      expect(response).to be_success
+      expect(assigns(:order)).to eq(order)
+    end
+  end
+
   describe 'POST create' do
     context 'with valid attributes' do
       before do
@@ -378,7 +387,5 @@ RSpec.describe OrdersController, type: :controller do
         expect(response).to redirect_to(payment_order_path)
       end
     end
-
-
   end
 end

@@ -14,6 +14,8 @@ class OrdersController < UsersController
     @orders = orders.page params[:page]
   end
 
+  def show; end
+
   def create
     order = OrderService.new(cart_id: params[:cart_id]).create
     if order
