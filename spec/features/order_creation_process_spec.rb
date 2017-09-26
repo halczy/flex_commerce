@@ -6,8 +6,10 @@ describe 'customer order creation process', type: :feature do
   before do
     feature_signin_as customer
     @product = FactoryGirl.create(:product, purchase_ready: true)
-    @another_product = FactoryGirl.create(:product, purchase_ready: true)
-    @province = Geo.find(@product.shipping_methods.delivery.first.shipping_rates.first.geo_code)
+    
+    @s_method = @product.shipping_methods.delivery.first
+    s_rate = @s_method.shipping_rates.sample
+    @province = Geo.find(s_rate.geo_code)
   end
 
   describe 'create order with product' do
@@ -108,14 +110,17 @@ describe 'customer order creation process', type: :feature do
       expect(page).to have_content('Self Pickup')
     end
 
-    it 'can handle multiple product with different shipping method' do
+    it 'can handle multiple products with different shipping method' do
+      another_product = FactoryGirl.create(:product, purchase_ready: true)
+      another_s_method = another_product.shipping_methods.self_pickup.first
       visit product_path(@product)
       click_on 'Add to Cart'
-      visit product_path(@another_product)
+      visit product_path(another_product)
       click_on 'Add to Cart'
       click_on 'Checkout'
-      select 'Delivery',    from: 'order_products_attributes_0_shipping_methods'
-      select 'Self Pickup', from: 'order_products_attributes_1_shipping_methods'
+
+      find(%Q{option[value="#{@s_method.id}"]}).select_option
+      find(%Q{option[value="#{another_s_method.id}"]}).select_option
       click_on 'Next'
 
       expect(page).to have_content('Delivery')
