@@ -405,4 +405,21 @@ RSpec.describe OrdersController, type: :controller do
       expect(response).to redirect_to(payment_order_path)
     end
   end
+
+  describe 'DELETE destroy' do
+    it 'cancels order and redirect to orders index' do
+      order_set
+      expect {
+        delete :destroy, params: { id: order_set.id }
+      }.to change(Order, :count).by(-1)
+      expect(flash[:success]).to be_present
+      expect(response).to redirect_to(orders_path)
+    end
+
+    it 'flash error message if order cannot be canceled' do
+      delete :destroy, params: { id: order_confirmed.id }
+      expect(flash[:danger]).to be_present
+      expect(response).to redirect_to(order_confirmed)
+    end
+  end
 end

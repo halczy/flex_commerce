@@ -145,6 +145,16 @@ class OrdersController < UsersController
     end
   end
 
+  def destroy
+    if @order.cancel
+      flash[:success] = "Successfully cancelled your order. "
+      redirect_to orders_path
+    else
+      flash[:danger] = 'Order cannot be cancelled at its current stage.'
+      redirect_to @order
+    end
+  end
+
   private
 
     def set_order
