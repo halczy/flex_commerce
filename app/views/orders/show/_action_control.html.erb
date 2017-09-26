@@ -4,10 +4,11 @@
     <%= link_to resume_order_path(@order), class: 'btn btn-success' do %>
       <i class="fa fa-play" aria-hidden="true"></i> Resume Order
     <% end %>
-    <%= link_to '#', class: 'btn btn-danger' do %>
-      <i class="fa fa-trash" aria-hidden="true"></i> Delete Order
+    <%= link_to @order, class: 'btn btn-danger', method: :delete do %>
+      <i class="fa fa-trash" aria-hidden="true"></i> Cancel Order
     <% end %>
   </div>
 <% else %>
   <!-- Hide Order -->
+  <!-- View Tracking Number -->
 <% end %>
