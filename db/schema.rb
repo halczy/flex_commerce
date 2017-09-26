@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 150) do
     t.integer "status", default: 0
     t.bigint "shipping_cost_cents", default: 0, null: false
     t.string "shipping_cost_currency", default: "CNY", null: false
+    t.string "tracking_number"
     t.uuid "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
