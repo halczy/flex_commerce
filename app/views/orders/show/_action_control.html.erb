@@ -1,7 +1,7 @@
 <h5>Order Actions</h5>
 <% if @order.status_before_type_cast <= 20  %>
   <div class="mb-3">
-    <%= link_to '#', class: 'btn btn-success' do %>
+    <%= link_to resume_order_path(@order), class: 'btn btn-success' do %>
       <i class="fa fa-play" aria-hidden="true"></i> Resume Order
     <% end %>
     <%= link_to '#', class: 'btn btn-danger' do %>
