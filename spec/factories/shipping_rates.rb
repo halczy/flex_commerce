@@ -3,13 +3,13 @@ FactoryGirl.define do
     geo_code "*"
     init_rate 0
     add_on_rate 0
-    association :shipping_method, factory: :self_pickup
+    # association :shipping_method, factory: :self_pickup
   end
 
   factory :shipping_rate_province, class: ShippingRate do
     geo_code { FactoryGirl.create(:province).id }
-    init_rate { Faker::Number.number(2) }
-    add_on_rate { Faker::Number.number(2) }
-    association :shipping_method, factory: :delivery
+    init_rate 10
+    add_on_rate 5
+    # association :shipping_method, factory: :delivery
   end
 end
