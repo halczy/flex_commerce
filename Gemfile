@@ -26,7 +26,6 @@ gem 'ruby-progressbar'
 gem 'cocoon'
 gem 'attr_encrypted'
 gem 'alipay'
-gem 'webmock'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -57,4 +56,6 @@ group :test do
   gem 'database_cleaner'
   gem 'rails-controller-testing'
   gem 'shrine-memory'
+  gem 'webmock'
+  gem 'puffing-billy'
 end
