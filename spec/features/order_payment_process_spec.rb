@@ -58,7 +58,6 @@ describe 'customer order payment process', type: :feature do
     it 'can pay a custom amount' do
       Order.last.user.wallet.update(balance: 100)
       visit payment_order_path(Order.last)
-
       fill_in 'custom_amount', with: '1'
       click_on 'Pay with Wallet'
 
@@ -70,7 +69,6 @@ describe 'customer order payment process', type: :feature do
     it 'can pay an order in installments' do
       Order.last.user.wallet.update(balance: 99999999)
       visit payment_order_path(Order.last)
-
       fill_in 'custom_amount', with: '1'
       click_on 'Pay with Wallet'
       fill_in 'custom_amount', with: Order.last.amount_unpaid.to_s
@@ -85,7 +83,6 @@ describe 'customer order payment process', type: :feature do
     it 'rejects negative custom amount' do
       Order.last.user.wallet.update(balance: 99999999)
       visit payment_order_path(Order.last)
-
       fill_in 'custom_amount', with: '-100'
       click_on 'Pay with Wallet'
 
@@ -95,11 +92,19 @@ describe 'customer order payment process', type: :feature do
     it 'rejects zero custom amount' do
       Order.last.user.wallet.update(balance: 99999999)
       visit payment_order_path(Order.last)
-
       fill_in 'custom_amount', with: '0'
       click_on 'Pay with Wallet'
 
       expect(page).to have_content('Invalid payment amount')
+    end
+
+    it 'renders links to order detail after successful payment' do
+      Order.last.user.wallet.update(balance: 999_999)
+      visit payment_order_path(Order.last)
+      click_on 'Pay with Wallet'
+      click_on 'View Order'
+
+      expect(page.current_path).to eq(order_path(Order.last))
     end
   end
 
@@ -143,12 +148,26 @@ describe 'customer order payment process', type: :feature do
       visit payment_order_path(Order.last)
       click_on 'Pay with Wallet'
       visit payment_order_path(Order.last)
-
       expect(page).to have_content("Alipay Payment: ¥0")
 
       click_on 'Pay with Alipay'
-
       expect(page).to have_content('Unable to create Alipay payment')
+    end
+
+    it 'renders payment sucess page when returned from Alipay', driver: :pg_billy do
+      allow_any_instance_of(Alipay::Client).to receive(:verify?).and_return(true)
+      proxy.stub('https://openapi.alipaydev.com:443/gateway.do')
+           .and_return(text: 'ALIPAY OK')
+
+      click_on 'Pay with Alipay'
+      visit alipay_return_payment_path(Order.last, id: Payment.last.id,
+                                        total_amount: Order.last.total.to_s,
+                                        out_trade_no: Payment.last.id)
+
+      expect(page).to have_content('Successful Payment')
+      expect(page).to have_content('Order Status Payment Success')
+      expect(page).to have_content('Payment Type Charge')
+      # expect(page).to have_content('Payment Processor Wallet')
     end
   end
 end
