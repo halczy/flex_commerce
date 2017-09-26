@@ -153,7 +153,7 @@ class OrdersController < UsersController
     end
 
     def populate_selector
-      @provinces = Geo.cn.children
+      @provinces = Geo.province_state
       @province = Geo.find_by(id: params[:province_id])
 
       @cities = @province.try(:children) || []
