@@ -13,6 +13,12 @@
   </ul>
   <ul class="nav nav-pills flex-column sidebar-nav">
     <li class="nav-item">
+      <%= link_to admin_orders_path,
+                  class: "nav-link #{active_controller?('orders')}" do %>
+       <em class="fa fa-file"></em> Orders</a>
+      <% end %>
+    </li>
+    <li class="nav-item">
       <%= link_to admin_products_path,
                   class: "nav-link #{active_controller?('products')}" do %>
        <em class="fa fa-industry"></em> Products</a>
