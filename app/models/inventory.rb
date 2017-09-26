@@ -22,4 +22,8 @@ class Inventory < ApplicationRecord
                  sold: 4,
                  returned: 5 }
 
+  def restock
+    raise(StandardError, "Inventory Locked!") unless status_before_type_cast <= 2
+    update(status: 0, cart: nil, order: nil, user: nil, shipping_method: nil)
+  end
 end
