@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'customer order process', type: :feature do
+describe 'customer order creation process', type: :feature do
 
   let(:customer) { FactoryGirl.create(:customer) }
 
