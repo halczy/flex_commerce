@@ -36,6 +36,7 @@ end
 
 # Capybara.javascript_driver = :chrome
 Capybara.javascript_driver = :poltergeist
+# Capybara.javascript_driver = :selenium_chrome_billy
 # Capybara.javascript_driver = :pg_billy
 
 Capybara.default_max_wait_time = 15

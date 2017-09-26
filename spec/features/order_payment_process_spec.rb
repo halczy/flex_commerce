@@ -103,6 +103,52 @@ describe 'customer order payment process', type: :feature do
     end
   end
 
-  context 'pay via alipay' do
+  context 'pay via Alipay' do
+    before { click_on 'Confirm'}
+
+    it 'sets payment amount to order total by default', driver: :pg_billy do
+      expect(page).to have_content("Alipay Payment: ¥#{Order.last.total.to_s[0]}")
+      stub = proxy.stub('https://openapi.alipaydev.com:443/gateway.do')
+                  .and_return(text: 'ALIPAY OK')
+      click_on 'Pay with Alipay'
+
+      expect(page).to have_content("ALIPAY OK")
+      expect(stub.requests[0][:params]["method"]).to eq(["alipay.trade.page.pay"])
+      expect(
+        stub.requests[0][:params]["biz_content"][0]
+      ).to include(Order.last.total.to_s)
+    end
+
+    it 'sets payment amount to unpaid amount on submission', driver: :pg_billy do
+      Order.last.user.wallet.update(balance: 99999999)
+      visit payment_order_path(Order.last)
+
+      fill_in 'custom_amount', with: '5'
+      click_on 'Pay with Wallet'
+      stub = proxy.stub('https://openapi.alipaydev.com:443/gateway.do')
+                  .and_return(text: 'ALIPAY OK')
+      click_on 'Pay with Alipay'
+
+      expect(page).to have_content("ALIPAY OK")
+      expect(
+        stub.requests[0][:params]["biz_content"][0]
+      ).to include(Order.last.id)
+      expect(
+        stub.requests[0][:params]["biz_content"][0]
+      ).to include(Order.last.amount_unpaid.to_s)
+    end
+
+    it 'does not submit zero payment amount to Alipay' do
+      Order.last.user.wallet.update(balance: 999_999)
+      visit payment_order_path(Order.last)
+      click_on 'Pay with Wallet'
+      visit payment_order_path(Order.last)
+
+      expect(page).to have_content("Alipay Payment: ¥0")
+
+      click_on 'Pay with Alipay'
+
+      expect(page).to have_content('Unable to create Alipay payment')
+    end
   end
 end
