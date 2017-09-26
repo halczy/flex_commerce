@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
 
@@ -26,6 +26,7 @@ gem 'ruby-progressbar'
 gem 'cocoon'
 gem 'attr_encrypted'
 gem 'alipay'
+gem 'webmock'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -39,8 +40,8 @@ end
 
 group :development do
   gem 'web-console'
-  gem "better_errors"
-  gem "binding_of_caller"
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'listen'
   gem 'spring'
   gem 'spring-watcher-listen'
@@ -50,9 +51,9 @@ end
 group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
-  gem "chromedriver-helper"
+  gem 'chromedriver-helper'
   gem 'poltergeist'
-  gem 'phantomjs', :require => 'phantomjs/poltergeist'
+  gem 'phantomjs', require: 'phantomjs/poltergeist'
   gem 'database_cleaner'
   gem 'rails-controller-testing'
   gem 'shrine-memory'

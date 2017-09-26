@@ -79,6 +79,8 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     crass (1.0.2)
     database_cleaner (1.6.1)
     debug_inspector (0.0.3)
@@ -101,6 +103,7 @@ GEM
     ffi (1.9.18)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    hashdiff (0.3.6)
     i18n (0.8.6)
     image_processing (0.4.5)
     interception (0.5)
@@ -223,6 +226,7 @@ GEM
     ruby-progressbar (1.8.3)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
+    safe_yaml (1.0.4)
     sass (3.5.1)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -272,6 +276,10 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
+    webmock (3.0.1)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
     webpacker (3.0.1)
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
@@ -328,6 +336,7 @@ DEPENDENCIES
   turbolinks
   uglifier
   web-console
+  webmock
   webpacker
 
 BUNDLED WITH

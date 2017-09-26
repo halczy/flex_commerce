@@ -14,6 +14,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'capybara/rspec'
+require 'webmock/rspec'
 # require "money-rails/test_helpers"
 
 RSpec.configure do |config|
