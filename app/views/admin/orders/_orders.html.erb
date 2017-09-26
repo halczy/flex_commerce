@@ -1,0 +1,27 @@
+<table class="table table-hover">
+  <thead>
+    <th>ID</th>
+    <th>Status</th>
+    <th>Customer</th>
+    <th>Total</th>
+    <th colspan="2"></th>
+  </thead>
+  <tbody>
+    <% orders.each do |order| %>
+    <tr>
+      <td><%= link_to order.id, admin_order_path(order) %></td>
+      <td><%= order.status.titleize %></td>
+      <td><%= link_to order.user.name, '#' %></td>
+      <td>
+        <% if order.status_before_type_cast >= 20 %>
+          <%= humanized_money_with_symbol order.total %>
+        <% else %>
+          <%= humanized_money_with_symbol order.pre_confirm_total %>
+        <% end %>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
