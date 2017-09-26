@@ -209,4 +209,36 @@ RSpec.describe Order, type: :model do
       expect(Order.service_process(@customer)).to match_array(@orders_in_service)
     end
   end
+
+  describe '#destroyable?' do
+    it 'returns true if order status is created' do
+      expect(order.destroyable?).to be_truthy
+    end
+
+    it 'returns true if order status is shipping_confirmed' do
+      expect(order_set.destroyable?).to be_truthy
+    end
+
+    it 'returns false if order status >= 20' do
+      expect(order_confirmed.destroyable?).to be_falsey
+    end
+  end
+
+  describe '#cancel' do
+    it 'restocks inventories' do
+      invs = order_set.inventories
+      order_set.cancel
+      invs.each do |inv|
+        expect(inv.unsold?).to be_truthy
+        expect(inv.order).to be_nil
+        expect(inv.shipping_method).to be_nil
+      end
+    end
+
+    it 'destroys order' do
+      order_set.cancel
+      expect {order_set.reload}.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+  end
 end

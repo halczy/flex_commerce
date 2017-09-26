@@ -70,4 +70,14 @@ class Order < ApplicationRecord
   def amount_unpaid
     total ? total - amount_paid : pre_confirm_total - amount_paid
   end
+
+  def destroyable?
+    status_before_type_cast < 20
+  end
+
+  def cancel
+    return false unless destroyable?
+    inventories.each(&:restock)
+    destroy
+  end
 end

@@ -38,8 +38,7 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    addressable (2.5.2)
-      public_suffix (>= 2.0.2, < 4.0)
+    addressable (2.4.0)
     alipay (0.15.0)
     archive-zip (0.7.0)
       io-like (~> 0.3.0)
@@ -181,9 +180,8 @@ GEM
     pry-rescue (1.4.5)
       interception (>= 0.5)
       pry
-    public_suffix (3.0.0)
-    puffing-billy (0.9.1)
-      addressable
+    puffing-billy (0.10.0)
+      addressable (~> 2.4.0)
       em-http-request (~> 1.1.0)
       em-synchrony
       eventmachine (~> 1.0.4)
