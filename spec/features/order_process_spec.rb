@@ -70,10 +70,6 @@ describe 'customer order process', type: :feature do
       select 'Delivery', from: "order_products_attributes_0_shipping_methods"
       click_on 'Next'
 
-      expect(page.current_path).to eq(address_order_path(Order.last))
-      expect(page).to have_content('Delivery')
-      expect(page).to have_content(@product.name.upcase)
-
       fill_in 'address[recipient]', with: 'Test Recipient'
       fill_in 'address[contact_number]', with: '17612344321'
       fill_in 'address[name]', with: 'Home'
@@ -94,10 +90,6 @@ describe 'customer order process', type: :feature do
       select 'Delivery', from: "order_products_attributes_0_shipping_methods"
       click_on 'Next'
 
-      expect(page.current_path).to eq(address_order_path(Order.last))
-      expect(page).to have_content('Delivery')
-      expect(page).to have_content(@product.name)
-
       fill_in 'address[recipient]', with: 'Test Recipient'
       fill_in 'address[contact_number]', with: '17612344321'
       fill_in 'address[name]', with: 'Home'
@@ -112,7 +104,22 @@ describe 'customer order process', type: :feature do
       expect(page).to have_content('Self Pickup')
 
       click_on 'Next'
+
       expect(page).to have_content('Self Pickup')
+    end
+
+    context 'invalid submission' do
+      it 'renders error message when customer submit empty address' do
+      visit product_path(@product)
+      click_on 'Add to Cart'
+      click_on 'Checkout'
+      select 'Delivery', from: "order_products_attributes_0_shipping_methods"
+      click_on 'Next'
+      click_on 'Next'
+
+      expect(page).to have_content('select an existing address')
+      expect(page).to have_content('errors')
+      end
     end
   end
 
