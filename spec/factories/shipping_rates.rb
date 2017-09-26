@@ -8,8 +8,8 @@ FactoryGirl.define do
 
   factory :shipping_rate_province, class: ShippingRate do
     geo_code { FactoryGirl.create(:province).id }
-    init_rate { Faker::Number.decimal(2) }
-    add_on_rate { Faker::Number.decimal(2) }
+    init_rate { Faker::Number.number(2) }
+    add_on_rate { Faker::Number.number(2) }
     association :shipping_method, factory: :delivery
   end
 end
