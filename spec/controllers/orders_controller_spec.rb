@@ -388,4 +388,21 @@ RSpec.describe OrdersController, type: :controller do
       end
     end
   end
+
+  describe 'GET resume' do
+    it 'redirects to shipping action if order status is created' do
+      get :resume, params: { id: order.id }
+      expect(response).to redirect_to(shipping_order_path)
+    end
+
+    it 'redirects to reivew page if order status is shipping confirmed' do
+      get :resume, params: { id: order_set.id }
+      expect(response).to redirect_to(review_order_path)
+    end
+
+    it 'redirects to payment page if order status is comfirmed' do
+      get :resume, params: { id: order_confirmed.id }
+      expect(response).to redirect_to(payment_order_path)
+    end
+  end
 end

@@ -37,7 +37,7 @@ Rails.application.routes.draw do
       post  :create_wallet_payment
       post  :create_alipay_payment
       get   :success
-      get   :failure
+      get   :resume
     end
     collection do
       get   :update_selector
