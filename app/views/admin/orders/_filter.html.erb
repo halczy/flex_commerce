@@ -1,0 +1,17 @@
+<%= form_with(url: admin_orders_path, local: true, method: :get) do |form| %>
+  <%= form.select :status, options_for_select([
+                  ['No Filter', ''],
+                  ['Created', 'created'],
+                  ['Shipping Confirmed', 'shipping_confirmed'],
+                  ['Confirmed', 'confirmed'],
+                  ['Payment Pending', 'payment_pending'],
+                  ['Partial Payment', 'partial_payment'],
+                  ['Payment Fail', 'payment_fail'],
+                  ['Payment Success', 'payment_success'],
+                  ['Staff Confirmed', 'staff_confirmed'],
+                  ['Pickup Pending', 'pickup_pending'],
+                  ['Shipped', 'shipped'],
+                  ['Completed', 'completed']]),
+                  { prompt: "Filter Orders" },
+                  class: 'form-control', onchange: 'this.form.submit();' %>
+<% end %>

@@ -1,16 +1,15 @@
 <%= provide :title, 'Orders' %>
 
 <div class="d-flex justify-content-start mb-3">
-  <div class="p-2">
-  </div>
-  <div class="ml-auto p-2">
+  <div><%= render 'filter' %></div>
+  <div class="ml-auto">
   </div>
 </div>
 
 <div class="row">
   <%= render 'shared/paginate', objects: @orders if @orders.present? %>
   <div class="col-lg-12">
-    <p>Inventory Count: <%= @orders.total_count %></p>
+    <p>Order Count: <%= @orders.total_count %></p>
     <%= render 'orders', orders: @orders %>
   </div>
   <%= render 'shared/paginate', objects: @orders if @orders.present? %>
