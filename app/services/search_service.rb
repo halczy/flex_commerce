@@ -8,7 +8,7 @@ class SearchService
   end
 
   def build_clause(field_name)
-    "#{field_name} ILIKE :#{field_name}"
+    "CAST(#{field_name} AS TEXT) ILIKE :#{field_name}"
   end
 
   def build_args
