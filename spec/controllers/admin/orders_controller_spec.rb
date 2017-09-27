@@ -38,4 +38,29 @@ RSpec.describe Admin::OrdersController, type: :controller do
       expect(assigns(:orders)).to match_array([@order_confirmed])
     end
   end
+
+  describe 'GET search' do
+    before do
+      @customer = FactoryGirl.create(:customer, name: 'TEST 1')
+      @order = FactoryGirl.create(:order, user: @customer)
+    end
+
+    it 'responses successfully with search result' do
+      get :search, params: { search_term: @customer.id }
+      expect(response).to render_template(:search)
+      expect(assigns(:search_result)).to match_array([@order])
+    end
+
+    it 'responses successfully with empty search result' do
+      get :search, params: { search_term: 'this_order_should_not_exist'}
+      expect(assigns(:search_result).count).to eq(0)
+    end
+
+    it 'renders flash message when no search term is provided' do
+      get :search, params: { }
+      expect(response).to render_template(:search)
+      expect(flash[:warning]).to be_present
+      expect(assigns(:search_result)).to be_nil
+    end
+  end
 end

@@ -76,6 +76,10 @@ Rails.application.routes.draw do
       end
     end
     resources :shipping_methods                                   # Shipping Methods
-    resources :orders                                             # Orders
+    resources :orders do                                          # Orders
+      collection do
+        get :search
+      end
+    end
   end
 end
