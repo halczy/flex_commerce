@@ -15,7 +15,7 @@ RSpec.describe SearchService, type: :model do
   describe '#build_clause' do
     it 'returns where clause' do
       result = search_run.build_clause('name')
-      expect(result).to eq('name ILIKE :name')
+      expect(result).to eq('CAST(name AS TEXT) ILIKE :name')
     end
   end
 
@@ -31,14 +31,14 @@ RSpec.describe SearchService, type: :model do
       it 'builds valid query clause with single field_name' do
         search_run.build('description')
         expect(search_run.where_clause).to eq(
-          "description ILIKE :description"
+          "CAST(description AS TEXT) ILIKE :description"
         )
       end
 
       it 'builds valid query clause with multiple field_name' do
         search_run.build('name', 'tag_line')
         expect(search_run.where_clause).to eq(
-         "name ILIKE :name OR tag_line ILIKE :tag_line"
+         "CAST(name AS TEXT) ILIKE :name OR CAST(tag_line AS TEXT) ILIKE :tag_line"
         )
       end
     end
