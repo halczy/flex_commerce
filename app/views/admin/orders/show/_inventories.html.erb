@@ -1,0 +1,37 @@
+<div class="col">
+  <div class="jumbotron">
+    <h4>Order Inventories</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Inventory ID</th>
+          <th>Purchase Price</th>
+          <th>Shipping Method</th>
+          <th>Purchase Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <% @order.inventories.each do |inv| %>
+            <td>
+              <%= link_to inv.product.name, admin_product_path(inv.product) %>
+            </td>
+            <td>
+              <%= link_to inv.id, admin_inventory_path(inv) %>
+            </td>
+            <td>
+              <%= humanized_money_with_symbol inv.purchase_price %>
+            </td>
+            <td>
+              <%= inv.shipping_method.name %>
+            </td>
+            <td>
+              <%= inv.purchased_at %>
+            </td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

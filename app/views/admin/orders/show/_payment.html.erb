@@ -1,0 +1,27 @@
+<div class="col">
+  <div class="jumbotron">
+    <h4>Payment</h4>
+    <table class="table table-responsive">
+      <thead>
+        <tr>
+          <th>Payment ID</th>
+          <th>Payment Amount</th>
+          <th>Payment Status</th>
+          <th>Payment Type</th>
+          <th>Payment Processor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <% @order.payments.each do |payment| %>
+            <td><%= payment.id %></td>
+            <td><%= humanized_money_with_symbol payment.amount %></td>
+            <td><%= payment.status.titleize %></td>
+            <td><%= payment.variety.titleize %></td>
+            <td><%= payment.processor.titleize %></td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

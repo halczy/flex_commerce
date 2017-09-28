@@ -1,0 +1,50 @@
+<div class="col">
+  <div class="jumbotron">
+    <h4>Basic Information</h4>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">ID</th>
+          <td><%= @order.id %></td>
+        </tr>
+        <tr>
+          <th scope='row'>Status</th>
+          <td><%= @order.status.titleize %></td>
+        </tr>
+        <tr>
+          <th scope='row'>Confrimed Total</th>
+          <td><%= humanized_money_with_symbol @order.total %></td>
+        </tr>
+        <tr>
+          <th scope="row">Pre-confirm Total</th>
+          <td><%= humanized_money_with_symbol @order.pre_confirm_total %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="col">
+  <div class="jumbotron">
+    <h4>Customer Information</h4>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">Name</th>
+          <td><%= @order.user.name %></td>
+        </tr>
+        <tr>
+          <th scope="row">Member ID</th>
+          <td><%= @order.user.member_id %></td>
+        </tr>
+        <tr>
+          <th scope="row">Email</th>
+          <td><%= @order.user.email %></td>
+        </tr>
+        <tr>
+          <th scope="row">Cell Number</th>
+          <td><%= @order.user.cell_number %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

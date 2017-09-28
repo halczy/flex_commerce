@@ -1,1 +1,27 @@
-<%= @order.inspect %>
+<%= provide :title, 'Order' %>
+
+<div class="d-flex justify-content-start mb-3">
+  <div>
+    <%= link_to admin_orders_path, class: 'btn btn-secondary' do %>
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+    <% end %>
+  </div>
+  <div class="ml-auto">
+  </div>
+</div>
+
+<div class="row">
+  <%= render 'admin/orders/show/basic' %>
+</div>
+<div class="row">
+  <%= render 'admin/orders/show/inventories' %>
+</div>
+<div class="row">
+  <%= render 'admin/orders/show/shipment' %>
+</div>
+<div class="row">
+  <%= render 'admin/orders/show/payment' %>
+</div>
+<div class="row">
+  <%= render 'admin/orders/show/transaction' %>
+</div>

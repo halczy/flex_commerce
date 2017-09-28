@@ -1,0 +1,27 @@
+<div class="col">
+  <div class="jumbotron">
+    <h4>Transaction</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Amount</th>
+          <th>Payment ID</th>
+          <th>Processor ID</th>
+          <th>Note</th>
+          <th>Process Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.transactions.each do |transaction| %>
+        <tr>
+          <td><%= humanized_money_with_symbol transaction.amount %></td>
+          <td><%= transaction.originable_id %></td>
+          <td><%= transaction.processable_id %></td>
+          <td><%= transaction.note %></td>
+          <td><%= transaction.created_at %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
