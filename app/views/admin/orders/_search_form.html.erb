@@ -1,0 +1,15 @@
+<%= form_with(url: search_admin_orders_path, class: 'form-inline',
+              local: true, method: :get) do |form| %>
+
+  <%= form.label :search_term, class: 'sr-only' %>
+  <%= form.search_field :search_term, value: "#{params[:search_term]}",
+                                      placeholder: 'ID or Customer Info',
+                                      class: "form-control" %>
+
+  <span class="input-group-btn">
+    <%= button_tag class: 'btn btn-success', data: { disable_with: "Searching..." } do %>
+      <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+      Search
+    <% end %>
+  </span>
+<% end %>
