@@ -140,7 +140,7 @@ describe 'customer order payment process', type: :feature do
       ).to include(Order.last.id)
       expect(
         stub.requests[0][:params]["biz_content"][0]
-      ).to include(Order.last.amount_unpaid.to_s)
+      ).to include(Order.last.amount_unpaid.to_s.split('.')[0])
     end
 
     it 'does not submit zero payment amount to Alipay' do
