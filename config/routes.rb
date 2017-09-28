@@ -76,7 +76,7 @@ Rails.application.routes.draw do
       end
     end
     resources :shipping_methods                                   # Shipping Methods
-    resources :orders do                                          # Orders
+    resources :orders, only: [:index, :show, :destroy] do         # Orders
       collection do
         get :search
       end

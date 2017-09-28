@@ -63,4 +63,12 @@ RSpec.describe Admin::OrdersController, type: :controller do
       expect(assigns(:search_result)).to be_nil
     end
   end
+
+  describe 'GET show' do
+    it 'responses successfully' do
+      get :show, params: { id: order.id }
+      expect(response).to be_success
+      expect(assigns(:order)).to be_an_instance_of Order
+    end
+  end
 end

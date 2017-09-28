@@ -1,4 +1,5 @@
 class Admin::OrdersController < Admin::AdminController
+  before_action :set_order, only: [ :show ]
 
   def index
     status = params[:status] ||= ""
@@ -17,5 +18,11 @@ class Admin::OrdersController < Admin::AdminController
       render :search
     end
   end
+
+  private
+
+    def set_order
+      @order = Order.find(params[:id])
+    end
 
 end
