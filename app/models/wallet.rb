@@ -1,7 +1,7 @@
 class Wallet < ApplicationRecord
   # Relationships
   belongs_to :user
-  has_many   :transactionslogs, as: :processable
+  has_many   :transactions_logs, as: :processable
 
   # Validation
   monetize :balance_cents, numericality: { greater_than_or_equal_to: 0 }
