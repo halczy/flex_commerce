@@ -38,7 +38,8 @@ RSpec.describe PaymentService, type: :model do
         expect(request).to be_present
         expect(request['out_trade_no']).to eq(alipay_created.payment.id)
         expect(request['product_code']).to eq('FAST_INSTANT_TRADE_PAY')
-        expect(request['total_amount']).to eq(alipay_created.payment.amount.to_s)
+        expect(request['total_amount'].to_f)
+          .to eq(alipay_created.payment.amount.to_f)
         expect(request['subject']).to be_present
       end
     end
