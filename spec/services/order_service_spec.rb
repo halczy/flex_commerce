@@ -12,6 +12,9 @@ RSpec.describe OrderService do
   let(:order_selected)  { FactoryGirl.create(:order, selected: true) }
   let(:order_set)       { FactoryGirl.create(:order, set: true) }
   let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true) }
+  let(:order_payment)   { FactoryGirl.create(:order_payment) }
+
+  let(:order_payment_sucess) { FactoryGirl.create(:order_payment, success: true) }
 
   let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
                                                              only_pickup: true) }
@@ -338,6 +341,15 @@ RSpec.describe OrderService do
       end
     end
 
+    describe '#total_inventories_cost' do
+      it 'returns total inventories cost in order' do
+        order_service = OrderService.new(order_id: order_set)
+        order_service.confirm
+        products_cost = Product.all.sum { |p| p.price_member}
+        expect(order_service.total_inventories_cost).to eq(products_cost)
+      end
+    end
+
     describe '#total_shipping_cost' do
       it 'returns order shipping cost with mixed shipping method',
           require_mix: true do
@@ -418,13 +430,15 @@ RSpec.describe OrderService do
     end
   end
 
-  describe '#total_inventories_cost' do
-    it 'returns total inventories cost in order' do
-      order_service = OrderService.new(order_id: order_set)
-      order_service.confirm
-      products_cost = Product.all.sum { |p| p.price_member}
-      expect(order_service.total_inventories_cost).to eq(products_cost)
+  describe 'staff_confrim' do
+    it 'returns true if confirm is successfully' do
+      order_service = OrderService.new(order_id: order_payment_sucess)
+      expect(order_service.staff_confrim).to be_truthy
+    end
+
+    it 'returns false if confirm fails due to incorrect status' do
+      order_service = OrderService.new(order_id: order_payment)
+      expect(order_service.staff_confrim).to be_falsey
     end
   end
-
 end

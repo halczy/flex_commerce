@@ -132,6 +132,11 @@ class OrderService
     end
   end
 
+  def staff_confrim
+    return false unless @order.payment_success?
+    @order.staff_confirmed!
+  end
+
   private
 
     def set_shipping_method(product, shipping_method)
