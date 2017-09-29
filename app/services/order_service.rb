@@ -137,6 +137,14 @@ class OrderService
     @order.staff_confirmed!
   end
 
+  def set_pickup_ready
+    return false unless @order.shipping_methods.self_pickup.present?
+    @order.update(shipment: {}) unless @order.shipment
+    @order.shipment[:pickup_readied_at] = DateTime.now
+    @order.pickup_pending! unless @order.shipped?
+    @order.save
+  end
+
   private
 
     def set_shipping_method(product, shipping_method)

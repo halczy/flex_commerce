@@ -22,9 +22,9 @@ RSpec.describe OrderService do
                                                              only_delivery: true) }
   let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true,
                                                              no_shipping: true) }
-
-  let(:payment_order)        { FactoryGirl.create(:payment_order) }
+  let(:payment_order)         { FactoryGirl.create(:payment_order) }
   let(:payment_success_order) { FactoryGirl.create(:payment_order, success: true) }
+  let(:service_order)         { FactoryGirl.create(:service_order) }
 
   describe '#initialize' do
     it 'initializes new order service with cart instance' do
@@ -437,6 +437,35 @@ RSpec.describe OrderService do
     it 'returns false if confirm fails due to incorrect status' do
       order_service = OrderService.new(order_id: payment_order)
       expect(order_service.staff_confirm).to be_falsey
+    end
+  end
+
+  describe '#set_pickup_ready' do
+    it 'adds pickup_readied_at to shipment hash' do
+      order_service = OrderService.new(order_id: service_order)
+      order_service.set_pickup_ready
+      expect(order_service.order.reload.shipment['pickup_readied_at']).to be_present
+    end
+
+    it 'sets order status to pickup pending' do
+      order_service = OrderService.new(order_id: service_order)
+      order_service.set_pickup_ready
+      expect(order_service.order.reload.pickup_pending?).to be_truthy
+    end
+
+    it 'does not set status if order status is shipped' do
+      service_order.shipped!
+      order_service = OrderService.new(order_id: service_order)
+      order_service.set_pickup_ready
+      expect(order_service.order.reload.shipped?).to be_truthy
+    end
+
+    it 'does not set pickup ready of self pickup method is not in order' do
+      inv = service_order.inventories.
+              where(shipping_method: ShippingMethod.all.self_pickup.first)
+      inv.update(shipping_method: nil)
+      order_service = OrderService.new(order_id: service_order)
+      expect(order_service.set_pickup_ready).to be_falsey
     end
   end
 end
