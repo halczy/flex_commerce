@@ -1,5 +1,5 @@
 class Admin::OrdersController < Admin::AdminController
-  before_action :set_order, only: [ :show ]
+  before_action :set_order, only: [ :show, :confirm ]
 
   def index
     status = params[:status] ||= ""
@@ -19,10 +19,22 @@ class Admin::OrdersController < Admin::AdminController
     end
   end
 
+  def confirm
+    if @order_service.staff_confirm
+      flash[:success] = "Order is now #{@order.status.titleize}."
+    else
+      flash[:danger] = "Unable to confirm this order."
+    end
+    redirect_to admin_orders_path(@order)
+  end
+
+  def show; end
+
   private
 
     def set_order
       @order = Order.find(params[:id])
+      @order_service = OrderService.new(order_id: @order.id)
     end
 
 end

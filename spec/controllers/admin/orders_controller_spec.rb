@@ -8,6 +8,9 @@ RSpec.describe Admin::OrdersController, type: :controller do
   let(:order_set)       { FactoryGirl.create(:order, set: true) }
   let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true) }
 
+  let(:order_payment)        { FactoryGirl.create(:order_payment) }
+  let(:order_payment_sucess) { FactoryGirl.create(:order_payment, success: true) }
+
   before { signin_as admin }
 
   describe 'GET index' do
@@ -69,6 +72,19 @@ RSpec.describe Admin::OrdersController, type: :controller do
       get :show, params: { id: order.id }
       expect(response).to be_success
       expect(assigns(:order)).to be_an_instance_of Order
+    end
+  end
+
+  describe 'PATCH confirm' do
+    it 'confirms order with correct status' do
+      patch :confirm, params: { id: order_payment_sucess }
+      expect(flash[:success]).to be_present
+      expect(response).to redirect_to(admin_orders_path(order_payment_sucess))
+    end
+
+    it 'renders error message if fail to confirm' do
+      patch :confirm, params: { id: order_payment }
+      expect(flash[:danger]).to be_present
     end
   end
 end
