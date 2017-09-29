@@ -37,7 +37,7 @@ class PaymentService
       h[:total_amount] = @payment.order.amount_unpaid.to_f
       h[:subject] = "[#{app_name}] Payment for order: #{@payment.order.id}"
     end
-    @payment.update(processor_request: biz_content.to_json)
+    @payment.update(processor_request: biz_content)
   end
 
   def build_processor
@@ -144,9 +144,8 @@ class PaymentService
     end
 
     def validate_processor_response
-      rsp_json = @payment.processor_response_return ||
-                 @payment.processor_response_notify
-      rsp = ActiveSupport::JSON.decode(rsp_json)
+      rsp = @payment.processor_response_return ||
+            @payment.processor_response_notify
 
       if rsp['out_trade_no'] != @payment.id
         raise(StandardError, 'Invalid out_trade_no')

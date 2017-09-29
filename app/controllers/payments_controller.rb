@@ -6,7 +6,7 @@ class PaymentsController < ApplicationController
 
   def alipay_return
     payment = Payment.find(params[:id])
-    payment.update(processor_response_return: request.query_parameters.to_json)
+    payment.update(processor_response_return: request.query_parameters)
     payment_service = PaymentService.new(payment_id:  payment.id)
     if payment_service.alipay_confirm
       redirect_to success_order_path(id: payment.order.id,
@@ -20,14 +20,13 @@ class PaymentsController < ApplicationController
 
   def alipay_notify
     notify_data = request.request_parameters
-    logger.info notify_data
     @payment = Payment.find(params[:id])
-    @payment.update(processor_response_notify: notify_data.to_json)
+    @payment.update(processor_response_notify: notify_data)
     render plain: 'success' if notify_data.present?
   end
 
   def process_alipay_notify
-    payment_service = PaymentService.new(payment_id:  @payment.id)
+    payment_service = PaymentService.new(payment_id: @payment.id)
     payment_service.alipay_confirm
   end
 
