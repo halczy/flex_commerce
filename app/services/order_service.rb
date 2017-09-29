@@ -148,7 +148,8 @@ class OrderService
 
     def confirm_inventories
       @order.inventories.each do |inv|
-        inv.update(status: 3, purchase_price: inv.product.price_member)
+        inv.update(status: 3, purchase_price: inv.product.price_member,
+                              purchase_weight: inv.product.weight)
       end
     end
 

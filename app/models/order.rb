@@ -72,7 +72,7 @@ class Order < ApplicationRecord
   end
 
   def destroyable?
-    status_before_type_cast < 20
+    status_before_type_cast <= 20
   end
 
   def cancel

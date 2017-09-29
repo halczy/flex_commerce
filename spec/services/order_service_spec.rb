@@ -389,6 +389,14 @@ RSpec.describe OrderService do
           expect(inv.reload.purchase_price).to eq(inv.product.price_member)
         end
       end
+
+      it 'assigns product weight to inventory' do
+        order_service = OrderService.new(order_id: order_set)
+        order_service.send(:confirm_inventories)
+        order_set.inventories.each do |inv|
+          expect(inv.reload.purchase_weight).to eq(inv.product.weight)
+        end
+      end
     end
 
     it 'returns true and changes order status if confirmed' do

@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe Order, type: :model do
 
   let(:order)           { FactoryGirl.create(:order) }
-
   let(:order_selected)  { FactoryGirl.create(:order, selected: true) }
   let(:order_set)       { FactoryGirl.create(:order, set: true) }
   let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true) }
+  let(:order_payment)   { FactoryGirl.create(:order_payment) }
 
   let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
                                                              only_pickup: true) }
@@ -219,8 +219,12 @@ RSpec.describe Order, type: :model do
       expect(order_set.destroyable?).to be_truthy
     end
 
-    it 'returns false if order status >= 20' do
-      expect(order_confirmed.destroyable?).to be_falsey
+    it 'returns false if order status is confirmed' do
+      expect(order_confirmed.destroyable?).to be_truthy
+    end
+
+    it 'returns false if order status > 20' do
+      expect(order_payment.destroyable?).to be_falsey
     end
   end
 

@@ -10,10 +10,10 @@ RSpec.describe OrdersController, type: :controller do
   let(:no_shipping) { FactoryGirl.create(:no_shipping) }
 
   let(:order)           { FactoryGirl.create(:order, user: customer) }
-
   let(:order_selected)  { FactoryGirl.create(:order, selected: true, user: customer) }
   let(:order_set)       { FactoryGirl.create(:order, set: true, user: customer) }
   let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true, user: customer) }
+  let(:order_payment)   { FactoryGirl.create(:order_payment, user: customer) }
 
   let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
                                                              only_pickup: true,
@@ -417,9 +417,9 @@ RSpec.describe OrdersController, type: :controller do
     end
 
     it 'flash error message if order cannot be canceled' do
-      delete :destroy, params: { id: order_confirmed.id }
+      delete :destroy, params: { id: order_payment.id }
       expect(flash[:danger]).to be_present
-      expect(response).to redirect_to(order_confirmed)
+      expect(response).to redirect_to(order_payment)
     end
   end
 end
