@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 150) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pgcrypto"
+  enable_extension "hstore"
 
   create_table "addresses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
@@ -135,9 +136,9 @@ ActiveRecord::Schema.define(version: 150) do
     t.integer "processor"
     t.integer "variety"
     t.uuid "order_id"
-    t.jsonb "processor_request"
-    t.jsonb "processor_response_return"
-    t.jsonb "processor_response_notify"
+    t.hstore "processor_request"
+    t.hstore "processor_response_return"
+    t.hstore "processor_response_notify"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_payments_on_order_id"

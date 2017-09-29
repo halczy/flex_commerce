@@ -6,9 +6,9 @@ class CreatePayments < ActiveRecord::Migration[5.1]
       t.integer    :processor, index: true
       t.integer    :variety,   index: true
       t.references :order,     index: true, type: :uuid, foreign_key: true
-      t.jsonb      :processor_request
-      t.jsonb      :processor_response_return
-      t.jsonb      :processor_response_notify
+      t.hstore     :processor_request
+      t.hstore     :processor_response_return
+      t.hstore     :processor_response_notify
 
       t.timestamps
     end
