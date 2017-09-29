@@ -21,11 +21,11 @@ class Admin::OrdersController < Admin::AdminController
 
   def confirm
     if @order_service.staff_confirm
-      flash[:success] = "Order is now #{@order.status.titleize}."
+      flash[:success] = "The order status is now #{@order.reload.status.titleize}."
     else
       flash[:danger] = "Unable to confirm this order."
     end
-    redirect_to admin_orders_path(@order)
+    redirect_to admin_order_path(@order)
   end
 
   def show; end

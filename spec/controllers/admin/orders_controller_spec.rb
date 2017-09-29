@@ -79,7 +79,7 @@ RSpec.describe Admin::OrdersController, type: :controller do
     it 'confirms order with correct status' do
       patch :confirm, params: { id: order_payment_sucess }
       expect(flash[:success]).to be_present
-      expect(response).to redirect_to(admin_orders_path(order_payment_sucess))
+      expect(response).to redirect_to(admin_order_path(order_payment_sucess))
     end
 
     it 'renders error message if fail to confirm' do
