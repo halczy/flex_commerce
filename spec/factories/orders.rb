@@ -4,12 +4,12 @@ FactoryGirl.define do
     association :user, factory: :customer
 
     transient do
-      selected      false
-      set           false
-      confirmed     false
-      only_pickup   false
-      only_delivery false
-      no_shipping   false
+      selected        false
+      set             false
+      confirmed       false
+      only_pickup     false
+      only_delivery   false
+      no_shipping     false
     end
 
     after(:create) do |order, evaluator|
@@ -66,121 +66,52 @@ FactoryGirl.define do
     end
   end
 
-  # factory :order_no_shipping, class: Order do
-  #   status 10
-  #   association :user, factory: :customer
+  factory :order_payment, class: Order do
+    status 30
+    association :user, factory: :customer
 
-  #   transient do
-  #     set           false
-  #     confirmed     false
-  #   end
+    transient do
+      partial false
+      fail    false
+      success false
+    end
 
-  #   after(:create) do |order|
-  #     3.times do
-  #       FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
-  #     end
-  #     no_shipping = FactoryGirl.create(:no_shipping)
+    after(:create) do |order, evaluator|
+      # Build order to confirm status
+      3.times do
+        FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
+      end
+      delivery = FactoryGirl.create(:delivery)
+      pickup = FactoryGirl.create(:self_pickup)
+      order.inventories.each { |i| i.update(shipping_method: delivery) }
+      order.inventories.first.update(shipping_method: pickup)
+      address = FactoryGirl.create(:address, addressable: order)
+      FactoryGirl.create(:shipping_rate, geo_code: address.community,
+                                         init_rate: 999.99,
+                                         add_on_rate: 111.11,
+                                         shipping_method: delivery)
+      order.inventories.each do |inv|
+        inv.update(status: 3, purchase_price: inv.product.price_member,
+                              purchase_weight: inv.product.weight)
+      end
+      shipping_cost = order.inventories.sum { |i| i.purchase_price }
+      order.update(shipping_cost: shipping_cost)
 
-  #     if evaluator.set || evaluator.confirmed
-  #       order.inventories.each { |i| i.update(shipping_method: no_shipping) }
-  #     end
+      # Add a wallet payment for order
+      order.user.wallet.update(balance: 999999)
+      payment_service = PaymentService.new(order_id: order.id, processor: 'wallet',
+                                           amount: Money.new(100))
+      payment_service.create
 
-  #     if evaluator.confirmed
-
-  #     end
-  #   end
-  # end
-
-  # factory :order_pickup_selected, class: Order do
-  #   status 0
-  #   association :user, factory: :customer
-
-  #   after(:create) do |order|
-  #     3.times do
-  #       FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
-  #     end
-  #     pickup = FactoryGirl.create(:self_pickup)
-  #     order.inventories.each { |i| i.update(shipping_method: pickup) }
-  #   end
-  # end
-
-  # factory :order_delivery_selected, class: Order do
-  #   status 0
-  #   association :user, factory: :customer
-
-  #   after(:create) do |order|
-  #     3.times do
-  #       FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
-  #     end
-  #     delivery = FactoryGirl.create(:delivery)
-  #     order.inventories.each { |i| i.update(shipping_method: delivery) }
-  #   end
-  # end
-
-  # factory :order_mix_selected, class: Order do
-  #   status 0
-  #   association :user, factory: :customer
-
-  #   after(:create) do |order|
-  #     3.times do
-  #       FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
-  #     end
-  #     delivery = FactoryGirl.create(:delivery)
-  #     pickup = FactoryGirl.create(:self_pickup)
-  #     order.inventories.each { |i| i.update(shipping_method: delivery) }
-  #     order.inventories.first.update(shipping_method: pickup)
-  #   end
-  # end
-
-  # factory :order_pickup_set, class: Order do
-  #   status 10
-  #   association :user, factory: :customer
-
-  #   after(:create) do |order|
-  #     3.times do
-  #       FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
-  #     end
-  #     pickup = FactoryGirl.create(:self_pickup)
-  #     order.inventories.each { |i| i.update(shipping_method: pickup) }
-  #   end
-  # end
-
-  # factory :order_delivery_set, class: Order do
-  #   status 10
-  #   association :user, factory: :customer
-
-  #   after(:create) do |order|
-  #     3.times do
-  #       FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
-  #     end
-  #     delivery = FactoryGirl.create(:delivery)
-  #     order.inventories.each { |i| i.update(shipping_method: delivery) }
-  #     address = FactoryGirl.create(:address, addressable: order)
-  #     FactoryGirl.create(:shipping_rate, geo_code: address.community,
-  #                                        init_rate: 999.99,
-  #                                        add_on_rate: 111.11,
-  #                                        shipping_method: delivery)
-  #   end
-  # end
-
-  # factory :order_mix_set, class: Order do
-  #   status 10
-  #   association :user, factory: :customer
-
-  #   after(:create) do |order|
-  #     3.times do
-  #       FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
-  #     end
-  #     delivery = FactoryGirl.create(:delivery)
-  #     pickup = FactoryGirl.create(:self_pickup)
-  #     order.inventories.each { |i| i.update(shipping_method: delivery) }
-  #     order.inventories.first.update(shipping_method: pickup)
-  #     address = FactoryGirl.create(:address, addressable: order)
-  #     FactoryGirl.create(:shipping_rate, geo_code: address.community,
-  #                                        init_rate: 999.99,
-  #                                        add_on_rate: 111.11,
-  #                                        shipping_method: delivery)
-  #   end
-  # end
-
+      # Transient
+      payment_service.charge if evaluator.partial
+      order.update(status: 50) if evaluator.fail
+      if evaluator.success
+        payment_service.charge
+        rps = PaymentService.new(order_id: order.id, processor: 'wallet')
+        rps.create
+        rps.charge
+      end
+    end
+  end
 end
