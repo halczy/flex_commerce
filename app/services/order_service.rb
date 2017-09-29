@@ -132,7 +132,7 @@ class OrderService
     end
   end
 
-  def staff_confrim
+  def staff_confirm
     return false unless @order.payment_success?
     @order.staff_confirmed!
   end
