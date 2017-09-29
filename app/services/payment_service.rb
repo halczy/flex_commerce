@@ -73,6 +73,7 @@ class PaymentService
   def process_result
     if @order.reload.amount_unpaid == 0
       @order.payment_success!
+      record_purchase_date
     elsif @payment.status_before_type_cast.between?(1, 3)
       @order.partial_payment!
     else
@@ -119,6 +120,7 @@ class PaymentService
         validate_processor_response
         confirm_payment_and_order
         create_transaction
+        record_purchase_date
         true
       end
     rescue Exception
@@ -166,6 +168,12 @@ class PaymentService
         @payment.processor_confirmed!
       end
       @payment.order.payment_success!
+    end
+
+    def record_purchase_date
+      if @order.reload.payment_success?
+        @order.inventories.each { |inv| inv.update(purchased_at: DateTime.now)}
+      end
     end
 
     def create_transaction

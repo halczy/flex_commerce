@@ -219,6 +219,21 @@ RSpec.describe PaymentService, type: :model do
         wallet_created.charge_wallet
         expect(wallet_created.order.payment_fail?).to be_truthy
       end
+
+      it 'records purchased date to inventories if payment is successful' do
+        wallet_created.user.wallet.update(balance: wallet_created.amount)
+        wallet_created.charge_wallet
+        wallet_created.order.inventories.each do |inv|
+          expect(inv.purchased_at).to be_present
+        end
+      end
+
+      it 'does not record purchased date if order status is not payment_success' do
+        wallet_created.charge_wallet
+        wallet_created.order.inventories.each do |inv|
+          expect(inv.purchased_at).to be_nil
+        end
+      end
     end
 
     describe '#charge_alipay' do
@@ -319,6 +334,23 @@ RSpec.describe PaymentService, type: :model do
         @payment_service.payment.client_side_confirmed!
         @payment_service.send(:confirm_payment_and_order)
         expect(@payment_service.payment.confirmed?).to be_truthy
+      end
+    end
+
+    context '#record_purchase_date' do
+      it 'records purchased date to inventories if payment is successful' do
+        @payment_service.order.payment_success!
+        @payment_service.send(:record_purchase_date)
+        @payment_service.order.inventories.each do |inv|
+          expect(inv.purchased_at).to be_present
+        end
+      end
+
+      it 'does not record purchased date if order status is not payment_success' do
+        @payment_service.send(:record_purchase_date)
+        @payment_service.order.inventories.each do |inv|
+          expect(inv.purchased_at).to be_nil
+        end
       end
     end
 
