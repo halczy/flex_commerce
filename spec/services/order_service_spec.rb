@@ -23,8 +23,8 @@ RSpec.describe OrderService do
   let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true,
                                                              no_shipping: true) }
 
-  let(:order_payment)        { FactoryGirl.create(:order_payment) }
-  let(:order_payment_sucess) { FactoryGirl.create(:order_payment, success: true) }
+  let(:payment_order)        { FactoryGirl.create(:payment_order) }
+  let(:payment_success_order) { FactoryGirl.create(:payment_order, success: true) }
 
   describe '#initialize' do
     it 'initializes new order service with cart instance' do
@@ -430,12 +430,12 @@ RSpec.describe OrderService do
 
   describe '#staff_confirm' do
     it 'returns true if confirm is successfully' do
-      order_service = OrderService.new(order_id: order_payment_sucess)
+      order_service = OrderService.new(order_id: payment_success_order)
       expect(order_service.staff_confirm).to be_truthy
     end
 
     it 'returns false if confirm fails due to incorrect status' do
-      order_service = OrderService.new(order_id: order_payment)
+      order_service = OrderService.new(order_id: payment_order)
       expect(order_service.staff_confirm).to be_falsey
     end
   end
