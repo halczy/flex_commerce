@@ -4,9 +4,10 @@
       <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
     <% end %>
   </div>
-  <div>
+  <div class="ml-2">
     <% if @order.payment_success? %>
       <%= link_to 'Confirm Order', confirm_admin_order_path(@order),
+                                   method: :patch,
                                    class: 'btn btn-primary' %>
     <% end %>
   </div>

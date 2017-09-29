@@ -25,7 +25,7 @@ class Admin::OrdersController < Admin::AdminController
     else
       flash[:danger] = "Unable to confirm this order."
     end
-    redirect_to admin_order_path(@order)
+    redirect_to admin_order_path(@orderer)
   end
 
   def show; end

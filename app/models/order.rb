@@ -29,6 +29,12 @@ class Order < ApplicationRecord
   scope :payment_process,  -> (user) { user.orders.where(status: 30..50) }
   scope :service_process,  -> (user) { user.orders.where(status: 60..100) }
 
+  # Attributes
+  attribute :shipping_company
+  attribute :tracking_number
+  attribute :pickup_ready_at
+  attribute :pickup_completed_at
+
   def inventories_by(product)
     inventories.where(product: product)
   end
