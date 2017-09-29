@@ -84,7 +84,9 @@ describe 'Inventory CURD', type: :feature do
       in_cart_id = @in_cart.id
       click_on("btn_del_#{@in_cart.id}")
       within("#delete_#{@in_cart.id}") do
+        sleep 1
         click_on('Confirm')
+        sleep 1
       end
 
       expect(page.current_path).to eq(admin_inventories_path)
