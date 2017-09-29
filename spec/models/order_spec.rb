@@ -6,8 +6,6 @@ RSpec.describe Order, type: :model do
   let(:order_selected)  { FactoryGirl.create(:order, selected: true) }
   let(:order_set)       { FactoryGirl.create(:order, set: true) }
   let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true) }
-  let(:order_payment)   { FactoryGirl.create(:order_payment) }
-
   let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
                                                              only_pickup: true) }
   let(:order_pickup_set)        { FactoryGirl.create(:order, set: true,
@@ -18,6 +16,7 @@ RSpec.describe Order, type: :model do
                                                              only_delivery: true) }
   let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true,
                                                              no_shipping: true) }
+  let(:payment_order)    { FactoryGirl.create(:payment_order) }
 
   let(:payment_wallet)   { FactoryGirl.create(:payment) }
   let(:payment_alipay)   { FactoryGirl.create(:payment, processor: 1) }
@@ -224,7 +223,7 @@ RSpec.describe Order, type: :model do
     end
 
     it 'returns false if order status > 20' do
-      expect(order_payment.destroyable?).to be_falsey
+      expect(payment_order.destroyable?).to be_falsey
     end
   end
 

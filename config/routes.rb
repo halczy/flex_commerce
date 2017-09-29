@@ -82,6 +82,7 @@ Rails.application.routes.draw do
       end
       member do
         patch :confirm
+        patch :set_pickup_ready
       end
     end
   end

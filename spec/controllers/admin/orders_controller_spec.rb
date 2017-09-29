@@ -7,9 +7,9 @@ RSpec.describe Admin::OrdersController, type: :controller do
   let(:order_selected)  { FactoryGirl.create(:order, selected: true) }
   let(:order_set)       { FactoryGirl.create(:order, set: true) }
   let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true) }
-
-  let(:order_payment)        { FactoryGirl.create(:order_payment) }
-  let(:order_payment_sucess) { FactoryGirl.create(:order_payment, success: true) }
+  let(:payment_order)         { FactoryGirl.create(:payment_order) }
+  let(:payment_success_order) { FactoryGirl.create(:payment_order, success: true) }
+  let(:service_order)         { FactoryGirl.create(:service_order) }
 
   before { signin_as admin }
 
@@ -77,13 +77,28 @@ RSpec.describe Admin::OrdersController, type: :controller do
 
   describe 'PATCH confirm' do
     it 'confirms order with correct status' do
-      patch :confirm, params: { id: order_payment_sucess }
+      patch :confirm, params: { id: payment_success_order }
       expect(flash[:success]).to be_present
-      expect(response).to redirect_to(admin_order_path(order_payment_sucess))
+      expect(response).to redirect_to(admin_order_path(payment_success_order))
     end
 
-    it 'renders error message if fail to confirm' do
-      patch :confirm, params: { id: order_payment }
+    it 'flashs error message if fail to confirm' do
+      patch :confirm, params: { id: payment_order }
+      expect(flash[:danger]).to be_present
+    end
+  end
+
+  describe 'PATCH set_pickup_ready' do
+    it 'sets order status to pickup pending' do
+      patch :set_pickup_ready, params: { id: payment_success_order }
+      expect(flash[:success]).to be_present
+      expect(response).to redirect_to(admin_order_path(payment_success_order))
+    end
+
+    it 'flashs error message if fail to set order as pickup ready ' do
+      allow_any_instance_of(OrderService).to receive(:set_pickup_ready)
+                                             .and_return(false)
+      patch :set_pickup_ready, params: { id: payment_order }
       expect(flash[:danger]).to be_present
     end
   end

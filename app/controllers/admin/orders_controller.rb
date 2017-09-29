@@ -1,5 +1,5 @@
 class Admin::OrdersController < Admin::AdminController
-  before_action :set_order, only: [ :show, :confirm ]
+  before_action :set_order, only: [ :show, :confirm, :set_pickup_ready ]
 
   def index
     status = params[:status] ||= ""
@@ -25,7 +25,16 @@ class Admin::OrdersController < Admin::AdminController
     else
       flash[:danger] = "Unable to confirm this order."
     end
-    redirect_to admin_order_path(@orderer)
+    redirect_to admin_order_path(@order)
+  end
+
+  def set_pickup_ready
+    if @order_service.set_pickup_ready
+      flash[:success] = "The order is now marked as ready for pickup"
+    else
+      flash[:danger] = "Unable to mark order as pickup ready."
+    end
+    redirect_to admin_order_path(@order)
   end
 
   def show; end

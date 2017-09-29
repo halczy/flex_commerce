@@ -6,6 +6,7 @@
         <tr>
           <th>Product Name</th>
           <th>Inventory ID</th>
+          <th>Inventory Status</th>
           <th>Purchase Price</th>
           <th>Shipping Method</th>
           <th>Purchase Date</th>
@@ -19,6 +20,9 @@
             </td>
             <td>
               <%= link_to inv.id, admin_inventory_path(inv) %>
+            </td>
+            <td>
+              <%= inv.status.titleize %>
             </td>
             <td>
               <%= humanized_money_with_symbol inv.purchase_price %>
