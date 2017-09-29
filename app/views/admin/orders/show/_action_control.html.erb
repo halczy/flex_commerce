@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-start mb-3">
+  <div>
+    <%= link_to admin_orders_path, class: 'btn btn-secondary' do %>
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+    <% end %>
+  </div>
+  <div>
+    <% if @order.payment_success? %>
+      <%= link_to 'Confirm Order', confirm_admin_order_path(@order),
+                                   class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+  <div>
+    <% if @order.shipping_methods.delivery.present? %>
+      SHIP ORDER MODAL
+      <!-- IF SHIPMENT['TACKING_NUMBER'].present? -->
+        <!-- MARK ORDER COMPLETE UNLESS PICKUP_READY_AT.present? -->
+    <% end %>
+    <% if @order.shipping_methods.self_pickup.present? %>
+      MARK PICKUP READY
+      <!-- IF SHIPMENT['PICKUP_READY_AT'] -->
+        <!-- MARK PICKUP COMPLETE -->
+    <% end %>
+  </div>
+
+  <div class="ml-auto">
+  </div>
+</div>

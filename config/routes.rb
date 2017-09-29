@@ -79,6 +79,8 @@ Rails.application.routes.draw do
     resources :orders, only: [:index, :show, :destroy] do         # Orders
       collection do
         get   :search
+      end
+      member do
         patch :confirm
       end
     end
