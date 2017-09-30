@@ -46,8 +46,10 @@ module OrdersHelper
     ( order.shipment.nil? || !order.shipment['pickup_readied_at'].present? )
   end
 
-  def display_mark_as_pickup_completed?
-
+  def display_mark_as_pickup_completed?(order)
+    order.shipment &&
+    order.shipment['pickup_readied_at'].present? &&
+    !order.shipment['pickup_completed_at'].present?
   end
 
   def display_ship_order?
