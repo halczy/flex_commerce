@@ -118,6 +118,12 @@ FactoryGirl.define do
   factory :service_order, class: Order do
     association :user, factory: :customer
 
+    transient do
+      pending_pickup false
+      shipped        false
+      completed      false
+    end
+
     after(:create) do |order, evaluator|
       # Build order to confirm status
       3.times do
@@ -148,6 +154,31 @@ FactoryGirl.define do
 
       # Staff Confirm
       order.staff_confirmed!
+
+      if evaluator.pending_pickup
+        order.shipment[:pickup_readied_at] = DateTime.now
+        order.save
+        order.pending_pickup!
+      end
+
+      if evaluator.shipped
+        order.shipment[:shipping_company] = 'FedEx'
+        order.shipment[:tracking_number] = '654987321231'
+        order.shipment[:shipped_at] = DateTime.now
+        order.save
+        order.shipped!
+      end
+
+      if evaluator.completed
+        if order.shipment[:tracking_number].present?
+          order.shipment[:shipping_completed_at] = DateTime.now
+        end
+        if order.shipment[:pickup_readied_at].present?
+          order.shipment[:pickup_completed_at] = DateTime.now
+        end
+        order.save
+        order.completed!
+      end
     end
   end
 end
