@@ -159,14 +159,14 @@ RSpec.describe Admin::OrdersController, type: :controller do
       patch :complete_shipping, params: { id: service_order_shipped }
 
       expect(assigns(:order).reload.shipment['shipping_completed_at']).to be_present
-      expect(assigns(:order).reload.shipping?).to be_truthy
+      expect(assigns(:order).reload.shipped?).to be_truthy
     end
 
     it 'redirects to order show action with flash message' do
       patch :complete_shipping, params: { id: service_order_shipped }
 
       expect(flash[:success]).to be_present
-      expect(response).to redirect_to(admin_order_path(service_order_ppending))
+      expect(response).to redirect_to(admin_order_path(service_order_shipped))
     end
   end
 end
