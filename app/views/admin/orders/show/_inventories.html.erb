@@ -13,8 +13,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <% @order.inventories.each do |inv| %>
+        <% @order.inventories.each do |inv| %>
+          <tr>
             <td>
               <%= link_to inv.product.name, admin_product_path(inv.product) %>
             </td>
@@ -33,8 +33,8 @@
             <td>
               <%= inv.purchased_at %>
             </td>
-          <% end %>
-        </tr>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>

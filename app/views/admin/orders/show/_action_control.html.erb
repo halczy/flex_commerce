@@ -17,13 +17,21 @@
                   id: 'btn_ship_#{@order.id}',
                   data: { toggle: 'modal', target: "#ship_#{@order.id}"} %>
     <% end %>
+    <% if display_mark_as_shipping_completed?(@order) %>
+      <%= link_to 'Mark as Shipping Completed', complete_shipping_admin_order_path(@order),
+                                                method: :patch,
+                                                class: 'btn btn-success' %>
+    <% end %>
     <% if display_mark_as_pickup_ready?(@order) %>
       <%= link_to 'Mark as Pickup Ready', set_pickup_ready_admin_order_path(@order),
                                           method: :patch,
                                           class: 'btn btn-success' %>
     <% end %>
-      <!-- IF SHIPMENT['PICKUP_READY_AT'] -->
-        <!-- MARK PICKUP COMPLETE -->
+    <% if display_mark_as_pickup_completed?(@order) %>
+      <%= link_to 'Mark as Pickup Completed', complete_pickup_admin_order_path(@order),
+                                              method: :patch,
+                                              class: 'btn btn-success' %>
+    <% end %>
   </div>
 
   <div class="ml-auto">
