@@ -1,5 +1,5 @@
 class Admin::OrdersController < Admin::AdminController
-  before_action :set_order, only: [ :show, :confirm, :set_pickup_ready, :add_tracking ]
+  before_action :set_order, except: [ :index, :search ]
 
   def index
     status = params[:status] ||= ""
@@ -18,6 +18,8 @@ class Admin::OrdersController < Admin::AdminController
       render :search
     end
   end
+
+  def show; end
 
   def confirm
     if @order_service.staff_confirm
@@ -56,7 +58,13 @@ class Admin::OrdersController < Admin::AdminController
     redirect_to admin_order_path(@order)
   end
 
-  def show; end
+  def complete_pickup
+    @order_service.complete_pickup
+    flash[:success] = "Completed self pickup. Order status is
+                       now #{@order.status.titleize}"
+    redirect_to admin_order_path(@order)
+  end
+
 
   private
 

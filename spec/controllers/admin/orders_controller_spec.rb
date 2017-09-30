@@ -2,14 +2,17 @@ require 'rails_helper'
 
 RSpec.describe Admin::OrdersController, type: :controller do
 
-  let(:admin)           { FactoryGirl.create(:admin) }
-  let(:order)           { FactoryGirl.create(:order) }
-  let(:order_selected)  { FactoryGirl.create(:order, selected: true) }
-  let(:order_set)       { FactoryGirl.create(:order, set: true) }
-  let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true) }
-  let(:payment_order)         { FactoryGirl.create(:payment_order) }
-  let(:payment_success_order) { FactoryGirl.create(:payment_order, success: true) }
-  let(:service_order)         { FactoryGirl.create(:service_order) }
+  let(:admin)                   { FactoryGirl.create(:admin) }
+  let(:order)                   { FactoryGirl.create(:order) }
+  let(:order_selected)          { FactoryGirl.create(:order, selected: true) }
+  let(:order_set)               { FactoryGirl.create(:order, set: true) }
+  let(:order_confirmed)         { FactoryGirl.create(:order, confirmed: true) }
+  let(:payment_order)           { FactoryGirl.create(:payment_order) }
+  let(:payment_success_order)   { FactoryGirl.create(:payment_order, success: true) }
+  let(:service_order)           { FactoryGirl.create(:service_order) }
+  let(:service_order_ppending)  { FactoryGirl.create(:service_order, pickup_pending: true) }
+  let(:service_order_shipped)   { FactoryGirl.create(:service_order, shipped: true) }
+  let(:completed_order)         { FactoryGirl.create(:service_order, completed: true) }
 
   before { signin_as admin }
 
@@ -130,6 +133,40 @@ RSpec.describe Admin::OrdersController, type: :controller do
     it 'flashes warning message when empty param is provided' do
       post :add_tracking, params: { id: service_order }
       expect(flash[:warning]).to be_present
+    end
+  end
+
+  describe 'PATCH complete_pickup' do
+    it 'calls complete_pickup order service' do
+      service_order_ppending.shipment[:shipping_completed_at] = DateTime.now
+      service_order_ppending.save
+      patch :complete_pickup, params: { id: service_order_ppending }
+
+      expect(assigns(:order).reload.completed?).to be_truthy
+      expect(assigns(:order).reload.shipment['pickup_completed_at']).to be_present
+    end
+
+    it 'redirects to order show action with flash message' do
+      patch :complete_pickup, params: { id: service_order_ppending }
+
+      expect(flash[:success]).to be_present
+      expect(response).to redirect_to(admin_order_path(service_order_ppending))
+    end
+  end
+
+  xdescribe 'PATCH complete_shipping' do
+    it 'calls complete_shipping order service' do
+      patch :complete_shipping, params: { id: service_order_shipped }
+
+      expect(assigns(:order).reload.shipment['shipping_completed_at']).to be_present
+      expect(assigns(:order).reload.shipping?).to be_truthy
+    end
+
+    it 'redirects to order show action with flash message' do
+      patch :complete_shipping, params: { id: service_order_shipped }
+
+      expect(flash[:success]).to be_present
+      expect(response).to redirect_to(admin_order_path(service_order_ppending))
     end
   end
 end
