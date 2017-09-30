@@ -38,7 +38,11 @@ class Admin::OrdersController < Admin::AdminController
   end
 
   def add_tracking
-    if params[:tracking_number].present? && params[:shipping_company].present?
+    unless params['shipping_company'].present? || params['pre_select_shipco'].nil?
+      params['shipping_company'] = params['pre_select_shipco']
+    end
+
+    if params['tracking_number'].present? && params['shipping_company'].present?
       if @order_service.add_tracking(params)
         flash[:success] = "Successfully added tracking information to order."
       else

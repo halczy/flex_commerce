@@ -111,6 +111,14 @@ RSpec.describe Admin::OrdersController, type: :controller do
       expect(response).to redirect_to(admin_order_path(service_order))
     end
 
+    it 'fills shipping_company param with pre_select_shipco params if empty' do
+      post :add_tracking, params: { id: service_order, tracking_number: '123456',
+                                                       pre_select_shipco: 'ABC',
+                                                       shipping_company: '' }
+      expect(flash[:success]).to be_present
+        expect(assigns(:order).reload.shipment['shipping_company']).to eq('ABC')
+    end
+
     it 'flashes error message if params is not saved' do
       allow_any_instance_of(OrderService).to receive(:add_tracking)
                                              .and_return(false)

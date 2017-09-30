@@ -10,10 +10,19 @@
       </div>
       <%= form_with(url: add_tracking_admin_order_path, local: true) do |f| %>
         <div class="modal-body">
-          <div class="row form-group">
-            <div class="col-6">
-              <%= f.label :shipping_company, 'Shipping Company' %>
-              <%= f.text_field :shipping_company, class: 'form-control' %>
+          <div class="form-group">
+            <div class="mt-1 mb-1">
+              Select or Enter New Shipping Company
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <%= f.select :pre_select_shipco,
+                             options_for_select(get_shipping_companies),
+                             { include_blank: true }, class: 'form-control' %>
+              </div>
+              <div class="col-6">
+                <%= f.text_field :shipping_company, class: 'form-control' %>
+              </div>
             </div>
           </div>
           <div class="form-group">
