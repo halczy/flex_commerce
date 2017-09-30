@@ -63,4 +63,14 @@ module OrdersHelper
     order.shipment['tracking_number'].present? &&
     !order.completed?
   end
+
+  def get_shipping_companies
+    shipping_companies = []
+    Order.all.each do |order|
+      if order.shipment && order.shipment['shipping_company'].present?
+        shipping_companies << order.shipment['shipping_company']
+      end
+    end
+    shipping_companies
+  end
 end

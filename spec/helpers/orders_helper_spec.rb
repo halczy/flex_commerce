@@ -31,7 +31,6 @@ RSpec.describe OrdersHelper, type: :helper do
         expect(result).to eq(sample_product.price_member)
       end
     end
-
   end
 
   describe '#shipping_method_by' do
@@ -166,6 +165,14 @@ RSpec.describe OrdersHelper, type: :helper do
 
     it 'returns false if order shipment is not initialized' do
       expect(display_mark_order_completed?(service_order)).to be_falsey
+    end
+  end
+
+  describe '#get_shipping_companies' do
+    it 'returns an array of shipping companies' do
+      o1 = FactoryGirl.create(:order, shipment: { shipping_company: 'Fedex'})
+      o2 = FactoryGirl.create(:order, shipment: { shipping_company: 'UPS' })
+      expect(get_shipping_companies).to match_array(['Fedex', 'UPS'])
     end
   end
 end
