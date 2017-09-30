@@ -12,10 +12,10 @@
     <% end %>
   </div>
   <div>
-    <% if @order.shipping_methods.delivery.present? %>
-      SHIP ORDER MODAL
-      <!-- IF SHIPMENT['TACKING_NUMBER'].present? -->
-        <!-- MARK ORDER COMPLETE UNLESS PICKUP_READY_AT.present? -->
+    <% if display_ship_order?(@order) %>
+      <%= link_to 'Ship Order', '#', class: 'btn btn-success',
+                  id: 'btn_ship_#{@order.id}',
+                  data: { toggle: 'modal', target: "#ship_#{@order.id}"} %>
     <% end %>
     <% if display_mark_as_pickup_ready?(@order) %>
       <%= link_to 'Mark as Pickup Ready', set_pickup_ready_admin_order_path(@order),
@@ -29,3 +29,5 @@
   <div class="ml-auto">
   </div>
 </div>
+
+<%= render 'admin/orders/show/shipment_form' %>
