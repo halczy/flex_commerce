@@ -119,7 +119,7 @@ FactoryGirl.define do
     association :user, factory: :customer
 
     transient do
-      pending_pickup false
+      pickup_pending false
       shipped        false
       completed      false
     end
@@ -155,10 +155,10 @@ FactoryGirl.define do
       # Staff Confirm
       order.staff_confirmed!
 
-      if evaluator.pending_pickup
+      if evaluator.pickup_pending
         order.shipment[:pickup_readied_at] = DateTime.now
         order.save
-        order.pending_pickup!
+        order.pickup_pending!
       end
 
       if evaluator.shipped
@@ -170,12 +170,12 @@ FactoryGirl.define do
       end
 
       if evaluator.completed
-        if order.shipment[:tracking_number].present?
-          order.shipment[:shipping_completed_at] = DateTime.now
-        end
-        if order.shipment[:pickup_readied_at].present?
-          order.shipment[:pickup_completed_at] = DateTime.now
-        end
+        order.shipment[:shipping_company] = 'FedEx'
+        order.shipment[:tracking_number] = '654987321231'
+        order.shipment[:shipped_at] = DateTime.now
+        order.shipment[:shipping_completed_at] = DateTime.now
+        order.shipment[:pickup_readied_at] = DateTime.now
+        order.shipment[:pickup_completed_at] = DateTime.now
         order.save
         order.completed!
       end
