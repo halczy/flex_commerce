@@ -150,7 +150,20 @@ class OrderService
     @order.update(shipment: {}) unless @order.shipment
     @order.shipment[:shipping_company] = params[:shipping_company]
     @order.shipment[:tracking_number] = params[:tracking_number]
+    @order.shipment[:shipped_at] = DateTime.now
     @order.shipped!
+  end
+
+  def complete_pickup
+
+  end
+
+  def complete_shipping
+
+  end
+
+  def complete
+
   end
 
   private

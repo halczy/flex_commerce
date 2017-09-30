@@ -32,6 +32,8 @@ class Order < ApplicationRecord
   # Attributes
   attribute :shipping_company
   attribute :tracking_number
+  attribute :shipped_at
+  attribute :shipping_completed_at
   attribute :pickup_readied_at
   attribute :pickup_completed_at
 

@@ -476,6 +476,7 @@ RSpec.describe OrderService do
       order_service.add_tracking(params)
       expect(order_service.order.shipment['shipping_company']).to be_present
       expect(order_service.order.shipment['tracking_number']).to be_present
+      expect(order_service.order.shipment['shipped_at']).to be_present
     end
 
     it 'sets order status to shipped' do
