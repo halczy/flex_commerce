@@ -517,8 +517,8 @@ RSpec.describe OrderService do
 
   describe '#complete' do
     it 'sets order to completed if all shipments are completed' do
-      service_order_shipped.shipment[:pickup_completed_at] = DateTime.now
-      service_order_shipped.shipment[:shipping_completed_at] = DateTime.now
+      service_order_shipped.shipment[:pickup_completed_at] = Time.zone.now
+      service_order_shipped.shipment[:shipping_completed_at] = Time.zone.now
       service_order_shipped.save
       order_service = OrderService.new(order_id: service_order_shipped)
       order_service.send(:complete)

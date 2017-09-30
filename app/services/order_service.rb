@@ -140,7 +140,7 @@ class OrderService
   def set_pickup_ready
     return false unless @order.shipping_methods.self_pickup.present?
     @order.update(shipment: {}) unless @order.shipment
-    @order.shipment[:pickup_readied_at] = DateTime.now
+    @order.shipment[:pickup_readied_at] = Time.zone.now
     @order.pickup_pending! unless @order.shipped?
     @order.save
   end
@@ -150,20 +150,20 @@ class OrderService
     @order.update(shipment: {}) unless @order.shipment
     @order.shipment[:shipping_company] = params[:shipping_company]
     @order.shipment[:tracking_number] = params[:tracking_number]
-    @order.shipment[:shipped_at] = DateTime.now
+    @order.shipment[:shipped_at] = Time.zone.now
     @order.shipped!
   end
 
   def complete_pickup
     return false unless @order.shipment['pickup_readied_at'].present?
-    @order.shipment[:pickup_completed_at] = DateTime.now
+    @order.shipment[:pickup_completed_at] = Time.zone.now
     @order.save
     complete
   end
 
   def complete_shipping
     return false unless @order.shipment['shipped_at'].present?
-    @order.shipment[:shipping_completed_at] = DateTime.now
+    @order.shipment[:shipping_completed_at] = Time.zone.now
     @order.save
     complete
   end
