@@ -58,7 +58,9 @@ module OrdersHelper
     ( order.shipment.nil? || !order.shipment['tracking_number'].present?)
   end
 
-  def display_mark_order_completed?
-
+  def display_mark_order_completed?(order)
+    order.shipment &&
+    order.shipment['tracking_number'].present? &&
+    !order.completed?
   end
 end
