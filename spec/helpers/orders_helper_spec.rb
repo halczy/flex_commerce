@@ -7,6 +7,7 @@ RSpec.describe OrdersHelper, type: :helper do
   let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
                                                              only_pickup: true) }
   let(:order_confirmed)         { FactoryGirl.create(:order, confirmed: true) }
+  let(:service_order)           { FactoryGirl.create(:service_order) }
 
   before do
     @order = FactoryGirl.create(:order, set: true)
@@ -102,6 +103,21 @@ RSpec.describe OrdersHelper, type: :helper do
       it 'returns active when creation_process fitler is provided' do
         expect(helper.incomplete_tab?({filter: 'creation_process'})).to eq('active')
       end
+    end
+  end
+
+  describe '#display_mark_as_pickup_completed?' do
+    it 'returns true if self pickup shipping method is present' do
+      expect(display_mark_as_pickup_ready?(service_order)).to be_truthy
+    end
+
+    it 'returns false if order have not been confirmed by staff' do
+      expect(display_mark_as_pickup_ready?(order_confirmed)).to be_falsey
+    end
+
+    it 'returns false if order shipment pickup_readied_at exists' do
+      service_order.update(shipment: { pickup_readied_at: Time.now })
+      expect(display_mark_as_pickup_ready?(service_order)).to be_falsey
     end
   end
 end

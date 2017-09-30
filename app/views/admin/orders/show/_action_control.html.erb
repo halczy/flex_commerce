@@ -17,11 +17,13 @@
       <!-- IF SHIPMENT['TACKING_NUMBER'].present? -->
         <!-- MARK ORDER COMPLETE UNLESS PICKUP_READY_AT.present? -->
     <% end %>
-    <% if @order.shipping_methods.self_pickup.present? %>
-      MARK PICKUP READY
+    <% if display_mark_as_pickup_ready?(@order) %>
+      <%= link_to 'Mark as Pickup Ready', set_pickup_ready_admin_order_path(@order),
+                                          method: :patch,
+                                          class: 'btn btn-success' %>
+    <% end %>
       <!-- IF SHIPMENT['PICKUP_READY_AT'] -->
         <!-- MARK PICKUP COMPLETE -->
-    <% end %>
   </div>
 
   <div class="ml-auto">

@@ -39,4 +39,22 @@ module OrdersHelper
   def incomplete_tab?(params)
     'active' if ( params[:filter] && params[:filter] == 'creation_process' )
   end
+
+  def display_mark_as_pickup_ready?(order)
+    order.shipping_methods.self_pickup.present? &&
+    order.status_before_type_cast >= 70 &&
+    ( order.shipment.nil? || !order.shipment['pickup_readied_at'].present? )
+  end
+
+  def display_mark_as_pickup_completed?
+
+  end
+
+  def display_ship_order?
+
+  end
+
+  def display_mark_order_completed?
+
+  end
 end
