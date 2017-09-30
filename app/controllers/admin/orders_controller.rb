@@ -60,11 +60,15 @@ class Admin::OrdersController < Admin::AdminController
 
   def complete_pickup
     @order_service.complete_pickup
-    flash[:success] = "Completed self pickup. Order status is
-                       now #{@order.status.titleize}"
+    flash[:success] = 'Mark self pickup as completed.'
     redirect_to admin_order_path(@order)
   end
 
+  def complete_shipping
+    @order_service.complete_shipping
+    flash[:success] = 'Mark shipping as completed.'
+    redirect_to admin_order_path(@order)
+  end
 
   private
 

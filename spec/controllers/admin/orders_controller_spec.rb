@@ -154,7 +154,7 @@ RSpec.describe Admin::OrdersController, type: :controller do
     end
   end
 
-  xdescribe 'PATCH complete_shipping' do
+  describe 'PATCH complete_shipping' do
     it 'calls complete_shipping order service' do
       patch :complete_shipping, params: { id: service_order_shipped }
 
