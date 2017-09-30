@@ -85,6 +85,7 @@ Rails.application.routes.draw do
         patch :set_pickup_ready
         post  :add_tracking
         patch :complete_pickup
+        patch :complete_shipping
       end
     end
   end
