@@ -162,9 +162,11 @@ class OrderService
   end
 
   def complete_shipping
-
+    return false unless @order.shipment['shipped_at'].present?
+    @order.shipment[:shipping_completed_at] = DateTime.now
+    @order.save
+    complete
   end
-
 
   private
 

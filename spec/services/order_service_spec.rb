@@ -489,13 +489,29 @@ RSpec.describe OrderService do
     it 'sets pickup_completed_at to order shipment' do
       order_service = OrderService.new(order_id: service_order_ppending)
       order_service.complete_pickup
-      expect(service_order_ppending.reload.shipment['pickup_completed_at'])
-        .to be_present
+      expect(
+        service_order_ppending.reload.shipment['pickup_completed_at']
+      ).to be_present
     end
 
     it 'returns false when pickup_readied_at is nil' do
       order_service = OrderService.new(order_id: service_order)
       expect(order_service.complete_pickup).to be_falsey
+    end
+  end
+
+  describe '#complete_shipping' do
+    it 'sets shipping_completed_at to order shipment' do
+      order_service = OrderService.new(order_id: service_order_shipped)
+      order_service.complete_shipping
+      expect(
+        order_service.order.reload.shipment['shipping_completed_at']
+      ).to be_present
+    end
+
+    it 'returns false when shipped_at is nil' do
+      order_service = OrderService.new(order_id: service_order)
+      expect(order_service.complete_shipping).to be_falsey
     end
   end
 
