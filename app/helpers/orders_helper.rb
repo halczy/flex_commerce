@@ -52,8 +52,10 @@ module OrdersHelper
     !order.shipment['pickup_completed_at'].present?
   end
 
-  def display_ship_order?
-
+  def display_ship_order?(order)
+    order.shipping_methods.delivery.present? &&
+    order.status_before_type_cast >= 70 &&
+    ( order.shipment.nil? || !order.shipment['tracking_number'].present?)
   end
 
   def display_mark_order_completed?

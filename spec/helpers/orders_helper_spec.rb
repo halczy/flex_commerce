@@ -137,4 +137,19 @@ RSpec.describe OrdersHelper, type: :helper do
       expect(display_mark_as_pickup_completed?(service_order)).to be_falsey
     end
   end
+
+  describe '#display_ship_order?' do
+    it 'returns true if delivery shipping method is present' do
+      expect(display_ship_order?(service_order)).to be_truthy
+    end
+
+    it 'returns false if order have not been confirmed by staff' do
+      expect(display_ship_order?(order_confirmed)).to be_falsey
+    end
+
+    it 'returns false if order shipment tracking number exists' do
+      service_order.update(shipment: { tracking_number: '123456789' })
+      expect(display_ship_order?(service_order)).to be_falsey
+    end
+  end
 end
