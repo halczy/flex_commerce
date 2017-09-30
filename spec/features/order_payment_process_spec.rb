@@ -121,7 +121,7 @@ describe 'customer order payment process', type: :feature do
       expect(stub.requests[0][:params]["method"]).to eq(["alipay.trade.page.pay"])
       expect(
         stub.requests[0][:params]["biz_content"][0]
-      ).to include(Order.last.total.to_s)
+      ).to include(Order.last.total.to_s.split('.')[0])
     end
 
     it 'sets payment amount to unpaid amount on submission', driver: :pg_billy do
