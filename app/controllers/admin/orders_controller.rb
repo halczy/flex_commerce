@@ -1,5 +1,5 @@
 class Admin::OrdersController < Admin::AdminController
-  before_action :set_order, only: [ :show, :confirm, :set_pickup_ready ]
+  before_action :set_order, only: [ :show, :confirm, :set_pickup_ready, :add_tracking ]
 
   def index
     status = params[:status] ||= ""
@@ -33,6 +33,21 @@ class Admin::OrdersController < Admin::AdminController
       flash[:success] = "The order is now marked as ready for pickup"
     else
       flash[:danger] = "Unable to mark order as pickup ready."
+    end
+    redirect_to admin_order_path(@order)
+  end
+
+  def add_tracking
+    if params[:tracking_number].present? && params[:shipping_company].present?
+      if @order_service.add_tracking(params)
+        flash[:success] = "Successfully added tracking information to order."
+      else
+        flash[:danger] = 'Unable to save tracking information to order. Please
+                          double check the value provided.'
+      end
+    else
+      flash[:warning] = 'Please provide or select and shipping company and
+                         enter the tracking number.'
     end
     redirect_to admin_order_path(@order)
   end

@@ -83,6 +83,7 @@ Rails.application.routes.draw do
       member do
         patch :confirm
         patch :set_pickup_ready
+        post  :add_tracking
       end
     end
   end

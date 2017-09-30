@@ -82,7 +82,7 @@ RSpec.describe Admin::OrdersController, type: :controller do
       expect(response).to redirect_to(admin_order_path(payment_success_order))
     end
 
-    it 'flashs error message if fail to confirm' do
+    it 'flashes error message if fail to confirm' do
       patch :confirm, params: { id: payment_order }
       expect(flash[:danger]).to be_present
     end
@@ -95,11 +95,33 @@ RSpec.describe Admin::OrdersController, type: :controller do
       expect(response).to redirect_to(admin_order_path(payment_success_order))
     end
 
-    it 'flashs error message if fail to set order as pickup ready ' do
+    it 'flashes error message if fail to set order as pickup ready ' do
       allow_any_instance_of(OrderService).to receive(:set_pickup_ready)
                                              .and_return(false)
       patch :set_pickup_ready, params: { id: payment_order }
       expect(flash[:danger]).to be_present
+    end
+  end
+
+  describe 'POST add_tracking' do
+    it 'passes params to add_tracking service and flash success message' do
+      post :add_tracking, params: { id: service_order, tracking_number: '12346',
+                                                       shipping_company: 'ABC' }
+      expect(flash[:success]).to be_present
+      expect(response).to redirect_to(admin_order_path(service_order))
+    end
+
+    it 'flashes error message if params is not saved' do
+      allow_any_instance_of(OrderService).to receive(:add_tracking)
+                                             .and_return(false)
+      post :add_tracking, params: { id: payment_order, tracking_number: '123',
+                                                       shipping_company: 'ABC' }
+      expect(flash[:danger]).to be_present
+    end
+
+    it 'flashes warning message when empty param is provided' do
+      post :add_tracking, params: { id: service_order }
+      expect(flash[:warning]).to be_present
     end
   end
 end
