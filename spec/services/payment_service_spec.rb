@@ -228,6 +228,14 @@ RSpec.describe PaymentService, type: :model do
         end
       end
 
+      it 'sets inventories status to sold if payment is successful' do
+        wallet_created.user.wallet.update(balance: wallet_created.amount)
+        wallet_created.charge_wallet
+        wallet_created.order.inventories.each do |inv|
+          expect(inv.sold?).to be_truthy
+        end
+      end
+
       it 'does not record purchased date if order status is not payment_success' do
         wallet_created.charge_wallet
         wallet_created.order.inventories.each do |inv|
@@ -337,17 +345,25 @@ RSpec.describe PaymentService, type: :model do
       end
     end
 
-    context '#record_purchase_date' do
+    context '#confirm_inventories' do
       it 'records purchased date to inventories if payment is successful' do
         @payment_service.order.payment_success!
-        @payment_service.send(:record_purchase_date)
+        @payment_service.send(:confirm_inventories)
         @payment_service.order.inventories.each do |inv|
           expect(inv.purchased_at).to be_present
         end
       end
 
+      it 'sets inventories status to sold' do
+        @payment_service.order.payment_success!
+        @payment_service.send(:confirm_inventories)
+        @payment_service.order.inventories.each do |inv|
+          expect(inv.sold?).to be_truthy
+        end
+      end
+
       it 'does not record purchased date if order status is not payment_success' do
-        @payment_service.send(:record_purchase_date)
+        @payment_service.send(:confirm_inventories)
         @payment_service.order.inventories.each do |inv|
           expect(inv.purchased_at).to be_nil
         end
