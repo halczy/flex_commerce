@@ -145,6 +145,14 @@ class OrderService
     @order.save
   end
 
+  def add_tracking(params)
+    return false unless @order.shipping_methods.delivery.present?
+    @order.update(shipment: {}) unless @order.shipment
+    @order.shipment[:shipping_company] = params[:shipping_company]
+    @order.shipment[:tracking_number] = params[:tracking_number]
+    @order.shipped!
+  end
+
   private
 
     def set_shipping_method(product, shipping_method)

@@ -468,4 +468,21 @@ RSpec.describe OrderService do
       expect(order_service.set_pickup_ready).to be_falsey
     end
   end
+
+  describe '#add_tracking(params)' do
+    it 'adds tracking number and shipping company to shipment' do
+      order_service = OrderService.new(order_id: service_order)
+      params = { shipping_company: 'ABCD', tracking_number: '123456789'}
+      order_service.add_tracking(params)
+      expect(order_service.order.shipment['shipping_company']).to be_present
+      expect(order_service.order.shipment['tracking_number']).to be_present
+    end
+
+    it 'sets order status to shipped' do
+      order_service = OrderService.new(order_id: service_order)
+      params = { shipping_company: 'ABCD', tracking_number: '123456789'}
+      order_service.add_tracking(params)
+      expect(order_service.order.shipped?).to be_truthy
+    end
+  end
 end
