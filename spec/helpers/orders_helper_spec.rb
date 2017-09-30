@@ -152,19 +152,19 @@ RSpec.describe OrdersHelper, type: :helper do
     end
   end
 
-  describe '#display_mark_order_completed' do
+  describe '#display_mark_as_shipping_completed' do
     it 'returns true if shipment include pickup_readied_at' do
-      service_order.update(shipment: { tracking_number: '123456789' })
-      expect(display_mark_order_completed?(service_order)).to be_truthy
+      service_order.update(shipment: { shipped_at: DateTime.now })
+      expect(display_mark_as_shipping_completed?(service_order)).to be_truthy
     end
 
-    it 'returns false if order is marked completed' do
-      service_order.completed!
-      expect(display_mark_order_completed?(service_order)).to be_falsey
+    it 'returns false if shipping_completed_at exists' do
+      service_order.update(shipment: { shipping_completed_at: DateTime.now })
+      expect(display_mark_as_shipping_completed?(service_order)).to be_falsey
     end
 
     it 'returns false if order shipment is not initialized' do
-      expect(display_mark_order_completed?(service_order)).to be_falsey
+      expect(display_mark_as_shipping_completed?(service_order)).to be_falsey
     end
   end
 
