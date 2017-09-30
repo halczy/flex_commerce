@@ -196,13 +196,13 @@ class OrderService
     end
 
     def complete
-      # set_complete = true
-      # if @order.shipping_methods.self_pickup.present?
-      #   set_complete = false unless @order.shipment['pickup_completed_at'].present?
-      # end
-      # if @order.shipping_methods.delivery.present?
-      #   set_complete = false unless @order.shipment['shipping_completed_at'].present?
-      # end
-      # @order.completed! if set_complete
+      set_complete = true
+      if @order.shipping_methods.self_pickup.present?
+        set_complete = false unless @order.shipment['pickup_completed_at'].present?
+      end
+      if @order.shipping_methods.delivery.present?
+        set_complete = false unless @order.shipment['shipping_completed_at'].present?
+      end
+      @order.completed! if set_complete
     end
 end

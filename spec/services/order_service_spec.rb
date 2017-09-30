@@ -515,20 +515,26 @@ RSpec.describe OrderService do
     end
   end
 
-  xdescribe '#complete' do
+  describe '#complete' do
     it 'sets order to completed if all shipments are completed' do
       service_order_shipped.shipment[:pickup_completed_at] = DateTime.now
+      service_order_shipped.shipment[:shipping_completed_at] = DateTime.now
+      service_order_shipped.save
       order_service = OrderService.new(order_id: service_order_shipped)
       order_service.send(:complete)
       expect(order_service.order.reload.completed?).to be_truthy
     end
 
     it 'does not set order to completed if self pickup is not complted' do
-
+      order_service = OrderService.new(order_id: service_order_shipped)
+      order_service.complete_shipping
+      expect(order_service.order.reload.completed?).to be_falsey
     end
 
     it 'does not set order to completed if shipping is not completed' do
-
+      order_service = OrderService.new(order_id: service_order_ppending)
+      order_service.complete_pickup
+      expect(order_service.order.reload.completed?).to be_falsey
     end
   end
 end
