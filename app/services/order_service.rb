@@ -155,16 +155,16 @@ class OrderService
   end
 
   def complete_pickup
-
+    return false unless @order.shipment['pickup_readied_at'].present?
+    @order.shipment[:pickup_completed_at] = DateTime.now
+    @order.save
+    complete
   end
 
   def complete_shipping
 
   end
 
-  def complete
-
-  end
 
   private
 
@@ -191,5 +191,16 @@ class OrderService
       raise unless validate_shipping_methods
       cost = total_shipping_cost
       @order.update(shipping_cost: cost)
+    end
+
+    def complete
+      # set_complete = true
+      # if @order.shipping_methods.self_pickup.present?
+      #   set_complete = false unless @order.shipment['pickup_completed_at'].present?
+      # end
+      # if @order.shipping_methods.delivery.present?
+      #   set_complete = false unless @order.shipment['shipping_completed_at'].present?
+      # end
+      # @order.completed! if set_complete
     end
 end

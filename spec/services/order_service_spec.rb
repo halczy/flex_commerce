@@ -8,23 +8,21 @@ RSpec.describe OrderService do
   let(:self_pickup) { FactoryGirl.create(:self_pickup) }
   let(:address)     { FactoryGirl.create(:address) }
 
-  let(:order)           { FactoryGirl.create(:order) }
-  let(:order_selected)  { FactoryGirl.create(:order, selected: true) }
-  let(:order_set)       { FactoryGirl.create(:order, set: true) }
-  let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true) }
-  let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
-                                                             only_pickup: true) }
-  let(:order_pickup_set)        { FactoryGirl.create(:order, set: true,
-                                                             only_pickup: true) }
-  let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true,
-                                                             only_delivery: true) }
-  let(:order_delivery_set)      { FactoryGirl.create(:order, set:true,
-                                                             only_delivery: true) }
-  let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true,
-                                                             no_shipping: true) }
-  let(:payment_order)         { FactoryGirl.create(:payment_order) }
-  let(:payment_success_order) { FactoryGirl.create(:payment_order, success: true) }
-  let(:service_order)         { FactoryGirl.create(:service_order) }
+  let(:order)                   { FactoryGirl.create(:order) }
+  let(:order_selected)          { FactoryGirl.create(:order, selected: true) }
+  let(:order_set)               { FactoryGirl.create(:order, set: true) }
+  let(:order_confirmed)         { FactoryGirl.create(:order, confirmed: true) }
+  let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true, only_pickup: true) }
+  let(:order_pickup_set)        { FactoryGirl.create(:order, set: true, only_pickup: true) }
+  let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true, only_delivery: true) }
+  let(:order_delivery_set)      { FactoryGirl.create(:order, set:true, only_delivery: true) }
+  let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true, no_shipping: true) }
+  let(:payment_order)           { FactoryGirl.create(:payment_order) }
+  let(:payment_success_order)   { FactoryGirl.create(:payment_order, success: true) }
+  let(:service_order)           { FactoryGirl.create(:service_order) }
+  let(:service_order_ppending)  { FactoryGirl.create(:service_order, pickup_pending: true) }
+  let(:service_order_shipped)   { FactoryGirl.create(:service_order, shipped: true) }
+  let(:completed_order)         { FactoryGirl.create(:service_order, completed: true) }
 
   describe '#initialize' do
     it 'initializes new order service with cart instance' do
@@ -469,7 +467,7 @@ RSpec.describe OrderService do
     end
   end
 
-  describe '#add_tracking(params)' do
+  describe '#add_tracking' do
     it 'adds tracking number and shipping company to shipment' do
       order_service = OrderService.new(order_id: service_order)
       params = { shipping_company: 'ABCD', tracking_number: '123456789'}
@@ -484,6 +482,37 @@ RSpec.describe OrderService do
       params = { shipping_company: 'ABCD', tracking_number: '123456789'}
       order_service.add_tracking(params)
       expect(order_service.order.shipped?).to be_truthy
+    end
+  end
+
+  describe '#complete_pickup' do
+    it 'sets pickup_completed_at to order shipment' do
+      order_service = OrderService.new(order_id: service_order_ppending)
+      order_service.complete_pickup
+      expect(service_order_ppending.reload.shipment['pickup_completed_at'])
+        .to be_present
+    end
+
+    it 'returns false when pickup_readied_at is nil' do
+      order_service = OrderService.new(order_id: service_order)
+      expect(order_service.complete_pickup).to be_falsey
+    end
+  end
+
+  xdescribe '#complete' do
+    it 'sets order to completed if all shipments are completed' do
+      service_order_shipped.shipment[:pickup_completed_at] = DateTime.now
+      order_service = OrderService.new(order_id: service_order_shipped)
+      order_service.send(:complete)
+      expect(order_service.order.reload.completed?).to be_truthy
+    end
+
+    it 'does not set order to completed if self pickup is not complted' do
+
+    end
+
+    it 'does not set order to completed if shipping is not completed' do
+
     end
   end
 end
