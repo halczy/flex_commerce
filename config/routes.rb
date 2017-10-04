@@ -52,6 +52,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :dashboard, only: [:index]                          # Dashboard
+    resources :customers do                                       # Customers
+    end
     resources :categories do                                      # Categories
       member do
         patch 'move'
@@ -68,14 +70,7 @@ Rails.application.routes.draw do
         patch  'force_remove_inventories'
       end
     end
-    resources :images, only: [:index, :create, :show, :destroy]   # Images
     resources :inventories, only: [:index, :show, :destroy]       # Inventories
-    resources :geos, only: [:index] do                            # Geos
-      collection do
-        get 'search'
-      end
-    end
-    resources :shipping_methods                                   # Shipping Methods
     resources :orders, only: [:index, :show, :destroy] do         # Orders
       collection do
         get   :search
@@ -88,5 +83,12 @@ Rails.application.routes.draw do
         patch :complete_shipping
       end
     end
+    resources :images, only: [:index, :create, :show, :destroy]   # Images
+    resources :geos, only: [:index] do                            # Geos
+      collection do
+        get 'search'
+      end
+    end
+    resources :shipping_methods                                   # Shipping Methods
   end
 end
