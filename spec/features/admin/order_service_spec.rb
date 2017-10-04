@@ -22,7 +22,6 @@ describe 'order service process', type: :feature do
     it 'can add shipping information' do
       visit admin_order_path(service_order)
       click_on 'Ship Order'
-      sleep 1
       fill_in 'shipping_company', with: 'ABCD'
       fill_in 'tracking_number', with: '12345'
       click_on 'Submit'
@@ -34,7 +33,6 @@ describe 'order service process', type: :feature do
     it 'can confirm delivery order' do
       visit admin_order_path(service_order)
       click_on 'Ship Order'
-      sleep 1
       fill_in 'shipping_company', with: 'ABCD'
       fill_in 'tracking_number', with: '12345'
       click_on 'Submit'
