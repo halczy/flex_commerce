@@ -103,7 +103,7 @@ class PaymentService
       method: 'alipay.trade.page.pay',
       return_url: ENV['API_RETURN_ROOT'] + "/payments/#{@payment.id}/alipay_return",
       notify_url: ENV['API_RETURN_ROOT'] + "/payments/#{@payment.id}/alipay_notify",
-      biz_content: @payment.processor_request,
+      biz_content: @payment.processor_request.to_json,
     )
   end
 
