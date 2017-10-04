@@ -13,9 +13,17 @@
   </ul>
   <ul class="nav nav-pills flex-column sidebar-nav">
     <li class="nav-item">
+      <%= link_to admin_customers_path,
+                  class: "nav-link #{active_controller?('customers')}" do %>
+        <em class="fa fa-users"></em> Customers
+      <% end %>
+    </li>
+  </ul>
+  <ul class="nav nav-pills flex-column sidebar-nav">
+    <li class="nav-item">
       <%= link_to admin_orders_path,
                   class: "nav-link #{active_controller?('orders')}" do %>
-       <em class="fa fa-file"></em> Orders</a>
+       <em class="fa fa-files-o"></em> Orders</a>
       <% end %>
     </li>
     <li class="nav-item">
