@@ -170,9 +170,15 @@ RSpec.describe OrdersHelper, type: :helper do
 
   describe '#get_shipping_companies' do
     it 'returns an array of shipping companies' do
-      o1 = FactoryGirl.create(:order, shipment: { shipping_company: 'Fedex'})
-      o2 = FactoryGirl.create(:order, shipment: { shipping_company: 'UPS' })
+      FactoryGirl.create(:order, shipment: { shipping_company: 'Fedex' })
+      FactoryGirl.create(:order, shipment: { shipping_company: 'UPS' })
       expect(get_shipping_companies).to match_array(['Fedex', 'UPS'])
+    end
+
+    it 'returns an unique array of shipping companies' do
+      FactoryGirl.create(:order, shipment: { shipping_company: 'UPS' })
+      FactoryGirl.create(:order, shipment: { shipping_company: 'UPS' })
+      expect(get_shipping_companies).to match_array(['UPS'])
     end
   end
 end

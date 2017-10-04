@@ -71,6 +71,6 @@ module OrdersHelper
         shipping_companies << order.shipment['shipping_company']
       end
     end
-    shipping_companies
+    shipping_companies.uniq
   end
 end
