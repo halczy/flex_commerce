@@ -12,6 +12,10 @@
           <td><%= @order.status.titleize %></td>
         </tr>
         <tr>
+          <th scope='row'>Shipping Cost</th>
+          <td><%= humanized_money_with_symbol @order.shipping_cost %></td>
+        </tr>
+        <tr>
           <th scope='row'>Confrimed Total</th>
           <td><%= humanized_money_with_symbol @order.total %></td>
         </tr>

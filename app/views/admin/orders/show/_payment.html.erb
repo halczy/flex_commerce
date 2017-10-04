@@ -12,15 +12,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <% @order.payments.each do |payment| %>
+        <% @order.payments.each do |payment| %>
+          <tr>
             <td><%= payment.id %></td>
             <td><%= humanized_money_with_symbol payment.amount %></td>
             <td><%= payment.status.titleize %></td>
             <td><%= payment.variety.titleize %></td>
             <td><%= payment.processor.titleize %></td>
-          <% end %>
-        </tr>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>
