@@ -53,6 +53,9 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :dashboard, only: [:index]                          # Dashboard
     resources :customers do                                       # Customers
+      collection do
+        get :search
+      end
     end
     resources :categories do                                      # Categories
       member do
