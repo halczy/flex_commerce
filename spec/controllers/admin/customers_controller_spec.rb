@@ -38,4 +38,11 @@ RSpec.describe Admin::CustomersController, type: :controller do
       expect(assigns(:search_result)).to be_nil
     end
   end
+
+  describe 'GET show' do
+    it 'responses successfully' do
+      get :show, params: { id: customer.id }
+      expect(response).to be_success
+    end
+  end
 end

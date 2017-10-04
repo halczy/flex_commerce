@@ -16,4 +16,13 @@ class Admin::CustomersController < Admin::AdminController
     end
   end
 
+  def show
+  end
+
+  private
+
+    def set_customer
+      @customer = Customer.find(params[:id])
+    end
+
 end
