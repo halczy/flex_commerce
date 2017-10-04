@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'customer order payment process', type: :feature do
+
   let(:customer) { FactoryGirl.create(:customer) }
 
   before do
