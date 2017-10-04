@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'sign up as customer' do
+describe 'sign up as customer', type: :feature do
   it 'allows sign up with email' do
     visit signup_path
     fill_in "customer[ident]", with: "feature_test_user@example.com"

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'visit homepage as guest' do
+describe 'visit homepage as guest', type: :feature do
   it 'renders sign in and sign up when not signed in' do
     visit root_path
     expect(page).to have_content('Sign In')

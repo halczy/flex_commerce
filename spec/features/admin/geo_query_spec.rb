@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Geo Data Query' do
+describe 'Geo Data Query', type: :feature do
 
   let(:admin) { FactoryGirl.create(:admin) }
   before { feature_signin_as(admin) }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe 'Product Index Filter' do
-  
+describe 'Product Index Filter', type: :feature do
+
   let(:admin) { FactoryGirl.create(:admin) }
   before { feature_signin_as(admin) }
 

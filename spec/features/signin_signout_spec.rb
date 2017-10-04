@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'sign in as customer' do
+describe 'sign in as customer', type: :feature do
 
   let(:customer) { FactoryGirl.create(:customer) }
 

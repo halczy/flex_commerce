@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'category_grid' do
+describe 'category_grid', type: :feature do
   before do
     Image.create(title: "Placeholder Image",
                  in_use: true,

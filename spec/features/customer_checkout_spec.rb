@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'customer checkout process' do
+describe 'customer checkout process', type: :feature do
 
   let(:customer) { FactoryGirl.create(:customer) }
   let(:cart)     { FactoryGirl.create(:cart) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'menu' do
+describe 'menu', type: :feature do
   before do
     @cat_1 = FactoryGirl.create(:category, display_order: 0)
     @cat_2 = FactoryGirl.create(:category, display_order: 2)

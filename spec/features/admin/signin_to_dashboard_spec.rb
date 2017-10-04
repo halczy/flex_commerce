@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'sign in as admin' do
+describe 'sign in as admin', type: :feature do
   let(:admin) { FactoryGirl.create(:admin) }
 
   it 'redirects admin to admin dashboard upon sign in' do

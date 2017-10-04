@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'product detail' do
+describe 'product detail', type: :feature do
   before do
     create_placeholder_image
     @cat = FactoryGirl.create(:category)

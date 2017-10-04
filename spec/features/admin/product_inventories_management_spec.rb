@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Product Inventories Management' do
+describe 'Product Inventories Management', type: :feature do
 
   let(:admin) { FactoryGirl.create(:admin) }
   before { feature_signin_as(admin) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'shopping cart control' do
+describe 'shopping cart control', type: :feature do
   let(:customer) { FactoryGirl.create(:customer) }
 
   before do |example|

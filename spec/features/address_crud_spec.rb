@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Customer Address CRUD' do
+describe 'Customer Address CRUD', type: :feature do
 
   let(:customer) { FactoryGirl.create(:customer) }
 
