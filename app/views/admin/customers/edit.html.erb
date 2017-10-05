@@ -1,6 +1,8 @@
 <%= provide :title, 'Edit Customer Detail' %>
 
-<%= form_with model: @customer, local: true do |f| %>
+<%= form_with model: [:admin, @customer], local: true do |f| %>
+
+  <%= render 'shared/error_messages', object: f.object %>
 
   <div class="form-group">
     <%= f.label :member_id, 'Member ID' %>

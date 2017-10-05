@@ -20,10 +20,23 @@ class Admin::CustomersController < Admin::AdminController
   def show; end
   def edit; end
 
+  def update
+    if @customer.update(customer_params)
+      flash[:success] = 'Customer updated successfully.'
+      redirect_to admin_customer_path(@customer)
+    else
+      render :edit
+    end
+  end
+
   private
 
     def set_customer
       @customer = Customer.find(params[:id])
+    end
+
+    def customer_params
+      params.require(:customer).permit(:member_id, :name, :email, :cell_number)
     end
 
 end

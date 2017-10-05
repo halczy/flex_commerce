@@ -62,4 +62,18 @@ RSpec.describe Admin::CustomersController, type: :controller do
       expect(response).to render_template(:edit)
     end
   end
+
+  describe 'PATCH update' do
+    it 'updates with valid params' do
+      patch :update, params: { id: customer.id, customer: {name: 'UPDATED NAME'} }
+      expect(flash[:success]).to be_present
+      expect(response).to redirect_to(admin_customer_path(customer))
+      expect(assigns(:customer).name).to eq('UPDATED NAME')
+    end
+
+    it 'renders error messages with invalid params' do
+      patch :update, params: { id: customer.id, customer: { cell_number: 110 } }
+      expect(response).to render_template(:edit)
+    end
+  end
 end
