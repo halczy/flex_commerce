@@ -16,6 +16,12 @@ class Admin::ApplicationConfigurationsController < Admin::AdminController
     end
   end
 
+  def destroy
+    @app_config.destroy
+    flash[:success] = 'Successfully deleted a application configuration.'
+    redirect_to admin_application_configurations_path
+  end
+
   private
 
     def set_app_config

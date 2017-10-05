@@ -43,4 +43,19 @@ RSpec.describe Admin::ApplicationConfigurationsController, type: :controller do
       expect(response).to render_template(:edit)
     end
   end
+
+  describe 'DELETE destroy' do
+    it 'destroys app config ' do
+      app_config
+      expect {
+        delete :destroy, params: { id: app_config.id }
+      }.to change(ApplicationConfiguration, :count).by(-1)
+    end
+
+    it 'redirects to index action' do
+      app_config
+      delete :destroy, params: { id: app_config.id }
+      expect(response).to redirect_to(admin_application_configurations_path)
+    end
+  end
 end
