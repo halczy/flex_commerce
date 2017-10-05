@@ -2,6 +2,8 @@
 
 <%= form_with model: [:admin, @app_config], local: true do |f| %>
 
+  <%= render 'shared/error_messages', object: f.object %>
+
   <div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name, class: 'form-control' %>
@@ -27,4 +29,5 @@
   <div class="d-flex justify-content-end">
     <%= f.submit class: 'btn btn-primary' %>
   </div>
+
 <% end %>
