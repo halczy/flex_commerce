@@ -59,6 +59,14 @@
       <% end %>
     </li>
   </ul>
+  <ul class="nav nav-pills flex-column sidebar-nav">
+    <li class="nav-item">
+      <%= link_to admin_application_configurations_path,
+                  class: "nav-link #{active_controller?('application_configurations')}" do %>
+        <em class="fa fa-cogs"></em> App Configs
+      <% end %>
+    </li>
+  </ul>
   <%= link_to root_url, class: 'logout-button hidden-xs-down' do %>
     <em class="fa fa-arrow-left"></em> Front Page</a>
   <% end %>
