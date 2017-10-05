@@ -1,0 +1,21 @@
+<div class="col">
+  <div class="jumbotron">
+    <h5>Customer Wallet</h5>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Balance</th>
+            <td><%= humanized_money_with_symbol @customer.wallet.balance %></td>
+          </tr>
+          <tr>
+            <th scope='row'>Pending</th>
+            <td><%= humanized_money_with_symbol @customer.wallet.pending %></td>
+          </tr>
+          <tr>
+            <th scope='row'>Available Fund</th>
+            <td><%= humanized_money_with_symbol @customer.wallet.available_fund %></td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
