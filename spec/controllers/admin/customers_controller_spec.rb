@@ -50,4 +50,16 @@ RSpec.describe Admin::CustomersController, type: :controller do
       expect(assigns(:customer)).to eq(customer)
     end
   end
+
+  describe 'GET edit' do
+    it 'responses successfully' do
+      get :edit, params: { id: customer.id }
+      expect(response).to be_success
+    end
+
+    it 'renders edit template' do
+      get :edit, params: { id: customer.id }
+      expect(response).to render_template(:edit)
+    end
+  end
 end

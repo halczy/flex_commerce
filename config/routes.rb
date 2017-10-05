@@ -51,18 +51,18 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :dashboard, only: [:index]                          # Dashboard
-    resources :customers do                                       # Customers
+    resources :dashboard, only: [:index]                             # Dashboard
+    resources :customers, only: [:index, :show, :edit, :update] do   # Customers
       collection do
         get :search
       end
     end
-    resources :categories do                                      # Categories
+    resources :categories do                                         # Categories
       member do
         patch 'move'
       end
     end
-    resources :products do                                        # Products
+    resources :products do                                           # Products
       collection do
         get 'search'
       end
@@ -73,8 +73,8 @@ Rails.application.routes.draw do
         patch  'force_remove_inventories'
       end
     end
-    resources :inventories, only: [:index, :show, :destroy]       # Inventories
-    resources :orders, only: [:index, :show, :destroy] do         # Orders
+    resources :inventories, only: [:index, :show, :destroy]         # Inventories
+    resources :orders, only: [:index, :show, :destroy] do           # Orders
       collection do
         get   :search
       end
@@ -86,12 +86,12 @@ Rails.application.routes.draw do
         patch :complete_shipping
       end
     end
-    resources :images, only: [:index, :create, :show, :destroy]   # Images
-    resources :geos, only: [:index] do                            # Geos
+    resources :images, only: [:index, :create, :show, :destroy]     # Images
+    resources :geos, only: [:index] do                              # Geos
       collection do
         get 'search'
       end
     end
-    resources :shipping_methods                                   # Shipping Methods
+    resources :shipping_methods                                     # Shipping Methods
   end
 end
