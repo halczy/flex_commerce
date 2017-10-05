@@ -93,5 +93,6 @@ Rails.application.routes.draw do
       end
     end
     resources :shipping_methods                                     # Shipping Methods
+    resources :application_configurations, only: [:index, :edit, :update, :destroy]
   end
 end
