@@ -1,0 +1,29 @@
+<%= provide :title, 'Edit Customer Detail' %>
+
+<%= form_with model: @customer, local: true do |f| %>
+
+  <div class="form-group">
+    <%= f.label :member_id, 'Member ID' %>
+    <%= f.number_field :member_id, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :cell_number, 'Cell Number' %>
+    <%= f.text_field :cell_number, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, class: 'form-control' %>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <%= f.submit class: 'btn btn-primary' %>
+  </div>
+
+<% end %>
