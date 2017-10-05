@@ -1,4 +1,5 @@
 class Admin::CustomersController < Admin::AdminController
+  before_action :set_customer, except: [ :index, :search ]
 
   def index
     customers = Customer.all.order(updated_at: :desc)

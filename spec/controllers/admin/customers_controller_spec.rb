@@ -44,5 +44,10 @@ RSpec.describe Admin::CustomersController, type: :controller do
       get :show, params: { id: customer.id }
       expect(response).to be_success
     end
+
+    it 'sets requested customer' do
+      get :show, params: { id: customer.id }
+      expect(assigns(:customer)).to eq(customer)
+    end
   end
 end
