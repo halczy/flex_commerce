@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 150) do
+ActiveRecord::Schema.define(version: 160) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -219,6 +219,23 @@ ActiveRecord::Schema.define(version: 150) do
     t.index ["originable_type", "originable_id"], name: "index_transactions_on_originable_type_and_originable_id"
     t.index ["processable_type", "processable_id"], name: "index_transactions_on_processable_type_and_processable_id"
     t.index ["transactable_type", "transactable_id"], name: "index_transactions_on_transactable_type_and_transactable_id"
+  end
+
+  create_table "transfers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "amount_cents", default: 0, null: false
+    t.string "amount_currency", default: "CNY", null: false
+    t.integer "status", default: 0
+    t.integer "processor"
+    t.uuid "transferer_id"
+    t.uuid "transferee_id"
+    t.uuid "fund_source"
+    t.uuid "fund_target"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fund_source"], name: "index_transfers_on_fund_source"
+    t.index ["fund_target"], name: "index_transfers_on_fund_target"
+    t.index ["transferee_id"], name: "index_transfers_on_transferee_id"
+    t.index ["transferer_id"], name: "index_transfers_on_transferer_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
