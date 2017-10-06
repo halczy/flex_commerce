@@ -8,7 +8,7 @@ class Transfer < ApplicationRecord
   belongs_to :fund_target, class_name: 'Wallet',
                            foreign_key: 'fund_target_id',
                            optional: true
-                          
+
   # Validations
   monetize :amount_cents, numericality: { greater_than: 0 }
 

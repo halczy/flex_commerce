@@ -2,6 +2,8 @@ class Wallet < ApplicationRecord
   # Relationships
   belongs_to :user
   has_many   :transactions_logs, as: :processable
+  has_many   :transfer_ins,  class_name: 'Transfer', foreign_key: 'fund_target_id'
+  has_many   :transfer_outs, class_name: 'Transfer', foreign_key: 'fund_source_id'
 
   # Validation
   monetize :balance_cents, numericality: { greater_than_or_equal_to: 0 }

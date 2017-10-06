@@ -35,9 +35,39 @@ RSpec.describe Transfer, type: :model do
 
   describe 'relationships' do
     it 'has a user as transferer' do
+      expect(transfer.transferer).to be_an_instance_of Customer
+    end
+
+    it 'allows transferee to refer to the transfer' do
+      expect(transfer.transferer.transfer_outs).to include(transfer)
     end
 
     it 'has a user as transferee' do
+      expect(transfer.transferee).to be_an_instance_of Customer
+    end
+
+    it 'allows transferer to refer to the transfer' do
+      expect(transfer.transferee.transfer_ins).to include(transfer)
+    end
+
+    it 'has wallet as fund_source' do
+      transfer.update(fund_source: transfer.transferer.wallet)
+      expect(transfer.fund_source).to eq(transfer.transferer.wallet)
+    end
+
+    it 'allows transferer wallet to refer to the transfer' do
+      transfer.update(fund_source: transfer.transferer.wallet)
+      expect(transfer.transferer.wallet.transfer_outs).to include(transfer)
+    end
+
+    it 'has wallet as fund_target' do
+      transfer.update(fund_target: transfer.transferee.wallet)
+      expect(transfer.fund_target).to eq(transfer.transferee.wallet)
+    end
+
+    it 'allows transferee wallet to refer to the transfer' do
+      transfer.update(fund_target: transfer.transferee.wallet)
+      expect(transfer.transferee.wallet.transfer_ins).to include(transfer)
     end
   end
 end

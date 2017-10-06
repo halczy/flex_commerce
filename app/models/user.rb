@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_one  :wallet
   has_many :orders
   has_many :addresses, as: :addressable, dependent: :destroy
+  has_many :transfer_outs, class_name: 'Transfer', foreign_key: 'transferer_id'
+  has_many :transfer_ins,  class_name: 'Transfer', foreign_key: 'transferee_id'
 
   # Callbacks
   before_save :downcase_email
