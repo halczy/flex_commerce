@@ -27,8 +27,23 @@ class TransferService
     end
   end
 
-  def transfer
+  def execute_transfer
+    case @transfer.processor
+    when 'wallet' then wallet_transfer
+    end
+  end
 
+  def wallet_transfer
+    begin
+      validate_transferee
+      validate_funding
+      @transfer.fund_source.debit(@transfer.amount)
+      @transfer.fund_target.credit(@transfer.amount)
+      process_wallet_transfer
+      true
+    rescue Exception
+      false
+    end
   end
 
   private
@@ -44,9 +59,18 @@ class TransferService
       if @transfer.amount == 0
         raise(StandardError, 'Invalid Amount')
       end
-      if @transfer.fund_source.available_fund < @amount
+      if @transfer.fund_source.available_fund < @transfer.amount
         raise(StandardError, 'Insufficient Fund')
       end
     end
 
+    def process_wallet_transfer
+      @transfer.success!
+      Transaction.create(
+        amount: @transfer.amount,
+        transactable: @transfer,
+        originable: @transfer.fund_target,
+        processable: @transfer.fund_source
+      )
+    end
 end

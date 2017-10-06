@@ -62,12 +62,69 @@ RSpec.describe TransferService, type: :model do
         expect(ts.create).to be_falsey
       end
 
-      it 'returns false if transfer is sent to transferer' do
+      it 'returns false if transferer is transferee' do
         ts = TransferService.new(
           transferer_id: customer.id,
           transferee_id: customer.id,
           amount: '300'
         )
+      end
+    end
+  end
+
+  describe '#transfer_to_wallet' do
+    before do
+      @c1 = FactoryGirl.create(:wealthy_customer)
+      @c2 = FactoryGirl.create(:customer)
+      @transfer_service = TransferService.new(
+        transferer_id: @c1.id,
+        transferee_id: @c2.id,
+        amount: '200'
+      )
+      @transfer_service.create
+    end
+
+    context 'with valid conditions' do
+
+      it 'returns true if transfer is successful' do
+        expect(@transfer_service.execute_transfer).to be_truthy
+      end
+
+      it 'debits transferer wallet' do
+        @transfer_service.execute_transfer
+        expect(@c1.wallet.reload.balance.to_s).to eq('99799.00')
+      end
+
+      it 'credits transferee wallet' do
+        @transfer_service.execute_transfer
+        expect(@c2.wallet.reload.balance.to_s).to eq('200.00')
+      end
+
+      it 'updates transfer status' do
+        @transfer_service.execute_transfer
+        expect(@transfer_service.transfer.success?).to be_truthy
+      end
+
+      it 'creates transactions' do
+        expect {
+          @transfer_service.execute_transfer
+        }.to change(Transaction, :count).by(1)
+        expect(Transaction.last.transactable).to eq(@transfer_service.transfer)
+        expect(Transaction.last.originable).to eq(@c2.wallet)
+        expect(Transaction.last.processable).to eq(@c1.wallet)
+        expect(Transaction.last.amount).to eq(@transfer_service.amount)
+      end
+    end
+
+    context 'with invalid conditions' do
+      it 'returns false if transferer is transferee' do
+        @transfer_service.transfer.update(transferee: @c1)
+        expect(@transfer_service.execute_transfer).to be_falsey
+      end
+
+      it 'returns false if transferer does not have sufficient fund' do
+        @transfer_service.transfer.update(amount: 9999999999)
+        expect(@transfer_service.execute_transfer).to be_falsey
       end
     end
   end
