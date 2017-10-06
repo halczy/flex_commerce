@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   resources :dashboards, only: [:show]
   resources :customers,  only: [:new, :create, :show]
+  resources :wallets,    only: [:show]
   resources :sessions,   only: [:new, :create, :destroy]
   resources :images,     only: [:show]
   resources :categories, only: [:show] do
