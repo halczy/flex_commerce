@@ -28,4 +28,47 @@ RSpec.describe TransferService, type: :model do
       expect(transfer_service.amount).to eq(transfer.amount)
     end
   end
+
+  describe '#create' do
+    context 'with valid params' do
+      it 'returns true if a transfer is created' do
+        c1 = FactoryGirl.create(:wealthy_customer)
+        c2 = FactoryGirl.create(:customer)
+        ts = TransferService.new(
+          transferer_id: c1.id,
+          transferee_id: c2.id,
+          amount: '200'
+        )
+        expect(ts.create).to be_truthy
+        expect(Transfer.count).to eq(1)
+      end
+    end
+
+    context 'with invalid params or conditions' do
+      it 'returns false if transferee is not set' do
+        ts = TransferService.new(transferer_id: customer.id, amount: '200')
+        expect(ts.create).to be_falsey
+      end
+
+      it 'returns false if transferer is not set' do
+        ts = TransferService.new(transferee_id: customer.id, amount: '100')
+        expect(ts.create).to be_falsey
+      end
+
+      it 'returns false if amount is not set' do
+        c1 = FactoryGirl.create(:wealthy_customer)
+        c2 = FactoryGirl.create(:customer)
+        ts = TransferService.new(transferer_id: c1.id, transferee_id: c2.id)
+        expect(ts.create).to be_falsey
+      end
+
+      it 'returns false if transfer is sent to transferer' do
+        ts = TransferService.new(
+          transferer_id: customer.id,
+          transferee_id: customer.id,
+          amount: '300'
+        )
+      end
+    end
+  end
 end
