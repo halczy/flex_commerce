@@ -224,16 +224,16 @@ ActiveRecord::Schema.define(version: 160) do
   create_table "transfers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "amount_cents", default: 0, null: false
     t.string "amount_currency", default: "CNY", null: false
-    t.integer "status", default: 0
     t.integer "processor"
+    t.integer "status", default: 0
     t.uuid "transferer_id"
     t.uuid "transferee_id"
-    t.uuid "fund_source"
-    t.uuid "fund_target"
+    t.uuid "fund_source_id"
+    t.uuid "fund_target_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["fund_source"], name: "index_transfers_on_fund_source"
-    t.index ["fund_target"], name: "index_transfers_on_fund_target"
+    t.index ["fund_source_id"], name: "index_transfers_on_fund_source_id"
+    t.index ["fund_target_id"], name: "index_transfers_on_fund_target_id"
     t.index ["transferee_id"], name: "index_transfers_on_transferee_id"
     t.index ["transferer_id"], name: "index_transfers_on_transferer_id"
   end

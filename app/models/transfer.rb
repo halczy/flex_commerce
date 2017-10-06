@@ -1,8 +1,14 @@
 class Transfer < ApplicationRecord
   # Relationships
-  belongs_to :transferer, class_name: 'User', foreign_key: 'transferer_id'
-  belongs_to :transferee, class_name: 'User', foreign_key: 'transferee_id'
-
+  belongs_to :transferer,  class_name: 'User', foreign_key: 'transferer_id'
+  belongs_to :transferee,  class_name: 'User', foreign_key: 'transferee_id'
+  belongs_to :fund_source, class_name: 'Wallet',
+                           foreign_key: 'fund_source_id',
+                           optional: true
+  belongs_to :fund_target, class_name: 'Wallet',
+                           foreign_key: 'fund_target_id',
+                           optional: true
+                          
   # Validations
   monetize :amount_cents, numericality: { greater_than: 0 }
 
