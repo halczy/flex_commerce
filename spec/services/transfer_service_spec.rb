@@ -113,6 +113,7 @@ RSpec.describe TransferService, type: :model do
         expect(Transaction.last.originable).to eq(@c2.wallet)
         expect(Transaction.last.processable).to eq(@c1.wallet)
         expect(Transaction.last.amount).to eq(@transfer_service.amount)
+        expect(Transaction.last.note).to be_present
       end
     end
 
