@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :addresses, as: :addressable, dependent: :destroy
   has_many :transfer_outs, class_name: 'Transfer', foreign_key: 'transferer_id'
   has_many :transfer_ins,  class_name: 'Transfer', foreign_key: 'transferee_id'
+  has_many :referrals,     class_name: 'Referral', foreign_key: 'referer_id'
+  has_many :referees,      through: :referrals
 
   # Callbacks
   before_save :downcase_email
@@ -65,6 +67,10 @@ class User < ApplicationRecord
 
   def admin?
     User.admin_types.include?(self.class.to_s)
+  end
+
+  def referer
+    Referral.where(referee: self).first.referer
   end
 
   protected

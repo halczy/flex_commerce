@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 160) do
+ActiveRecord::Schema.define(version: 170) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,6 +180,15 @@ ActiveRecord::Schema.define(version: 160) do
     t.uuid "shipping_method_id"
     t.index ["product_id"], name: "index_products_shipping_methods_on_product_id"
     t.index ["shipping_method_id"], name: "index_products_shipping_methods_on_shipping_method_id"
+  end
+
+  create_table "referrals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "referer_id"
+    t.uuid "referee_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["referee_id"], name: "index_referrals_on_referee_id"
+    t.index ["referer_id"], name: "index_referrals_on_referer_id"
   end
 
   create_table "shipping_methods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
