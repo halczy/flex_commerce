@@ -1,20 +1,22 @@
 class Category < ApplicationRecord
   # Relationships
-  has_many :child_categories, class_name: 'Category', foreign_key: 'parent_id'
-  belongs_to :parent, class_name: 'Category', optional: true
-  has_many :categorizations, dependent: :destroy
-  has_many :products, through: :categorizations
+  belongs_to :parent,           class_name: 'Category', optional: true
+  has_many   :child_categories, class_name: 'Category', foreign_key: 'parent_id'
+  has_many   :categorizations,  dependent: :destroy
+  has_many   :products,         through: :categorizations
 
   # Validations
   validate  :ensure_parent_exists
   validates :name, presence: true, uniqueness: true
   validates :display_order, numericality: { greater_than_or_equal_to: 0 }
 
-  # Scope / Enum
+  # Scope
   scope :special,   -> { where("flavor >= ?", 2) }
   scope :top_level, -> { where(parent: nil, hide: false, flavor: 0) }
   scope :no_parent, -> { where(parent: nil, flavor: 0) }
   scope :children,  -> { where(flavor: 0).where.not(parent: nil) }
+
+  # Enum
   enum flavor: { regular: 0, brand: 1, feature: 2 }
 
   def unassociate_children
@@ -38,13 +40,13 @@ class Category < ApplicationRecord
 
   private
 
-  def ensure_parent_exists
-    return true if parent_id.nil?
-    begin
-      Category.find(self.parent_id)
-    rescue ActiveRecord::RecordNotFound
-      errors.add(:parent_id, 'category with this ID does not exist')
-      false
+    def ensure_parent_exists
+      return true if parent_id.nil?
+      begin
+        Category.find(self.parent_id)
+      rescue ActiveRecord::RecordNotFound
+        errors.add(:parent_id, 'category with this ID does not exist')
+        false
+      end
     end
-  end
 end
