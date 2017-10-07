@@ -9,6 +9,21 @@ class WalletsController < UsersController
                                .limit(10)
   end
 
+  def show_transactions
+    @transactions = Transaction.where(processable: @wallet.id)
+                               .or(Transaction.where(originable: @wallet.id))
+                               .order(created_at: :desc)
+                               .page params[:page]
+  end
+
+  def show_transfer_ins
+
+  end
+
+  def show_transfer_outs
+
+  end
+
   private
 
     def set_wallet

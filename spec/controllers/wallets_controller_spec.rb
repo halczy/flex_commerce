@@ -5,10 +5,10 @@ RSpec.describe WalletsController, type: :controller do
   let(:customer) { FactoryGirl.create(:customer) }
   let(:admin)    { FactoryGirl.create(:admin) }
 
-  describe 'GET show' do
-    before { signin_as customer }
+  before { signin_as customer }
 
-    it 'response successfully' do
+  describe 'GET show' do
+    it 'responses successfully' do
       get :show, params: { id: customer.id }
       expect(response).to be_success
     end
@@ -16,6 +16,13 @@ RSpec.describe WalletsController, type: :controller do
     it 'retrives customer wallet' do
       get :show, params: { id: customer.id }
       expect(assigns(:wallet)).to eq(customer.wallet)
+    end
+  end
+
+  describe 'GET show_transactions' do
+    it 'responses successfully' do
+      get :show_transactions, params: { id: customer.id }
+      expect(response).to be_success
     end
   end
 
