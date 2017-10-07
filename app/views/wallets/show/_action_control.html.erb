@@ -1,4 +1,5 @@
 <%= link_to 'All Transactions', show_transactions_wallet_path(@wallet),
                                 class: 'btn btn-light' %>
-<%= link_to 'Transfer Ins', '#', class: 'btn btn-light' %>
+<%= link_to 'Transfer Ins', show_transfer_ins_wallet_path(@wallet),
+                            class: 'btn btn-light' %>
 <%= link_to 'Transfer Outs', '#', class: 'btn btn-light' %>

@@ -1,0 +1,13 @@
+<div class="list-group-item flex-column">
+  <div class="d-flex justify-content-between">
+    <h6>Transferer: <%= transfer.transferer.name %></h6>
+    <h6>Amount: <%= humanized_money_with_symbol transfer.amount %></h6>
+  </div>
+  <div class="d-flex justify-content-between">
+    <h6>Transferee: <%= transfer.transferee.name %></h6>
+  </div>
+  <div class="d-flex justify-content-between">
+    <small class="text-muted">Transfer ID: <%= transfer.id %></small>
+    <small><%= transfer.created_at.strftime("Transferred at: %Y/%m/%d") %></small>
+  </div>
+</div>
