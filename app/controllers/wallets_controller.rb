@@ -22,7 +22,8 @@ class WalletsController < UsersController
   end
 
   def show_transfer_outs
-
+    @transfers = Transfer.where(fund_target: @wallet).order(created_at: :desc)
+                         .page params[:page]
   end
 
   private

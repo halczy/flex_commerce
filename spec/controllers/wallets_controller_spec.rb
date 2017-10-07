@@ -28,7 +28,14 @@ RSpec.describe WalletsController, type: :controller do
 
   describe 'GET show_transfer_ins' do
     it 'responses successfully' do
-      get :show_transfer_ins, params: { id: customer. id }
+      get :show_transfer_ins, params: { id: customer.id }
+      expect(response).to be_success
+    end
+  end
+
+  describe 'GET show_transfer_outs' do
+    it 'responses successfully' do
+      get :show_transfer_outs, params: { id: customer.id }
       expect(response).to be_success
     end
   end
