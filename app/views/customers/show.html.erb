@@ -18,7 +18,8 @@
               Cell Number: <%= current_user.cell_number %>
             </div>
             <div class="mt-2 mb-2">
-              <%= link_to 'Add/Modify Profile', '#', class: 'btn btn-info' %>
+              <%= link_to 'Add/Modify Profile', edit_customer_path(current_user),
+                                                class: 'btn btn-info' %>
             </div>
           </div>
           <div class="col-md-6">

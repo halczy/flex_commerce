@@ -1,0 +1,54 @@
+<%= provide :title, 'Edit Profile' %>
+
+<%= render 'shared/header_breadcrumb', title: yield(:title) %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <%= render 'shared/navigation/customer/sidenav' %>
+    </div>
+    <div class="col-9">
+      <div class="card">
+        <div class="card-header">
+          <%= yield(:title) %>
+        </div>
+        <div class="card-body">
+          <%= form_with(model: current_user, local: true, method: :patch) do |f| %>
+            <div class="form-group">
+              <%= f.label :name %>
+              <%= f.text_field :name, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :cell_number, 'Cell Number' %>
+              <%= f.text_field :cell_number, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :email %>
+              <%= f.email_field :email, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :referer_id,
+                          "Referer #{@customer.try(:referer).try(:name)}" %>
+              <%= f.text_field :referer_id, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :password %>
+              <%= f.password_field :password, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :password_confirmation, 'Password Confirmation' %>
+              <%= f.password_field :password_confirmation, class: 'form-control' %>
+            </div>
+
+            <%= f.submit 'Update Profile', class: 'btn btn-block btn-primary' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
