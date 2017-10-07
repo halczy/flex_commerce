@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :wallets,    only: [:show] do
     member do
       get :show_transactions
+      get :show_transfer_ins
     end
   end
   resources :sessions,   only: [:new, :create, :destroy]

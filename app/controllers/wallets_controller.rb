@@ -17,7 +17,8 @@ class WalletsController < UsersController
   end
 
   def show_transfer_ins
-
+    @transfers = Transfer.where(fund_target: @wallet).order(created_at: :desc)
+                         .page params[:page]
   end
 
   def show_transfer_outs
