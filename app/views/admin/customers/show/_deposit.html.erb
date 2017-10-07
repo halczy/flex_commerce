@@ -1,0 +1,29 @@
+<!-- Deposit Modal -->
+<div class="modal fade" id="deposit_<%= @customer.id %>">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Deposit to Customer Account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_with(url: deposit_admin_wallets_path, local: true) do |f| %>
+      <div class="modal-body">
+        <%= f.hidden_field :transferer_id, value: current_user.id %>
+        <%= f.hidden_field :transferee_id, value: @customer.id %>
+        <div class="form-group">
+          <%= f.label :amount, 'Amount' %>
+          <%= f.number_field :amount, step: :any, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <%= f.submit 'Deposit', class: 'btn btn-primary' %>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
