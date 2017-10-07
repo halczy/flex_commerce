@@ -30,12 +30,13 @@ class User < ApplicationRecord
                           uniqueness: true, allow_nil: true
   validates :member_id, presence: true, uniqueness: true,
                         inclusion: { in: 100_000..999_999 }
-  validates_with IdentificationValidator
   validates :password, length: { minimum: 6, maximum: 50 }, allow_blank: true
+  validates_with IdentificationValidator
 
   # Attributes
-  attribute :ident, :string
+  attribute :ident,          :string
   attribute :remember_token, :string
+  attribute :referer_id,     :string
 
 
   def self.create_digest(token)

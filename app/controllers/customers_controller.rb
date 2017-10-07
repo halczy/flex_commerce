@@ -1,7 +1,8 @@
 class CustomersController < UsersController
   # Filters
-  before_action :authenticate_user, only: [:show]
-  before_action :set_user, only: [:show]
+  before_action :authenticate_user, only: [ :show ]
+  before_action :set_user, only: [ :show ]
+  after_action  :set_referral, only: [ :create ]
 
   def new
     @customer = Customer.new
@@ -9,7 +10,7 @@ class CustomersController < UsersController
 
   def create
     helpers.convert_ident
-    @customer = Customer.new(params_on_create)
+    @customer = Customer.new(customer_params)
     if @customer.save
       flash[:success] = 'Your account has been created successfully.'
       helpers.login(@customer)
@@ -25,9 +26,16 @@ class CustomersController < UsersController
 
   private
 
-    def params_on_create
+    def customer_params
       params.require(:customer).permit(:email, :cell_number, :name,
                                        :password, :password_confirmation)
+    end
+
+    def set_referral
+      referer = User.find_by(id: params[:customer][:referer_id])
+      if referer
+        Referral.create!(referer: referer, referee: helpers.current_user)
+      end
     end
 
 end

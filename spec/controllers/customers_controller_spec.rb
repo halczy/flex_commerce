@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe CustomersController, type: :controller do
 
+  let(:customer) { FactoryGirl.create(:customer) }
+
   describe 'GET new' do
     it "renders the new customer sign up template" do
       get :new
@@ -54,11 +56,29 @@ RSpec.describe CustomersController, type: :controller do
           if example.metadata[:create_cart]
             session[:cart_id] = FactoryGirl.create(:cart).id
           end
-          post :create, params: { customer: { email: 'customer@creation.com',
-                                              cell_number: '14900000000',
-                                              name: 'Customer Create Test',
-                                              password: 'example',
-                                              password_confirmation: 'example' } }
+
+          if example.metadata[:with_ref]
+            post :create, params: {
+              customer: {
+                email: 'customer@creation.com',
+                cell_number: '14900000000',
+                name: 'Customer Create Test',
+                referer_id: customer.id,
+                password: 'example',
+                password_confirmation: 'example'
+              }
+            }
+          else
+            post :create, params: {
+              customer: {
+                email: 'customer@creation.com',
+                cell_number: '14900000000',
+                name: 'Customer Create Test',
+                password: 'example',
+                password_confirmation: 'example'
+              }
+            }
+          end
         end
 
         it 'creates customer with correct attributes' do
@@ -74,6 +94,10 @@ RSpec.describe CustomersController, type: :controller do
 
         it 'cleans up session cart_id', create_cart: true do
           expect(session[:cart_id]).to be_nil
+        end
+
+        it 'sets reffral if referer_id is provided', with_ref: true do
+          expect(assigns(:customer).referer).to be_an_instance_of Customer
         end
       end
 

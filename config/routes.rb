@@ -101,11 +101,10 @@ Rails.application.routes.draw do
     end
     resources :shipping_methods                                     # Shipping Methods
     resources :application_configurations, only: [:index, :edit, :update, :destroy]
-    resources :wallets, only: [] do
+    resources :wallets, only: [] do                                 # Wallets
       collection do
         post :deposit
       end
     end
-
   end
 end
