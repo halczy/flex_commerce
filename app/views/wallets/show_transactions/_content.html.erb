@@ -10,6 +10,7 @@
         <p>Transaction Count: <%= @transactions.total_count %></p>
       </div>
       <div class="col-lg-12">
+        <%= render 'shared/no_record' if @transactions.empty? %>
         <% @transactions.each do |transaction| %>
           <%= render 'wallets/shared/transaction', transaction: transaction %>
         <% end %>
