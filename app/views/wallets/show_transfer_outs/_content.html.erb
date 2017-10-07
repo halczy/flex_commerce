@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card-header">
+    <%= yield(:title) %>
+  </div>
+  <div class="card-body">
+    <%= render 'wallets/shared/action_return' %>
+    <div class="row">
+      <%= render 'shared/paginate', objects: @transfers if @transfers.present? %>
+      <div class="col-lg-12">
+        <p>Transfer Count: <%= @transfers.total_count %></p>
+      </div>
+      <div class="col-lg-12">
+        <% @transfers.each do |transfer| %>
+          <%= render 'wallets/shared/transfer', transfer: transfer %>
+        <% end %>
+      </div>
+      <%= render 'shared/paginate', objects: @transfers if @transfers.present? %>
+    </div>
+  </div>
+</div>
