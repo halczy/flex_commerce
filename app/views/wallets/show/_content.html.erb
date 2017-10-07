@@ -12,7 +12,7 @@
       </div>
     <% end %>
     <% @transactions.each do |transaction| %>
-      <%= render '/wallets/show/transaction', transaction: transaction %>
+      <%= render '/wallets/shared/transaction', transaction: transaction %>
     <% end %>
   </div>
 </div>
