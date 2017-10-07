@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Transfer, type: :model do
 
-  let(:customer) { FactoryGirl.create(:customer) }
-  let(:transfer) { FactoryGirl.create(:transfer) }
+  let(:customer)       { FactoryGirl.create(:customer) }
+  let(:transfer)       { FactoryGirl.create(:transfer) }
+  let(:wallet_success) { FactoryGirl.create(:transfer, wallet_success: true) }
 
   describe 'creation' do
     it 'creates a transfer' do
@@ -68,6 +69,10 @@ RSpec.describe Transfer, type: :model do
     it 'allows transferee wallet to refer to the transfer' do
       transfer.update(fund_target: transfer.transferee.wallet)
       expect(transfer.transferee.wallet.transfer_ins).to include(transfer)
+    end
+
+    it 'has a transaction as transaction_log' do
+      expect(wallet_success.transaction_log).to be_present
     end
   end
 end

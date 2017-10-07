@@ -8,4 +8,8 @@ module TransactionsHelper
     end
   end
 
+  def amount_direction(user, transaction)
+    transaction.processable.user == user ? 'Debit' : 'Credit'
+  end
+
 end
