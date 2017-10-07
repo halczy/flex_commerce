@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get    'r/:id',         to: 'referrals#set_referral', as: :set_referral
 
   resources :dashboards, only: [:show]
-  resources :customers,  only: [:new, :create, :show]
+  resources :customers,  only: [:new, :create, :show, :edit, :update]
   resources :wallets,    only: [:show] do
     member do
       get :show_transactions

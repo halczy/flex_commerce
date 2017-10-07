@@ -152,4 +152,13 @@ RSpec.describe CustomersController, type: :controller do
     end
   end
 
+  describe 'GET edit' do
+    before { signin_as customer }
+
+    it 'responses successfully' do
+      get :edit, params: { id: customer.id }
+      expect(response).to be_success
+    end
+  end
+
 end

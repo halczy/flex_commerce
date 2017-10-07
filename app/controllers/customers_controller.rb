@@ -1,7 +1,7 @@
 class CustomersController < UsersController
   # Filters
   before_action :authenticate_user, only: [ :show ]
-  before_action :set_user, only: [ :show ]
+  before_action :set_user, only: [ :show, :edit ]
   after_action  :set_referral, only: [ :create ]
 
   def new
@@ -21,8 +21,8 @@ class CustomersController < UsersController
     end
   end
 
-  def show
-  end
+  def show; end
+  def edit; end
 
   private
 
