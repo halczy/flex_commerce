@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="card-header">
+    Wallet
+  </div>
+  <div class="card-body">
+    <%= render 'wallets/show/snapshot' %>
+    <%= render 'wallets/show/action_control' %>
+    <h5 class="mt-5">Recent Transactions</h5>
+    <% if @transactions.empty? %>
+      <div class="jumbotron">
+        <h6>No Transactions</h6>
+      </div>
+    <% end %>
+    <% @transactions.each do |transaction| %>
+      <%= render '/wallets/show/transaction' %>
+    <% end %>
+  </div>
+</div>

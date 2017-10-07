@@ -1,0 +1,14 @@
+<div class="list-group-item flex-column">
+  <div class="d-flex justify-content-between">
+    <h6>Amount: <%= humanized_money_with_symbol transcation.amount %></h6>
+    <h6><%= amount_direction(@wallet, transcation) %></h6>
+    <h6>Source: <%= transcation.transactable.class %></h6>
+  </div>
+  <div class="d-flex justify-content-between">
+    <small class="text-muted">Note: <%= transcation.note %></small>
+  </div>
+  <div class="d-flex justify-content-between">
+    <small class="text-muted">Transcation ID: <%= transcation.id %></small>
+    <small><%= transcation.created_at.strftime("Paid at: %Y/%m/%d") %></small>
+  </div>
+</div>

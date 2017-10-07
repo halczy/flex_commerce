@@ -3,7 +3,8 @@
               class: "list-group-item #{active_controller?('dashboards')}" %>
   <%= link_to 'Profile', customer_path(current_user),
               class: "list-group-item #{active_controller?('customers')}" %>
-  <li class="list-group-item">Wallet</li>
+  <%= link_to 'Wallet', wallet_path(current_user),
+              class: "list-group-item #{active_controller?('wallets')}" %>
   <%= link_to 'Order', orders_path,
               class: "list-group-item #{active_controller?('orders')}" %>
   <li class="list-group-item">Reward</li>

@@ -43,12 +43,12 @@ RSpec.describe TransactionsHelper, type: :helper do
     end
 
     it 'returns debit if transaction processable is given user wallet' do
-      result = helper.amount_direction(@c1, @transfer_service.transfer.transaction_log)
+      result = helper.amount_direction(@c1.wallet, @transfer_service.transfer.transaction_log)
       expect(result).to eq('Debit')
     end
 
     it 'returns credit if transaction processable is given user wallet' do
-      result = helper.amount_direction(@c2, @transfer_service.transfer.transaction_log)
+      result = helper.amount_direction(@c2.wallet, @transfer_service.transfer.transaction_log)
       expect(result).to eq('Credit')
     end
   end
