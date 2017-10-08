@@ -1,7 +1,7 @@
 class CustomersController < UsersController
   # Filters
-  before_action :authenticate_user, only: [ :show ]
-  before_action :set_user, only: [ :show, :edit ]
+  before_action :authenticate_user, except: [ :new, :create ]
+  before_action :set_user, except: [ :new, :create ]
   after_action  :set_referral, only: [ :create ]
 
   def new
@@ -23,6 +23,16 @@ class CustomersController < UsersController
 
   def show; end
   def edit; end
+
+  def update
+    if @user.update(customer_params)
+      flash[:success] = "Successfully updated your profile."
+      set_referral if params[:customer][:referer_id].present? && !@user.referer
+      redirect_to @user
+    else
+      render :edit
+    end
+  end
 
   private
 

@@ -71,7 +71,7 @@ class User < ApplicationRecord
   end
 
   def referer
-    Referral.where(referee: self).first.referer
+    Referral.where(referee: self).try(:first).try(:referer)
   end
 
   protected

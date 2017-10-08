@@ -161,4 +161,68 @@ RSpec.describe CustomersController, type: :controller do
     end
   end
 
+  describe 'POST update' do
+    before { signin_as customer }
+
+    context 'with valid params' do
+      it 'updates customer record' do
+        patch :update, params: { id: customer.id, customer: {name: 'New Name'} }
+        expect(flash[:success]).to be_present
+        expect(response).to redirect_to(customer)
+        expect(customer.reload.name).to eq('New Name')
+      end
+
+      it 'updates customer password' do
+        patch :update, params: {
+          id: customer.id,
+          customer: {
+            password: 'acbdefg123456',
+            password_confirmation: 'acbdefg123456'
+          }
+        }
+        expect(flash[:success]).to be_present
+        expect(response).to redirect_to(customer)
+      end
+
+      it 'sets customer referer if not set previously' do
+        new_customer = FactoryGirl.create(:customer)
+        patch :update, params: {
+          id: customer.id,
+          customer: {
+            referer_id: new_customer.id
+          }
+        }
+        expect(customer.referer).to eq(new_customer)
+      end
+    end
+
+    context 'with invalid params' do
+      it 'rejects change to referer is set previously' do
+        old_referer = FactoryGirl.create(:customer)
+        new_referer = FactoryGirl.create(:customer)
+        Referral.create!(referer: old_referer, referee: customer)
+        patch :update, params: {
+          id: customer.id,
+          customer: {
+            referer_id: new_referer.id
+          }
+        }
+        expect(customer.referer).to eq(old_referer)
+      end
+
+      it 'rejects invalid params' do
+        patch :update, params: {
+          id: customer.id,
+          customer: {
+            cell_number: '1234560',
+            email: 'abcd#sadfadsf',
+            password: '1',
+            password_confirmation: '1'
+          }
+        }
+        expect(response).to render_template(:edit)
+      end
+    end
+  end
+
 end
