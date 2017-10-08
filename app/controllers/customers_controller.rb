@@ -37,7 +37,7 @@ class CustomersController < UsersController
   private
 
     def customer_params
-      params.require(:customer).permit(:email, :cell_number, :name,
+      params.require(:customer).permit(:email, :cell_number, :name, :referer_id,
                                        :password, :password_confirmation)
     end
 

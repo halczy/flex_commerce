@@ -23,11 +23,11 @@ class User < ApplicationRecord
   after_create :create_wallet
 
   # Validations
-  validates :email, length: { maximum: 255 }, allow_nil: true,
+  validates :email, length: { maximum: 255 }, allow_nil: true, allow_blank: true,
                     format: { with: EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   validates :cell_number, format: { with: CN_CELLULAR },
-                          uniqueness: true, allow_nil: true
+                          uniqueness: true, allow_nil: true, allow_blank: true
   validates :member_id, presence: true, uniqueness: true,
                         inclusion: { in: 100_000..999_999 }
   validates :password, length: { minimum: 6, maximum: 50 }, allow_blank: true
