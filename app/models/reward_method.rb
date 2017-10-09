@@ -12,6 +12,9 @@ class RewardMethod < ApplicationRecord
   # Attributes
   attribute :percentage
 
+  # Validations
+  validates_presence_of :name, :variety
+
   private
 
     def load_settings
