@@ -20,6 +20,8 @@ class Admin::RewardMethodsController < Admin::AdminController
     end
   end
 
+  def show; end
+
   private
 
     def set_reward_method

@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Admin::RewardMethodsController, type: :controller do
 
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin)      { FactoryGirl.create(:admin) }
+  let(:ref_reward) { FactoryGirl.create(:ref_reward) }
 
   before { signin_as admin }
 
@@ -51,6 +52,13 @@ RSpec.describe Admin::RewardMethodsController, type: :controller do
         post :create, params: { reward_method: { name: '' } }
         expect(response).to render_template(:new)
       end
+    end
+  end
+
+  describe 'GET show' do
+    it 'responses successfully' do
+      get :show, params: { id: ref_reward.id }
+      expect(response).to be_success
     end
   end
 end
