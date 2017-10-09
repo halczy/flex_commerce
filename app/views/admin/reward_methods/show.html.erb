@@ -1,0 +1,46 @@
+<%= provide :title, 'Reward Method Detail' %>
+
+<div class="d-flex justify-content-start mb-3">
+  <div>
+    <%= link_to admin_reward_methods_path, class: 'btn btn-secondary' do %>
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+    <% end %>
+  </div>
+  <div>
+    <%= link_to edit_admin_reward_method_path(@reward_method),
+                class: 'btn btn-warning' do %>
+      <i class="fa fa-edit" aria-hidden="true"></i> Edit Reward Method
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="jumbotron">
+      <h4 class="mb-3 mt-0">Basic Properties</h4>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Name</th>
+            <td><%= @reward_method.name %></td>
+          </tr>
+          <tr>
+            <th scope="row">Type</th>
+            <td><%= @reward_method.variety.titleize %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col jumbotron">
+    <h4 class="mb-3 mt-0">Method Data</h4>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Percentage</th>
+            <td><%= @reward_method.percentage %>%</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
