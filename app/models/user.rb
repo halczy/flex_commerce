@@ -100,7 +100,7 @@ class User < ApplicationRecord
     end
 
     def load_settings
-      setting.each do |key, value|
+      settings.each do |key, value|
         send("#{key}=", value)
       end
     end

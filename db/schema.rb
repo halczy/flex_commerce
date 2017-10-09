@@ -253,7 +253,7 @@ ActiveRecord::Schema.define(version: 170) do
     t.string "email"
     t.string "cell_number"
     t.integer "member_id"
-    t.hstore "setting", default: {}
+    t.hstore "settings", default: {}
     t.string "password_digest"
     t.string "remember_digest"
     t.datetime "created_at", null: false

@@ -6,9 +6,9 @@ RSpec.describe User, type: :model do
     @user_with_email = User.create(email: 'spec_email@example.com',
                                    password: 'example',
                                    password_confirmation: 'example')
-    @user_with_cell = User.create(cell_number: '18612344321',
-                                  password: 'example',
-                                  password_confirmation: 'example')
+    @user_with_cell =  User.create(cell_number: '18612344321',
+                                   password: 'example',
+                                   password_confirmation: 'example')
   end
 
   let(:user) { FactoryGirl.create(:customer) }
@@ -191,7 +191,7 @@ RSpec.describe User, type: :model do
 
   describe '#load_settings' do
     it "loads setting into virtual attribute on init" do
-      user.update(setting: { 'alipay_account': 'abc@123.com' } )
+      user.update(settings: { 'alipay_account': 'abc@123.com' } )
       expect(user.reload.alipay_account).to eq('abc@123.com')
     end
   end
