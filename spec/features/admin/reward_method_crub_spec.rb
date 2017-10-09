@@ -1,0 +1,37 @@
+require 'rails_helper'
+
+describe 'Reward Method CRUD', type: :feature do
+
+  let(:admin)      { FactoryGirl.create(:admin) }
+  let(:ref_reward) { FactoryGirl.create(:ref_reward) }
+
+  before { feature_signin_as admin }
+
+  describe 'create' do
+    it 'can create referral type reward method' do
+      visit admin_reward_methods_path
+      click_on 'New Reward Method'
+      fill_in "reward_method[name]", with: "Feature Test"
+      fill_in "reward_method[percentage]", with: "12"
+      select 'Referral', from: 'reward_method[variety]'
+      click_on 'Submit'
+
+      expect(page.current_path).to eq(admin_reward_method_path(RewardMethod.last))
+      expect(page).to have_content('Feature Test')
+      expect(page).to have_content('Percentage 12%')
+      expect(page).to have_content('Referral')
+    end
+
+    it 'displays error message when name is not filled' do
+      visit admin_reward_methods_path
+      click_on 'New Reward Method'
+      expect(page).to have_css('#error_messages')
+    end
+  end
+
+  describe 'edit' do
+  end
+
+  describe 'destroy' do
+  end
+end
