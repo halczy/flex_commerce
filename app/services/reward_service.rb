@@ -1,0 +1,3 @@
+class RewardService
+
+end
