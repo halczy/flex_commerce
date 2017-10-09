@@ -6,5 +6,10 @@ RSpec.describe Admin::RewardMethodsController, type: :controller do
 
   before { signin_as admin }
 
-
+  describe 'GET index' do
+    it 'responses successfully' do
+      get :index
+      expect(response).to be_success
+    end
+  end
 end

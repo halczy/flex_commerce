@@ -107,5 +107,6 @@ Rails.application.routes.draw do
         post :deposit
       end
     end
+    resources :reward_methods                                       # Reward Methods
   end
 end
