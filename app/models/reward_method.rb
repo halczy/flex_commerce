@@ -1,0 +1,2 @@
+class RewardMethod < ApplicationRecord
+end
