@@ -1,9 +1,10 @@
 class Product < ApplicationRecord
   # Realtionships
   has_many :categorizations, dependent: :destroy
-  has_many :categories, through: :categorizations
-  has_many :images, as: :imageable, dependent: :destroy
-  has_many :inventories, dependent: :destroy
+  has_many :categories,      through: :categorizations
+  has_many :images,          as: :imageable, dependent: :destroy
+  has_many :inventories,     dependent: :destroy
+  has_many :reward_methods
   has_and_belongs_to_many :shipping_methods
 
   # Nested form

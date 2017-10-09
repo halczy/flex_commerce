@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 170) do
+ActiveRecord::Schema.define(version: 180) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -191,6 +191,17 @@ ActiveRecord::Schema.define(version: 170) do
     t.index ["referer_id"], name: "index_referrals_on_referer_id"
   end
 
+  create_table "reward_methods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "variety"
+    t.hstore "settings"
+    t.uuid "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_reward_methods_on_product_id"
+    t.index ["variety"], name: "index_reward_methods_on_variety"
+  end
+
   create_table "shipping_methods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "variety"
@@ -284,6 +295,7 @@ ActiveRecord::Schema.define(version: 170) do
   add_foreign_key "inventories", "users"
   add_foreign_key "orders", "users"
   add_foreign_key "payments", "orders"
+  add_foreign_key "reward_methods", "products"
   add_foreign_key "shipping_methods", "products"
   add_foreign_key "shipping_rates", "shipping_methods"
   add_foreign_key "wallets", "users"
