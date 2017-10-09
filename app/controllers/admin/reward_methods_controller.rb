@@ -21,6 +21,7 @@ class Admin::RewardMethodsController < Admin::AdminController
   end
 
   def show; end
+  def edit; end
 
   private
 

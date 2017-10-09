@@ -61,4 +61,12 @@ RSpec.describe Admin::RewardMethodsController, type: :controller do
       expect(response).to be_success
     end
   end
+
+  describe 'GET edit' do
+    it 'responses successfully' do
+      get :edit, params: { id:ref_reward.id }
+      expect(response).to be_success
+    end
+
+  end
 end
