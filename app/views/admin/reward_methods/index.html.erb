@@ -1,0 +1,16 @@
+<%= provide :title, 'Reward Methods' %>
+
+<div class="d-flex justify-content-start mb-3">
+  <div>
+    <%= link_to 'New Reward Methods', new_admin_reward_method_path,
+                                      class: 'btn btn-primary' %>
+  </div>
+</div>
+
+<div class="row">
+  <%= render 'shared/paginate', objects: @reward_methods if @reward_methods.present? %>
+  <div class="col-lg-12">
+    <%= render 'admin/reward_methods/index/reward_methods' %>
+  </div>
+  <%= render 'shared/paginate', objects: @reward_methods if @reward_methods.present? %>
+</div>

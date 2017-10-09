@@ -1,0 +1,25 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reward_methods.each do |reward_method| %>
+      <tr>
+        <td>
+          <%= link_to reward_method.name, admin_reward_method_path(reward_method) %>
+        </td>
+        <td>
+          <%= reward_method.variety.titleize %>
+        </td>
+        <%= render 'admin/reward_methods/index/action_control' %>
+      </tr>
+    <% end %>
+    <% if @reward_methods.empty? %>
+      <tr><td colspan="5">No Reward Method Available</td></tr>
+    <% end %>
+  </tbody>
+</table>
