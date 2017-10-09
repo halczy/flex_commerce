@@ -28,4 +28,15 @@ RSpec.describe RewardMethod, type: :model do
     end
   end
 
+  describe '#destroyable?' do
+    it 'returns true if reward method is not associated with any products' do
+      reward_method = RewardMethod.create(name: 't', variety: 'referral')
+      expect(reward_method.destroyable?).to be_truthy
+    end
+
+    it 'returns false is reward method is associated with any product' do
+      expect(ref_reward.destroyable?).to be_falsey
+    end
+  end
+
 end

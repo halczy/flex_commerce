@@ -15,6 +15,10 @@ class RewardMethod < ApplicationRecord
   # Validations
   validates_presence_of :name, :variety
 
+  def destroyable?
+    products.empty?
+  end
+
   private
 
     def load_settings
