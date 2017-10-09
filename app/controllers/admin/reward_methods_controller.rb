@@ -23,6 +23,16 @@ class Admin::RewardMethodsController < Admin::AdminController
   def show; end
   def edit; end
 
+  def update
+    if @reward_method.update(reward_method_params)
+      flash[:success] = "Successfully updated the reward method"
+      set_settings
+      redirect_to admin_reward_method_path(@reward_method)
+    else
+      render :edit
+    end
+  end
+
   private
 
     def set_reward_method
@@ -35,7 +45,7 @@ class Admin::RewardMethodsController < Admin::AdminController
 
     def set_settings
       if @reward_method.referral? && params[:reward_method][:percentage]
-        @reward_method.settings[:percentage] = params[:reward_method][:percentage]
+        @reward_method.settings['percentage'] = params[:reward_method][:percentage]
       end
       @reward_method.save
     end

@@ -67,6 +67,31 @@ RSpec.describe Admin::RewardMethodsController, type: :controller do
       get :edit, params: { id:ref_reward.id }
       expect(response).to be_success
     end
+  end
 
+  describe 'PATCH update' do
+    context 'with valid params' do
+      it 'updates record' do
+        patch :update, params: {
+          id: ref_reward, reward_method: { name: 'New Name' }
+        }
+        expect(flash[:success]).to be_present
+        expect(response).to redirect_to(admin_reward_method_path(ref_reward))
+      end
+
+      it 'updates settings hash for referral attributes' do
+        patch :update, params: {
+          id: ref_reward, reward_method: { percentage: '20' }
+        }
+        expect(ref_reward.reload.percentage).to eq('20')
+      end
+    end
+
+    context 'with invalid params' do
+      it 'flashes error messages when given invalid params' do
+        patch :update, params: { id: ref_reward, reward_method: { name: '' } }
+        expect(response).to render_template(:edit)
+      end
+    end
   end
 end
