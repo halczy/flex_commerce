@@ -11,33 +11,34 @@ class User < ApplicationRecord
   has_one  :cart
   has_one  :wallet
   has_many :orders
-  has_many :addresses, as: :addressable, dependent: :destroy
+  has_many :addresses,     as: :addressable,       dependent: :destroy
   has_many :transfer_outs, class_name: 'Transfer', foreign_key: 'transferer_id'
   has_many :transfer_ins,  class_name: 'Transfer', foreign_key: 'transferee_id'
   has_many :referrals,     class_name: 'Referral', foreign_key: 'referer_id'
   has_many :referees,      through: :referrals
 
   # Callbacks
-  before_save :downcase_email
+  after_initialize  :load_settings
   before_validation :assign_member_id
-  after_create :create_wallet
+  before_save       :downcase_email
+  after_create      :create_wallet
 
   # Validations
-  validates :email, length: { maximum: 255 }, allow_nil: true, allow_blank: true,
-                    format: { with: EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
-  validates :cell_number, format: { with: CN_CELLULAR },
-                          uniqueness: true, allow_nil: true, allow_blank: true
-  validates :member_id, presence: true, uniqueness: true,
-                        inclusion: { in: 100_000..999_999 }
-  validates :password, length: { minimum: 6, maximum: 50 }, allow_blank: true
-  validates_with IdentificationValidator
+  validates :email,       length: { maximum: 255 }, allow_nil: true, 
+                          allow_blank: true, format: { with: EMAIL_REGEX },
+                          uniqueness: { case_sensitive: false }
+  validates :cell_number, uniqueness: true, allow_nil: true, allow_blank: true,
+                          format: { with: CN_CELLULAR }
+  validates :member_id,   presence: true, uniqueness: true,
+                          inclusion: { in: 100_000..999_999 }
+  validates :password,    length: { minimum: 6, maximum: 50 }, allow_blank: true
+  validates_with          IdentificationValidator
 
   # Attributes
   attribute :ident,          :string
   attribute :remember_token, :string
   attribute :referer_id,     :string
-
+  attribute :alipay_account, :string
 
   def self.create_digest(token)
     BCrypt::Password.create(token, cost: 10)
@@ -94,6 +95,12 @@ class User < ApplicationRecord
         raise if User.where(member_id: self.member_id).exists?
       rescue
         retry
+      end
+    end
+    
+    def load_settings
+      setting.each do |key, value|
+        self.send("#{key}=", value)
       end
     end
 
