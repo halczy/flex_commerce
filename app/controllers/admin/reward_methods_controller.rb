@@ -2,7 +2,7 @@ class Admin::RewardMethodsController < Admin::AdminController
   before_action :set_reward_method, except: [ :index, :new, :create ]
 
   def index
-    @reward_methods = RewardMethod.all
+    @reward_methods = RewardMethod.all.order(updated_at: :desc).page params[:page]
   end
 
   def new
