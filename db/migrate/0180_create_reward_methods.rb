@@ -4,7 +4,6 @@ class CreateRewardMethods < ActiveRecord::Migration[5.1]
       t.string     :name
       t.integer    :variety,  index: true
       t.hstore     :settings, default: {}
-      t.references :product,  foreign_key: true, type: :uuid, index: true
 
       t.timestamps
     end

@@ -202,10 +202,8 @@ ActiveRecord::Schema.define(version: 180) do
     t.string "name"
     t.integer "variety"
     t.hstore "settings", default: {}
-    t.uuid "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_reward_methods_on_product_id"
     t.index ["variety"], name: "index_reward_methods_on_variety"
   end
 
@@ -302,7 +300,6 @@ ActiveRecord::Schema.define(version: 180) do
   add_foreign_key "inventories", "users"
   add_foreign_key "orders", "users"
   add_foreign_key "payments", "orders"
-  add_foreign_key "reward_methods", "products"
   add_foreign_key "shipping_methods", "products"
   add_foreign_key "shipping_rates", "shipping_methods"
   add_foreign_key "wallets", "users"
