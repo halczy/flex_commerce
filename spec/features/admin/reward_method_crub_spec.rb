@@ -59,5 +59,26 @@ describe 'Reward Method CRUD', type: :feature do
   end
 
   describe 'destroy' do
+    it 'can delete unassociated reward method' do
+      visit admin_reward_methods_path
+      click_on 'New Reward Method'
+      fill_in 'reward_method[name]', with: 'Feature Test'
+      fill_in 'reward_method[percentage]', with: '12'
+      select 'Referral', from: 'reward_method[variety]'
+      click_on 'Submit'
+      click_on 'Delete'
+      click_on 'Confirm'
+
+      expect(page).to have_content('No Reward Method Available')
+    end
+
+    it 'cannot delete reward method with product asscoiated' do
+      ref_reward
+      visit admin_reward_methods_path
+      click_on 'Delete'
+      click_on 'Confirm'
+
+      expect(page).to have_content('This reward method cannot be deleted.')
+    end
   end
 end
