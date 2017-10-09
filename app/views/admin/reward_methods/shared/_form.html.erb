@@ -1,0 +1,28 @@
+<%= form_with(model: [:admin, @reward_method], local: true) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <div class="form-group row">
+    <div class="col-6">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="col-6">
+      <%= f.label :variety, 'Type' %>
+      <%= f.select :variety, options_for_select([['Referral', 'referral']],
+                                                @reward_method.variety),
+                             {}, id: 'reward_select', class: 'form-control' %>
+    </div>
+  </div>
+  <div id="referral_section">
+    <div class="form-group row">
+      <div class="col-6">
+        <%= f.label :percentage %>
+        <%= f.number_field :percentage, class: 'form-control' %>
+      </div>
+    </div>
+  </div>
+
+  <%= f.submit class: 'btn btn-primary btn-block' %>
+<% end %>
+
+<%= javascript_include_tag 'reward_form', 'data-turbolinks-track': 'reload' %>

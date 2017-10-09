@@ -4,4 +4,8 @@ class Admin::RewardMethodsController < Admin::AdminController
     @reward_methods = RewardMethod.all
   end
 
+  def new
+    @reward_method = RewardMethod.new
+  end
+
 end

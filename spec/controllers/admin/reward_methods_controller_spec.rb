@@ -12,4 +12,11 @@ RSpec.describe Admin::RewardMethodsController, type: :controller do
       expect(response).to be_success
     end
   end
+
+  describe 'GET new' do
+    it 'renders new form' do
+      get :new
+      expect(response).to render_template(:new)
+    end
+  end
 end
