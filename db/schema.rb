@@ -253,13 +253,14 @@ ActiveRecord::Schema.define(version: 170) do
     t.string "email"
     t.string "cell_number"
     t.integer "member_id"
+    t.hstore "setting"
     t.string "password_digest"
     t.string "remember_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cell_number"], name: "index_users_on_cell_number", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["member_id"], name: "index_users_on_member_id", unique: true
+    t.index ["cell_number"], name: "index_users_on_cell_number"
+    t.index ["email"], name: "index_users_on_email"
+    t.index ["member_id"], name: "index_users_on_member_id"
   end
 
   create_table "wallets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
