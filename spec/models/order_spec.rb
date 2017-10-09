@@ -2,29 +2,25 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
 
-  let(:order)           { FactoryGirl.create(:order) }
-  let(:order_selected)  { FactoryGirl.create(:order, selected: true) }
-  let(:order_set)       { FactoryGirl.create(:order, set: true) }
-  let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true) }
-  let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
-                                                             only_pickup: true) }
-  let(:order_pickup_set)        { FactoryGirl.create(:order, set: true,
-                                                             only_pickup: true) }
-  let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true,
-                                                             only_delivery: true) }
-  let(:order_delivery_set)      { FactoryGirl.create(:order, set:true,
-                                                             only_delivery: true) }
-  let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true,
-                                                             no_shipping: true) }
-  let(:payment_order)    { FactoryGirl.create(:payment_order) }
-
-  let(:payment_wallet)   { FactoryGirl.create(:payment) }
-  let(:payment_alipay)   { FactoryGirl.create(:payment, processor: 1) }
-
-  let(:wallet_created)   { PaymentService.new(payment_id: payment_wallet.id) }
-  let(:alipay_created)   { PaymentService.new(payment_id: payment_alipay.id) }
-
-  let(:customer)         { FactoryGirl.create(:customer) }
+  let(:customer)                { FactoryGirl.create(:customer) }
+  let(:order)                   { FactoryGirl.create(:order) }
+  let(:order_selected)          { FactoryGirl.create(:order, selected: true) }
+  let(:order_set)               { FactoryGirl.create(:order, set: true) }
+  let(:order_confirmed)         { FactoryGirl.create(:order, confirmed: true) }
+  let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true, only_pickup: true) }
+  let(:order_pickup_set)        { FactoryGirl.create(:order, set: true,      only_pickup: true) }
+  let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true, only_delivery: true) }
+  let(:order_delivery_set)      { FactoryGirl.create(:order, set:true,       only_delivery: true) }
+  let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true,      no_shipping: true) }
+  let(:payment_order)           { FactoryGirl.create(:payment_order) }
+  let(:payment_wallet)          { FactoryGirl.create(:payment) }
+  let(:payment_alipay)          { FactoryGirl.create(:payment, processor: 1) }
+  let(:service_order)           { FactoryGirl.create(:service_order) }
+  let(:service_order_ppending)  { FactoryGirl.create(:service_order, pickup_pending: true) }
+  let(:service_order_shipped)   { FactoryGirl.create(:service_order, shipped: true) }
+  let(:completed_order)         { FactoryGirl.create(:service_order, completed: true) }
+  let(:wallet_created)          { PaymentService.new(payment_id: payment_wallet.id) }
+  let(:alipay_created)          { PaymentService.new(payment_id: payment_alipay.id) }
 
   describe 'creation' do
     it 'can be created' do
@@ -242,6 +238,17 @@ RSpec.describe Order, type: :model do
       order_set.cancel
       expect {order_set.reload}.to raise_error(ActiveRecord::RecordNotFound)
     end
+  end
 
+  describe '#load_shipment' do
+    it 'loads shipment hash to corresponding virtual attribute' do
+      completed_order.reload
+      expect(completed_order.shipping_company).to be_present
+      expect(completed_order.tracking_number).to be_present
+      expect(completed_order.shipped_at).to be_present
+      expect(completed_order.shipping_completed_at).to be_present
+      expect(completed_order.pickup_readied_at).to be_present
+      expect(completed_order.pickup_completed_at).to be_present
+    end
   end
 end

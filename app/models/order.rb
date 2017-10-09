@@ -13,6 +13,10 @@ class Order < ApplicationRecord
   # Validation
   monetize :shipping_cost_cents, numericality: { greater_than_or_equal_to: 0 }
 
+  # Callbacks
+  after_initialize :load_shipment
+  after_touch      :load_shipment
+
   # Enum
   enum status: {
     # Creation
@@ -88,4 +92,12 @@ class Order < ApplicationRecord
     inventories.each(&:restock)
     destroy
   end
+
+  private
+
+    def load_shipment
+      shipment.each do |key, value|
+        send("#{key}=", value)
+      end
+    end
 end
