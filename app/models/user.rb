@@ -22,9 +22,10 @@ class User < ApplicationRecord
   before_validation :assign_member_id
   before_save       :downcase_email
   after_create      :create_wallet
+  after_touch       :load_settings
 
   # Validations
-  validates :email,       length: { maximum: 255 }, allow_nil: true, 
+  validates :email,       length: { maximum: 255 }, allow_nil: true,
                           allow_blank: true, format: { with: EMAIL_REGEX },
                           uniqueness: { case_sensitive: false }
   validates :cell_number, uniqueness: true, allow_nil: true, allow_blank: true,
@@ -97,10 +98,10 @@ class User < ApplicationRecord
         retry
       end
     end
-    
+
     def load_settings
       setting.each do |key, value|
-        self.send("#{key}=", value)
+        send("#{key}=", value)
       end
     end
 

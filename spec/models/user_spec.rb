@@ -58,14 +58,6 @@ RSpec.describe User, type: :model do
         end
       end
     end
-    
-    describe 'setting' do
-      it "loads setting into virtual attribute on init" do
-        user.update(setting: { 'alipay_account': 'abc@123.com' } )
-        new_instance = User.find(user.id)
-        expect(new_instance.alipay_account).to eq('abc@123.com')
-      end
-    end
 
     describe 'cell_number' do
       it 'allows sign up with valid phone number' do
@@ -194,6 +186,13 @@ RSpec.describe User, type: :model do
       wallet_id = user.wallet.id
       expect { user.create_wallet }.to raise_error(ActiveRecord::RecordNotSaved)
       expect(user.wallet.reload.id).to eq(wallet_id)
+    end
+  end
+
+  describe '#load_settings' do
+    it "loads setting into virtual attribute on init" do
+      user.update(setting: { 'alipay_account': 'abc@123.com' } )
+      expect(user.reload.alipay_account).to eq('abc@123.com')
     end
   end
 end
