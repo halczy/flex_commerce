@@ -194,7 +194,7 @@ ActiveRecord::Schema.define(version: 180) do
   create_table "reward_methods", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "variety"
-    t.hstore "settings"
+    t.hstore "settings", default: {}
     t.uuid "product_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
