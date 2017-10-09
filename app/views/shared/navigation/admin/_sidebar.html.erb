@@ -7,7 +7,7 @@
     <li class="nav-item">
       <%= link_to admin_dashboard_index_path,
                   class: "nav-link #{active_controller?('dashboard')}" do %>
-        <em class="fa fa-dashboard"></em> Dashboard
+        <em class="fa fa-dashboard fa-fw"></em> Dashboard
       <% end %>
     </li>
   </ul>
@@ -15,7 +15,7 @@
     <li class="nav-item">
       <%= link_to admin_customers_path,
                   class: "nav-link #{active_controller?('customers')}" do %>
-        <em class="fa fa-users"></em> Customers
+        <em class="fa fa-users fa-fw"></em> Customers
       <% end %>
     </li>
   </ul>
@@ -23,19 +23,19 @@
     <li class="nav-item">
       <%= link_to admin_orders_path,
                   class: "nav-link #{active_controller?('orders')}" do %>
-       <em class="fa fa-files-o"></em> Orders</a>
+       <em class="fa fa-files-o fa-fw"></em> Orders</a>
       <% end %>
     </li>
     <li class="nav-item">
       <%= link_to admin_products_path,
                   class: "nav-link #{active_controller?('products')}" do %>
-       <em class="fa fa-industry"></em> Products</a>
+       <em class="fa fa-industry fa-fw"></em> Products</a>
       <% end %>
     </li>
     <li class="nav-item">
       <%= link_to admin_inventories_path,
                   class: "nav-link #{active_controller?('inventories')}" do %>
-       <em class="fa fa-archive"></em> Inventories</a>
+       <em class="fa fa-archive fa-fw"></em> Inventories</a>
       <% end %>
     </li>
   </ul>
@@ -43,19 +43,25 @@
     <li class="nav-item">
       <%= link_to admin_categories_path,
                   class: "nav-link #{active_controller?('categories')}" do %>
-       <em class="fa fa-list-ul"></em> Categories</a>
+       <em class="fa fa-list-ul fa-fw"></em> Categories</a>
       <% end %>
     </li>
     <li class="nav-item">
       <%= link_to admin_images_path,
                   class: "nav-link #{active_controller?('images')}" do %>
-       <em class="fa fa-picture-o"></em> Images</a>
+       <em class="fa fa-picture-o fa-fw"></em> Images</a>
       <% end %>
     </li>
     <li class="nav-item">
       <%= link_to admin_shipping_methods_path,
                   class: "nav-link #{active_controller?('shipping_methods')}" do %>
-       <em class="fa fa-truck"></em> Shipping Methods</a>
+       <em class="fa fa-truck fa-fw"></em> Shipping Methods</a>
+      <% end %>
+    </li>
+    <li class="nav-item">
+      <%= link_to admin_reward_methods_path,
+                  class: "nav-link #{active_controller?('reward_methods')}" do %>
+       <em class="fa fa-handshake-o fa-fw"></em> Reward Methods</a>
       <% end %>
     </li>
   </ul>
@@ -63,7 +69,7 @@
     <li class="nav-item">
       <%= link_to admin_application_configurations_path,
                   class: "nav-link #{active_controller?('application_configurations')}" do %>
-        <em class="fa fa-cogs"></em> App Configs
+        <em class="fa fa-cogs fa-fw"></em> App Configs
       <% end %>
     </li>
   </ul>
