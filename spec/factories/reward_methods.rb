@@ -3,6 +3,9 @@ FactoryGirl.define do
     name 'Referral Reward'
     variety 0
     settings {{ percentage: 5 }}
-    association :product, factory: :product
+
+    after(:create) do |reward|
+      3.times { reward.products << FactoryGirl.create(:product) }
+    end
   end
 end

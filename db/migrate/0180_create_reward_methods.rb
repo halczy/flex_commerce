@@ -8,5 +8,10 @@ class CreateRewardMethods < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+
+    create_table :products_reward_methods, id: false do |t|
+      t.belongs_to :product,       type: :uuid, index: true
+      t.belongs_to :reward_method, type: :uuid, index: true
+    end
   end
 end

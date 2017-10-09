@@ -175,6 +175,13 @@ ActiveRecord::Schema.define(version: 180) do
     t.index ["weight"], name: "index_products_on_weight"
   end
 
+  create_table "products_reward_methods", id: false, force: :cascade do |t|
+    t.uuid "product_id"
+    t.uuid "reward_method_id"
+    t.index ["product_id"], name: "index_products_reward_methods_on_product_id"
+    t.index ["reward_method_id"], name: "index_products_reward_methods_on_reward_method_id"
+  end
+
   create_table "products_shipping_methods", id: false, force: :cascade do |t|
     t.uuid "product_id"
     t.uuid "shipping_method_id"

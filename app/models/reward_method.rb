@@ -1,6 +1,6 @@
 class RewardMethod < ApplicationRecord
   # Relationships
-  belongs_to :product
+  has_and_belongs_to_many :products
 
   # Callbacks
   after_initialize :load_settings
