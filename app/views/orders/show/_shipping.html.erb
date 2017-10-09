@@ -11,15 +11,15 @@
               <h6>Contact Number: <%= @self_pickup.address.contact_number %></h6>
               <div class="mb-2"><strong>Pickup Tracking</strong></div>
               <h6>
-                Pickup Readied At: 
-                <% if @order.shipment['pickup_readied_at'] %>
-                  <%= DateTime.parse(@order.shipment['pickup_readied_at']).strftime("%Y/%m/%d") %>
+                Pickup Readied At:
+                <% if @order.pickup_readied_at %>
+                  <%= DateTime.parse(@order.pickup_readied_at).strftime("%Y/%m/%d") %>
                 <% end %>
               </h6>
               <h6>
                 Pickup Completed At:
-                <% if @order.shipment['pickup_completed_at'] %>
-                  <%= DateTime.parse(@order.shipment['pickup_completed_at']).strftime("%Y/%m/%d") %>
+                <% if @order.pickup_completed_at %>
+                  <%= DateTime.parse(@order.pickup_completed_at).strftime("%Y/%m/%d") %>
                 <% end %>
               </h6>
             </div>
@@ -29,12 +29,12 @@
           <div class="col-md">
             <div class="jumbotron">
               <div class="mb-2"><strong>Delivery Tracking</strong></div>
-              <h6>Shipping Company: <%= @order.shipment['shipping_company'] %></h6>
-              <h6>Tracking Number: <%= @order.shipment['tracking_number'] %></h6>
+              <h6>Shipping Company: <%= @order.shipping_company %></h6>
+              <h6>Tracking Number: <%= @order.tracking_number %></h6>
               <h6>
-                Ship Date: 
-                <% if @order.shipment['shipped_at'] %>
-                  <%= DateTime.parse(@order.shipment['shipped_at']).strftime("%Y/%m/%d") %>
+                Ship Date:
+                <% if @order.shipped_at %>
+                  <%= DateTime.parse(@order.shipped_at).strftime("%Y/%m/%d") %>
                 <% end %>
               </h6>
               <div class="mb-2"><strong>Shipping Address</strong></div>
