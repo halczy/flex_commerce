@@ -94,4 +94,27 @@ RSpec.describe Admin::RewardMethodsController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE destroy' do
+    before do
+      @reward_method = RewardMethod.create(name: 'Test', variety: 'referral')
+    end
+    it 'destroys reward method without associated products' do
+      expect {
+        delete :destroy, params: { id: @reward_method.id }
+      }.to change(RewardMethod, :count).by(-1)
+    end
+
+    it 'destorys and return to index' do
+      delete :destroy, params: { id: @reward_method.id }
+      expect(flash[:success]).to be_present
+      expect(response).to redirect_to admin_reward_methods_path
+    end
+
+    it 'flashes error message if associated products exist' do
+      delete :destroy, params: { id: ref_reward.id }
+      expect(flash[:warning]).to be_present
+      expect(response).to redirect_to admin_reward_methods_path
+    end
+  end
 end
