@@ -13,6 +13,7 @@ class PaymentService
   def create
     case @variety
     when 'charge' then create_charge
+    when 'reward' then create_reward
     end
   end
 
@@ -39,10 +40,28 @@ class PaymentService
     end
   end
 
+  def create_reward
+    begin
+      Payment.transaction do
+        build_reward
+        validate_order_status
+        true
+      end
+    rescue Exception
+      @payment = nil
+      false
+    end
+  end
+
   def build_charge
     @payment = Payment.create!(order: @order, processor: @processor,
-                               variety: @variety, amount: @amount)
+                               variety: 'charge', amount: @amount)
     build_processor
+  end
+
+  def build_reward
+    @payment = Payment.create!(order: @order, amount: @amount,
+                               processor: 'wallet', variety: 'reward')
   end
 
   def create_processor_client
@@ -131,8 +150,13 @@ class PaymentService
   private
 
     def validate_order_status
-      return true if @order.status_before_type_cast.between?(20, 59)
-      raise(StandardError, 'Invalid order status.')
+      if @variety == 'charge'
+        return true if @order.status_before_type_cast.between?(20, 59)
+      elsif @variety == 'reward'
+        return true if @order.status_before_type_cast >= 60
+      else
+        raise(StandardError, 'Invalid order status.')
+      end
     end
 
     def validate_amount_with_order
