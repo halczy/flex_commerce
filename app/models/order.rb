@@ -75,7 +75,7 @@ class Order < ApplicationRecord
 
   def amount_paid
     payments.sum do |payment|
-      payment.status_before_type_cast.between?(1, 3) ? payment.amount : 0
+      payment.status_before_type_cast >= 20 ? payment.amount : 0
     end
   end
 

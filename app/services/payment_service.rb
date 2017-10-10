@@ -1,17 +1,42 @@
 class PaymentService
   attr_accessor :order, :payment, :amount, :user, :processor, :processor_client
 
-  def initialize(order_id: nil, payment_id: nil, processor: nil, amount: nil)
+  def initialize(order_id: nil, payment_id: nil, processor: nil, amount: nil, variety: nil)
     @payment = Payment.find_by(id: payment_id)
-    @order = Order.find_by(id: order_id) || @payment.order
+    @order = Order.find_by(id: order_id) || @payment.try(:order)
     @processor = processor || @payment.try(:processor)
     @amount = amount || @order.try(:amount_unpaid) || @payment.try(:amount)
-    @user = @order.user
+    @user = @order.try(:user)
+    @variety = variety || 'charge'
   end
 
-  def validate_amount
-    validate_amount_with_order
-    validate_customer_fund if @payment.processor == 'wallet'
+  def create
+    case @variety
+    when 'charge' then create_charge
+    end
+  end
+
+  def charge
+    case @payment.processor
+    when 'wallet' then charge_wallet
+    when 'alipay' then charge_alipay
+    end
+  end
+
+  def create_charge
+    begin
+      Payment.transaction do
+        build
+        validate_order_status
+        validate_amount_with_order
+        validate_customer_fund if @payment.processor == 'wallet'
+        @order.payment_pending!
+        @payment
+      end
+    rescue Exception
+      @payment = nil
+      false
+    end
   end
 
   def build
@@ -46,21 +71,6 @@ class PaymentService
     create_processor_request
   end
 
-  def create
-    begin
-      Payment.transaction do
-        build
-        validate_order_status
-        validate_amount
-        @order.payment_pending!
-        @payment
-      end
-    rescue Exception
-      @payment = nil
-      false
-    end
-  end
-
   def mark_success
     @payment.processor_confirmed!
     create_transaction
@@ -74,7 +84,7 @@ class PaymentService
     if @order.reload.amount_unpaid == 0
       @order.payment_success!
       confirm_inventories
-    elsif @payment.status_before_type_cast.between?(1, 3)
+    elsif @payment.status_before_type_cast >= 20
       @order.partial_payment!
     else
       @order.payment_fail! unless @order.partial_payment?
@@ -105,13 +115,6 @@ class PaymentService
       notify_url: ENV['API_RETURN_ROOT'] + "/payments/#{@payment.id}/alipay_notify",
       biz_content: @payment.processor_request.to_json,
     )
-  end
-
-  def charge
-    case @payment.processor
-    when 'wallet' then charge_wallet
-    when 'alipay' then charge_alipay
-    end
   end
 
   def alipay_confirm
@@ -191,6 +194,6 @@ class PaymentService
 
     def app_name
       ApplicationConfiguration.find_by(name: 'application_title').try(:plain) ||
-                               'Flex Commerce'
+      'Flex Commerce'
     end
 end

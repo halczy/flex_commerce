@@ -7,7 +7,6 @@ RSpec.describe PaymentService, type: :model do
   let(:order_confirmed)  { FactoryGirl.create(:order, confirmed: true) }
   let(:payment_wallet)   { FactoryGirl.create(:payment) }
   let(:payment_alipay)   { FactoryGirl.create(:payment, processor: 1) }
-
   let(:wallet_created)   { PaymentService.new(payment_id: payment_wallet.id) }
   let(:alipay_created)   { PaymentService.new(payment_id: payment_alipay.id) }
 
