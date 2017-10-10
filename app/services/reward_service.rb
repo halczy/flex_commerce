@@ -8,6 +8,11 @@ class RewardService
 
   def distribute
     # CALCUATE REWARD AMOUNTS FOR ALL REWARD METHODS
+    @order.inventories.each do |inv|
+      inv.product.reward_methods.each do |reward_method|
+        reward_amount(inv, reward_method)
+      end
+    end
     # CALL PRESET SUB DISTRIBUTE METHODS
   end
 
@@ -18,7 +23,7 @@ class RewardService
 
   def reward_amount(inv, reward_method)
     case reward_method.variety
-    when 'referral' then referral_reward_amount_(inv, reward_method)
+    when 'referral' then referral_reward_amount(inv, reward_method)
     end
   end
 
