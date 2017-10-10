@@ -26,7 +26,7 @@ class PaymentService
   def create_charge
     begin
       Payment.transaction do
-        build
+        build_charge
         validate_order_status
         validate_amount_with_order
         validate_customer_fund if @payment.processor == 'wallet'
@@ -39,12 +39,9 @@ class PaymentService
     end
   end
 
-  def build
-    variety = 0 if @order.status_before_type_cast.between?(20, 59)
-    @payment = Payment.create!(order: @order,
-                               processor: @processor,
-                               variety: variety,
-                               amount: @amount)
+  def build_charge
+    @payment = Payment.create!(order: @order, processor: @processor,
+                               variety: @variety, amount: @amount)
     build_processor
   end
 

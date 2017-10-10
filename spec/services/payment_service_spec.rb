@@ -43,12 +43,12 @@ RSpec.describe PaymentService, type: :model do
       end
     end
 
-    describe '#build' do
+    describe '#build_charge' do
       it 'creates a wallet payment for confirmed order' do
         payment_service = PaymentService.new(order_id: order_confirmed.id,
                                              processor: 'wallet',
                                              amount: Money.new(100))
-        payment_service.build
+        payment_service.build_charge
         expect(payment_service.payment).to be_present
         expect(payment_service.payment.variety).to eq('charge')
         expect(payment_service.payment.amount).to eq(Money.new(100))
@@ -60,7 +60,7 @@ RSpec.describe PaymentService, type: :model do
         payment_service = PaymentService.new(order_id: order_confirmed.id,
                                              processor: 'alipay',
                                              amount: order_confirmed.total)
-        payment_service.build
+        payment_service.build_charge
         expect(payment_service.payment).to be_present
         expect(payment_service.payment.variety).to eq('charge')
         expect(payment_service.payment.amount).to eq(order_confirmed.total)
@@ -72,14 +72,14 @@ RSpec.describe PaymentService, type: :model do
       it 'defaults amount to the order unpaid balance if the figure is not given' do
         payment_service = PaymentService.new(order_id: order_confirmed.id,
                                              processor: 'wallet')
-        payment_service.build
+        payment_service.build_charge
         expect(payment_service.payment.amount).to eq(order_confirmed.total)
       end
 
       it 'does not create payment if processor is missing' do
         payment_service = PaymentService.new(order_id: order_confirmed.id,
                                              amount: Money.new(100))
-        expect { payment_service.build }.to raise_error(ActiveRecord::RecordInvalid)
+        expect { payment_service.build_charge }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
 
@@ -95,7 +95,7 @@ RSpec.describe PaymentService, type: :model do
         payment_service = PaymentService.new(order_id: order_confirmed.id,
                                              processor: 'wallet',
                                              amount: Money.new(100))
-        payment_service.build
+        payment_service.build_charge
         expect(payment_service.send(:validate_amount_with_order)).to be_truthy
       end
 
@@ -103,7 +103,7 @@ RSpec.describe PaymentService, type: :model do
         payment_service = PaymentService.new(order_id: order_confirmed.id,
                                              processor: 'wallet',
                                              amount: Money.new(9999999))
-        payment_service.build
+        payment_service.build_charge
         expect {
           payment_service.send(:validate_amount_with_order)
         }.to raise_error(StandardError)
@@ -114,14 +114,14 @@ RSpec.describe PaymentService, type: :model do
       it 'returns true if customer have sufficient fund to complete order' do
         order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
         payment_service = PaymentService.new(order_id: order, processor: 'wallet')
-        payment_service.build
+        payment_service.build_charge
         expect(payment_service.send(:validate_customer_fund)).to be_truthy
       end
 
       it 'raises error if customer does not have enough fund to make the payment' do
         payment_service = PaymentService.new(order_id: order_confirmed.id,
                                                        processor: 'wallet')
-        payment_service.build
+        payment_service.build_charge
         expect {
           payment_service.send(:validate_customer_fund)
         }.to raise_error(StandardError)

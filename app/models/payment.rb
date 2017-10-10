@@ -9,7 +9,7 @@ class Payment < ApplicationRecord
 
   # Enum
   enum processor: { wallet: 0, alipay: 1 }
-  enum variety:   { charge: 0, refund: 1 }
+  enum variety:   { charge: 0, refund: 1, reward: 2 }
   enum status:    {
     created: 0,
     insufficient_fund: 10, timeout: 11, expired: 12,
