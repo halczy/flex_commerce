@@ -27,7 +27,7 @@ describe 'order service process', type: :feature do
       click_on 'Submit'
 
       expect(page).to have_content('Shipped')
-      expect(page).to have_content("Shipped At " + DateTime.now.strftime("%Y/%m/%d"))
+      expect(page).to have_content("Shipped At " + Time.zone.now.strftime("%Y/%m/%d"))
     end
 
     it 'can confirm delivery order' do
@@ -40,7 +40,7 @@ describe 'order service process', type: :feature do
       expect(page).to have_content('Mark as Shipping Completed')
       click_on('Mark as Shipping Completed')
       expect(page).to have_content('Shipped')
-      expect(page).to have_content("Shipping Completed At " + DateTime.now.strftime("%Y/%m/%d"))
+      expect(page).to have_content("Shipping Completed At " + Time.zone.now.strftime("%Y/%m/%d"))
     end
   end
 
@@ -50,7 +50,7 @@ describe 'order service process', type: :feature do
       click_on 'Mark as Pickup Ready'
 
       expect(page).to have_content('Pickup Pending')
-      expect(page).to have_content("Pickup Readied At " + DateTime.now.strftime("%Y/%m/%d"))
+      expect(page).to have_content("Pickup Readied At " + Time.zone.now.strftime("%Y/%m/%d"))
     end
 
     it 'can mark order as picked up' do
@@ -59,7 +59,7 @@ describe 'order service process', type: :feature do
       click_on 'Mark as Pickup Complete'
 
       expect(page).to have_content('Pickup Pending')
-      expect(page).to have_content("Pickup Completed At " + DateTime.now.strftime("%Y/%m/%d"))
+      expect(page).to have_content("Pickup Completed At " + Time.zone.now.strftime("%Y/%m/%d"))
     end
   end
 

@@ -29,7 +29,7 @@ describe 'customer order service process', type: :feature do
 
       visit order_path(service_order)
       expect(page).to have_content('Pickup Pending')
-      expect(page).to have_content("Pickup Readied At: " + DateTime.now.strftime("%Y/%m/%d"))
+      expect(page).to have_content("Pickup Readied At: " + Time.zone.now.strftime("%Y/%m/%d"))
     end
 
     it 'displays pickup completion date' do
@@ -38,7 +38,7 @@ describe 'customer order service process', type: :feature do
       click_on 'Mark as Pickup Complete'
 
       visit order_path(service_order)
-      expect(page).to have_content('Pickup Completed At: ' + DateTime.now.strftime("%Y/%m/%d"))
+      expect(page).to have_content('Pickup Completed At: ' + Time.zone.now.strftime("%Y/%m/%d"))
     end
   end
 
