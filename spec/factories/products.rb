@@ -14,17 +14,20 @@ FactoryGirl.define do
 
     transient do
       purchase_ready false
+      reward         false
     end
 
     after(:create) do |product, evaluator|
-      product.reward_methods << FactoryGirl.create(:ref_reward, no_products: true)
-
       if evaluator.purchase_ready
         3.times { FactoryGirl.create(:inventory, product: product) }
         product.shipping_methods << FactoryGirl.create(:delivery)
         product.shipping_methods << FactoryGirl.create(:self_pickup)
         product.shipping_methods << FactoryGirl.create(:no_shipping)
         product.images << FactoryGirl.create(:image)
+      end
+
+      if evaluator.reward
+        product.reward_methods << FactoryGirl.create(:ref_reward, no_products: true)
       end
     end
   end
