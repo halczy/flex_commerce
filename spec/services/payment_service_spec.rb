@@ -11,7 +11,7 @@ RSpec.describe PaymentService, type: :model do
   let(:wallet_created)        { PaymentService.new(payment_id: payment_wallet.id) }
   let(:alipay_created)        { PaymentService.new(payment_id: payment_alipay.id) }
 
-  xdescribe 'create order payment' do
+  describe 'create order payment' do
     describe '#validate_order_status' do
       it 'returns true if order is confirmed' do
         payment_service = PaymentService.new(order_id: order_confirmed.id)
@@ -169,7 +169,7 @@ RSpec.describe PaymentService, type: :model do
     end
   end
 
-  xdescribe 'charge order payment' do
+  describe 'charge order payment' do
     describe '#mark_success' do
       it 'updates payment status' do
         wallet_created.user.wallet.update(balance: wallet_created.amount)
@@ -409,6 +409,7 @@ RSpec.describe PaymentService, type: :model do
           variety: 'reward'
         )
       end
+
       it 'creates reward payment' do
         expect { @reward_ps.create }.to change(Payment, :count).by(1)
       end
@@ -439,5 +440,34 @@ RSpec.describe PaymentService, type: :model do
   end
 
   describe 'reward reward payment' do
+    before do
+      @reward_ps = PaymentService.new(
+        order_id: payment_success_order,
+        amount: Money.new(100),
+        variety: 'reward'
+      )
+      @reward_ps.create
+    end
+
+    it 'deposits reward into customer wallet' do
+      old_balance = @reward_ps.user.wallet.balance
+      expect(@reward_ps.reward).to be_truthy
+      new_balance = @reward_ps.user.wallet.reload.balance
+      expect(new_balance - old_balance).to eq(Money.new(100))
+    end
+
+    it 'marks payment as success' do
+      @reward_ps.reward
+      expect(@reward_ps.payment.confirmed?).to be_truthy
+    end
+
+    it 'creates transaction' do
+      expect { @reward_ps.reward }.to change(Transaction, :count).by(1)
+      t = @reward_ps.payment.reload.transaction_log
+      expect(t.amount).to eq(@reward_ps.amount)
+      expect(t.originable).to eq(@reward_ps.payment)
+      expect(t.transactable).to eq(@reward_ps.order)
+      expect(t.processable).to eq(@reward_ps.user.wallet)
+    end
   end
 end

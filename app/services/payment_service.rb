@@ -24,6 +24,18 @@ class PaymentService
     end
   end
 
+  def reward
+    begin
+      Payment.transaction do
+        deposit_reward
+        create_transaction
+        true
+      end
+    rescue Exception
+      false
+    end
+  end
+
   def create_charge
     begin
       Payment.transaction do
@@ -145,6 +157,11 @@ class PaymentService
     rescue Exception
       false
     end
+  end
+
+  def deposit_reward
+    @user.wallet.credit(@amount)
+    @payment.confirmed!
   end
 
   private
