@@ -4,8 +4,14 @@ FactoryGirl.define do
     variety 0
     settings {{ percentage: 5 }}
 
-    after(:create) do |reward|
-      3.times { reward.products << FactoryGirl.create(:product) }
+    transient do
+      no_products false
+    end
+
+    after(:create) do |reward, evaluator|
+      unless evaluator.no_products
+        3.times { reward.products << FactoryGirl.create(:product) }
+      end
     end
   end
 end
