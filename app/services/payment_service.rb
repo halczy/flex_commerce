@@ -171,9 +171,8 @@ class PaymentService
         return true if @order.status_before_type_cast.between?(20, 59)
       elsif @variety == 'reward'
         return true if @order.status_before_type_cast >= 60
-      else
-        raise(StandardError, 'Invalid order status.')
       end
+      raise(StandardError, 'Invalid order status.')
     end
 
     def validate_amount_with_order
