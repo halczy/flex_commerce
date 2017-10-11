@@ -14,6 +14,7 @@ class Product < ApplicationRecord
   validates :name,   presence: true, length: { maximum: 30 }
   validates :weight, presence: true
   validates_with ShippingMethodValidator
+  validates_with RewardMethodValidator
   monetize :price_market_cents, numericality: { greater_than_or_equal_to: 0 }
   monetize :price_member_cents, numericality: { greater_than_or_equal_to: 0 }
   monetize :price_reward_cents, numericality: { greater_than_or_equal_to: 0 }

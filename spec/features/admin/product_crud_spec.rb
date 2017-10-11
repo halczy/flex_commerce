@@ -15,10 +15,11 @@ describe 'Product CRUD', type: :feature do
 
     it 'can create product' do
       ship_delivery = FactoryGirl.create(:delivery)
-      ship_pickup = FactoryGirl.create(:self_pickup)
+      ship_pickup   = FactoryGirl.create(:self_pickup)
+      ref_reward    = FactoryGirl.create(:ref_reward, no_products: true)
+      cash_back     = FactoryGirl.create(:cash_back, no_products: true)
 
       click_on('New Product')
-
       fill_in "product[name]", with: "Test Product Name"
       fill_in "product[tag_line]", with: "Test Product Tag Line"
       select 'Active', from: 'product[status]'
@@ -26,6 +27,8 @@ describe 'Product CRUD', type: :feature do
       fill_in "product[weight]", with: 12.34
       select "#{ship_delivery.name}", from: "shipping_method_select"
       select "#{ship_pickup.name}", from: "shipping_method_select"
+      select "#{ref_reward.name}", from: "reward_method_select"
+      select "#{cash_back.name}", from: "reward_method_select"
       select "True", from: "product[strict_inventory]"
       select "False", from: "product[digital]"
       first('input#introduction', visible: false).set("Test Introduction")
@@ -45,6 +48,8 @@ describe 'Product CRUD', type: :feature do
       expect(page).to have_content('12.34')
       expect(page).to have_content('Delivery')
       expect(page).to have_content('Self Pickup')
+      expect(page).to have_content('Referral Reward')
+      expect(page).to have_content('Cash Back')
       expect(page).to have_content('Strict Inventory True')
       expect(page).to have_content('Digital Product False')
       expect(page).to have_content('Test Introduction')
@@ -103,6 +108,18 @@ describe 'Product CRUD', type: :feature do
         fill_in "product[weight]", with: 12.34
         select "#{ship_delivery.name}", from: "shipping_method_select"
         select "#{dup_delivery.name}", from: "shipping_method_select"
+        click_on('Create Product')
+        expect(page).to have_css('#error_messages')
+      end
+
+      it 'can only assign one of each variety reward method to product' do
+        cash_back     = FactoryGirl.create(:cash_back, name: 'CB1', no_products: true)
+        dup_cash_back = FactoryGirl.create(:cash_back, name: 'CB2', no_products: true)
+        click_on('New Product')
+        fill_in "product[name]", with: "Test Product with Images"
+        fill_in "product[weight]", with: 12.34
+        select "#{cash_back.name}", from: "reward_method_select"
+        select "#{dup_cash_back.name}", from: "reward_method_select"
         click_on('Create Product')
         expect(page).to have_css('#error_messages')
       end
