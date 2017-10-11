@@ -198,6 +198,12 @@ puts 'SHIPPING METHOD: Added shipping method to all products.'
 
 # REWARD METHODS
 ref_reward = RewardMethod.create(name: 'Referral Reward',
-                                  variety: 0,
-                                  settings: { percentage: 5 })
-Product.all.each { |p| p.reward_methods << ref_reward }
+                                 variety: 0,
+                                 settings: { percentage: 5 })
+cash_back = RewardMethod.create(:name: 'Cash Back',
+                                variety: 1,
+                                settings: { percentage: 5 })
+Product.all.each do |product|
+  p.reward_methods << ref_reward
+  p.reward_methods << cash_back
+end
