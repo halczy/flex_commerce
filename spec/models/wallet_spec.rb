@@ -87,6 +87,23 @@ RSpec.describe Wallet, type: :model do
       expect(wealthy_customer.reload.wallet.balance).to eq(Money.new(9999800))
     end
 
+    context '#sync_withdrawable' do
+      it 'deducts fund from withdrawable if balance is equal to withdrawable' do
+        result = wealthy_customer.wallet.debit(Money.new(100))
+        expect(wealthy_customer.reload.wallet.withdrawable).to eq(Money.new(9999800))
+      end
+
+      it 'deducts fund from withdrawable if balance is lower than withdrawable' do
+        customer.wallet.update(balance: 150.to_money, withdrawable: 100.to_money)
+        customer.wallet.debit(130.to_money)
+        expect(customer.wallet.reload.balance).to eq(20.to_money)
+        expect(customer.wallet.reload.withdrawable).to eq(20.to_money)
+      end
+    end
+
+    it 'does not deducts fund from withdrawable if balance is greater than withdrawable' do
+    end
+
     context 'invalid debit amount' do
       it 'rejects negative deduction' do
         result = customer.wallet.debit(Money.new(-100))

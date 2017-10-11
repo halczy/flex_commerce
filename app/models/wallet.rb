@@ -38,6 +38,7 @@ class Wallet < ApplicationRecord
     return false if ( amount < 0 || !sufficient_fund?(amount) )
     self.balance -= amount
     save
+    sync_withdrawable
   end
 
   private
@@ -45,5 +46,9 @@ class Wallet < ApplicationRecord
     def prevent_destroy
       errors[:base] << 'User wallet cannot be removed once created.'
       throw :abort
+    end
+
+    def sync_withdrawable
+      update(withdrawable: balance) if balance < withdrawable
     end
 end
