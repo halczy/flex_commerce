@@ -55,6 +55,11 @@ RSpec.describe Wallet, type: :model do
       expect(customer.reload.wallet.balance).to eq(Money.new(100))
     end
 
+    it 'adds fund to user withdrawable' do
+      customer.wallet.credit(100.to_money)
+      expect(customer.reload.wallet.withdrawable).to eq(Money.new(10000))
+    end
+
     context 'invalid credit amount' do
       it 'rejects negative credit amount' do
         result = wealthy_customer.wallet.credit(Money.new(-100))

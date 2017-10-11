@@ -284,6 +284,8 @@ ActiveRecord::Schema.define(version: 180) do
     t.string "balance_currency", default: "CNY", null: false
     t.bigint "pending_cents", default: 0, null: false
     t.string "pending_currency", default: "CNY", null: false
+    t.bigint "withdrawable_cents", default: 0, null: false
+    t.string "withdrawable_currency", default: "CNY", null: false
     t.uuid "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -4,7 +4,7 @@ class CreateWallets < ActiveRecord::Migration[5.1]
       t.monetize   :balance,      default: 0
       t.monetize   :pending,      default: 0
       t.monetize   :withdrawable, default: 0
-      t.references :user,    index: true, type: :uuid, foreign_key: true
+      t.references :user,         index: true, type: :uuid, foreign_key: true
 
       t.timestamps
     end

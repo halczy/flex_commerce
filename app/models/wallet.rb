@@ -6,8 +6,9 @@ class Wallet < ApplicationRecord
   has_many   :transfer_outs, class_name: 'Transfer', foreign_key: 'fund_source_id'
 
   # Validation
-  monetize :balance_cents, numericality: { greater_than_or_equal_to: 0 }
-  monetize :pending_cents, numericality: { greater_than_or_equal_to: 0 }
+  monetize :balance_cents,      numericality: { greater_than_or_equal_to: 0 }
+  monetize :pending_cents,      numericality: { greater_than_or_equal_to: 0 }
+  monetize :withdrawable_cents, numericality: { greater_than_or_equal_to: 0 }
 
   # Callbacks
   before_destroy :prevent_destroy
@@ -23,6 +24,7 @@ class Wallet < ApplicationRecord
   def credit(amount)
     return false if amount <= 0
     self.balance += amount
+    self.withdrawable += amount
     save
   end
 
