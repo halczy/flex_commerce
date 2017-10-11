@@ -4,6 +4,7 @@ RSpec.describe Admin::RewardMethodsController, type: :controller do
 
   let(:admin)      { FactoryGirl.create(:admin) }
   let(:ref_reward) { FactoryGirl.create(:ref_reward) }
+  let(:cash_back)  { FactoryGirl.create(:cash_back) }
 
   before { signin_as admin }
 
@@ -38,6 +39,13 @@ RSpec.describe Admin::RewardMethodsController, type: :controller do
       it 'sets percentage attribute for referral type method' do
         post :create, params: { reward_method: valid_ref_attrs }
         expect(RewardMethod.last.reload.percentage).to eq('10')
+      end
+
+      it 'sets percentage attribute for cash back type method' do
+        valid_ref_attrs[:variety] = 'cash_back'
+        post :create, params: { reward_method: valid_ref_attrs }
+        expect(RewardMethod.last.reload.percentage).to eq('10')
+        expect(RewardMethod.last.cash_back?).to be_truthy
       end
 
       it 'redirects to reward method show action' do
@@ -84,6 +92,13 @@ RSpec.describe Admin::RewardMethodsController, type: :controller do
           id: ref_reward, reward_method: { percentage: '20' }
         }
         expect(ref_reward.reload.percentage).to eq('20')
+      end
+
+      it 'updates settings hash for cash back attributes' do
+        patch :update, params: {
+          id: cash_back, reward_method: { percentage: '20' }
+        }
+        expect(cash_back.reload.percentage).to eq('20')
       end
     end
 

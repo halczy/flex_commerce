@@ -58,6 +58,9 @@ class Admin::RewardMethodsController < Admin::AdminController
       if @reward_method.referral? && params[:reward_method][:percentage]
         @reward_method.settings['percentage'] = params[:reward_method][:percentage]
       end
+      if @reward_method.cash_back? && params[:reward_method][:percentage]
+        @reward_method.settings['percentage'] = params[:reward_method][:percentage]
+      end
       @reward_method.save
     end
 end
