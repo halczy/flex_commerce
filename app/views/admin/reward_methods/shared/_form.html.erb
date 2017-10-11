@@ -8,12 +8,13 @@
     </div>
     <div class="col-6">
       <%= f.label :variety, 'Type' %>
-      <%= f.select :variety, options_for_select([['Referral', 'referral']],
+      <%= f.select :variety, options_for_select([['Referral', 'referral'],
+                                                 ['Cash Back', 'cash_back']],
                                                 @reward_method.variety),
                              {}, id: 'reward_select', class: 'form-control' %>
     </div>
   </div>
-  <div id="referral_section">
+  <div id="ref_cash_section">
     <div class="form-group row">
       <div class="col-6">
         <%= f.label :percentage %>

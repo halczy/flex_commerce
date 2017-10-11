@@ -1,8 +1,10 @@
 $('#reward_select').on("change", function() {
   if ($('#reward_select').val() == 'referral') {
-    $('#referral_section').show();
+    $('#ref_cash_section').show();
+  } else if () {
+    $('#ref_cash_section').show();
   } else {
-    $('#referral_section').hide();
+    $('#ref_cash_section').hide();
   }
 });
 
