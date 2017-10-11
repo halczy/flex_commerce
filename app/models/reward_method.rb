@@ -7,7 +7,7 @@ class RewardMethod < ApplicationRecord
   after_touch      :load_settings
 
   # Enum
-  enum variety: { referral: 0 }
+  enum variety: { referral: 0, cash_back: 1 }
 
   # Attributes
   attribute :percentage
