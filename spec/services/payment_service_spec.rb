@@ -440,13 +440,15 @@ RSpec.describe PaymentService, type: :model do
   end
 
   describe 'reward reward payment' do
-    before do
-      @reward_ps = PaymentService.new(
-        order_id: payment_success_order,
-        amount: Money.new(100),
-        variety: 'reward'
-      )
-      @reward_ps.create
+    before do |example|
+      unless example.metadata[:skip_before]
+        @reward_ps = PaymentService.new(
+          order_id: payment_success_order,
+          amount: Money.new(100),
+          variety: 'reward'
+        )
+        @reward_ps.create
+      end
     end
 
     it 'deposits reward into customer wallet' do
@@ -456,7 +458,7 @@ RSpec.describe PaymentService, type: :model do
       expect(new_balance - old_balance).to eq(Money.new(100))
     end
 
-    it 'deposits reward into referer wallet' do
+    it 'deposits reward into referer wallet', skip_before: true do
       referer = FactoryGirl.create(:customer)
       reward_ps = PaymentService.new(order_id: payment_success_order,
                                      amount: 100.to_money,
@@ -466,6 +468,19 @@ RSpec.describe PaymentService, type: :model do
       reward_ps.reward
       expect(referer.wallet.reload.balance).not_to eq(0)
       expect(payment_success_order.user.wallet.balance).to eq(999999.to_money)
+    end
+
+    it 'deposits reward conditionally into referer wallet', skip_before: true do
+      referer = FactoryGirl.create(:customer)
+      reward_ps = PaymentService.new(order_id: payment_success_order,
+                                     amount: 100.to_money,
+                                     variety: 'reward',
+                                     user_id: referer.id,
+                                     withdrawable: false)
+      reward_ps.create
+      reward_ps.reward
+      expect(referer.wallet.reload.balance).not_to eq(0)
+      expect(referer.wallet.reload.withdrawable).to eq(0)
     end
 
     it 'marks payment as success' do

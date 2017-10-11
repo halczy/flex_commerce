@@ -2,13 +2,14 @@ class PaymentService
   attr_accessor :order, :payment, :amount, :user, :processor, :processor_client
 
   def initialize(order_id: nil, payment_id: nil, processor: nil, amount: nil,
-                 variety: nil, user_id: nil)
+                 variety: nil, user_id: nil, withdrawable: true)
     @payment = Payment.find_by(id: payment_id)
     @order = Order.find_by(id: order_id) || @payment.try(:order)
     @processor = processor || @payment.try(:processor)
     @amount = amount || @order.try(:amount_unpaid) || @payment.try(:amount)
     @user = User.find_by(id: user_id) || @order.try(:user)
     @variety = variety || 'charge'
+    @withdrawable = withdrawable
   end
 
   def create
@@ -161,7 +162,11 @@ class PaymentService
   end
 
   def deposit_reward
-    @user.wallet.credit(@amount)
+    if @withdrawable
+      @user.wallet.credit(@amount)
+    else
+      @user.wallet.conditional_credit(@amount)
+    end
     @payment.confirmed!
   end
 
