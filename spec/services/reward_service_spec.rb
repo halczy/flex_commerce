@@ -5,6 +5,8 @@ RSpec.describe RewardService, type: :model do
   before do
     @ref_reward = FactoryGirl.create(:ref_reward, no_products: true)
     @success_order = FactoryGirl.create(:payment_order, success: true)
+    @referer = FactoryGirl.create(:customer)
+    Referral.create(referer: @referer, referee: @success_order.user)
     @success_order.products.each do |product|
       product.update(price_reward: Money.new(10000))
       product.reward_methods << @ref_reward
@@ -37,6 +39,31 @@ RSpec.describe RewardService, type: :model do
         exp_amount = (100 * 0.05 * 3).to_money
         @reward_service.distribute
         expect(@reward_service.referral_amount).to eq(exp_amount)
+      end
+
+      it 'distributes referral reward to referer' do
+        exp_amount = (100 * 0.05 * 3).to_money
+        @reward_service.distribute
+        expect(@referer.wallet.reload.balance).to eq(exp_amount)
+      end
+
+      it 'creates transaction log with note' do
+        @reward_service.distribute
+        t = Transaction.where(processable: @referer.wallet).first
+        expect(t.note).to be_present
+      end
+
+      it 'does not distribute referral reward if customer has no referer' do
+        Referral.delete_all
+        @reward_service.distribute
+        expect(@referer.wallet.reload.balance).to eq(0)
+      end
+
+      it 'does not distribute referral if referral amount is zero' do
+        Product.all.each { |p| p.update(price_reward: 0) }
+        @reward_service.distribute
+        expect(@reward_service.referral_amount).to eq(0)
+        expect(@referer.wallet.reload.balance).to eq(0)
       end
     end
   end
