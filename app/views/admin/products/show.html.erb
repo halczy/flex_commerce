@@ -72,6 +72,16 @@
               </ul>
             </td>
           </tr>
+          <tr>
+            <th scope="row">Reward Methods</th>
+            <td>
+              <ul>
+              <% @product.reward_methods.each do |reward_method| %>
+                <li><%= reward_method.name %></li>
+              <% end %>
+              </ul>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

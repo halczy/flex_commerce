@@ -33,11 +33,9 @@ class Admin::ProductsController < Admin::AdminController
     end
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @product.update(product_params)
@@ -110,7 +108,7 @@ class Admin::ProductsController < Admin::AdminController
       params.require(:product).permit(:name, :tag_line, :sku, :introduction,
         :description, :specification, :digital, :strict_inventory,
         :price_market, :price_member, :price_reward, :cost, :status, :weight,
-        category_ids: [], shipping_method_ids: [],
+        category_ids: [], shipping_method_ids: [], reward_method_ids: [],
         images_attributes: [:id, :image, :display_order, :title, :description,
                             :in_use, :source_channel, :imageable_id,
                             :imageable_type])

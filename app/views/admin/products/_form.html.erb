@@ -16,7 +16,7 @@
   </div>
 
   <div class="row form-group">
-    <div class="col-sm-6">
+    <div class="col-sm-3">
       <%= f.label :status, 'Status' %>
       <%= f.select :status, options_for_select([['Active',  'active'],
                                                 ['Disable', 'disabled']]),
@@ -32,6 +32,13 @@
                               :id, :name, {},
                               { multiple: true, class: 'form-control',
                                 id: 'shipping_method_select' } %>
+    </div>
+    <div class="col-sm-3">
+      <%= f.label :reward_method_ids, 'Select Reward Methods' %>
+      <%= f.collection_select :reward_method_ids, RewardMethod.all,
+                              :id, :name, {},
+                              { multiple: true, class: 'form-control',
+                                id: 'reward_method_select' } %>
     </div>
   </div>
 
@@ -80,7 +87,7 @@
     </div>
   </div>
 
-  <h4 class='mt-5'>Pricing and Shopping</h4>
+  <h4 class='mt-5'>Pricing</h4>
   <hr \>
 
   <div class="row form-group">
