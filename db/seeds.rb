@@ -26,6 +26,9 @@ ShippingRate.delete_all
 puts 'SHIPPING RATE: Clear old shipping rate data'
 ShippingMethod.delete_all
 puts 'SHIPPING METHOD: Clear old shipping method data'
+RewardMethod.delete_all
+puts 'REWARD METHOD: Clear old reward method data'
+
 
 # Application Name
 ApplicationConfiguration.create(name: 'application_title', plain: 'Flex Commerce')
@@ -192,3 +195,9 @@ Product.all.each do |product|
 end
 
 puts 'SHIPPING METHOD: Added shipping method to all products.'
+
+# REWARD METHODS
+ref_reward = RewardMethod.create(name: 'Referral Reward',
+                                  variety: 0,
+                                  settings: { percentage: 5 })
+Product.all.each { |p| p.reward_methods << ref_reward }
