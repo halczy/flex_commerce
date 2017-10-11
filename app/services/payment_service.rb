@@ -1,12 +1,13 @@
 class PaymentService
   attr_accessor :order, :payment, :amount, :user, :processor, :processor_client
 
-  def initialize(order_id: nil, payment_id: nil, processor: nil, amount: nil, variety: nil)
+  def initialize(order_id: nil, payment_id: nil, processor: nil, amount: nil,
+                 variety: nil, user_id: nil)
     @payment = Payment.find_by(id: payment_id)
     @order = Order.find_by(id: order_id) || @payment.try(:order)
     @processor = processor || @payment.try(:processor)
     @amount = amount || @order.try(:amount_unpaid) || @payment.try(:amount)
-    @user = @order.try(:user)
+    @user = User.find_by(id: user_id) || @order.try(:user)
     @variety = variety || 'charge'
   end
 

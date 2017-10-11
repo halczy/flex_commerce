@@ -456,6 +456,18 @@ RSpec.describe PaymentService, type: :model do
       expect(new_balance - old_balance).to eq(Money.new(100))
     end
 
+    it 'deposits reward into referer wallet' do
+      referer = FactoryGirl.create(:customer)
+      reward_ps = PaymentService.new(order_id: payment_success_order,
+                                     amount: 100.to_money,
+                                     variety: 'reward',
+                                     user_id: referer.id)
+      reward_ps.create
+      reward_ps.reward
+      expect(referer.wallet.reload.balance).not_to eq(0)
+      expect(payment_success_order.user.wallet.balance).to eq(999999.to_money)
+    end
+
     it 'marks payment as success' do
       @reward_ps.reward
       expect(@reward_ps.payment.confirmed?).to be_truthy
