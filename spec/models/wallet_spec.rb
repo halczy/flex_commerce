@@ -122,26 +122,30 @@ RSpec.describe Wallet, type: :model do
   end
 
   describe '#create_withdraw' do
-    it 'deducts withdrawable to pending' do
+    before do
       customer.wallet.update(balance: 150.to_money, withdrawable: 100.to_money)
+    end
+
+    it 'deducts withdrawable to pending' do
       customer.wallet.create_withdraw(100.to_money)
       expect(customer.wallet.reload.pending).to eq(100.to_money)
       expect(customer.wallet.reload.withdrawable).to eq(0)
     end
 
     it 'deducts balance' do
-      customer.wallet.update(balance: 150.to_money, withdrawable: 100.to_money)
       customer.wallet.create_withdraw(100.to_money)
       expect(customer.wallet.reload.balance).to eq(50.to_money)
     end
 
     context 'with invalid withdraw amount' do
       it 'rejects negative withdraw' do
-
+        result = customer.wallet.create_withdraw(-100.to_money)
+        expect(result).to be_falsey
       end
 
       it 'returns false when attempt to withdraw more than withdrawable' do
-
+        result = customer.wallet.create_withdraw(1000.to_money)
+        expect(result).to be_falsey
       end
     end
   end
