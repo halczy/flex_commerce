@@ -8,13 +8,11 @@ class RewardService
   end
 
   def distribute
-    # CALCUATE REWARD AMOUNTS FOR ALL REWARD METHODS
     @order.inventories.each do |inv|
       inv.product.reward_methods.each do |reward_method|
         reward_amount(inv, reward_method)
       end
     end
-    # CALL PRESET SUB DISTRIBUTE METHODS
     distribute_referral if referral_rewardable?
     distribute_cash_back if cash_back_rewardable?
   end
@@ -76,6 +74,4 @@ class RewardService
       return false unless @cash_back_amount > 0
       true
     end
-
-
 end

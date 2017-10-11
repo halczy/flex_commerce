@@ -206,6 +206,12 @@ RSpec.describe PaymentService, type: :model do
         expect(wallet_created.order.payment_success?).to be_truthy
       end
 
+      it 'calls #distrbute_reward if order paid in full' do
+        wallet_created.user.wallet.update(balance: wallet_created.amount)
+        expect(wallet_created).to receive(:distribute_rewards)
+        wallet_created.charge_wallet
+      end
+
       it 'sets order status to partial payment if some amount paid' do
         payment = FactoryGirl.create(:payment, order: order_confirmed)
         payment.order.user.wallet.update(balance: 9999999)
@@ -392,6 +398,12 @@ RSpec.describe PaymentService, type: :model do
       it 'returns true if confrimation process is successful' do
         @payment_service.payment.update(processor_response_return: @res)
         expect(@payment_service.alipay_confirm).to be_truthy
+      end
+
+      it 'calls #distribute_rewards during the confirmation process' do
+        @payment_service.payment.update(processor_response_return: @res)
+        expect(@payment_service).to receive(:distribute_rewards)
+        @payment_service.alipay_confirm
       end
 
       it 'returns false if it cannot complete the confirmation process' do

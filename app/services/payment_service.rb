@@ -114,6 +114,7 @@ class PaymentService
     if @order.reload.amount_unpaid == 0
       @order.payment_success!
       confirm_inventories
+      distribute_rewards
     elsif @payment.status_before_type_cast >= 20
       @order.partial_payment!
     else
@@ -154,6 +155,7 @@ class PaymentService
         confirm_payment_and_order
         create_transaction
         confirm_inventories
+        distribute_rewards
         true
       end
     rescue Exception
@@ -233,6 +235,11 @@ class PaymentService
          transactable: @order,
          processable: processable)
       end
+    end
+
+    def distribute_rewards
+      reward_service = RewardService.new(order_id: @order.id)
+      reward_service.distribute
     end
 
     def app_name
