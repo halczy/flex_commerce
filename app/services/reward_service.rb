@@ -16,6 +16,14 @@ class RewardService
     end
     # CALL PRESET SUB DISTRIBUTE METHODS
     distribute_referral if referral_rewardable?
+    distribute_cash_back if cash_back_rewardable?
+  end
+
+  def reward_amount(inv, reward_method)
+    case reward_method.variety
+    when 'referral'  then referral_reward_amount(inv, reward_method)
+    when 'cash_back' then cash_back_reward_amount(inv, reward_method)
+    end
   end
 
   def distribute_referral
@@ -31,11 +39,18 @@ class RewardService
     payment_service.payment.reload.transaction_log.update(note: note)
   end
 
-  def reward_amount(inv, reward_method)
-    case reward_method.variety
-    when 'referral'  then referral_reward_amount(inv, reward_method)
-    when 'cash_back' then cash_back_reward_amount(inv, reward_method)
-    end
+  def distribute_cash_back
+    reward_target = @order.user.total_spent > 0 ? @order.user : @order.user.referer
+    payment_service = PaymentService.new(
+      order_id: @order.id,
+      amount: @cash_back_amount,
+      user_id: reward_target.id,
+      variety: 'reward'
+    )
+    payment_service.create
+    payment_service.reward
+    note = "Cash back reward from #{reward_target.name}."
+    payment_service.payment.reload.transaction_log.update(note: note)
   end
 
   private
@@ -53,6 +68,12 @@ class RewardService
     def referral_rewardable?
       return false unless @order.user.referer
       return false unless @referral_amount > 0
+      true
+    end
+
+    def cash_back_rewardable?
+      return false unless @order.user.referer
+      return false unless @cash_back_amount > 0
       true
     end
 

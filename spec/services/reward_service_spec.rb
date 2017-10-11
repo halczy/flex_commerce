@@ -75,6 +75,33 @@ RSpec.describe RewardService, type: :model do
         @reward_service.distribute
         expect(@reward_service.cash_back_amount).to eq(exp_amount)
       end
+
+      it 'distributes cash back to customer' do
+        FactoryGirl.create(:service_order, completed: true, user: @success_order.user)
+        old_balance = @success_order.user.wallet.reload.balance
+        @reward_service.distribute
+        new_balance = @success_order.user.wallet.reload.balance
+        expect(new_balance).to be > old_balance
+      end
+
+      it 'distributes cash back to referer on first order' do
+        @reward_service.distribute
+        expect(@referer.wallet.reload.balance).not_to eq(0)
+        expect(@referer.wallet.reload.withdrawable).not_to eq(0)
+      end
+
+      it 'does not distribute cash back reward if customer has no referer' do
+        Referral.delete_all
+        @reward_service.distribute
+        expect(@referer.wallet.reload.balance).to eq(0)
+      end
+
+      it 'does not distribute cash back reward if cash back amount is zero' do
+        Product.all.each { |p| p.update(price_reward: 0) }
+        @reward_service.distribute
+        expect(@reward_service.referral_amount).to eq(0)
+        expect(@referer.wallet.reload.balance).to eq(0)
+      end
     end
   end
 
