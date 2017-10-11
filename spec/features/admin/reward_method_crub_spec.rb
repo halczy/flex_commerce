@@ -22,6 +22,20 @@ describe 'Reward Method CRUD', type: :feature do
       expect(page).to have_content('Referral')
     end
 
+    it 'can create cash back type reward method' do
+      visit admin_reward_methods_path
+      click_on 'New Reward Method'
+      fill_in 'reward_method[name]', with: 'Feature Test'
+      fill_in 'reward_method[percentage]', with: '12'
+      select 'Cash Back', from: 'reward_method[variety]'
+      click_on 'Submit'
+
+      expect(page.current_path).to eq(admin_reward_method_path(RewardMethod.last))
+      expect(page).to have_content('Feature Test')
+      expect(page).to have_content('Percentage 12%')
+      expect(page).to have_content('Cash Back')
+    end
+
     it 'displays error message when name is not filled' do
       visit admin_reward_methods_path
       click_on 'New Reward Method'
