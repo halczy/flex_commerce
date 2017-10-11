@@ -149,4 +149,20 @@ RSpec.describe Wallet, type: :model do
       end
     end
   end
+
+  describe '#withdraw' do
+    it 'deducts from amount from pending' do
+      customer.wallet.update(pending: 100.to_money)
+      customer.wallet.withdraw(100.to_money)
+      expect(customer.wallet.pending).to eq(0)
+    end
+
+    context 'with invalid withdraw amount' do
+      it 'rejects withdraw amount larger than pending amount' do
+        customer.wallet.update(withdrawable: 1000.to_money, pending: 100.to_money)
+        result = customer.wallet.withdraw(120.to_money)
+        expect(result).to be_falsey
+      end
+    end
+  end
 end

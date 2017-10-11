@@ -54,7 +54,9 @@ class Wallet < ApplicationRecord
   end
 
   def withdraw(amount)
-
+    return false if amount > pending
+    self.pending -= amount
+    save
   end
 
   private
