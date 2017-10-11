@@ -99,9 +99,13 @@ RSpec.describe Wallet, type: :model do
         expect(customer.wallet.reload.balance).to eq(20.to_money)
         expect(customer.wallet.reload.withdrawable).to eq(20.to_money)
       end
-    end
 
-    it 'does not deducts fund from withdrawable if balance is greater than withdrawable' do
+      it 'does not deducts fund from withdrawable if balance is greater than withdrawable' do
+        customer.wallet.update(balance: 150.to_money, withdrawable: 100.to_money)
+        customer.wallet.debit(10.to_money)
+        expect(customer.wallet.reload.balance).to eq(140.to_money)
+        expect(customer.wallet.reload.withdrawable).to eq(100.to_money)
+      end
     end
 
     context 'invalid debit amount' do
@@ -113,6 +117,31 @@ RSpec.describe Wallet, type: :model do
       it 'rejects deduction more than available fund' do
         result = customer.wallet.debit(Money.new(100))
         expect(result).to be_falsey
+      end
+    end
+  end
+
+  describe '#create_withdraw' do
+    it 'deducts withdrawable to pending' do
+      customer.wallet.update(balance: 150.to_money, withdrawable: 100.to_money)
+      customer.wallet.create_withdraw(100.to_money)
+      expect(customer.wallet.reload.pending).to eq(100.to_money)
+      expect(customer.wallet.reload.withdrawable).to eq(0)
+    end
+
+    it 'deducts balance' do
+      customer.wallet.update(balance: 150.to_money, withdrawable: 100.to_money)
+      customer.wallet.create_withdraw(100.to_money)
+      expect(customer.wallet.reload.balance).to eq(50.to_money)
+    end
+
+    context 'with invalid withdraw amount' do
+      it 'rejects negative withdraw' do
+
+      end
+
+      it 'returns false when attempt to withdraw more than withdrawable' do
+
       end
     end
   end

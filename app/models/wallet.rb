@@ -17,6 +17,10 @@ class Wallet < ApplicationRecord
     balance - pending
   end
 
+  def withdrawable_fund
+    balance - pending
+  end
+
   def sufficient_fund?(amount)
     available_fund >= amount
   end
@@ -35,10 +39,22 @@ class Wallet < ApplicationRecord
   end
 
   def debit(amount)
-    return false if ( amount < 0 || !sufficient_fund?(amount) )
+    return false if amount < 0 || !sufficient_fund?(amount)
     self.balance -= amount
     save
     sync_withdrawable
+  end
+
+  def create_withdraw(amount)
+    return false if amount < 0 || amount > withdrawable_fund
+    self.withdrawable -= amount
+    self.balance -= amount
+    self.pending += amount
+    save
+  end
+
+  def withdraw(amount)
+
   end
 
   private
