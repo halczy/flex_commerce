@@ -28,6 +28,12 @@ class Wallet < ApplicationRecord
     save
   end
 
+  def conditional_credit(amount)
+    return false if amount <= 0
+    self.balance += amount
+    save
+  end
+
   def debit(amount)
     return false if ( amount < 0 || !sufficient_fund?(amount) )
     self.balance -= amount

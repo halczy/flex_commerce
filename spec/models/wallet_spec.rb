@@ -73,6 +73,14 @@ RSpec.describe Wallet, type: :model do
     end
   end
 
+  describe '#conditional_credit' do
+    it 'adds fund to balance but not withdrawable' do
+      customer.wallet.conditional_credit(100.to_money)
+      expect(customer.wallet.reload.withdrawable).to eq(0)
+      expect(customer.wallet.reload.balance.to_s).to eq('100.00')
+    end
+  end
+
   describe '#debit' do
     it 'deducts fund from wallet' do
       result = wealthy_customer.wallet.debit(Money.new(100))
