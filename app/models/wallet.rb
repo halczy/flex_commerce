@@ -59,6 +59,14 @@ class Wallet < ApplicationRecord
     save
   end
 
+  def cancel_withdraw(amount)
+    return false if amount > pending
+    self.balance += amount
+    self.withdrawable += amount
+    self.pending -= amount
+    save
+  end
+
   private
 
     def prevent_destroy

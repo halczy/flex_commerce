@@ -165,4 +165,32 @@ RSpec.describe Wallet, type: :model do
       end
     end
   end
+
+  describe '#cancel_withdraw' do
+    before do
+      customer.wallet.update(pending: 100.to_money)
+    end
+
+    it 'refunds pending withdraw to withdrawable' do
+      customer.wallet.cancel_withdraw(50.to_money)
+      expect(customer.wallet.reload.withdrawable).to eq(50.to_money)
+    end
+
+    it 'refunds pending withdraw to balance' do
+      customer.wallet.cancel_withdraw(30.to_money)
+      expect(customer.wallet.reload.balance).to eq(30.to_money)
+    end
+
+    it 'deducts cancel withdraw amount from pendingr' do
+      customer.wallet.cancel_withdraw(100.to_money)
+      expect(customer.wallet.reload.pending).to eq(0)
+    end
+
+    context 'with invalid amount' do
+      it 'returns false when withdraw amount is larger than pending' do
+        result = customer.wallet.cancel_withdraw(200.to_money)
+        expect(result).to be_falsey
+      end
+    end
+  end
 end
