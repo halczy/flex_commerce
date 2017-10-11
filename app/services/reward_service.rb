@@ -1,9 +1,10 @@
 class RewardService
-  attr_accessor :order, :referral_amount
+  attr_accessor :order, :referral_amount, :cash_back_amount
 
   def initialize(order_id: nil)
     @order = Order.find(order_id)
     @referral_amount = Money.new(0)
+    @cash_back_amount = Money.new(0)
   end
 
   def distribute
@@ -32,7 +33,8 @@ class RewardService
 
   def reward_amount(inv, reward_method)
     case reward_method.variety
-    when 'referral' then referral_reward_amount(inv, reward_method)
+    when 'referral'  then referral_reward_amount(inv, reward_method)
+    when 'cash_back' then cash_back_reward_amount(inv, reward_method)
     end
   end
 
@@ -41,6 +43,11 @@ class RewardService
     def referral_reward_amount(inv, reward_method)
       percentage = reward_method.reload.percentage.to_f * 0.01
       @referral_amount += inv.product.price_reward * percentage
+    end
+
+    def cash_back_reward_amount(inv, reward_method)
+      percentage = reward_method.reload.percentage.to_f * 0.01
+      @cash_back_amount += inv.product.price_reward * percentage
     end
 
     def referral_rewardable?
