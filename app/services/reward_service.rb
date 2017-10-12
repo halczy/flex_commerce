@@ -70,8 +70,8 @@ class RewardService
     end
 
     def cash_back_rewardable?
-      return false unless @order.user.referer
       return false unless @cash_back_amount > 0
+      return false if @order.user.total_spent == 0 && !@order.user.referer
       true
     end
 end

@@ -84,6 +84,15 @@ RSpec.describe RewardService, type: :model do
         expect(new_balance).to be > old_balance
       end
 
+      it 'distributes cash back to customer reguardless of referer' do
+        Referral.delete_all
+        FactoryGirl.create(:service_order, completed: true, user: @success_order.user)
+        old_balance = @success_order.user.wallet.reload.balance
+        @reward_service.distribute
+        new_balance = @success_order.user.wallet.reload.balance
+        expect(new_balance).to be > old_balance
+      end
+
       it 'distributes cash back to referer on first order' do
         @reward_service.distribute
         expect(@referer.wallet.reload.balance).not_to eq(0)
