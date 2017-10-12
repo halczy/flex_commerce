@@ -17,19 +17,22 @@
 
             <%= render 'shared/error_messages', object: f.object %>
 
+            <h5>Basic Information</h5>
             <div class="form-group">
               <%= f.label :name %>
               <%= f.text_field :name, class: 'form-control' %>
             </div>
 
-            <div class="form-group">
-              <%= f.label :cell_number, 'Cell Number' %>
-              <%= f.text_field :cell_number, class: 'form-control' %>
-            </div>
+            <div class="form-group row">
+              <div class="col-md">
+                <%= f.label :cell_number, 'Cell Number' %>
+                <%= f.text_field :cell_number, class: 'form-control' %>
+              </div>
 
-            <div class="form-group">
-              <%= f.label :email %>
-              <%= f.email_field :email, class: 'form-control' %>
+              <div class="col-md">
+                <%= f.label :email %>
+                <%= f.email_field :email, class: 'form-control' %>
+              </div>
             </div>
 
             <div class="form-group">
@@ -38,14 +41,39 @@
               <%= f.text_field :referer_id, class: 'form-control' %>
             </div>
 
+            <h5>Financial Information</h5>
             <div class="form-group">
-              <%= f.label :password %>
-              <%= f.password_field :password, class: 'form-control' %>
+              <%= f.label :alipay_account, 'Alipay Account' %>
+              <%= f.text_field :alipay_account, class: 'form-control' %>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-md">
+                <%= f.label :bank, 'Bank Name' %>
+                <%= f.text_field :bank, class: 'form-control' %>
+              </div>
+
+              <div class="col-md">
+                <%= f.label :bank_branch, 'Bank Branch' %>
+                <%= f.text_field :bank_branch, class: 'form-control' %>
+              </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :password_confirmation, 'Password Confirmation' %>
-              <%= f.password_field :password_confirmation, class: 'form-control' %>
+              <%= f.label :bank_account %>
+              <%= f.text_field :bank_account, class: 'form-control' %>
+            </div>
+
+            <h5>Leave Blank To Leave Unchanged</h5>
+            <div class="form-group row">
+              <div class="col-md">
+                <%= f.label :password %>
+                <%= f.password_field :password, class: 'form-control' %>
+              </div>
+              <div class="col-md">
+                <%= f.label :password_confirmation, 'Password Confirmation' %>
+                <%= f.password_field :password_confirmation, class: 'form-control' %>
+              </div>
             </div>
 
             <%= f.submit 'Update Profile', class: 'btn btn-block btn-primary' %>
