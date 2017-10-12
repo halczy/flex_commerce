@@ -40,6 +40,9 @@ class User < ApplicationRecord
   attribute :remember_token, :string
   attribute :referer_id,     :string
   attribute :alipay_account, :string
+  attribute :bank_account,   :string
+  attribute :bank,           :string
+  attribute :bank_branch,    :string
 
   def self.create_digest(token)
     BCrypt::Password.create(token, cost: 10)
@@ -104,5 +107,4 @@ class User < ApplicationRecord
         send("#{key}=", value)
       end
     end
-
 end
