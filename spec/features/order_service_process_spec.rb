@@ -2,20 +2,20 @@ require 'rails_helper'
 
 describe 'customer order service process', type: :feature do
 
-  let(:admin)          { FactoryGirl.create(:admin) }
-  let(:psuccess_order) { FactoryGirl.create(:payment_order, success: true) }
-  let(:service_order)  { FactoryGirl.create(:service_order) }
+  let(:admin)            { FactoryGirl.create(:admin) }
+  let(:pm_success_order) { FactoryGirl.create(:payment_order, success: true) }
+  let(:service_order)    { FactoryGirl.create(:service_order) }
 
   before { feature_signin_as admin }
 
   describe 'confirm order' do
     it 'shows order as confrimed' do
-      visit order_path(psuccess_order)
+      visit order_path(pm_success_order)
       expect(page).to have_content('Payment Success')
-      visit admin_order_path(psuccess_order)
+      visit admin_order_path(pm_success_order)
       click_on('Confirm Order')
 
-      visit order_path(psuccess_order)
+      visit order_path(pm_success_order)
       expect(page).to have_content('Staff Confirmed')
     end
   end
