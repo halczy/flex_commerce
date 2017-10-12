@@ -9,7 +9,13 @@ module TransactionsHelper
   end
 
   def amount_direction(wallet, transaction)
-    transaction.processable == wallet ? 'Debit' : 'Credit'
+    if transaction.originable.try(:charge?)
+      'Debit'
+    elsif transaction.originable.try(:reward?)
+      'Credit'
+    else
+      transaction.processable == wallet ? 'Debit' : 'Credit'
+    end
   end
 
 end

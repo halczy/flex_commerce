@@ -1,5 +1,5 @@
 <% if @order.transactions %>
-  <h4>transactions</h4>
+  <h4>Transactions</h4>
   <div class="list-group">
     <% @order.transactions.each do |transaction| %>
       <div class="list-group-item flex-column">
@@ -8,8 +8,12 @@
           <h6>Source: <%= payment_source(transaction) %></h6>
         </div>
         <div class="d-flex justify-content-between">
-          <small class="text-muted">transaction ID: <%= transaction.id %></small>
-          <small><%= transaction.created_at.strftime("Paid at: %Y/%m/%d") %></small>
+          <small class="text-muted">Note: <%= transaction.note || 'None' %></small>
+          <h6>Type: <%= transaction.originable.variety.titleize %></h6>
+        </div>
+        <div class="d-flex justify-content-between">
+          <small class="text-muted">Transaction ID: <%= transaction.id %></small>
+          <small><%= transaction.created_at.strftime("Transacted at: %Y/%m/%d") %></small>
         </div>
       </div>
     <% end %>

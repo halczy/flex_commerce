@@ -1,11 +1,11 @@
 <div class="list-group-item flex-column">
   <div class="d-flex justify-content-between">
-    <h6>Amount: <%= humanized_money_with_symbol transaction.amount %></h6>
-    <h6><%= amount_direction(@wallet, transaction) %></h6>
     <h6>Source: <%= transaction.transactable.class %></h6>
+    <h6>Amount: <%= humanized_money_with_symbol transaction.amount %></h6>
   </div>
   <div class="d-flex justify-content-between">
-    <small class="text-muted">Note: <%= transaction.note %></small>
+    <small class="text-muted">Note: <%= transaction.note || 'None' %></small>
+    <h6><%= amount_direction(@wallet, transaction) %></h6>
   </div>
   <div class="d-flex justify-content-between">
     <small class="text-muted">Transaction ID: <%= transaction.id %></small>

@@ -71,7 +71,7 @@ class TransferService
         transactable: @transfer,
         originable: @transfer.fund_target,
         processable: @transfer.fund_source,
-        note: "Transfer #{@transfer.amount} from #{@transferer.name} to #{@transferee.name}"
+        note: "Transfer from #{@transferer.name} to #{@transferee.name}"
       )
     end
 end

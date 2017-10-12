@@ -203,7 +203,11 @@ ref_reward = RewardMethod.create(name: 'Referral Reward',
 cash_back = RewardMethod.create(name: 'Cash Back',
                                 variety: 1,
                                 settings: { percentage: 5 })
+puts "REWARD METHOD: #{RewardMethod.count} reward methods created."
+
 Product.all.each do |product|
-  p.reward_methods << ref_reward
-  p.reward_methods << cash_back
+  product.reward_methods << ref_reward
+  product.reward_methods << cash_back
 end
+
+puts 'REWARD METHOD: Applied reward methods to all products.'

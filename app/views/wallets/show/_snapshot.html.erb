@@ -1,7 +1,7 @@
 <div class="card-deck">
   <div class="card text-white bg-info mb-3">
     <div class="card-body">
-      <div class="d-flex justify-content-between">
+      <div class="d-md-flex justify-content-between">
         <div class="ml-3">
           <div class="row">
             <h4>Balance</h4>
@@ -16,19 +16,19 @@
       </div>
     </div>
   </div>
-  <div class="card text-white bg-secondary mb-3">
+  <div class="card text-white bg-success mb-3">
     <div class="card-body">
-      <div class="d-flex justify-content-between">
+      <div class="d-md-flex justify-content-between">
         <div class="ml-3">
           <div class="row">
-            <h4>Pending Amount</h4>
+            <h4>Withdrawable</h4>
           </div>
           <div class="row">
-            <h4><%= humanized_money_with_symbol @wallet.pending %></h4>
+            <h4><%= humanized_money_with_symbol @wallet.withdrawable %></h4>
           </div>
         </div>
         <div>
-          <i class="fa fa-credit-card fa-4x"></i>
+          <i class="fa fa-university fa-4x"></i>
         </div>
       </div>
     </div>
