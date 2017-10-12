@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   delete 'cart/remove',   to: 'carts#remove',           as: :remove_from_cart
   get    'r/:id',         to: 'referrals#set_referral', as: :set_referral
 
+  resources :sessions,   only: [:new, :create, :destroy]
   resources :dashboards, only: [:show]
   resources :customers,  only: [:new, :create, :show, :edit, :update]
   resources :wallets,    only: [:show] do
@@ -19,7 +20,7 @@ Rails.application.routes.draw do
       get :show_transfer_outs
     end
   end
-  resources :sessions,   only: [:new, :create, :destroy]
+  resources :rewards,    only: [:show]
   resources :images,     only: [:show]
   resources :categories, only: [:show] do
     collection do
