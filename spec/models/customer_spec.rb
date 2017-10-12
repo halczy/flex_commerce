@@ -43,4 +43,35 @@ RSpec.describe Customer, type: :model do
       expect(customer.reward_income).to eq(450.to_money)
     end
   end
+
+  describe '#monthly_reward_income' do
+    it 'sums up customer reward amount created this month' do
+      3.times do
+        payment_service = PaymentService.new(
+          order_id: FactoryGirl.create(:service_order, completed: true).id,
+          amount: 150.to_money,
+          user_id: customer.id,
+          variety: 'reward'
+        )
+        payment_service.create
+        payment_service.reward
+      end
+      expect(customer.monthly_reward_income).to eq(450.to_money)
+    end
+  end
+
+  it 'does not sum up reward from a month ago' do
+      3.times do
+        payment_service = PaymentService.new(
+          order_id: FactoryGirl.create(:service_order, completed: true).id,
+          amount: 150.to_money,
+          user_id: customer.id,
+          variety: 'reward'
+        )
+        payment_service.create
+        payment_service.reward
+        payment_service.payment.update(created_at: 1.month.ago)
+      end
+      expect(customer.monthly_reward_income).to eq(450.to_money)
+  end
 end
