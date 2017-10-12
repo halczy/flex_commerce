@@ -5,6 +5,7 @@ class OrdersController < UsersController
   before_action :set_user, except: [ :create ]
   before_action :set_order, except: [ :index, :create, :update_selector ]
   before_action :populate_selector, only: [ :address, :update_selector ]
+  before_action :set_payment_amount, only: [ :wallet_payment ]
   before_action :set_payment, only: [ :success, :failure ]
 
   def index
@@ -17,6 +18,7 @@ class OrdersController < UsersController
   def show
     @self_pickup = helpers.get_self_pickup_method(@order)
     @delivery = helpers.get_delivery_method(@order)
+    @transactions = @order.transactions.select { |o| o.originable.charge? }
   end
 
   def create
@@ -104,23 +106,13 @@ class OrdersController < UsersController
 
   def payment;end
 
-  def create_wallet_payment
-    unless validate_payment_params
-      flash[:warning] = 'Invalid payment amount. Please try again.'
-      redirect_to payment_order_path and return
-    end
+  def wallet_payment
+    charge_result = pay_via_wallet
 
-    payment_service = create_payment_service
-    charge_result = payment_service.charge
     if @order.reload.payment_success?
-      redirect_to success_order_path(id: @order.id,
-                                     payment_id: payment_service.payment.id)
+      redirect_to success_order_path(id: @order.id, payment_id: @payment.id)
     elsif charge_result && @order.reload.partial_payment?
       flash[:success] = "Partial payment successful!"
-      redirect_to payment_order_path
-    else
-      flash[:danger] = 'Payment fail. Please check your wallet balance or contact
-                        customer service.'
       redirect_to payment_order_path
     end
   end
@@ -208,33 +200,41 @@ class OrdersController < UsersController
       end
     end
 
-    def validate_payment_params
-      return false if helpers.current_user.wallet.available_fund == 0
-      return false unless (params[:amount].present? || params[:custom_amount].present?)
+    def set_payment_amount
+      validity = true
+      validity = false if helpers.current_user.wallet.available_fund == 0
+      validity = false unless params[:amount].present? || params[:custom_amount].present?
 
       if params[:amount].present? && params[:custom_amount].blank?
-        amount = Money.new(params[:amount].to_f * 100)
+        @amount = params[:amount].to_money
       elsif params[:custom_amount].present?
-        amount = Money.new(params[:custom_amount].to_f * 100)
+        @amount = params[:custom_amount].to_money
       end
 
-      return false unless amount.between?(Money.new(1), @order.amount_unpaid)
-      true
+      validity = false if @amount == 0
+      validity = false if @amount > helpers.current_user.wallet.available_fund
+      validity = false unless @amount.between?(0.01.to_money, @order.amount_unpaid)
+
+      unless validity && @amount
+        flash[:warning] = 'Invalid payment amount. Please try again.'
+        redirect_to payment_order_path and return
+      end
     end
 
-    def create_payment_service
-      amount = params[:custom_amount].present? ? params[:custom_amount] : params[:amount]
-      amount = Money.new(amount.to_f * 100)
-      payment_service = PaymentService.new(order_id: @order.id, amount: amount,
-                                           processor: 'wallet')
-      payment = payment_service.create
-      payment_service = PaymentService.new(payment_id: payment.id, amount: amount,
-                                           processor: 'wallet')
-
+    def pay_via_wallet
+      payment_service = PaymentService.new(
+        order_id: @order.id, amount: @amount, processor: 'wallet'
+      )
+      @payment = payment_service.create
+      if @payment
+        payment_service.charge
+      else
+        flash[:danger] = "Unable to create payment."
+        redirect_to payment_order_path and return
+      end
     end
 
     def set_payment
       @payment = Payment.find(params[:payment_id])
     end
-
 end
