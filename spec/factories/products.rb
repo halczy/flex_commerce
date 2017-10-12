@@ -28,6 +28,7 @@ FactoryGirl.define do
 
       if evaluator.reward
         product.reward_methods << FactoryGirl.create(:ref_reward, no_products: true)
+        product.reward_methods << FactoryGirl.create(:cash_back, no_products: true)
       end
     end
   end
