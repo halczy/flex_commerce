@@ -12,7 +12,7 @@ class Payment < ApplicationRecord
   enum variety:   { charge: 0, refund: 1, reward: 2 }
   enum status:    {
     created: 0,
-    insufficient_fund: 10, timeout: 11, expired: 12,
+    insufficient_fund: 10, expired: 11,
     client_side_confirmed: 20, processor_confirmed: 21, confirmed: 22
   }
 
