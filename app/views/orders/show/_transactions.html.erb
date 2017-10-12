@@ -1,7 +1,7 @@
-<% if @order.transactions %>
+<% if @transactions %>
   <h4>Transactions</h4>
   <div class="list-group">
-    <% @order.transactions.each do |transaction| %>
+    <% @transactions.each do |transaction| %>
       <div class="list-group-item flex-column">
         <div class="d-flex justify-content-between">
           <h6>Amount: <%= humanized_money_with_symbol transaction.amount %></h6>
@@ -18,4 +18,6 @@
       </div>
     <% end %>
   </div>
+<% else %>
+  <%= render 'shared/no_record' %>
 <% end %>
