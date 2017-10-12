@@ -18,7 +18,7 @@ class OrdersController < UsersController
   def show
     @self_pickup = helpers.get_self_pickup_method(@order)
     @delivery = helpers.get_delivery_method(@order)
-    @transactions = @order.transactions.select { |o| o.originable.charge? }
+    @transactions = @order.transactions.select { |t| t.originable.charge? }
   end
 
   def create
