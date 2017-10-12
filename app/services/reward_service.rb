@@ -38,7 +38,11 @@ class RewardService
   end
 
   def distribute_cash_back
-    reward_target = @order.user.total_spent > 0 ? @order.user : @order.user.referer
+    if @order.user.total_spent > @order.total
+      reward_target = @order.user
+    else
+      reward_target = @order.user.referer
+    end
     payment_service = PaymentService.new(
       order_id: @order.id,
       amount: @cash_back_amount,
@@ -70,8 +74,12 @@ class RewardService
     end
 
     def cash_back_rewardable?
-      return false unless @cash_back_amount > 0
-      return false if @order.user.total_spent == 0 && !@order.user.referer
-      true
+      if @cash_back_amount == 0
+        return false
+      elsif @order.user.total_spent == @order.total && !@order.user.referer
+        return false
+      else
+        true
+      end
     end
 end

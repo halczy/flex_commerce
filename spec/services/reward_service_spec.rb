@@ -45,6 +45,7 @@ RSpec.describe RewardService, type: :model do
 
       it 'distributes referral reward to referer' do
         exp_amount = (100 * 0.05 * 3).to_money
+        allow(@reward_service).to receive(:cash_back_rewardable?) { false }
         @reward_service.distribute
         expect(@referer.wallet.reload.balance).to eq(exp_amount)
       end
