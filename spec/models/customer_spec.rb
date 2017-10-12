@@ -19,7 +19,7 @@ RSpec.describe Customer, type: :model do
   end
 
   describe '#total_spent' do
-    it 'sums up customer payment success orders total ' do
+    it 'sums up customer payment success orders total' do
       qo_1 = FactoryGirl.create(:service_order, user: customer, completed: true)
       qo_2 = FactoryGirl.create(:payment_order, user: customer, success: true)
       FactoryGirl.create(:order, user: customer)
@@ -28,4 +28,19 @@ RSpec.describe Customer, type: :model do
     end
   end
 
+  describe '#reward_income' do
+    it 'sums up customer reward amount' do
+      3.times do
+        payment_service = PaymentService.new(
+          order_id: FactoryGirl.create(:service_order, completed: true).id,
+          amount: 150.to_money,
+          user_id: customer.id,
+          variety: 'reward'
+        )
+        payment_service.create
+        payment_service.reward
+      end
+      expect(customer.reward_income).to eq(450.to_money)
+    end
+  end
 end
