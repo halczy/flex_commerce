@@ -28,6 +28,7 @@ class CustomersController < UsersController
     if @user.update(customer_params)
       flash[:success] = "Successfully updated your profile."
       set_referral if params[:customer][:referer_id].present? && !@user.referer
+      set_financial
       redirect_to @user
     else
       render :edit
@@ -46,6 +47,14 @@ class CustomersController < UsersController
       if referer
         Referral.create!(referer: referer, referee: helpers.current_user)
       end
+    end
+
+    def set_financial
+      financial_params = [:alipay_account, :bank_account, :bank_name, :bank_branch]
+      financial_params.each do |fin|
+        @user.settings[fin] = params[:customer][fin] if params[:customer][fin]
+      end
+      @user.save
     end
 
 end

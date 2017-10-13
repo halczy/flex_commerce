@@ -194,6 +194,23 @@ RSpec.describe CustomersController, type: :controller do
         }
         expect(customer.referer).to eq(new_customer)
       end
+
+      it 'updates customer financial information' do
+        patch :update, params: {
+          id: customer.id,
+          customer: {
+            alipay_account: 'alipay@test.com',
+            bank_account: '6212123412341234',
+            bank_name: 'ACME Bank',
+            bank_branch: 'ABCD'
+          }
+        }
+        customer.reload
+        expect(customer.alipay_account).to eq('alipay@test.com')
+        expect(customer.bank_account).to eq('6212123412341234')
+        expect(customer.bank_name).to eq('ACME Bank')
+        expect(customer.bank_branch).to eq('ABCD')
+      end
     end
 
     context 'with invalid params' do

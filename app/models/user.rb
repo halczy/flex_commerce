@@ -41,7 +41,7 @@ class User < ApplicationRecord
   attribute :referer_id,     :string
   attribute :alipay_account, :string
   attribute :bank_account,   :string
-  attribute :bank,           :string
+  attribute :bank_name,      :string
   attribute :bank_branch,    :string
 
   def self.create_digest(token)
