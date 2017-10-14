@@ -1,6 +1,7 @@
 class WalletsController < UsersController
   before_action :set_user
   before_action :set_wallet
+  before_action :set_proceesors, only: [ :new_withdraw ]
   before_action :require_financial, only: [ :new_withdraw ]
 
   def show
@@ -55,8 +56,15 @@ class WalletsController < UsersController
       @wallet = @user.wallet
     end
 
+    def set_proceesors
+      @proceesors =  Array.new.tap do |proceesors|
+        proceesors << ['Alipay', 'alipay'] if @user.alipay_account.present?
+        proceesors << ['Bank', 'bank'] if @user.bank_account.present?
+      end
+    end
+
     def require_financial
-      unless @user.alipay_account.present? || @user.bank_account.present?
+      if @proceesors.empty?
         flash[:warning] = "Please provide your Alipay account or
                            bank account information before requesting a
                            withdraw"
