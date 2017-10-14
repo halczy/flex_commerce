@@ -1,6 +1,14 @@
-<%= link_to 'All Transactions', show_transactions_wallet_path(@wallet),
+<div class="d-flex justify-content-between">
+  <div id="transactions">
+    <%= link_to 'All Transactions', show_transactions_wallet_path(@wallet),
+                                    class: 'btn btn-light' %>
+    <%= link_to 'Transfer Ins', show_transfer_ins_wallet_path(@wallet),
                                 class: 'btn btn-light' %>
-<%= link_to 'Transfer Ins', show_transfer_ins_wallet_path(@wallet),
-                            class: 'btn btn-light' %>
-<%= link_to 'Transfer Outs', show_transfer_outs_wallet_path(@wallet),
-                             class: 'btn btn-light' %>
+    <%= link_to 'Transfer Outs', show_transfer_outs_wallet_path(@wallet),
+                                 class: 'btn btn-light' %>
+  </div>
+  <div id="withdraw">
+    <%= link_to 'Withdraw', new_withdraw_wallet_path, class: 'btn btn-light' %>
+    <%= link_to 'Transfer Statuses', '#', class: 'btn btn-light' %>
+  </div>
+</div>
