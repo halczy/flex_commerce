@@ -97,6 +97,12 @@ class TransferService
     end
   end
 
+  def cancel_transfer
+    case @processor
+    when 'bank' then cancel_bank_transfer
+    end
+  end
+
   def cancel_bank_transfer
     begin
       Transfer.transaction do

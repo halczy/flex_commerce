@@ -201,13 +201,13 @@ RSpec.describe TransferService, type: :model do
     context 'cancel transfer' do
       it 'returns true when bank transfer is canceled' do
         ts = TransferService.new(transfer_id: Transfer.first)
-        expect(ts.cancel_bank_transfer).to be_truthy
+        expect(ts.cancel_transfer).to be_truthy
         expect(ts.transfer.failure?).to be_truthy
       end
 
       it 'removes transfer funding back to wallet' do
         ts = TransferService.new(transfer_id: Transfer.first)
-        ts.cancel_bank_transfer
+        ts.cancel_transfer
         expect(@cstm.wallet.reload.pending).to eq(0)
         expect(@cstm.wallet.reload.balance).to eq('99999'.to_money)
         expect(@cstm.wallet.reload.withdrawable).to eq('99999'.to_money)
@@ -215,7 +215,7 @@ RSpec.describe TransferService, type: :model do
 
       it 'updates transaction log' do
         ts = TransferService.new(transfer_id: Transfer.first)
-        ts.cancel_bank_transfer
+        ts.cancel_transfer
         expect(ts.transfer.transaction_log.note).to include('REJECTED')
       end
     end
