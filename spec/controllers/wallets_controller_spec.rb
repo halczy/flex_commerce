@@ -111,7 +111,7 @@ RSpec.describe WalletsController, type: :controller do
       @transfer = Transfer.all.first
     end
 
-    it 'response successfully' do
+    it 'responses successfully' do
       get :show_withdraw, params: { id: customer.id, transfer_id: @transfer.id }
       expect(response).to be_success
     end

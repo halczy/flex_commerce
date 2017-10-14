@@ -1,0 +1,52 @@
+<div class="card">
+  <div class="card-header">
+    Withdraw
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md">
+        <div class="mb-3">
+          <%= link_to '#', class: 'btn btn-secondary' do %>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            Return to Withdraw List
+          <% end %>
+        </div>
+        <div class="jumbotron">
+      <h4 class="mb-3 mt-0">Withdraw Detail</h4>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Withdraw ID</th>
+            <td><%= @transfer.id %></td>
+          </tr>
+          <tr>
+            <th scope="row">Amount</th>
+            <td><%= humanized_money_with_symbol @transfer.amount %></td>
+          </tr>
+          <tr>
+            <th scope="row">Current Status</th>
+            <td><strong><%= @transfer.status.titleize %></strong></td>
+          </tr>
+          <tr>
+            <th scope="row">Withdraw To</th>
+            <td><%= @transfer.processor.titleize %></td>
+          </tr>
+          <tr>
+            <th scope="row">Bank Name</th>
+            <td><%= @transfer.transferee.bank_name %></td>
+          </tr>
+          <tr>
+            <th scope="row">Bank Branch</th>
+            <td><%= @transfer.transferee.bank_branch %></td>
+          </tr>
+          <tr>
+            <th scope="row">Bank Account</th>
+            <td><%= @transfer.transferee.bank_account %></td>
+          </tr>
+        </tbody>
+      </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
