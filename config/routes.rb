@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       get :show_transactions
       get :show_transfer_ins
       get :show_transfer_outs
+      get :new_withdraw
     end
   end
   resources :rewards,    only: [:show]

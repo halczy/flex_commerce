@@ -40,4 +40,16 @@ RSpec.describe WalletsController, type: :controller do
     end
   end
 
+  describe 'GET new_withdraw' do
+    it 'responses successfully' do
+      customer.update(settings: { alipay_account: '1@1.com' })
+      get :new_withdraw, params: { id: customer.reload.id }
+      expect(response).to be_success
+    end
+
+    it 'redirects to user profile edit if neither bank of alipay is present' do
+      get :new_withdraw, params: { id: customer.id }
+      expect(response).to redirect_to(edit_customer_path(customer))
+    end
+  end
 end
