@@ -172,7 +172,52 @@ RSpec.describe TransferService, type: :model do
     end
   end
 
-  describe '#wallet_transfer' do
+  describe '#bank_transfer' do
+    before do
+        @cstm = FactoryGirl.create(:wealthy_customer)
+        ts = TransferService.new(
+          transferer_id: @cstm.id,
+          transferee_id: @cstm.id,
+          processor: 'bank',
+          amount: '300'
+        )
+        ts.create
+    end
 
+    context 'execute transfer' do
+      it 'returns true when bank transfer is successful' do
+        ts = TransferService.new(transfer_id: Transfer.first)
+        expect(ts.execute_transfer).to be_truthy
+        expect(ts.transfer.success?).to be_truthy
+      end
+
+      it 'removes fund from pending' do
+        ts = TransferService.new(transfer_id: Transfer.first)
+        ts.execute_transfer
+        expect(@cstm.wallet.reload.pending).to eq(0)
+      end
+    end
+
+    context 'cancel transfer' do
+      it 'returns true when bank transfer is canceled' do
+        ts = TransferService.new(transfer_id: Transfer.first)
+        expect(ts.cancel_bank_transfer).to be_truthy
+        expect(ts.transfer.failure?).to be_truthy
+      end
+
+      it 'removes transfer funding back to wallet' do
+        ts = TransferService.new(transfer_id: Transfer.first)
+        ts.cancel_bank_transfer
+        expect(@cstm.wallet.reload.pending).to eq(0)
+        expect(@cstm.wallet.reload.balance).to eq('99999'.to_money)
+        expect(@cstm.wallet.reload.withdrawable).to eq('99999'.to_money)
+      end
+
+      it 'updates transaction log' do
+        ts = TransferService.new(transfer_id: Transfer.first)
+        ts.cancel_bank_transfer
+        expect(ts.transfer.transaction_log.note).to include('REJECTED')
+      end
+    end
   end
 end

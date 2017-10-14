@@ -7,7 +7,7 @@ class TransferService
     @transfer = Transfer.find_by(id: transfer_id)
     @transferer = @transfer.try(:transferer) || User.find_by(id: transferer_id)
     @transferee = @transfer.try(:transferee) || User.find_by(id: transferee_id)
-    @amount = @transfer.try(:amount) || Money.new(amount.to_f * 100)
+    @amount = @transfer.try(:amount) || amount.to_money
     @processor = processor || @transfer.try(:processor) || 'wallet'
   end
 
@@ -63,6 +63,7 @@ class TransferService
   def execute_transfer
     case @transfer.processor
     when 'wallet' then wallet_transfer
+    when 'bank'   then bank_transfer
     end
   end
 
@@ -74,6 +75,37 @@ class TransferService
         @transfer.fund_source.debit(@transfer.amount)
         @transfer.fund_target.credit(@transfer.amount)
         process_wallet_transfer
+        true
+      end
+    rescue Exception
+      false
+    end
+  end
+
+  def bank_transfer
+    begin
+      Transfer.transaction do
+        @transfer.fund_source.withdraw(@amount)
+        @transfer.transaction_log.update(
+          note: "SUCCESS: Withdraw to bank account."
+        )
+        @transfer.success!
+        true
+      end
+    rescue Exception
+      false
+    end
+  end
+
+  def cancel_bank_transfer
+    begin
+      Transfer.transaction do
+        @transfer.fund_source.cancel_withdraw(@amount)
+        @transfer.failure!
+        @transfer.transaction_log.update(
+          amount: 0,
+          note: 'REJECTED: Withdraw request rejected.'
+        )
         true
       end
     rescue Exception
@@ -124,7 +156,7 @@ class TransferService
         transactable: @transfer,
         originable: @transfer.fund_source,
         processable: @transfer.fund_source,
-        note: "PENDING: Withdraw transfer to bank account"
+        note: "PENDING: Withdraw to bank account."
       )
     end
 end
