@@ -99,4 +99,21 @@ RSpec.describe WalletsController, type: :controller do
       end
     end
   end
+
+  describe 'GET show_withdraw' do
+    before do
+      customer.wallet.update(withdrawable: 100.to_money, balance: 100.to_money)
+      post :create_withdraw, params: {
+            id: customer.id,
+            processor: 'bank',
+            amount: '100'.to_money
+      }
+      @transfer = Transfer.all.first
+    end
+
+    it 'response successfully' do
+      get :show_withdraw, params: { id: customer.id, transfer_id: @transfer.id }
+      expect(response).to be_success
+    end
+  end
 end

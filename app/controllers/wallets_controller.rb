@@ -1,7 +1,7 @@
 class WalletsController < UsersController
   before_action :set_user
-  before_action :set_wallet
-  before_action :set_proceesors, only: [ :new_withdraw ]
+  before_action :set_wallet, except: [ :show_withdraw ]
+  before_action :set_processors, only: [ :new_withdraw ]
   before_action :require_financial, only: [ :new_withdraw ]
 
   def show
@@ -34,20 +34,24 @@ class WalletsController < UsersController
 
   def create_withdraw
     ts = TransferService.new(
-      processor: params[:processor],
       transferer_id: @user,
       transferee_id: @user,
-      amount: params[:amount]
+      amount: params[:amount],
+      processor: params[:processor]
     )
 
     if ts.create
       flash[:success] = "Successfully created a withdraw request."
-      redirect_to show_withdraw_wallet_path(ts.transfer)
+      redirect_to show_withdraw_wallet_path(id: @user.id, transfer_id: ts.transfer.id)
     else
       flash[:warning] = "Unable to initialize transfer request. Please double
                          check your withdrawable amount."
       redirect_to new_withdraw_wallet_path(@user)
     end
+  end
+
+  def show_withdraw
+    @transfer = Transfer.find(params[:transfer_id])
   end
 
   private
@@ -56,15 +60,15 @@ class WalletsController < UsersController
       @wallet = @user.wallet
     end
 
-    def set_proceesors
-      @proceesors =  Array.new.tap do |proceesors|
-        proceesors << ['Alipay', 'alipay'] if @user.alipay_account.present?
-        proceesors << ['Bank', 'bank'] if @user.bank_account.present?
+    def set_processors
+      @processors =  Array.new.tap do |processor|
+        processor << ['Alipay', 'alipay'] if @user.alipay_account.present?
+        processor << ['Bank', 'bank'] if @user.bank_account.present?
       end
     end
 
     def require_financial
-      if @proceesors.empty?
+      if @processors.empty?
         flash[:warning] = "Please provide your Alipay account or
                            bank account information before requesting a
                            withdraw"
