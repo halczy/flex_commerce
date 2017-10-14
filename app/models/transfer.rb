@@ -14,6 +14,6 @@ class Transfer < ApplicationRecord
   monetize :amount_cents, numericality: { greater_than: 0 }
 
   # Enums
-  enum processor: { wallet: 0, alipay: 1 }
+  enum processor: { wallet: 0, alipay: 1, bank: 2 }
   enum status: { created: 0, pending: 1, failure: 2, success: 3 }
 end

@@ -26,12 +26,13 @@ RSpec.describe TransferService, type: :model do
       expect(transfer_service.transferer).to eq(transfer.transferer)
       expect(transfer_service.transferee).to eq(transfer.transferee)
       expect(transfer_service.amount).to eq(transfer.amount)
+      expect(transfer_service.processor).to eq('wallet')
     end
   end
 
   describe '#create' do
     context 'with valid params' do
-      it 'returns true if a transfer is created' do
+      it 'returns true if a wallet transfer is created' do
         c1 = FactoryGirl.create(:wealthy_customer)
         c2 = FactoryGirl.create(:customer)
         ts = TransferService.new(
@@ -41,6 +42,48 @@ RSpec.describe TransferService, type: :model do
         )
         expect(ts.create).to be_truthy
         expect(Transfer.count).to eq(1)
+      end
+
+      it 'returns true if a bank transfer is created' do
+        cstm = FactoryGirl.create(:wealthy_customer)
+        ts = TransferService.new(
+          transferer_id: cstm.id,
+          transferee_id: cstm.id,
+          processor: 'bank',
+          amount: '300'
+        )
+        expect(ts.create).to be_truthy
+        expect(Transfer.first.pending?).to be_truthy
+      end
+
+      it 'withhold funds upon bank transfer creation' do
+        cstm = FactoryGirl.create(:wealthy_customer)
+        ts = TransferService.new(
+          transferer_id: cstm.id,
+          transferee_id: cstm.id,
+          processor: 'bank',
+          amount: '300'
+        )
+        old_balance = cstm.wallet.balance
+        ts.create
+        new_balance = cstm.wallet.reload.balance
+        expect(old_balance - new_balance).to eq('300'.to_money)
+        expect(cstm.wallet.reload.pending).to eq('300'.to_money)
+      end
+
+      it 'creates transaction upon bank transfer creation' do
+        cstm = FactoryGirl.create(:wealthy_customer)
+        ts = TransferService.new(
+          transferer_id: cstm.id,
+          transferee_id: cstm.id,
+          processor: 'bank',
+          amount: '300'
+        )
+        expect { ts.create }.to change(Transaction, :count).by(1)
+        expect(Transaction.first.amount).to eq('300'.to_money)
+        expect(Transaction.first.transactable).to eq(Transfer.first)
+        expect(Transaction.first.originable).to eq(cstm.wallet)
+        expect(Transaction.first.processable).to eq(cstm.wallet)
       end
     end
 
@@ -72,7 +115,7 @@ RSpec.describe TransferService, type: :model do
     end
   end
 
-  describe '#transfer_to_wallet' do
+  describe '#wallet_transfer' do
     before do
       @c1 = FactoryGirl.create(:wealthy_customer)
       @c2 = FactoryGirl.create(:customer)
@@ -85,7 +128,6 @@ RSpec.describe TransferService, type: :model do
     end
 
     context 'with valid conditions' do
-
       it 'returns true if transfer is successful' do
         expect(@transfer_service.execute_transfer).to be_truthy
       end
@@ -128,5 +170,9 @@ RSpec.describe TransferService, type: :model do
         expect(@transfer_service.execute_transfer).to be_falsey
       end
     end
+  end
+
+  describe '#wallet_transfer' do
+
   end
 end
