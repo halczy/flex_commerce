@@ -29,6 +29,26 @@ class WalletsController < UsersController
 
   def new_withdraw; end
 
+  def show_withdraw; end
+
+  def create_withdraw
+    ts = TransferService.new(
+      processor: params[:processor],
+      transferer_id: @user,
+      transferee_id: @user,
+      amount: params[:amount]
+    )
+
+    if ts.create
+      flash[:success] = "Successfully created a withdraw request."
+      redirect_to show_withdraw_wallet_path(ts.transfer)
+    else
+      flash[:warning] = "Unable to initialize transfer request. Please double
+                         check your withdrawable amount."
+      redirect_to new_withdraw_wallet_path(@user)
+    end
+  end
+
   private
 
     def set_wallet

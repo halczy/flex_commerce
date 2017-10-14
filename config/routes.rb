@@ -15,10 +15,12 @@ Rails.application.routes.draw do
   resources :customers,  only: [:new, :create, :show, :edit, :update]
   resources :wallets,    only: [:show] do
     member do
-      get :show_transactions
-      get :show_transfer_ins
-      get :show_transfer_outs
-      get :new_withdraw
+      get  :show_transactions
+      get  :show_transfer_ins
+      get  :show_transfer_outs
+      get  :new_withdraw
+      post :create_withdraw
+      get  :show_withdraw
     end
   end
   resources :rewards,    only: [:show]
