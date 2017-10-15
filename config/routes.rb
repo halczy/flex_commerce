@@ -112,5 +112,6 @@ Rails.application.routes.draw do
       end
     end
     resources :reward_methods                                       # Reward Methods
+    resources :transfers, only: [:index, :show]                     # Transfers
   end
 end

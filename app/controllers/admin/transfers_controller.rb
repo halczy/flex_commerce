@@ -1,4 +1,4 @@
-class Admin::TransferController < Admin::AdminController
+class Admin::TransfersController < Admin::AdminController
 
   def index
     @transfers = Transfer.all
