@@ -73,7 +73,9 @@ RSpec.describe WalletsController, type: :controller do
         post :create_withdraw, params: { id: customer.id,
                                          processor: 'bank', amount: '100'.to_money }
         expect(flash[:success]).to be_present
-        expect(response).to redirect_to(show_withdraw_wallet_path(Transfer.last))
+        expect(response)
+        .to redirect_to(show_withdraw_wallet_path(id: customer.id,
+                                                  transfer_id: Transfer.last))
       end
     end
 

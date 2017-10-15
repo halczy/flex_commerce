@@ -50,9 +50,9 @@ class CustomersController < UsersController
     end
 
     def set_financial
-      financial_params = [:alipay_account, :bank_account, :bank_name, :bank_branch]
+      financial_params = ['alipay_account', 'bank_account', 'bank_name', 'bank_branch']
       financial_params.each do |fin|
-        @user.settings[fin] = params[:customer][fin] if params[:customer][fin]
+        @user.settings[fin] = params['customer'][fin] if params['customer'][fin]
       end
       @user.save
     end
