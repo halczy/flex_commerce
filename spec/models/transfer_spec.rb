@@ -13,22 +13,22 @@ RSpec.describe Transfer, type: :model do
 
     context 'validations' do
       it 'cannot create a transfer without amount' do
-        transfer = FactoryGirl.build(:transfer, amount: nil)
+        transfer = FactoryGirl.build(:wallet_transfer, amount: nil)
         expect(transfer).not_to be_valid
       end
 
       it 'cannot create a transfer with zero as amount' do
-        transfer = FactoryGirl.build(:transfer, amount: Money.new(0))
+        transfer = FactoryGirl.build(:wallet_transfer, amount: Money.new(0))
         expect(transfer).not_to be_valid
       end
 
       it 'cannot create a transfer without transferer' do
-        transfer = FactoryGirl.build(:transfer, transferee: nil)
+        transfer = FactoryGirl.build(:wallet_transfer, transferee: nil)
         expect(transfer).not_to be_valid
       end
 
       it 'cannot create a transfer without transferee' do
-        transfer = FactoryGirl.build(:transfer, transferer: nil)
+        transfer = FactoryGirl.build(:wallet_transfer, transferer: nil)
         expect(transfer).not_to be_valid
       end
     end
