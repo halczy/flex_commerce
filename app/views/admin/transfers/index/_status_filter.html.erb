@@ -1,0 +1,10 @@
+<%= form_with(url: admin_transfers_path, local: true, method: :get) do |form| %>
+  <%= form.select :filter, options_for_select([
+                  ['No Filter', ''],
+                  ['Created', 'created'],
+                  ['Pending', 'pending'],
+                  ['Failure', 'failure'],
+                  ['Success', 'success']]),
+                  { prompt: "Filter By Status" },
+                  class: 'form-control', onchange: 'this.form.submit();' %>
+<% end %>
