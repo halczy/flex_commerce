@@ -128,6 +128,13 @@ class TransferService
     end
   end
 
+  def manual_alipay_transfer
+    @transfer.success!
+    @transfer.transaction_log.update(
+      note: 'SUCCESS: Withdrawn to Alipay account.'
+    )
+  end
+
   def cancel_transfer
     case @processor
     when 'bank'   then cancel_external_transfer

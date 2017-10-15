@@ -302,5 +302,12 @@ RSpec.describe TransferService, type: :model do
         expect(@ts.transferer.wallet.pending).to eq(0)
       end
     end
+
+    context 'manual alipay transfer' do
+      it 'sets transfer to success status' do
+        @ts.manual_alipay_transfer
+        expect(@ts.transfer.reload.success?).to be_truthy
+      end
+    end
   end
 end
