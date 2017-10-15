@@ -11,7 +11,8 @@
         <p>Please confrim that you would like to reject this transfer.</p>
       </div>
       <div class="modal-footer">
-        <%= link_to 'Confrim', '#', class: 'btn btn-danger' %>
+        <%= link_to 'Confrim', reject_admin_transfer_path(@transfer),
+                               method: :patch, class: 'btn btn-danger' %>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Close
         </button>

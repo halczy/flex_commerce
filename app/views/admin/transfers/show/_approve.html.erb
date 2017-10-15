@@ -10,12 +10,24 @@
       <div class="modal-body">
         <% if @transfer.alipay? %>
           <p>
-            Please confrim transfer of
-            <strong><%= humanized_money_with_symbol @transfer.amount %></strong>
-            to customer <strong><%= @transfer.transferee.name %></strong>
-            via Alipay
-            <strong><%= @transfer.transferee.alipay_account %></strong>.
+            Please confrim the follow Alipay transfer.
           </p>
+          <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">Name</th>
+                <td><%= @transfer.transferee.name %></td>
+              </tr>
+              <tr>
+                <th scope="row">Alipay Account</th>
+                <td><%= @transfer.transferee.alipay_account %></td>
+              </tr>
+              <tr>
+                <th scope="row">Amount</th>
+                <td><%= humanized_money_with_symbol @transfer.amount %></td>
+              </tr>
+            </tbody>
+          </table>
         <% elsif @transfer.bank? %>
           <p>
             Please transfer
@@ -46,12 +58,16 @@
       </div>
       <div class="modal-footer">
         <% if @transfer.alipay? %>
-          <%= button_to 'Automatic Transfer', '#',
-                                                      class: 'btn btn-success' %>
-          <%= button_to 'Manual Transfer', '#',
-                                                      class: 'btn btn-warning' %>
+          <%= link_to 'Automatic Transfer',
+                       approve_admin_transfer_path(@transfer),
+                       method: :patch, class: 'btn btn-success' %>
+          <%= link_to 'Manual Transfer',
+                       manual_approve_alipay_admin_transfer_path(@transfer),
+                       method: :patch, class: 'btn btn-warning' %>
         <% else %>
-          <%= button_to 'Confirm Transferred', '#', class: 'btn btn-success' %>
+          <%= link_to 'Confirm Transferred',
+                       approve_admin_transfer_path(@transfer),
+                       method: :patch, class: 'btn btn-success' %>
         <% end %>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Close
