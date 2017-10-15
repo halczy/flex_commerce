@@ -290,5 +290,17 @@ RSpec.describe TransferService, type: :model do
         expect(@ts.transfer.reload.failure?).to be_truthy
       end
     end
+
+    context 'cancal transfer' do
+      it 'cancels alipay transfer' do
+        @ts.cancel_transfer
+        expect(@ts.transfer.failure?).to be_truthy
+      end
+
+      it 'returns withheld fund to transferer' do
+        @ts.cancel_transfer
+        expect(@ts.transferer.wallet.pending).to eq(0)
+      end
+    end
   end
 end

@@ -130,11 +130,12 @@ class TransferService
 
   def cancel_transfer
     case @processor
-    when 'bank' then cancel_bank_transfer
+    when 'bank'   then cancel_external_transfer
+    when 'alipay' then cancel_external_transfer
     end
   end
 
-  def cancel_bank_transfer
+  def cancel_external_transfer
     begin
       Transfer.transaction do
         @transfer.fund_source.cancel_withdraw(@amount)
