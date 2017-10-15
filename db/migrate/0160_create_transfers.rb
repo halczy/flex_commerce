@@ -8,6 +8,8 @@ class CreateTransfers < ActiveRecord::Migration[5.1]
       t.uuid     :transferee_id,  index: true
       t.uuid     :fund_source_id, index: true
       t.uuid     :fund_target_id, index: true
+      t.hstore   :processor_response
+      t.hstore   :processor_query_result
 
       t.timestamps
     end

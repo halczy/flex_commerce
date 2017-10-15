@@ -255,6 +255,8 @@ ActiveRecord::Schema.define(version: 180) do
     t.uuid "transferee_id"
     t.uuid "fund_source_id"
     t.uuid "fund_target_id"
+    t.hstore "processor_response"
+    t.hstore "processor_query_result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fund_source_id"], name: "index_transfers_on_fund_source_id"
