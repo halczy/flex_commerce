@@ -13,7 +13,7 @@ RSpec.describe Admin::TransfersController, type: :controller do
   before { signin_as admin }
 
   describe 'GET index' do
-    it 'reponses successfully' do
+    it 'responses successfully' do
       get :index
       expect(response).to be_success
     end
@@ -45,6 +45,13 @@ RSpec.describe Admin::TransfersController, type: :controller do
         get :index, params: { filter: 'success' }
         expect(assigns(:transfers)).to match_array([@wallet_success, @bank_success])
       end
+    end
+  end
+
+  describe 'GET show' do
+    it 'responses successfully' do
+      get :show, params: { id: wallet_transfer }
+      expect(response).to be_success
     end
   end
 end
