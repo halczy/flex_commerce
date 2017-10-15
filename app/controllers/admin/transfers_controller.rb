@@ -19,6 +19,15 @@ class Admin::TransfersController < Admin::AdminController
     redirect_to admin_transfer_path(@transfer)
   end
 
+  def reject
+    if @transfer_service.cancel_transfer
+      flash[:success] = "Transfer cancelled."
+    else
+      flash[:warning] = "Cancellation fail."
+    end
+    redirect_to admin_transfer_path(@transfer)
+  end
+
   private
 
     def set_transfer
