@@ -38,6 +38,12 @@
        <em class="fa fa-archive fa-fw"></em> Inventories</a>
       <% end %>
     </li>
+    <li class="nav-item">
+      <%= link_to admin_transfers_path,
+                  class: "nav-link #{active_controller?('transfers')}" do %>
+       <em class="fa fa-money fa-fw"></em> Transfers</a>
+      <% end %>
+    </li>
   </ul>
   <ul class="nav nav-pills flex-column sidebar-nav">
     <li class="nav-item">
