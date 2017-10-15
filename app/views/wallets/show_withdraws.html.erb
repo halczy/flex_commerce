@@ -1,0 +1,14 @@
+<%= provide :title, 'Withdraws' %>
+
+<%= render 'shared/header_breadcrumb', title: yield(:title) %>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3">
+      <%= render 'shared/navigation/customer/sidenav' %>
+    </div>
+    <div class="col-9">
+      <%= render 'wallets/show_withdraws/content' %>
+    </div>
+  </div>
+</div>
