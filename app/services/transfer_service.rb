@@ -66,6 +66,7 @@ class TransferService
     case @transfer.processor
     when 'wallet' then wallet_transfer
     when 'bank'   then bank_transfer
+    when 'alipay' then alipay_transfer
     end
   end
 
@@ -89,12 +90,40 @@ class TransferService
       Transfer.transaction do
         @transfer.fund_source.withdraw(@amount)
         @transfer.transaction_log.update(
-          note: "SUCCESS: Withdraw to bank account."
+          note: "SUCCESS: Withdrawn to bank account."
         )
         @transfer.success!
         true
       end
     rescue Exception
+      false
+    end
+  end
+
+  def alipay_transfer
+    create_alipay_client
+    @retry_limit = 0
+
+    begin
+      rsp = @client.execute(
+        method: 'alipay.fund.trans.toaccount.transfer',
+        biz_content: {
+          out_biz_no: @transfer.id,
+          payee_type: 'ALIPAY_LOGONID',
+          payee_account: @transferee.alipay_account,
+          amount: @amount.to_f
+        }.to_json
+      )
+      @retry_limit += 1
+      raise if rsp.empty?
+    rescue Exception
+      retry if @retry_limit <= 3
+    end
+
+    if rsp.present?
+      @transfer.update(processor_response: JSON.parse(rsp)['alipay_fund_trans_toaccount_transfer_response'])
+      process_alipay_refund_response
+    else
       false
     end
   end
@@ -164,7 +193,31 @@ class TransferService
         transactable: @transfer,
         originable: @transfer.fund_source,
         processable: @transfer.fund_source,
-        note: "PENDING: Withdraw to bank account."
+        note: "PENDING: Withdraw to #{@processor} account."
       )
+    end
+
+    def create_alipay_client
+      @client = Alipay::Client.new(
+        url: ENV['ALIPAY_GATEWAY'],
+        app_id: ENV['ALIPAY_APP_ID'],
+        app_private_key: ENV['ALIPAY_APP_PRIVATE_KEY'],
+        alipay_public_key: ENV['ALIPAY_PUBLIC_KEY']
+      )
+    end
+
+    def process_alipay_refund_response
+      @transfer.reload
+      if @transfer.processor_response &&
+         @transfer.processor_response['code'] == '10000' ||
+         @transfer.processor_query_result &&
+         @transfer.processor_query_result['status'] == 'success'
+        @transfer.success!
+        @transfer.transaction_log.update(
+          note: 'SUCCESS: Withdrawn to Alipay account.'
+        )
+      else
+        @transfer.failure!
+      end
     end
 end

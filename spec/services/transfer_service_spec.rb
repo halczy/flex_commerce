@@ -232,4 +232,63 @@ RSpec.describe TransferService, type: :model do
       end
     end
   end
+
+  describe '#alipay_transfer' do
+    before do
+      @cstm = FactoryGirl.create(:wealthy_customer)
+      @cstm.update(settings: { alipay_account: 'abc@example.com' })
+      @ts = TransferService.new(
+         transferer_id: @cstm.id,
+         transferee_id: @cstm.id,
+         processor: 'alipay',
+         amount: '300'
+      )
+      @ts.create
+    end
+
+    context 'with valid params' do
+      before do
+        stub_request(:post, "https://openapi.alipaydev.com/gateway.do").
+          to_return(body: {
+            alipay_fund_trans_toaccount_transfer_response: {
+              code: '10000',
+              out_biz_no: @ts.transfer.id,
+              order_id: '1234567890'
+            }
+          }.to_json, status: 200)
+      end
+
+      it 'returns true when alipay transfer is sent successfully' do
+        expect(@ts.execute_transfer).to be_truthy
+      end
+
+      it 'logs alipay response' do
+        @ts.execute_transfer
+        expect(@ts.transfer.processor_response).to be_present
+      end
+
+      it 'updates transfer status and transaction log' do
+        @ts.execute_transfer
+        expect(@ts.transfer.reload.success?).to be_truthy
+        expect(@ts.transfer.reload.transaction_log.note).to include('SUCCESS')
+      end
+    end
+
+    context 'with invalid params' do
+      before do
+        stub_request(:post, "https://openapi.alipaydev.com/gateway.do").
+          to_return(body: {
+            alipay_fund_trans_toaccount_transfer_response: {
+              code: '20000',
+              msg: 'Service Currently Unavailable'
+            }
+          }.to_json, status: 200)
+      end
+
+      it 'sets payment status to failure when alipay fail to process' do
+        @ts.execute_transfer
+        expect(@ts.transfer.reload.failure?).to be_truthy
+      end
+    end
+  end
 end
