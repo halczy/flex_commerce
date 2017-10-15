@@ -54,4 +54,33 @@ RSpec.describe Admin::TransfersController, type: :controller do
       expect(response).to be_success
     end
   end
+
+  describe 'PATCH approve' do
+    context 'with valid conditions' do
+      before do
+        bank_transfer.transferer.wallet.update(pending: 100.to_money)
+        Transaction.create(
+          amount: 100.to_money,
+          transactable: bank_transfer,
+          originable: bank_transfer.fund_source,
+          processable: bank_transfer.fund_source,
+          note: "PENDING: Withdraw to bank account."
+        )
+      end
+
+      it 'displays success flash and redirect to show on success transfer' do
+        patch :approve, params: { id: bank_transfer }
+        expect(flash[:success]).to be_present
+        expect(response).to redirect_to(admin_transfer_path(bank_transfer))
+      end
+    end
+
+    context 'with invalid conditions' do
+      it 'displays warning flash and redirect to show on failure' do
+        patch :approve, params: { id: bank_transfer }
+        expect(flash[:warning]).to be_present
+        expect(response).to redirect_to(admin_transfer_path(bank_transfer))
+      end
+    end
+  end
 end
