@@ -54,6 +54,11 @@ class WalletsController < UsersController
     @transfer = Transfer.find(params[:transfer_id])
   end
 
+  def show_withdraws
+    transfers = Transfer.where.not(processor: 0).where(transferer: @user)
+    @transfers = transfers.order(created_at: :desc).page params[:page]
+  end
+
   private
 
     def set_wallet

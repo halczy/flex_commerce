@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe WalletsController, type: :controller do
 
-  let(:customer) { FactoryGirl.create(:customer) }
-  let(:admin)    { FactoryGirl.create(:admin) }
+  let(:customer)        { FactoryGirl.create(:customer) }
+  let(:admin)           { FactoryGirl.create(:admin) }
+  let(:bank_transfer)   { FactoryGirl.create(:bank_transfer, transferer: customer) }
+  let(:alipay_transfer) { FactoryGirl.create(:alipay_transfer, transferer: customer) }
 
   before { signin_as customer }
 
@@ -116,6 +118,18 @@ RSpec.describe WalletsController, type: :controller do
     it 'responses successfully' do
       get :show_withdraw, params: { id: customer.id, transfer_id: @transfer.id }
       expect(response).to be_success
+    end
+  end
+
+  describe 'GET show_withdraws' do
+    before do
+      alipay_transfer
+      bank_transfer
+    end
+
+    it 'populates with customer withdraws' do
+      get :show_withdraws, params: { id: customer.id }
+      expect(assigns(:transfers)).to match_array([alipay_transfer, bank_transfer])
     end
   end
 end

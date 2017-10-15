@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get  :new_withdraw
       post :create_withdraw
       get  :show_withdraw
+      get  :show_withdraws
     end
   end
   resources :rewards,    only: [:show]
