@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Transfer, type: :model do
 
   let(:customer)       { FactoryGirl.create(:customer) }
-  let(:transfer)       { FactoryGirl.create(:transfer) }
-  let(:wallet_success) { FactoryGirl.create(:transfer, wallet_success: true) }
+  let(:transfer)       { FactoryGirl.create(:wallet_transfer) }
+  let(:wallet_success) { FactoryGirl.create(:wallet_transfer, success: true) }
 
   describe 'creation' do
     it 'creates a transfer' do

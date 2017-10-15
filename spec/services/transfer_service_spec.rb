@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe TransferService, type: :model do
 
   let(:customer) { FactoryGirl.create(:customer) }
-  let(:transfer) { FactoryGirl.create(:transfer) }
+  let(:transfer) { FactoryGirl.create(:wallet_transfer) }
 
   describe '#initialize' do
     it 'can be initialize with transferer transferee and amount' do
