@@ -69,11 +69,69 @@ describe 'withdraw from wallet', type: :feature do
   end
 
   context 'withdraw to Alipay' do
-    context 'with valid condition' do
+    before do
+      customer.update(settings: { alipay_account: 'user@alipay.com' })
+      customer.wallet.update(balance: 150.to_money, withdrawable: 150.to_money)
     end
 
-    context 'with invalid condition' do
+    it 'can create alipay withdraw' do
+      visit wallet_path(customer)
+      click_on 'New Withdraw'
+      fill_in 'amount', with: '50'
+      click_on 'Submit Withdraw'
+
+      expect(page).to have_content('Amount ¥50')
+      expect(page).to have_content('Current Status Pending')
+      expect(page).to have_content('Withdraw To Alipay')
+      expect(page).to have_content(customer.alipay_account)
+    end
+
+    it 'lets admin process alipay withdraw automatically' do
+      visit wallet_path(customer)
+      click_on 'New Withdraw'
+      fill_in 'amount', with: '50'
+      click_on 'Submit Withdraw'
+
+      stub_request(:post, "https://openapi.alipaydev.com/gateway.do").
+        to_return(body: {
+          alipay_fund_trans_toaccount_transfer_response: {
+            code: '10000',
+            out_biz_no: Transfer.last.id,
+            order_id: '1234567890'
+          }
+        }.to_json, status: 200)
+
+      feature_signin_as admin
+      click_on 'Transfers'
+      click_on 'Detail'
+      click_on 'Approve Transfer'
+      click_on 'Automatic Transfer'
+      expect(page).to have_content('Status Success')
+
+      feature_signin_as customer
+      visit wallet_path(customer)
+      click_on 'Withdraw List'
+      click_on "#{Transfer.last.id}"
+      expect(page).to have_content('Current Status Success')
+    end
+
+    it 'lets admin process aliapy withdraw manually' do
+      visit wallet_path(customer)
+      click_on 'New Withdraw'
+      fill_in 'amount', with: '50'
+      click_on 'Submit Withdraw'
+      feature_signin_as admin
+      click_on 'Transfers'
+      click_on 'Detail'
+      click_on 'Approve Transfer'
+      click_on 'Manual Transfer'
+      expect(page).to have_content('Status Success')
+
+      feature_signin_as customer
+      visit wallet_path(customer)
+      click_on 'Withdraw List'
+      click_on "#{Transfer.last.id}"
+      expect(page).to have_content('Current Status Success')
     end
   end
-
 end
