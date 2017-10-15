@@ -1,15 +1,10 @@
-<div class="d-flex justify-content-between">
-  <div id="transactions">
-    <%= link_to 'All Transactions', show_transactions_wallet_path(@wallet),
-                                    class: 'btn btn-light' %>
-    <%= link_to 'Transfer Ins', show_transfer_ins_wallet_path(@wallet),
-                                class: 'btn btn-light' %>
-    <%= link_to 'Transfer Outs', show_transfer_outs_wallet_path(@wallet),
-                                 class: 'btn btn-light' %>
-  </div>
-  <div id="withdraw">
-    <%= link_to 'New Withdraw', new_withdraw_wallet_path, class: 'btn btn-light' %>
-    <%= link_to 'Withdraw List', show_withdraws_wallet_path,
-                                   class: 'btn btn-light' %>
+<div class="row">
+  <div class="col-lg-12">
+    <%= link_to new_withdraw_wallet_path, class: 'btn btn-light' do %>
+      <i class="fa fa-plus-circle" aria-hidden="true"></i> New Withdraw
+    <% end %>
+    <%= link_to show_withdraws_wallet_path, class: 'btn btn-light' do %>
+      <i class="fa fa-list" aria-hidden="true"></i> Withdraw List
+    <% end %>
   </div>
 </div>
