@@ -84,6 +84,36 @@ RSpec.describe Admin::TransfersController, type: :controller do
     end
   end
 
+  describe 'PATCH manual_approve_alipay' do
+    context 'with valid conditions' do
+      before do
+        alipay_transfer.transferer.wallet.update(pending: 100.to_money)
+        Transaction.create(
+          amount: 100.to_money,
+          transactable: alipay_transfer,
+          originable: alipay_transfer.fund_source,
+          processable: alipay_transfer.fund_source,
+          note: "PENDING: Withdraw to bank account."
+        )
+      end
+
+      it 'displays success flash and redirect to show on success transfer' do
+        patch :manual_approve_alipay, params: { id: alipay_transfer }
+        expect(flash[:success]).to be_present
+        expect(response).to redirect_to(admin_transfer_path(alipay_transfer))
+      end
+    end
+
+    context 'with invalid conditions' do
+      it 'displays warning flash and redirect to show on failure' do
+        patch :manual_approve_alipay, params: { id: alipay_transfer }
+        expect(flash[:warning]).to be_present
+        expect(response).to redirect_to(admin_transfer_path(alipay_transfer))
+      end
+    end
+  end
+
+
   describe 'PATCH reject' do
     context 'with valid conditions' do
       before do

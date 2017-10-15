@@ -19,6 +19,15 @@ class Admin::TransfersController < Admin::AdminController
     redirect_to admin_transfer_path(@transfer)
   end
 
+  def manual_approve_alipay
+    if @transfer_service.manual_alipay_transfer
+      flash[:success] = "Transfer approved!"
+    else
+      flash[:warning] = "Transfer fail."
+    end
+    redirect_to admin_transfer_path(@transfer)
+  end
+
   def reject
     if @transfer_service.cancel_transfer
       flash[:success] = "Transfer cancelled."

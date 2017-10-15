@@ -115,6 +115,7 @@ Rails.application.routes.draw do
     resources :transfers, only: [:index, :show] do                  # Transfers
       member do
         patch :approve
+        patch :manual_approve_alipay
         patch :reject
       end
     end

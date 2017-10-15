@@ -129,11 +129,18 @@ class TransferService
   end
 
   def manual_alipay_transfer
-    @transfer.fund_source.withdraw(@amount)
-    @transfer.success!
-    @transfer.transaction_log.update(
-      note: 'SUCCESS: Withdrawn to Alipay account.'
-    )
+    begin
+      Transfer.transaction do
+        @transfer.fund_source.withdraw(@amount)
+        @transfer.transaction_log.update(
+          note: "SUCCESS: Withdrawn to bank account."
+        )
+        @transfer.success!
+        true
+      end
+    rescue Exception
+      false
+    end
   end
 
   def cancel_transfer
