@@ -31,17 +31,29 @@
             <th scope="row">Withdraw To</th>
             <td><%= @transfer.processor.titleize %></td>
           </tr>
+          <% if @transfer.bank? %>
+            <tr>
+              <th scope="row">Bank Name</th>
+              <td><%= @transfer.transferee.bank_name %></td>
+            </tr>
+            <tr>
+              <th scope="row">Bank Branch</th>
+              <td><%= @transfer.transferee.bank_branch %></td>
+            </tr>
+            <tr>
+              <th scope="row">Bank Account</th>
+              <td><%= @transfer.transferee.bank_account %></td>
+            </tr>
+          <% end %>
+          <% if @transfer.alipay? %>
+            <tr>
+              <th scope="row">Alipay Account</th>
+              <td><%= @transfer.transferee.alipay_account %></td>
+            </tr>
+          <% end %>
           <tr>
-            <th scope="row">Bank Name</th>
-            <td><%= @transfer.transferee.bank_name %></td>
-          </tr>
-          <tr>
-            <th scope="row">Bank Branch</th>
-            <td><%= @transfer.transferee.bank_branch %></td>
-          </tr>
-          <tr>
-            <th scope="row">Bank Account</th>
-            <td><%= @transfer.transferee.bank_account %></td>
+            <th scope="row">Last Update:</th>
+            <td><%= time_ago_in_words @transfer.updated_at %></td>
           </tr>
         </tbody>
       </table>
