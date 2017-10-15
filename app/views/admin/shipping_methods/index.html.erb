@@ -1,13 +1,13 @@
 <%= provide :title, 'Shipping Methods' %>
 
-<div class="d-flex justify-content-start mb-3">
-  <div class="p-2">
+<div class="d-flex justify-content-start mb-3 mt-3">
+  <div>
     <%= link_to new_admin_shipping_method_path, class: "btn btn-primary" do %>
       <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
       New Shipping Method
     <% end %>
   </div>
-  <div class="p-2">
+  <div class="ml-2">
     <%= link_to admin_geos_path, class: "btn btn-success" do %>
       <i class="fa fa-globe fa-lg" aria-hidden="true"></i>
       Geo Data Reference

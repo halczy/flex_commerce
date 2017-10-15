@@ -1,12 +1,12 @@
 <%= provide :title, 'Shipping Method' %>
 
-<div class="d-flex justify-content-start mb-3">
-  <div class="p-2">
+<div class="d-flex justify-content-start mb-3 mt-3">
+  <div>
     <%= link_to admin_shipping_methods_path, class: 'btn btn-secondary' do %>
       <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
     <% end %>
   </div>
-  <div class="p-2">
+  <div class="ml-2">
     <%= link_to edit_admin_shipping_method_path(@shipping_method),
                 class: 'btn btn-warning' do %>
       <i class="fa fa-edit" aria-hidden="true"></i> Edit Shipping Method

@@ -1,13 +1,13 @@
 <%= provide :title, 'Categories' %>
 
-<div class="d-flex justify-content-start mb-3">
-  <div class="p-2">
+<div class="d-flex justify-content-start mb-3 mt-3">
+  <div>
     <%= link_to new_admin_category_path(regular: true), class: "btn btn-primary" do %>
       <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
       New Regular Category
     <% end %>
   </div>
-  <div class="p-2">
+  <div class="ml-2">
     <%= link_to new_admin_category_path(brand: true), class: "btn btn-primary" do %>
       <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
       New Brand Category

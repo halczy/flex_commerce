@@ -1,12 +1,12 @@
 <%= provide :title, 'Geo Data Serach' %>
 
-<div class="d-flex justify-content-start mb-3">
-  <div class="p-2">
+<div class="d-flex justify-content-start mb-3 mt-3">
+  <div>
     <%= link_to admin_geos_path, class: 'btn btn-info' do %>
       <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
     <% end %>
   </div>
-  <div class="ml-auto p-2">
+  <div class="ml-auto">
     <%= render 'search_form' %>
   </div>
 </div>

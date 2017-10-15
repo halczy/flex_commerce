@@ -1,9 +1,11 @@
 <%= provide :title, 'Reward Methods' %>
 
-<div class="d-flex justify-content-start mb-3">
+<div class="d-flex justify-content-start mb-3 mt-3">
   <div>
-    <%= link_to 'New Reward Methods', new_admin_reward_method_path,
-                                      class: 'btn btn-primary' %>
+    <%= link_to new_admin_reward_method_path, class: "btn btn-primary" do %>
+      <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+      New Reward Methods
+    <% end %>
   </div>
 </div>
 
