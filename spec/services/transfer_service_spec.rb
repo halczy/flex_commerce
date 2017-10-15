@@ -56,7 +56,19 @@ RSpec.describe TransferService, type: :model do
         expect(Transfer.first.pending?).to be_truthy
       end
 
-      it 'withhold funds upon bank transfer creation' do
+      it 'returns true if an alipay transfer is created' do
+        cstm = FactoryGirl.create(:wealthy_customer)
+        ts = TransferService.new(
+          transferer_id: cstm.id,
+          transferee_id: cstm.id,
+          processor: 'alipay',
+          amount: '300'
+        )
+        expect(ts.create).to be_truthy
+        expect(Transfer.first.pending?).to be_truthy
+      end
+
+      it 'withhold funds upon external transfer creation' do
         cstm = FactoryGirl.create(:wealthy_customer)
         ts = TransferService.new(
           transferer_id: cstm.id,
@@ -71,12 +83,12 @@ RSpec.describe TransferService, type: :model do
         expect(cstm.wallet.reload.pending).to eq('300'.to_money)
       end
 
-      it 'creates transaction upon bank transfer creation' do
+      it 'creates transaction upon external transfer creation' do
         cstm = FactoryGirl.create(:wealthy_customer)
         ts = TransferService.new(
           transferer_id: cstm.id,
           transferee_id: cstm.id,
-          processor: 'bank',
+          processor: 'alipay',
           amount: '300'
         )
         expect { ts.create }.to change(Transaction, :count).by(1)

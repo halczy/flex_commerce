@@ -14,13 +14,15 @@ class TransferService
   def create(fund_source: nil, fund_target: nil)
     case @processor
     when 'wallet'
-      create_wallet_transfer(fund_source: fund_source, fund_target: fund_target)
+      create_internal_transfer(fund_source: fund_source, fund_target: fund_target)
     when 'bank'
-      create_bank_transfer
+      create_external_transfer
+    when 'alipay'
+      create_external_transfer
     end
   end
 
-  def create_wallet_transfer(fund_source: nil, fund_target: nil)
+  def create_internal_transfer(fund_source: nil, fund_target: nil)
     begin
       Transfer.transaction do
         @transfer = Transfer.create(
@@ -31,7 +33,7 @@ class TransferService
           fund_source: (fund_source || @transferer.wallet),
           fund_target: (fund_target || @transferee.wallet)
         )
-        validate_wallet_transferee
+        validate_internal_transferee
         validate_funding
         true
       end
@@ -40,17 +42,17 @@ class TransferService
     end
   end
 
-  def create_bank_transfer
+  def create_external_transfer
     begin
       Transfer.transaction do
         @transfer = Transfer.create(
           transferer: @transferer,
           transferee: @transferee,
           amount: @amount,
-          processor: 'bank',
+          processor: @processor,
           fund_source: @transferer.wallet
         )
-        validate_bank_transferee
+        validate_external_transferee
         validate_funding
         withhold_fund
         true
@@ -70,7 +72,7 @@ class TransferService
   def wallet_transfer
     begin
       Transfer.transaction do
-        validate_wallet_transferee
+        validate_internal_transferee
         validate_funding
         @transfer.fund_source.debit(@transfer.amount)
         @transfer.fund_target.credit(@transfer.amount)
@@ -121,13 +123,13 @@ class TransferService
 
   private
 
-    def validate_wallet_transferee
+    def validate_internal_transferee
       if @transfer.transferer == @transfer.transferee
         raise(StandardError, 'Cannot transfer fund to your own account.')
       end
     end
 
-    def validate_bank_transferee
+    def validate_external_transferee
       if @transfer.transferer != @transfer.transferee
         raise(StandardError, 'You cannot transfer to other customer.')
       end
