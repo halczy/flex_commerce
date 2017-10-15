@@ -1,0 +1,62 @@
+<div class="modal fade" id="approve_<%= @transfer.id %>">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Approve Transfer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <% if @transfer.alipay? %>
+          <p>
+            Please confrim transfer of
+            <strong><%= humanized_money_with_symbol @transfer.amount %></strong>
+            to customer <strong><%= @transfer.transferee.name %></strong>
+            via Alipay
+            <strong><%= @transfer.transferee.alipay_account %></strong>.
+          </p>
+        <% elsif @transfer.bank? %>
+          <p>
+            Please transfer
+            <strong><%= humanized_money_with_symbol @transfer.amount %></strong>
+            to the following bank account. Once completed, click confirm transfer.
+          </p>
+          <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">Name</th>
+                <td><%= @transfer.transferee.name %></td>
+              </tr>
+              <tr>
+                <th scope="row">Bank Name</th>
+                <td><%= @transfer.transferee.bank_name %></td>
+              </tr>
+              <tr>
+                <th scope="row">Bank Branch</th>
+                <td><%= @transfer.transferee.bank_branch %></td>
+              </tr>
+              <tr>
+                <th scope="row">Bank Account</th>
+                <td><%= @transfer.transferee.bank_account %></td>
+              </tr>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <% if @transfer.alipay? %>
+          <%= button_to 'Automatic Transfer', '#',
+                                                      class: 'btn btn-success' %>
+          <%= button_to 'Manual Transfer', '#',
+                                                      class: 'btn btn-warning' %>
+        <% else %>
+          <%= button_to 'Confirm Transferred', '#', class: 'btn btn-success' %>
+        <% end %>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

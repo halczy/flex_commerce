@@ -1,0 +1,75 @@
+<%= provide :title, 'Transfer Detail' %>
+
+<%= render 'admin/transfers/show/action_control' %>
+
+<div class="row">
+  <div class="col-md">
+    <div class="jumbotron">
+      <h4>Transfer Information</h4>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">ID</th>
+            <td><%= @transfer.id %></td>
+          </tr>
+          <tr>
+            <th scope="row">Amount</th>
+            <td><%= humanized_money_with_symbol @transfer.amount %></td>
+          </tr>
+          <tr>
+            <th scope="row">Processor</th>
+            <td><%= @transfer.processor.titleize %></td>
+          </tr>
+          <tr>
+            <th scope="row">Status</th>
+            <td><%= @transfer.status.titleize %></td>
+          </tr>
+          <tr>
+            <th scope="row">Transferer</th>
+            <td><%= @transfer.transferer.name %></td>
+          </tr>
+          <tr>
+            <th scope="row">Transferee</th>
+            <td><%= @transfer.transferee.name %></td>
+          </tr>
+          <tr>
+            <th scope="row">Processor Response</th>
+            <td><%= @transfer.processor_response %></td>
+          </tr>
+          <tr>
+            <th scope="row">Processor Query Result</th>
+            <td><%= @transfer.processor_query_result %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md">
+    <div class="jumbotron">
+      <h4>Transferee Financial Information</h4>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Alipay Account</th>
+            <td><%= @transfer.transferee.alipay_account %></td>
+          </tr>
+          <tr>
+            <th scope="row">Bank Name</th>
+            <td><%= @transfer.transferee.bank_name %></td>
+          </tr>
+          <tr>
+            <th scope="row">Bank Branch</th>
+            <td><%= @transfer.transferee.bank_branch %></td>
+          </tr>
+          <tr>
+            <th scope="row">Bank Account</th>
+            <td><%= @transfer.transferee.bank_account %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

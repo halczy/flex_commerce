@@ -1,4 +1,5 @@
 class Admin::TransfersController < Admin::AdminController
+  before_action :set_transfer, except: [ :index ]
 
   def index
     filter = params[:filter] || ""
@@ -7,4 +8,11 @@ class Admin::TransfersController < Admin::AdminController
     @transfers = transfers.page params[:page]
   end
 
+  def show; end
+
+  private
+
+    def set_transfer
+      @transfer = Transfer.find(params[:id])
+    end
 end

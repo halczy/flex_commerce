@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-start mb-3 mt-3">
+  <div>
+    <%= link_to admin_transfers_path, class: 'btn btn-secondary' do %>
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+    <% end %>
+  </div>
+  <% if @transfer.pending? %>
+    <div class="ml-2">
+      <%= link_to 'Approve Transfer', '#', class: 'btn btn-success',
+                  data: { toggle: "modal", target: "#approve_#{@transfer.id}"} %>
+    </div>
+    <div class="ml-2">
+      <%= link_to 'Reject Transfer', '#', class: 'btn btn-danger',
+                  data: { toggle: "modal", target: "#reject_#{@transfer.id}"} %>
+    </div>
+  <% end %>
+</div>
+
+<%= render 'admin/transfers/show/approve' %>
+<%= render 'admin/transfers/show/reject' %>
