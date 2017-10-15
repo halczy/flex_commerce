@@ -267,6 +267,11 @@ RSpec.describe TransferService, type: :model do
         expect(@ts.transfer.processor_response).to be_present
       end
 
+      it 'withdraws transfer amount from pending' do
+        @ts.execute_transfer
+        expect(@ts.transferer.wallet.reload.pending).to eq(0)
+      end
+
       it 'updates transfer status and transaction log' do
         @ts.execute_transfer
         expect(@ts.transfer.reload.success?).to be_truthy
@@ -299,7 +304,7 @@ RSpec.describe TransferService, type: :model do
 
       it 'returns withheld fund to transferer' do
         @ts.cancel_transfer
-        expect(@ts.transferer.wallet.pending).to eq(0)
+        expect(@ts.transferer.wallet.reload.pending).to eq(0)
       end
     end
 
@@ -307,6 +312,11 @@ RSpec.describe TransferService, type: :model do
       it 'sets transfer to success status' do
         @ts.manual_alipay_transfer
         expect(@ts.transfer.reload.success?).to be_truthy
+      end
+
+      it 'withdraws transfer amount from pending' do
+        @ts.manual_alipay_transfer
+        expect(@ts.transferer.wallet.reload.pending).to eq(0)
       end
     end
   end

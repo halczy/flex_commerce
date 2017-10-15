@@ -129,6 +129,7 @@ class TransferService
   end
 
   def manual_alipay_transfer
+    @transfer.fund_source.withdraw(@amount)
     @transfer.success!
     @transfer.transaction_log.update(
       note: 'SUCCESS: Withdrawn to Alipay account.'
@@ -220,6 +221,7 @@ class TransferService
          @transfer.processor_response['code'] == '10000' ||
          @transfer.processor_query_result &&
          @transfer.processor_query_result['status'] == 'success'
+        @transfer.fund_source.withdraw(@amount)
         @transfer.success!
         @transfer.transaction_log.update(
           note: 'SUCCESS: Withdrawn to Alipay account.'
