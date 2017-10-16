@@ -35,5 +35,11 @@ module FlexCommerce
 
     # Sidekiq
     config.active_job.queue_adapter = :sidekiq
+
+    # I18n
+    config.i18n.default_locale = "zh-CN"
+    config.i18n.available_locales = ['en-US', 'zh-CN']
+    config.i18n.fallbacks = true
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
   end
 end
