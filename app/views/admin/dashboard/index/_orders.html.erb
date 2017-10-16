@@ -8,12 +8,14 @@
 <% if @pd_confirm_orders.empty? &&
       @pd_shipment_orders.empty? &&
       @pd_pickup_orders.empty? &&
-      @pd_delivery_orders
- %>
-  <div class="row jumbotron">
-    <div class="text-center">
-      No Orders Pending Action
-      <%= link_to 'All Orders', admin_orders_path, class: 'btn btn-info btn-lg' %>
+      @pd_delivery_orders.empty? %>
+  <div class="row">
+    <div class="col-12 jumbotron">
+      <div class="d-flex justify-content-center">
+        <div>
+          <h5 class="mb-3">No Orders Pending Action</h5>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>
