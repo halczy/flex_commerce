@@ -15,6 +15,7 @@ describe 'sign in as customer', type: :feature do
     click_button 'Submit'
 
     expect(page.current_path).to eq(dashboard_path(customer))
+    click_on 'Profile'
     expect(page).to have_content(customer.email)
   end
 
@@ -24,6 +25,7 @@ describe 'sign in as customer', type: :feature do
     click_button 'Submit'
 
     expect(page.current_path).to eq(dashboard_path(customer))
+    click_on 'Profile'
     expect(page).to have_content(customer.cell_number)
   end
 
@@ -33,6 +35,7 @@ describe 'sign in as customer', type: :feature do
     click_button 'Submit'
 
     expect(page.current_path).to eq(dashboard_path(customer))
+    click_on 'Profile'
     expect(page).to have_content(customer.cell_number)
   end
 
@@ -43,6 +46,7 @@ describe 'sign in as customer', type: :feature do
     click_button 'Submit'
 
     expect(page.current_path).to eq(dashboard_path(customer))
+    click_on 'Profile'
     expect(page).to have_content(customer.cell_number)
   end
 
