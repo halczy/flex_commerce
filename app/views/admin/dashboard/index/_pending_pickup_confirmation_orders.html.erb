@@ -1,0 +1,21 @@
+<% @pd_pickup_orders.each do |order|%>
+  <div class="col-md-4">
+    <div class="card bg-light mb-3">
+      <div class="card-header d-flex justify-content-between">
+        <div>Pending Pickup Confirm.</div>
+        <%= link_to 'Confirm Self Pickup', admin_order_path(order),
+                                    class: 'btn btn-info btn-sm' %>
+      </div>
+      <div class="card-body">
+        <div class="mb-2">
+          Customer Name: <%= order.user.name %>
+        </div>
+        <strong>Shipment:</strong>
+        <div>
+          Pickup Readied At:
+          <%= DateTime.parse(order.pickup_readied_at).strftime("%Y/%m/%d") %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

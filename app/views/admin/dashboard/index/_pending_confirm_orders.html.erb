@@ -1,0 +1,25 @@
+<% @pd_confirm_orders.each do |order|%>
+  <div class="col-md-4">
+    <div class="card bg-light mb-3">
+      <div class="card-header d-flex justify-content-between">
+        <div>Pending Confirmation</div>
+        <%= link_to 'Review Order', admin_order_path(order),
+                                    class: 'btn btn-warning btn-sm' %>
+      </div>
+      <div class="card-body">
+        <h5>
+          Amount: <%= humanized_money_with_symbol order.total %>
+        </h5>
+        <div>
+          Status: <%= order.status.titleize %>
+        </div>
+        <div>
+          Customer Name: <%= order.user.name %>
+        </div>
+        <div>
+          Items: <%= order.inventories.count %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

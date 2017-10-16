@@ -1,8 +1,10 @@
 class Admin::DashboardController < Admin::AdminController
 
   def index
-    @to_confirm_orders = Order.payment_success
-    @to_ship_orders = Order.staff_confirmed
+    @pd_confirm_orders = Order.payment_success
+    @pd_shipment_orders = Order.staff_confirmed
+    @pd_pickup_orders = Order.pickup_pending
+    @pd_delivery_orders = Order.shipped
     # PENDING TRANSFER
     # OOS Product
   end

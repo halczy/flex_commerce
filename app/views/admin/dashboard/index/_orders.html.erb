@@ -1,0 +1,19 @@
+<div class="row">
+  <%= render 'admin/dashboard/index/pending_confirm_orders' %>
+  <%= render 'admin/dashboard/index/pending_shipment_orders' %>
+  <%= render 'admin/dashboard/index/pending_pickup_confirmation_orders' %>
+  <%= render 'admin/dashboard/index/pending_delivery_confirmation_orders' %>
+</div>
+
+<% if @pd_confirm_orders.empty? &&
+      @pd_shipment_orders.empty? &&
+      @pd_pickup_orders.empty? &&
+      @pd_delivery_orders
+ %>
+  <div class="row jumbotron">
+    <div class="text-center">
+      No Orders Pending Action
+      <%= link_to 'All Orders', admin_orders_path, class: 'btn btn-info btn-lg' %>
+    </div>
+  </div>
+<% end %>

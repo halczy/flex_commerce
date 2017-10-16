@@ -1,0 +1,30 @@
+<% @pd_shipment_orders.each do |order|%>
+  <div class="col-md-4">
+    <div class="card bg-light mb-3">
+      <div class="card-header d-flex justify-content-between">
+        <div>Pending Shipment</div>
+        <%= link_to 'Ship Order', admin_order_path(order),
+                                  class: 'btn btn-primary btn-sm' %>
+      </div>
+      <div class="card-body">
+        <div class="mb-2">
+          Customer Name: <%= order.user.name %>
+        </div>
+        <strong>Shipment:</strong>
+        <div>
+          <% if get_delivery_method(order).present? %>
+            Require Delivery
+          <% end %>
+        </div>
+        <div>
+          <% if get_self_pickup_method(order).present? %>
+            Request Self Pickup
+          <% end %>
+        </div>
+        <div>
+          Items: <%= order.inventories.count %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
