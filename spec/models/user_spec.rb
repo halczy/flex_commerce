@@ -195,4 +195,61 @@ RSpec.describe User, type: :model do
       expect(user.reload.alipay_account).to eq('abc@123.com')
     end
   end
+
+  describe '#total_spent' do
+    it 'sums up customer payment success orders total' do
+      qo_1 = FactoryGirl.create(:service_order, user: customer, completed: true)
+      qo_2 = FactoryGirl.create(:payment_order, user: customer, success: true)
+      FactoryGirl.create(:order, user: customer)
+      exp_total = qo_1.total + qo_2.total
+      expect(customer.total_spent).to eq(exp_total)
+    end
+  end
+
+  describe '#reward_income' do
+    it 'sums up customer reward amount' do
+      3.times do
+        payment_service = PaymentService.new(
+          order_id: FactoryGirl.create(:service_order, completed: true).id,
+          amount: 150.to_money,
+          user_id: customer.id,
+          variety: 'reward'
+        )
+        payment_service.create
+        payment_service.reward
+      end
+      expect(customer.reward_income).to eq(450.to_money)
+    end
+  end
+
+  describe '#monthly_reward_income' do
+    it 'sums up customer reward amount created this month' do
+      3.times do
+        payment_service = PaymentService.new(
+          order_id: FactoryGirl.create(:service_order, completed: true).id,
+          amount: 150.to_money,
+          user_id: customer.id,
+          variety: 'reward'
+        )
+        payment_service.create
+        payment_service.reward
+      end
+      expect(customer.monthly_reward_income).to eq(450.to_money)
+    end
+  end
+
+  it 'does not sum up reward from a month ago' do
+      3.times do
+        payment_service = PaymentService.new(
+          order_id: FactoryGirl.create(:service_order, completed: true).id,
+          amount: 150.to_money,
+          user_id: customer.id,
+          variety: 'reward'
+        )
+        payment_service.create
+        payment_service.reward
+        payment_service.payment.update(created_at: 1.month.ago)
+      end
+      expect(customer.monthly_reward_income).to eq(450.to_money)
+  end
 end
