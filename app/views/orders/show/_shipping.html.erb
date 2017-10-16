@@ -9,7 +9,7 @@
               <h6>Address: <%= @self_pickup.address.full_address %></h6>
               <h6>Contact Name: <%= @self_pickup.address.recipient %></h6>
               <h6>Contact Number: <%= @self_pickup.address.contact_number %></h6>
-              <div class="mb-2"><strong>Pickup Tracking</strong></div>
+              <div class="mb-2 mt-3"><strong>Pickup Tracking</strong></div>
               <h6>
                 Pickup Readied At:
                 <% if @order.pickup_readied_at %>
@@ -28,7 +28,11 @@
         <% if @delivery.present? %>
           <div class="col-md">
             <div class="jumbotron">
-              <div class="mb-2"><strong>Delivery Tracking</strong></div>
+              <div class="mb-2"><strong>Shipping Address</strong></div>
+              <h6>Address: <%= @order.address.full_address %></h6>
+              <h6>Recipient: <%= @order.address.recipient %></h6>
+              <h6>Contact Number: <%= @order.address.contact_number %></h6>
+              <div class="mb-2 mt-3"><strong>Delivery Tracking</strong></div>
               <h6>Shipping Company: <%= @order.shipping_company %></h6>
               <h6>Tracking Number: <%= @order.tracking_number %></h6>
               <h6>
@@ -37,10 +41,6 @@
                   <%= DateTime.parse(@order.shipped_at).strftime("%Y/%m/%d") %>
                 <% end %>
               </h6>
-              <div class="mb-2"><strong>Shipping Address</strong></div>
-              <h6>Address: <%= @order.address.full_address %></h6>
-              <h6>Recipient: <%= @order.address.recipient %></h6>
-              <h6>Contact Number: <%= @order.address.contact_number %></h6>
             </div>
           </div>
         <% end %>
