@@ -6,7 +6,7 @@ class Admin::DashboardController < Admin::AdminController
     @pd_pickup_orders = Order.pickup_pending
     @pd_delivery_orders = Order.shipped
     @pd_withdraws = Transfer.pending
-    # OOS Product
+    @oos_products = Product.out_of_stock.limit(6)
   end
 
 end

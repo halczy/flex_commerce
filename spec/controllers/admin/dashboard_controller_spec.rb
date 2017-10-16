@@ -44,6 +44,12 @@ RSpec.describe Admin::DashboardController, type: :controller do
       expect(assigns(:pd_withdraws).count).to eq(5)
     end
 
+    it 'contains out of stock products' do
+      2.times { FactoryGirl.create(:product) }
+      get :index
+      expect(assigns(:oos_products).count).to eq(2)
+    end
+
     context 'access control' do
       it 'does not allow non-admin access' do
         signin_as(customer)
