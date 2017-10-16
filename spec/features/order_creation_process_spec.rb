@@ -6,7 +6,7 @@ describe 'customer order creation process', type: :feature do
   before do
     feature_signin_as customer
     @product = FactoryGirl.create(:product, purchase_ready: true)
-    
+
     @s_method = @product.shipping_methods.delivery.first
     s_rate = @s_method.shipping_rates.sample
     @province = Geo.find(s_rate.geo_code)
@@ -148,7 +148,7 @@ describe 'customer order creation process', type: :feature do
         click_on 'Next'
 
         expect(page).to have_content('select an existing address')
-        expect(page).to have_content('errors')
+        expect(page).to have_content('4 error')
       end
     end
   end
