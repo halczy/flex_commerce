@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
+  let(:customer) { FactoryGirl.create(:customer) }
+
   before do
     @user_with_email = User.create(email: 'spec_email@example.com',
                                    password: 'example',
