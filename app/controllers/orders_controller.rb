@@ -131,9 +131,9 @@ class OrdersController < UsersController
 
   def resume
     case @order.status_before_type_cast
-    when 0  then redirect_to(shipping_order_path(@order))
-    when 10 then redirect_to(review_order_path(@order))
-    when 20 then redirect_to(payment_order_path(@order))
+    when 0      then redirect_to(shipping_order_path(@order))
+    when 10     then redirect_to(review_order_path(@order))
+    when 20..50 then redirect_to(payment_order_path(@order))
     end
   end
 

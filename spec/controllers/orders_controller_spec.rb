@@ -14,6 +14,7 @@ RSpec.describe OrdersController, type: :controller do
   let(:order_set)       { FactoryGirl.create(:order, set: true, user: customer) }
   let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true, user: customer) }
   let(:payment_order)   { FactoryGirl.create(:payment_order, user: customer) }
+  let(:p_payment_order) { FactoryGirl.create(:payment_order, user: customer, partial: true) }
 
   let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
                                                              only_pickup: true,
@@ -408,6 +409,11 @@ RSpec.describe OrdersController, type: :controller do
 
     it 'redirects to payment page if order status is comfirmed' do
       get :resume, params: { id: order_confirmed.id }
+      expect(response).to redirect_to(payment_order_path)
+    end
+
+    it 'redirects to payment page if order is in payment process' do
+      get :resume, params: { id: p_payment_order.id }
       expect(response).to redirect_to(payment_order_path)
     end
   end
