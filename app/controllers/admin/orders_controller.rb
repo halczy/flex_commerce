@@ -19,7 +19,10 @@ class Admin::OrdersController < Admin::AdminController
     end
   end
 
-  def show; end
+  def show
+    @self_pickup = helpers.get_self_pickup_method(@order)
+    @delivery = helpers.get_delivery_method(@order)
+  end
 
   def confirm
     if @order_service.staff_confirm
