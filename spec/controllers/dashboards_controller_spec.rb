@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe DashboardsController, type: :controller do
 
-
   let(:customer) { FactoryGirl.create(:customer) }
-
 
   describe 'GET show' do
     before { signin_as(customer) }

@@ -1,0 +1,20 @@
+<% @creation_process_orders.each do |order|%>
+  <div class="col-md-6">
+    <div class="card bg-light mb-3">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div>Unfinished Order</div>
+        <%= link_to 'Resume', resume_order_path(order),
+                              class: 'btn btn-warning btn-sm' %>
+      </div>
+      <div class="card-body">
+        <ul>
+        <% order.products.each do |product| %>
+          <li>
+            <%= product.name %> x<%= order.inventories_by(product).count %>
+          </li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>

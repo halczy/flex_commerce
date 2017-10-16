@@ -1,0 +1,19 @@
+<div class="row">
+  <%= render 'dashboards/show/payment_process_orders' %>
+  <%= render 'dashboards/show/creation_process_orders' %>
+  <%= render 'dashboards/show/shipment_orders' %>
+</div>
+
+<% if @creation_process_orders.empty? &&
+      @payment_process_orders.empty? &&
+      @shipment_orders.empty? %>
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-center">
+        <div>
+          <h5 class="mb-3 mt-5">No Items That Require Your Attention</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

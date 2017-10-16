@@ -1,0 +1,37 @@
+<div class="card-deck">
+  <div class="card text-white bg-success mb-3">
+    <div class="card-body">
+      <div class="d-md-flex justify-content-between">
+        <div class="ml-3">
+          <div class="row">
+            <h4>Orders</h4>
+          </div>
+          <div class="row">
+            <h4><%= @user.orders.count %></h4>
+          </div>
+        </div>
+        <div>
+          <i class="fa fa-file-text fa-4x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card text-white bg-info mb-3">
+    <div class="card-body" data-toggle="tooltip" data-placement="top"
+         title="Pending: <%= humanized_money_with_symbol @wallet.pending %>">
+      <div class="d-md-flex justify-content-between">
+        <div class="ml-3">
+          <div class="row">
+            <h4>Balance</h4>
+          </div>
+          <div class="row">
+            <h4><%= humanized_money_with_symbol @wallet.balance %></h4>
+          </div>
+        </div>
+        <div>
+          <i class="fa fa-money fa-4x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
