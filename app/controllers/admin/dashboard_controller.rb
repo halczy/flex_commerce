@@ -5,7 +5,7 @@ class Admin::DashboardController < Admin::AdminController
     @pd_shipment_orders = Order.staff_confirmed
     @pd_pickup_orders = Order.pickup_pending
     @pd_delivery_orders = Order.shipped
-    # PENDING TRANSFER
+    @pd_withdraws = Transfer.pending
     # OOS Product
   end
 

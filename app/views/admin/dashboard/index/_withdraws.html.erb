@@ -1,0 +1,39 @@
+<div class="row">
+  <% @pd_withdraws.each do |transfer|%>
+    <div class="col-md-4">
+      <div class="card bg-light mb-3">
+        <div class="card-header d-flex justify-content-between">
+          <div>Pending Withdraw</div>
+          <%= link_to 'Review Withdraw', admin_transfer_path(transfer),
+                                         class: 'btn btn-warning btn-sm' %>
+        </div>
+        <div class="card-body">
+          <div>
+            Customer Name:
+            <%= transfer.transferer.name %>
+          </div>
+          <div>
+            Amount:
+            <%= humanized_money_with_symbol transfer.amount %>
+          </div>
+          <div>
+            Processor:
+            <%= transfer.processor.titleize %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<% if @pd_withdraws.empty? %>
+  <div class="row">
+    <div class="col-12 jumbotron">
+      <div class="d-flex justify-content-center">
+        <div>
+          <h5 class="mb-3">No Transfers Pending Action</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -5,12 +5,6 @@ RSpec.describe Admin::DashboardController, type: :controller do
   let(:admin) { FactoryGirl.create(:admin) }
   let(:customer) { FactoryGirl.create(:customer) }
 
-  # Orders
-  let(:payment_success_order)   { FactoryGirl.create(:payment_order, success: true) }
-  let(:service_order)           { FactoryGirl.create(:service_order) }
-  let(:service_order_ppending)  { FactoryGirl.create(:service_order, pickup_pending: true) }
-  let(:service_order_shipped)   { FactoryGirl.create(:service_order, shipped: true) }
-
   before { signin_as admin }
 
   describe 'GET index' do
@@ -41,6 +35,13 @@ RSpec.describe Admin::DashboardController, type: :controller do
       4.times { FactoryGirl.create(:service_order, shipped: true) }
       get :index
       expect(assigns(:pd_delivery_orders).count).to eq(4)
+    end
+
+    it 'contains pending withdraw transfers' do
+      2.times { FactoryGirl.create(:bank_transfer, status: 1) }
+      3.times { FactoryGirl.create(:alipay_transfer, status: 1) }
+      get :index
+      expect(assigns(:pd_withdraws).count).to eq(5)
     end
 
     context 'access control' do
