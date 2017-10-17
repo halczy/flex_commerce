@@ -9,15 +9,16 @@ module ApplicationHelper
   end
 
   def page_title(title = "")
-    application_title = ApplicationConfiguration.
-                          find_by(name: 'application_title').try(:plain) ||
-                        'Flex Commerce'
-
     unless title.empty?
-      "#{title} | #{application_title}"
+      "#{title} | #{app_title}"
     else
-      application_title
+      app_title
     end
+  end
+
+  def app_title
+    ApplicationConfiguration.find_by(name: 'application_title').try(:plain) ||
+    'Flex Commerce'
   end
 
   def admin_controller?(controller)

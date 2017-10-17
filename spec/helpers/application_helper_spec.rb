@@ -21,6 +21,17 @@ RSpec.describe ApplicationHelper, :type => :helper do
     end
   end
 
+  describe '#app_title' do
+    it 'returns value from app configs' do
+      ApplicationConfiguration.create(name: 'application_title', plain: 'Flex Shop')
+      expect(helper.app_title).to eq('Flex Shop')
+    end
+
+    it 'returns default value if app configs does not exist' do
+      expect(helper.app_title).to eq('Flex Commerce')
+    end
+  end
+
   describe '#alert_icon' do
     it 'returns success icon class' do
       expect(helper.alert_icon('success')).to eq('fa-check-circle')

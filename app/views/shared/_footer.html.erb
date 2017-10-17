@@ -1,21 +1,29 @@
-<div class="mt-5">
-  <footer class="text-muted">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <p class="float-left">
-            Copyright © <%= Time.now.year %> Flex Commerce
-          </p>
-          <p class="float-right">
-            <a href="#">Back to top</a>
-          </p>
-        </div>
-        <div class="col-12">
-          <p class="text-muted float-right" style="font-size: 0.8rem;">
-            <%= sprintf('%.3f', (Time.zone.now - @init_time) * 1000) %> ms
-          </p>
-        </div>
+<footer class="text-muted">
+  <div class="container">
+    <div class="d-flex justify-content-between mb-3">
+      <div>
+        <%= Time.now.year %> <%= app_title %>
+      </div>
+      <div>
+        <a href="#">Back to Top</a>
       </div>
     </div>
-  </footer>
-</div>
+    <div class="d-flex justify-content-between mt-3 mb-3">
+      <div>
+        <%= form_with(url: prefer_locale_path, local: true) do |f| %>
+          <%= f.hidden_field :return_back, value: true %>
+          <%= f.select :locale, options_for_select(
+              [['简体中文', 'zh-CN'], ['English', 'en-US']]),
+              { prompt: 'Switch Language / 切换语言' },
+              class: 'form-control form-control-sm',
+              onchange: 'this.form.submit();' %>
+        <% end %>
+      </div>
+      <div>
+        <small>
+          <%= sprintf('%.3f', (Time.zone.now - @init_time) * 1000) %> ms
+        </small>
+      </div>
+    </div>
+  </div>
+</footer>

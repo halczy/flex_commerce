@@ -102,7 +102,7 @@ describe 'shopping cart control', type: :feature do
 
       it 'cannot change quantity field to more than available', js: true do
         fill_in "quantity", with: 999
-        click_on 'Back to top'
+        click_on 'Back to Top'
         expect(page.current_path).to eq(cart_path)
         expect(page).to have_field('quantity', with: 1)
         expect(page).to have_content('does not have enough stock')
