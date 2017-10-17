@@ -1,0 +1,48 @@
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 100;
+  src: font-url('NotoSansSC-Thin.woff2') format('woff2'),
+       font-url('NotoSansSC-Thin.woff') format('woff'),
+       font-url('NotoSansSC-Thin.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 300;
+  src: font-url('NotoSansSC-Light.woff2') format('woff2'),
+       font-url('NotoSansSC-Light.woff') format('woff'),
+       font-url('NotoSansSC-Light.otf') format('opentype');
+}
+@font-face {
+   font-family: 'Noto Sans SC';
+   font-style: normal;
+   font-weight: 400;
+   src: font-url('NotoSansSC-Regular.woff2') format('woff2'),
+        font-url('NotoSansSC-Regular.woff') format('woff'),
+        font-url('NotoSansSC-Regular.otf') format('opentype');
+ }
+@font-face {
+   font-family: 'Noto Sans SC';
+   font-style: normal;
+   font-weight: 500;
+   src: font-url('NotoSansSC-Medium.woff2') format('woff2'),
+        font-url('NotoSansSC-Medium.woff') format('woff'),
+        font-url('NotoSansSC-Medium.otf') format('opentype');
+ }
+@font-face {
+   font-family: 'Noto Sans SC';
+   font-style: normal;
+   font-weight: 700;
+   src: font-url('NotoSansSC-Bold.woff2') format('woff2'),
+        font-url('NotoSansSC-Bold.woff') format('woff'),
+        font-url('NotoSansSC-Bold.otf') format('opentype');
+ }
+@font-face {
+   font-family: 'Noto Sans SC';
+   font-style: normal;
+   font-weight: 900;
+   src: font-url('NotoSansSC-Black.woff2') format('woff2'),
+        font-url('NotoSansSC-Black.woff') format('woff'),
+        font-url('NotoSansSC-Black.otf') format('opentype');
+ }
