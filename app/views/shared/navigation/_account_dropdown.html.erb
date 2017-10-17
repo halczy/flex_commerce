@@ -1,17 +1,17 @@
 <li class="nav-item dropdown">
   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Account
+    <%= t '.account' %>
   </a>
   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-    <%= link_to 'Dashboard', dashboard_path(current_user), class: 'dropdown-item' %>
-    <%= link_to 'Orders', orders_path(current_user), class: 'dropdown-item' %>
-    <%= link_to 'Wallet', wallet_path(current_user), class: 'dropdown-item' %>
+    <%= link_to t('.dashboard'), dashboard_path(current_user), class: 'dropdown-item' %>
+    <%= link_to t('.orders'), orders_path(current_user), class: 'dropdown-item' %>
+    <%= link_to t('.wallet'), wallet_path(current_user), class: 'dropdown-item' %>
     <% if current_user.admin? %>
-      <%= link_to 'Admin Dashboard', admin_dashboard_index_path, class: 'dropdown-item' %>
+      <%= link_to t('.admin_dashboard'), admin_dashboard_index_path, class: 'dropdown-item' %>
     <% end %>
     <div class="dropdown-divider"></div>
-    <%= link_to 'Sign Out', session_path(current_user), method: :delete,
+    <%= link_to t('.sign_out'), session_path(current_user), method: :delete,
                                                         class: 'dropdown-item' %>
   </div>
 </li>

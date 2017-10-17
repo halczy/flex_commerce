@@ -1,0 +1,49 @@
+en-US:
+  shared:
+    product_card:
+      detail: Detail
+      add_to_cart: Add to Cart
+      out_of_stock: Out of Stock
+    no_record:
+      no_record_available: No Record Available
+    header_breadcrumb:
+      home: Home
+    error_messages:
+      errors:
+        one: This form contains 1 error
+        other: This form contains %{count} errors
+    navigation:
+      account_dropdown:
+        account: Account
+        dashboard: Dashboard
+        orders: Orders
+        wallet: Wallets
+        admin_dashboard: Admin Dashboard
+        sign_out: Sign Out
+      menu:
+        brands: Brands
+      signin_signup:
+        sign_up: Sign Up
+        sign_in: Sign In
+      admin:
+        sidebar:
+          dashboard: Dashboard
+          customers: Customers
+          orders: Orders
+          products: Products
+          inventories: Inventories
+          transfers: Transfers
+          categories: Categories
+          images: Images
+          shipping_methods: Shipping Methods
+          reward_methods: Reward Methods
+          app_configs: App Configs
+          front_page: Front Page
+      customer:
+        sidenav:
+          dashboard: Dashboard
+          profile: Profile
+          wallet: Wallet
+          order: Order
+          reward: Reward
+          address: Address

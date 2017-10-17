@@ -12,6 +12,8 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
+
+# JavaScript
 Rails.application.config.assets.precompile += %w(
   product_cart.js trix.js product_form.js trix.css dynamic_address.js
   order_address.js shipping_form.js reward_form.js

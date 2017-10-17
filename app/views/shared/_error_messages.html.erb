@@ -2,7 +2,7 @@
   <div id="error_messages">
     <div class="alert alert-danger">
       <h5 class="alert-heading">
-        This form contains <%= pluralize(object.errors.count, "error") %>.
+        <%= t('.errors', count: object.errors.count) %>
       </h5>
     <ul class="mb-0">
     <% object.errors.full_messages.each do |msg| %>

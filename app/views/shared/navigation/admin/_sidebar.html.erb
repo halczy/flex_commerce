@@ -1,5 +1,5 @@
 <nav class="col-sm-3 col-md-2 d-sm-block sidebar">
-  <h1 class="site-title">Flex Commerce</h1>
+  <h1 class="site-title"><%= app_title %></h1>
   <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">
     <em class="fa fa-bars"></em>
   </a>
@@ -7,7 +7,7 @@
     <li class="nav-item">
       <%= link_to admin_dashboard_index_path,
                   class: "nav-link #{active_controller?('dashboard')}" do %>
-        <em class="fa fa-dashboard fa-fw"></em> Dashboard
+        <em class="fa fa-dashboard fa-fw"></em> <%= t('.dashboard') %>
       <% end %>
     </li>
   </ul>
@@ -15,7 +15,7 @@
     <li class="nav-item">
       <%= link_to admin_customers_path,
                   class: "nav-link #{active_controller?('customers')}" do %>
-        <em class="fa fa-users fa-fw"></em> Customers
+        <em class="fa fa-users fa-fw"></em> <%= t('.customers') %>
       <% end %>
     </li>
   </ul>
@@ -23,25 +23,25 @@
     <li class="nav-item">
       <%= link_to admin_orders_path,
                   class: "nav-link #{active_controller?('orders')}" do %>
-       <em class="fa fa-files-o fa-fw"></em> Orders</a>
+       <em class="fa fa-files-o fa-fw"></em> <%= t('.orders') %>
       <% end %>
     </li>
     <li class="nav-item">
       <%= link_to admin_products_path,
                   class: "nav-link #{active_controller?('products')}" do %>
-       <em class="fa fa-industry fa-fw"></em> Products</a>
+       <em class="fa fa-industry fa-fw"></em> <%= t('.products') %>
       <% end %>
     </li>
     <li class="nav-item">
       <%= link_to admin_inventories_path,
                   class: "nav-link #{active_controller?('inventories')}" do %>
-       <em class="fa fa-archive fa-fw"></em> Inventories</a>
+       <em class="fa fa-archive fa-fw"></em> <%= t('.inventories') %>
       <% end %>
     </li>
     <li class="nav-item">
       <%= link_to admin_transfers_path,
                   class: "nav-link #{active_controller?('transfers')}" do %>
-       <em class="fa fa-money fa-fw"></em> Transfers</a>
+       <em class="fa fa-money fa-fw"></em> <%= t('.transfers') %>
       <% end %>
     </li>
   </ul>
@@ -49,25 +49,25 @@
     <li class="nav-item">
       <%= link_to admin_categories_path,
                   class: "nav-link #{active_controller?('categories')}" do %>
-       <em class="fa fa-list-ul fa-fw"></em> Categories</a>
+       <em class="fa fa-list-ul fa-fw"></em> <%= t('.categories') %>
       <% end %>
     </li>
     <li class="nav-item">
       <%= link_to admin_images_path,
                   class: "nav-link #{active_controller?('images')}" do %>
-       <em class="fa fa-picture-o fa-fw"></em> Images</a>
+       <em class="fa fa-picture-o fa-fw"></em> <%= t('.images') %>
       <% end %>
     </li>
     <li class="nav-item">
       <%= link_to admin_shipping_methods_path,
                   class: "nav-link #{active_controller?('shipping_methods')}" do %>
-       <em class="fa fa-truck fa-fw"></em> Shipping Methods</a>
+       <em class="fa fa-truck fa-fw"></em> <%= t('.shipping_methods') %>
       <% end %>
     </li>
     <li class="nav-item">
       <%= link_to admin_reward_methods_path,
                   class: "nav-link #{active_controller?('reward_methods')}" do %>
-       <em class="fa fa-handshake-o fa-fw"></em> Reward Methods</a>
+       <em class="fa fa-handshake-o fa-fw"></em> <%= t('.reward_methods') %>
       <% end %>
     </li>
   </ul>
@@ -75,11 +75,11 @@
     <li class="nav-item">
       <%= link_to admin_application_configurations_path,
                   class: "nav-link #{active_controller?('application_configurations')}" do %>
-        <em class="fa fa-cogs fa-fw"></em> App Configs
+        <em class="fa fa-cogs fa-fw"></em> <%= t('.app_configs') %>
       <% end %>
     </li>
   </ul>
   <%= link_to root_url, class: 'logout-button hidden-xs-down' do %>
-    <em class="fa fa-arrow-left"></em> Front Page</a>
+    <em class="fa fa-arrow-left"></em> <%= t('.front_page') %>
   <% end %>
 </nav>

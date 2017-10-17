@@ -1,6 +1,6 @@
 <section class="jumbotron">
   <div class="container">
-    <h3>Feature Products</h3>
+    <h3><%= t '.feature_products' %></h3>
     <% unless @feature_products.nil? %>
       <%= render 'feature_products', feature_products: @feature_products,
                                      cache: true %>

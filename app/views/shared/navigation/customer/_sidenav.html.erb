@@ -1,14 +1,14 @@
 <ul class="list-group">
-  <%= link_to 'Dashbaord', dashboard_path(current_user),
+  <%= link_to t('.dashboard'), dashboard_path(current_user),
               class: "list-group-item #{active_controller?('dashboards')}" %>
-  <%= link_to 'Profile', customer_path(current_user),
+  <%= link_to t('.profile'), customer_path(current_user),
               class: "list-group-item #{active_controller?('customers')}" %>
-  <%= link_to 'Wallet', wallet_path(current_user),
+  <%= link_to t('.wallet'), wallet_path(current_user),
               class: "list-group-item #{active_controller?('wallets')}" %>
-  <%= link_to 'Order', orders_path,
+  <%= link_to t('.order'), orders_path,
               class: "list-group-item #{active_controller?('orders')}" %>
-  <%= link_to 'Reward', reward_path(current_user),
+  <%= link_to t('.reward'), reward_path(current_user),
               class: "list-group-item #{active_controller?('rewards')}" %>
-  <%= link_to 'Address', addresses_path,
+  <%= link_to t('.address'), addresses_path,
               class: "list-group-item #{active_controller?('addresses')}" %>
 </ul>

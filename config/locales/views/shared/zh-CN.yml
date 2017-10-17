@@ -1,0 +1,49 @@
+zh-CN:
+  shared:
+    product_card:
+      detail: 商品详情
+      add_to_cart: 加入购物车
+      out_of_stock: 无货
+    no_record:
+      no_record_available: 暂无记录
+    header_breadcrumb:
+      home: 首页
+    error_messages:
+      errors:
+        one: 以下表格有 1 个错误
+        other: 以下表格有 %{count} 个错误
+    navigation:
+      account_dropdown:
+        account: 帐号
+        dashboard: 个人中心
+        orders: 订单
+        wallet: 钱包
+        admin_dashboard: 管理中心
+        sign_out: 登出
+      menu:
+        brands: 品牌
+      signin_signup:
+        sign_up: 注册
+        sign_in: 登录
+      admin:
+        sidebar:
+          dashboard: 控制面板
+          customers: 顾客
+          orders: 订单
+          products: 产品
+          inventories: 库存
+          transfers: 转帐
+          categories: 目录
+          images: 图片
+          shipping_methods: 运输方式
+          reward_methods: 奖励方式
+          app_configs: 设置
+          front_page: 返回前台
+      customer:
+        sidenav:
+          dashboard: 个人中心
+          profile: 帐号信息
+          wallet: 钱包
+          order: 订单
+          reward: 奖励
+          address: 地址
