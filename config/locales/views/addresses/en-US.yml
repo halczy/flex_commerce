@@ -1,0 +1,25 @@
+en-US:
+  addresses:
+    address:
+      contact_number: Contact Number
+      delete_address: Delete Address
+      delete_msg: Please confrim that you want to delete this address.
+      confirm: Confirm
+      close: Close
+    form:
+      recipient_name: Recipient Name
+      contact_number: Contact Number
+      address_name: Address Name (Optional)
+      address: Address
+      save_address: Save Address
+    edit:
+      address: Address
+      edit_address: Edit Address
+    index:
+      addresses: Addresses
+      new_address: New Address
+      no_address: You do not have any address on file.
+      add_address: New Address
+    new:
+      address: Address
+      new_address: New Address

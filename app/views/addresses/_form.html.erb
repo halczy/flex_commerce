@@ -4,15 +4,15 @@
 
   <div class="form-group row">
     <div class="col">
-      <%= f.label :recipient, 'Recipient Name' %>
+      <%= f.label :recipient, t('.recipient_name') %>
       <%= f.text_field :recipient, class: 'form-control' %>
     </div>
     <div class="col">
-      <%= f.label :contact_number, 'Contact Number' %>
+      <%= f.label :contact_number, t('.contact_number') %>
       <%= f.text_field :contact_number, class: 'form-control' %>
     </div>
     <div class="col">
-      <%= f.label :name, 'Address Name (Optional)' %>
+      <%= f.label :name, t('.address_name') %>
       <%= f.text_field :name, class: 'form-control' %>
     </div>
   </div>
@@ -21,7 +21,7 @@
   <div class="form-group">
     <div class="row">
       <div class="col">
-        <%= f.label :province_state, 'Address' %>
+        <%= f.label :province_state, t('.address') %>
       </div>
     </div>
     <div class="row">
@@ -65,7 +65,7 @@
   </div>
 
   <div class="d-flex justify-content-end">
-    <%= f.submit 'Save Address', class: 'btn btn-primary' %>
+    <%= f.submit t('.save_address'), class: 'btn btn-primary' %>
   </div>
 
 <% end %>

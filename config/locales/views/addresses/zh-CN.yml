@@ -1,0 +1,25 @@
+zh-CN:
+  addresses:
+    address:
+      contact_number: 联系电话
+      delete_address: 删除地址
+      delete_msg: 你将删除该地址，请确认。
+      confirm: 确认
+      close: 关闭
+    form:
+      recipient_name: 收件人
+      contact_number: 联系电话
+      address_name: 地址别名（可选）
+      address: 地址
+      save_address: 保存地址
+    edit:
+      address: 地址
+      edit_address: 修改地址
+    index:
+      addresses: 地址
+      new_address: 添加地址
+      no_address: 暂无地址记录
+      add_address: 添加地址
+    new:
+      address: 地址
+      new_address: 添加地址

@@ -12,6 +12,8 @@ zh-CN:
       errors:
         one: 以下表格有 1 个错误
         other: 以下表格有 %{count} 个错误
+    footer:
+      back_to_top: 返回顶部
     navigation:
       account_dropdown:
         account: 帐号
@@ -22,6 +24,8 @@ zh-CN:
         sign_out: 登出
       menu:
         brands: 品牌
+      navbar:
+        home: 首页
       signin_signup:
         sign_up: 注册
         sign_in: 登录

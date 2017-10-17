@@ -12,6 +12,8 @@ en-US:
       errors:
         one: This form contains 1 error
         other: This form contains %{count} errors
+    footer:
+      back_to_top: Back to Top
     navigation:
       account_dropdown:
         account: Account
@@ -22,6 +24,8 @@ en-US:
         sign_out: Sign Out
       menu:
         brands: Brands
+      navbar:
+        home: Home
       signin_signup:
         sign_up: Sign Up
         sign_in: Sign In

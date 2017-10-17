@@ -1,4 +1,4 @@
-<%= provide :title, 'Addresses' %>
+<%= provide :title, t('.addresses') %>
 
 <%= render 'shared/header_breadcrumb', title: yield(:title) %>
 
@@ -12,9 +12,9 @@
       <div class="card">
         <div class="card-header">
           <div class="d-flex justify-content-between">
-            Addresses
+            <%= t('.addresses') %>
             <%= link_to new_address_path, class: 'btn btn-sm btn-info' do %>
-                <i class="fa fa-plus-square" aria-hidden="true"></i> New Address
+                <i class="fa fa-plus-square" aria-hidden="true"></i> <%= t('.new_address') %>
             <% end %>
           </div>
         </div>
@@ -28,10 +28,10 @@
           <% else %>
             <div class="jumbotron">
               <div class="h3 text-center">
-                You don't have any address on file.
+                <%= t('.no_address') %>
               </div>
               <div class="text-center m-5">
-                <%= link_to 'New Address', new_address_path, class: 'btn btn-info' %>
+                <%= link_to t('.new_address'), new_address_path, class: 'btn btn-info' %>
               </div>
             </div>
           <% end %>
