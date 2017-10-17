@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   get    'index',             to: 'home#index'
   get    'signup',            to: 'customers#new'
+  get    'customers',         to: 'customers#new'
   get    'signin',            to: 'sessions#new'
+  get    'sessions',          to: 'sessions#new'
   get    'cart',              to: 'carts#show'
   patch  'cart',              to: 'carts#update'
   post   'cart/add',          to: 'carts#add',                 as: :add_to_cart
