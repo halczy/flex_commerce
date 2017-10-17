@@ -4,8 +4,9 @@ class ApplicationController < ActionController::Base
   # Rescue
   # rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
-  # Filter
+  # Callbacks
   before_action :page_speed
+  before_action :set_locale
 
   def render_404
    respond_to do |format|
@@ -42,4 +43,14 @@ class ApplicationController < ActionController::Base
   def page_speed
     @init_time = Time.zone.now
   end
+
+  private
+
+    def set_locale
+      begin
+        I18n.locale = params[:locale] || current_locale
+      rescue Exception
+        I18n.locale = I18n.default_locale
+      end
+    end
 end
