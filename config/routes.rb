@@ -1,14 +1,16 @@
 Rails.application.routes.draw do
   root 'home#index'
 
-  get    'index',         to: 'home#index'
-  get    'signup',        to: 'customers#new'
-  get    'signin',        to: 'sessions#new'
-  get    'cart',          to: 'carts#show'
-  patch  'cart',          to: 'carts#update'
-  post   'cart/add',      to: 'carts#add',              as: :add_to_cart
-  delete 'cart/remove',   to: 'carts#remove',           as: :remove_from_cart
-  get    'r/:id',         to: 'referrals#set_referral', as: :set_referral
+  get    'index',             to: 'home#index'
+  get    'signup',            to: 'customers#new'
+  get    'signin',            to: 'sessions#new'
+  get    'cart',              to: 'carts#show'
+  patch  'cart',              to: 'carts#update'
+  post   'cart/add',          to: 'carts#add',                 as: :add_to_cart
+  delete 'cart/remove',       to: 'carts#remove',              as: :remove_from_cart
+  get    'r/:id',             to: 'referrals#set_referral',    as: :set_referral
+  post   'locale_preference', to: 'locale_preference#create',  as: :prefer_locale
+  delete 'locale_preference', to: 'locale_preference#destroy', as: :reset_locale
 
   resources :sessions,   only: [:new, :create, :destroy]
   resources :dashboards, only: [:show]

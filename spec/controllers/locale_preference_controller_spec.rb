@@ -7,7 +7,6 @@ RSpec.describe LocalePreferenceController, type: :controller do
       post :create, params: { locale: 'zh-CN' }
       expect(session[:locale]).to eq('zh-CN')
       expect(cookies[:locale]).to eq('zh-CN')
-      expect(I18n.locale).to eq :'zh-CN'
     end
 
     it 'redirects to back root url without smart return' do
@@ -33,11 +32,6 @@ RSpec.describe LocalePreferenceController, type: :controller do
     it 'clears locale from session' do
       delete :destroy
       expect(session[:locale]).to be_nil
-    end
-
-    it 'clears locale from cookies' do
-      delete :destroy
-      expect(I18n.locale).to eq :'en-US'
     end
 
     it 'redirects back to previous location' do

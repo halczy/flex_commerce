@@ -47,10 +47,6 @@ class ApplicationController < ActionController::Base
   private
 
     def set_locale
-      begin
-        I18n.locale = params[:locale] || current_locale
-      rescue Exception
-        I18n.locale = I18n.default_locale
-      end
+      I18n.locale = helpers.current_locale.try(:to_sym) || I18n.locale = I18n.default_locale
     end
 end
