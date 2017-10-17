@@ -59,5 +59,7 @@ module SessionsHelper
       session.delete(:user_id)
       cookies.delete(:user_id)
       cookies.delete(:remember_token)
+      session.delete(:locale)
+      cookies.delete(:locale)
     end
 end
