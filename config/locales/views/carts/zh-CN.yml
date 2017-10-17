@@ -1,0 +1,20 @@
+zh-CN:
+  carts:
+    action_control:
+      remove: 移除
+      remove_product: 移除产品
+      remove_msg: 请确认您将该商品移除出您的购物车
+      confirm: 确认
+      close: 关闭
+    product:
+      brand: 品牌
+    show:
+      title: 购物车
+      empty_msg: 暂无商品在购物车内
+      product: 产品
+      price: 价格
+      quantity: 数量
+      subtotal: 小记
+      total: 总额
+      checkout: 结帐
+      checkout_msg: 正在结帐...

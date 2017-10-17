@@ -1,0 +1,20 @@
+en-US:
+  carts:
+    action_control:
+      remove: Remove
+      remove_product: Remove Product
+      remove_msg: Please confirm that you want to remove this product from your shopping cart.
+      confirm: Confirm
+      close: Close
+    product:
+      brand: Brand
+    show:
+      title: Shopping Cart
+      empty_msg: Your Shopping Cart Is Empty
+      product: Product
+      price: Price
+      quantity: Quantity
+      subtotal: Subtotal
+      total: Total
+      checkout: Checkout
+      checkout_msg: Checking Out...
