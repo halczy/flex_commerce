@@ -1,0 +1,31 @@
+en-US:
+  customers:
+    edit:
+      title: Edit Profile
+      basic_info: Basic Information
+      cell_number: Cell Number
+      referer: Referer
+      financial_info: Financial Information
+      alipay_account: Alipay Account
+      bank_name: Bank Name
+      bank_branch: Bank Branch
+      bank_account: Bank Account
+      leave_blank: Leave Blank To Leave Unchanged
+      password_confirmation: Password Confirmation
+      update_profile: Update Profile
+    new:
+      title: Sign Up
+      ident: Email / Cell Phone Number
+      password: Password
+      password_confirmation: Password Confirmation
+      referer: Referer (Optional)
+      submit: 'Submit'
+    show:
+      title: Profile
+      email: Email
+      cell_number: Cell Number
+      referer: Referer
+      none: None
+      modify: Modify Profile
+      customer: Customer
+      member_id: Membership ID

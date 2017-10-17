@@ -1,4 +1,4 @@
-<%= provide :title, 'Edit Profile' %>
+<%= provide :title, t('.title') %>
 
 <%= render 'shared/header_breadcrumb', title: yield(:title) %>
 
@@ -17,7 +17,7 @@
 
             <%= render 'shared/error_messages', object: f.object %>
 
-            <h5>Basic Information</h5>
+            <h5><%= t('.basic_info') %></h5>
             <div class="form-group">
               <%= f.label :name %>
               <%= f.text_field :name, class: 'form-control' %>
@@ -25,7 +25,7 @@
 
             <div class="form-group row">
               <div class="col-md">
-                <%= f.label :cell_number, 'Cell Number' %>
+                <%= f.label :cell_number, t('.cell_number') %>
                 <%= f.text_field :cell_number, class: 'form-control' %>
               </div>
 
@@ -37,46 +37,46 @@
 
             <div class="form-group">
               <%= f.label :referer_id,
-                          "Referer #{@customer.try(:referer).try(:name)}" %>
+                          t('.referer') + " #{@customer.try(:referer).try(:name)}" %>
               <%= f.text_field :referer_id, class: 'form-control' %>
             </div>
 
-            <h5>Financial Information</h5>
+            <h5><%= t('.financial_info') %></h5>
             <div class="form-group">
-              <%= f.label :alipay_account, 'Alipay Account' %>
+              <%= f.label :alipay_account, t('.alipay_account') %>
               <%= f.text_field :alipay_account, class: 'form-control' %>
             </div>
 
             <div class="form-group row">
               <div class="col-md">
-                <%= f.label :bank_name, 'Bank Name' %>
+                <%= f.label :bank_name, t('.bank_name') %>
                 <%= f.text_field :bank_name, class: 'form-control' %>
               </div>
 
               <div class="col-md">
-                <%= f.label :bank_branch, 'Bank Branch' %>
+                <%= f.label :bank_branch, t('.bank_branch') %>
                 <%= f.text_field :bank_branch, class: 'form-control' %>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :bank_account, 'Bank Account' %>
+              <%= f.label :bank_account, t('.bank_account') %>
               <%= f.text_field :bank_account, class: 'form-control' %>
             </div>
 
-            <h5>Leave Blank To Leave Unchanged</h5>
+            <h5><%= t('.leave_blank') %></h5>
             <div class="form-group row">
               <div class="col-md">
                 <%= f.label :password %>
                 <%= f.password_field :password, class: 'form-control' %>
               </div>
               <div class="col-md">
-                <%= f.label :password_confirmation, 'Password Confirmation' %>
+                <%= f.label :password_confirmation, t('.password_confirmation') %>
                 <%= f.password_field :password_confirmation, class: 'form-control' %>
               </div>
             </div>
 
-            <%= f.submit 'Update Profile', class: 'btn btn-block btn-primary' %>
+            <%= f.submit t('.update_profile'), class: 'btn btn-block btn-primary' %>
           <% end %>
         </div>
       </div>

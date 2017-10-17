@@ -1,39 +1,39 @@
-<%= provide :title, 'Sign Up' %>
+<%= provide :title, t('.title') %>
 
 <div class="container">
   <div class="row justify-content-lg-center mt-5">
     <div class="col-lg-6">
       <div class="card">
         <div class="card-header text-center">
-          <h4>Sign Up</h4>
+          <h4><%= t('.title') %></h4>
         </div>
         <div class="card-body">
           <%= form_with(model: @customer,  local: true) do |f| %>
             <%= render 'shared/error_messages', object: f.object %>
 
             <div class="form-group">
-              <%= f.text_field :ident, placeholder: 'Email / Cell Phone Number',
+              <%= f.text_field :ident, placeholder: t('.ident'),
                                        class: 'form-control' %>
             </div>
 
             <div class="form-group">
-              <%= f.password_field :password, placeholder: 'Password',
+              <%= f.password_field :password, placeholder: t('.password'),
                                               class: 'form-control' %>
             </div>
 
             <div class="form-group">
               <%= f.password_field :password_confirmation,
-                                   placeholder: 'Password Confirmation',
+                                   placeholder: t('.password_confirmation'),
                                    class: 'form-control' %>
             </div>
 
             <div class="form-group">
-              <%= f.text_field :referer_id, placeholder: 'Referer (Optional)',
+              <%= f.text_field :referer_id, placeholder: t('.referer'),
                                             value: "#{params[:referer_id]}",
                                             class: 'form-control' %>
             </div>
 
-            <%= f.submit 'Submit', class: 'btn btn-block btn-primary' %>
+            <%= f.submit t('.submit'), class: 'btn btn-block btn-primary' %>
           <% end %>
         </div>
       </div>

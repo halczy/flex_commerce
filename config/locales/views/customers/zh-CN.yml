@@ -1,0 +1,31 @@
+zh-CN:
+  customers:
+    edit:
+      title: 修改账户信息
+      basic_info: 基本信息
+      cell_number: 手机号码
+      referer: 推荐人
+      financial_info: 财务信息
+      alipay_account: 支付宝帐号
+      bank_name: 银行名称
+      bank_branch: 银行分行
+      bank_account: 银行账户
+      leave_blank: 无须修改密码请留空
+      password_confirmation: 确认密码
+      update_profile: 更新信息
+    new:
+      title: 注册
+      ident: 手机号码或邮箱地址
+      password: 密码
+      password_confirmation: 确认密码
+      referer: 推荐人 (选填)
+      submit: 提交
+    show:
+      title: 帐号信息
+      email: 邮箱
+      cell_number: 手机号码
+      referer: 推荐人
+      none: 无
+      modify: 修改信息
+      customer: 会员
+      member_id: 会员号
