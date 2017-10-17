@@ -1,0 +1,29 @@
+en-US:
+  dashboards:
+    show:
+      title: Dashboard
+      creation_process_orders:
+        unfinished_order: Unfinished Order
+        resume: Resume
+      orders:
+        no_items: No Items That Require Your Attention
+      payment_process_orders:
+        unpaid_order: Unpaid Order
+        pay: Pay
+        unpaid_amount: Unpaid Amount
+        items: Items
+        order_status: Order Status
+      shipment_orders:
+        order_in_transit: Order in Transit
+        check_detail: Check Detail
+        status: Status
+        pickup_addr: Pickup Address
+        pickup_readied_at: Pickup Readied At
+        processing: Processing
+        tracking_number: Tracking Number
+        pending: Pending
+        shipped_at: Shipped At
+      snapshot:
+        orders: Orders
+        pending: Pending
+        balance: Balance

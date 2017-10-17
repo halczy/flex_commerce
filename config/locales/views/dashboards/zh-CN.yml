@@ -1,0 +1,29 @@
+zh-CN:
+  dashboards:
+    show:
+      title: 个人中心
+      creation_process_orders:
+        unfinished_order: 未完成订单
+        resume: 继续结帐
+      orders:
+        no_items: 无未处理事项
+      payment_process_orders:
+        unpaid_order: 未付款订单
+        pay: 付款
+        unpaid_amount: 待支付金额
+        items: 件数
+        order_status: 订单状态
+      shipment_orders:
+        order_in_transit: 订单在途
+        check_detail: 查看详情
+        status: 状态
+        pickup_addr: 提货地址
+        pickup_readied_at: 提货预备完成
+        processing: 处理中
+        tracking_number: 快递单号
+        pending: 未生成
+        shipped_at: 发货时间
+      snapshot:
+        orders: 订单
+        pending: 冻结金额
+        balance: 余额

@@ -2,8 +2,8 @@
   <div class="col-md-6">
     <div class="card bg-light mb-3">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <div>Unfinished Order</div>
-        <%= link_to 'Resume', resume_order_path(order),
+        <div><%= t('.unfinished_order') %></div>
+        <%= link_to t('.resume'), resume_order_path(order),
                               class: 'btn btn-warning btn-sm' %>
       </div>
       <div class="card-body">

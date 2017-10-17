@@ -2,18 +2,18 @@
   <div class="col-md-6">
     <div class="card bg-light mb-3">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <div>Unpaid Order</div>
-        <%= link_to 'Pay', resume_order_path(order),
+        <div><%= t('.unpaid_order') %></div>
+        <%= link_to t('.pay'), resume_order_path(order),
                            class: 'btn btn-primary btn-sm' %>
       </div>
       <div class="card-body">
         <div class="mb-3">
           <strong>
-            Unpaid Amount: <%= humanized_money_with_symbol order.amount_unpaid %>
+            <%= t('.unpaid_amount') %>: <%= humanized_money_with_symbol order.amount_unpaid %>
           </strong>
         </div>
-        <h6>Items: <%= order.inventories.count %></h6>
-        <h6>Order Status: <%= order.status.titleize %></h6>
+        <h6><%= t('.items') %>: <%= order.inventories.count %></h6>
+        <h6><%= t('.order_status') %>: <%= order.status.titleize %></h6>
       </div>
     </div>
   </div>
