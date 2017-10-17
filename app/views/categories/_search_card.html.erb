@@ -1,27 +1,26 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Search</h4>
-      <%= form_with(url: search_categories_path, 
+    <h4 class="card-title"><%= t('.search') %></h4>
+      <%= form_with(url: search_categories_path,
                     local: true, method: :get) do |form| %>
-        
+
         <div class="input-group">
           <%= form.search_field :search_term, value: "#{params[:search_term]}",
                                               class: 'form-control' %>
           <span class="input-group-btn">
-            <%= form.submit 'Go', class: 'btn btn-secondary' %>
+            <%= form.submit t('.go'), class: 'btn btn-secondary' %>
           </span>
         </div>
-        
+
         <% if @category %>
           <div class="form-check mt-2 mb-0">
             <label class="form-check-label">
               <%= form.hidden_field :category_id, value: @category.id %>
               <%= form.check_box :current_category, class: 'form-check-input' %>
-              Limit to this category
+              <%= t('.limit') %>
             </label>
           </div>
         <% end %>
-
       <% end %>
   </div>
 </div>

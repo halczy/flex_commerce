@@ -1,0 +1,22 @@
+zh-CN:
+  categories:
+    refine_card:
+      categories: 目录
+      brands: 品牌
+    result_stat:
+      result: 搜索结果
+      products:
+        one: 个商品
+        other: 个商品
+      no_product: 无符合商品
+    search_card:
+      search: 搜索
+      go: 提交
+      limit: 仅搜索当前目录
+    sort_card:
+      sort: 排序
+      price_high_to_low: 价钱从高到低
+      price_low_to_high: 价钱从低到高
+    search:
+      search_result: 搜索结果
+      no_record: 无符合条件商品

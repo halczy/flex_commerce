@@ -1,13 +1,13 @@
 <div class="card mt-3">
   <div class="card-body">
-    <h4 class="card-title">Result</h4>
+    <h4 class="card-title"><%= t('.result') %></h4>
     <% if @search_result %>
       <p class="card-text">
-        <%= @search_result.total_count %> 
-        <%= "Product".pluralize(@search_result.count) %> Found
+        <%= @search_result.total_count %>
+        <%= t('.products', count: @search_result.count) %>
       </p>
     <% else %>
-      <p class="card-text">0 Products Found</p>
+      <p class="card-text"><%= t('.no_product') %></p>
     <% end %>
   </div>
 </div>

@@ -1,0 +1,22 @@
+en-US:
+  categories:
+    refine_card:
+      categories: Categories
+      brands: Brands
+    result_stat:
+      result: Result
+      products:
+        one: Product Found
+        other: Products Found
+      no_product: No Product Found
+    search_card:
+      search: Search
+      go: Go
+      limit: Limit to this category
+    sort_card:
+      sort: Sort
+      price_high_to_low: Price from High to Low
+      price_low_to_high: Price from Low to High
+    search:
+      search_result: Search Result
+      no_record: No Matching Product Found

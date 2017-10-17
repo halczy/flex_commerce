@@ -1,4 +1,4 @@
-<%= provide :title, 'Search Result' %>
+<%= provide :title, t('.search_result') %>
 <%= render 'shared/header_breadcrumb', title: yield(:title) %>
 
 <div class="container mt-5">
@@ -20,7 +20,7 @@
       <% else %>
         <div class="col-12">
           <div class="jumbotron">
-            <h5 class="text-center">No Matching Product Found</h5>
+            <h5 class="text-center"><%= t('.no_record') %></h5>
           </div>
         </div>
       <% end %>

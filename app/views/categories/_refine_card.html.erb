@@ -3,9 +3,9 @@
     <div class="card-body">
       <h4 class="card-title">
         <% if @category.regular? %>
-          Categories
+          <%= t('.categories') %>
         <% elsif @category.brand? %>
-          Brands
+          <%= t('.brands') %>
         <% end %>
       </h4>
       <div class="ml-1">

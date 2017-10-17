@@ -1,9 +1,9 @@
 <div class="card mt-3">
   <div class="card-body">
-    <h4 class="card-title">Sort</h4>
+    <h4 class="card-title"><%= t('.sort') %></h4>
     <%= form_with(url: category_path(@category), local: true, method: :get) do |form| %>
       <%= form.select :price_sort, options_for_select([
-        ['Price From High to Low', 'desc'], ['Price From Low to High', 'asc']]),
+        [t('.price_high_to_low'), 'desc'], [t('.price_low_to_high'), 'asc']]),
         { include_blank: true },
         class: 'form-control form-control-sm', onchange: 'this.form.submit();' %>
     <% end %>
