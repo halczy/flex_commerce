@@ -23,6 +23,7 @@ en-US:
         contact_number: Contact Number
         pickup_at: Pickup At
     index:
+      title: Orders
       orders: Orders
       completed: Completed
       pending: Pending Payment

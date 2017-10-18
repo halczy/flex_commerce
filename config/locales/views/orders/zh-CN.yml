@@ -23,6 +23,7 @@ zh-CN:
         contact_number: 联系电话
         pickup_at: 提货地点
     index:
+      title: 订单
       orders: 订单
       completed: 已完成
       pending: 待付款
@@ -80,8 +81,7 @@ zh-CN:
         shipping_method: 送货方式
         next: 下一步
     show:
-      order_success: 成功
-      payment_success: 交易成功
+      order_detail: 订单详情
       action_control:
         resume_order: 继续结帐
         cancel_order: 取消订单        
@@ -118,6 +118,8 @@ zh-CN:
         transaction_id: 流水号
         transacted_at: 产生时间
     success:
+      order_success: 成功
+      payment_success: 交易成功
       nav:
         navigation: 导航
         view_order: 查看订单详情
