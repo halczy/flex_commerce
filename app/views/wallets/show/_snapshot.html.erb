@@ -1,11 +1,11 @@
 <div class="card-deck">
   <div class="card text-white bg-info mb-3">
     <div class="card-body" data-toggle="tooltip" data-placement="top"
-         title="Pending: <%= humanized_money_with_symbol @wallet.pending %>">
+         title="<%= t('.pending') %>: <%= humanized_money_with_symbol @wallet.pending %>">
       <div class="d-md-flex justify-content-between">
         <div class="ml-3">
           <div class="row">
-            <h4>Balance</h4>
+            <h4><%= t('.balance') %></h4>
           </div>
           <div class="row">
             <h4><%= humanized_money_with_symbol @wallet.balance %></h4>
@@ -19,11 +19,11 @@
   </div>
   <div class="card text-white bg-success mb-3">
     <div class="card-body" data-toggle="tooltip" data-placement="top"
-         title="Pending: <%= humanized_money_with_symbol @wallet.pending %>">
+         title="<%= t('.pending') %>: <%= humanized_money_with_symbol @wallet.pending %>">
       <div class="d-md-flex justify-content-between">
         <div class="ml-3">
           <div class="row">
-            <h4>Withdrawable</h4>
+            <h4><%= t('.withdrawable') %></h4>
           </div>
           <div class="row">
             <h4><%= humanized_money_with_symbol @wallet.withdrawable %></h4>

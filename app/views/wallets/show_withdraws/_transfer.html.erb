@@ -1,15 +1,23 @@
 <%= link_to show_withdraw_wallet_path(id: @user.id, transfer_id: transfer.id),
             class: 'list-group-item list-group-item-action flex-column' do %>
   <div class="d-flex justify-content-between">
-    <h6>Amount: <%= humanized_money_with_symbol transfer.amount %></h6>
-    <h6>Status: <%= transfer.status.titleize %></h6>
+    <h6>
+      <%= t('.amount') %>: <%= humanized_money_with_symbol transfer.amount %>
+    </h6>
+    <h6><%= t('.status') %>: <%= transfer.status.titleize %></h6>
   </div>
   <div class="d-flex justify-content-between">
-    <small>Note: <%= transfer.try(:transaction_log).try(:note) %></small>
+    <small>
+      <%= t('.note') %>: <%= transfer.try(:transaction_log).try(:note) %>
+    </small>
     <h6><%= transfer.processor.titleize %></h6>
   </div>
   <div class="d-flex justify-content-between">
-    <small class="text-muted">Transfer ID: <%= transfer.id %></small>
-    <small><%= transfer.created_at.strftime("Transferred at: %Y/%m/%d") %></small>
+    <small class="text-muted">
+      <%= t('.transfer_id') %>: <%= transfer.id %>
+    </small>
+    <small>
+      <%= t('.transferred_at') %>:
+      <%= transfer.created_at.strftime("%Y/%m/%d") %></small>
   </div>
 <% end %>

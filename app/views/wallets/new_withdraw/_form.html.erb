@@ -2,17 +2,17 @@
 
   <div class="form-group row">
     <div class="col-md">
-      <%= f.label :processor, 'Withdraw To' %>
+      <%= f.label :processor, t('.withdraw_to') %>
       <%= f.select :processor, options_for_select(@processors),
                                {}, { class: 'form-control' } %>
     </div>
     <div class="col-md">
-      <%= f.label :amount, 'Amount' %>
+      <%= f.label :amount, t('.amount') %>
       <%= f.number_field :amount, step: :any, class: 'form-control' %>
     </div>
   </div>
 
   <div class="d-flex justify-content-end">
-    <%= f.submit 'Submit Withdraw', class: 'btn btn-primary' %>
+    <%= f.submit t('.submit'), class: 'btn btn-primary' %>
   </div>
 <% end %>

@@ -1,0 +1,77 @@
+zh-CN:
+  wallets:
+    shared:
+      action_return:
+        return: 返回钱包总览
+      transaction:
+        source: 来源
+        amount: 金额
+        note: 备注
+        none: 无记录
+        transaction_id: 流水号 
+        transacted_at: 交易时间
+      transfer:
+        transferer: 转帐人
+        amount: 金额
+        transferee: 收款人
+        transfer_id: 转帐交易号
+        transferred_at: 转帐时间
+    new_withdraw:
+      title: 创建提款申请
+      withdrawable_amount: 可提款金额
+      form: 
+        withdraw_to: 提款到
+        amount: 金额
+        submit: 提交申请
+    show:
+      title: 钱包
+      action_control:
+        new_withdraw: 创建提款单
+        withdraw_list: 提款单列表
+      content:
+        header: 钱包
+        recent_transactions: 近期交易
+        all_transactions: 查看全部交易
+        transfer_ins: 查看入账交易
+        transfer_outs: 查看出帐交易
+      snapshot:
+        balance: 余额
+        withdrawable: 可提款金额
+        pending: 冻结金额
+    show_transactions:
+      title: 钱包交易记录
+      content:
+        transaction_count: 交易记录数量
+    show_transfer_ins:
+      title: 转入交易
+      content:
+        transfer_count: 交易数量
+    show_transfer_outs:
+      title: 转出交易
+      content:
+        transfer_count: 交易数量
+    show_withdraw:
+      title: 提款单
+      content:
+        header: 提款单
+        return: 返回提款单列表
+        detail: 提款详情
+        withdraw_id: 提款转帐号
+        amount: 金额
+        current_status: 当前状态
+        withdraw_to: 转帐到
+        bank_name: 银行名称
+        bank_branch: 银行分行
+        bank_account: 银行帐号
+        alipay_account: 支付宝帐号
+        last_update: 离上次更新时间
+    show_withdraws:
+      title: 提款单列表
+      content:
+        withdraw_count: 提款单数量
+      transfer:
+        amount: 金额
+        status: 状态
+        note: 备注
+        transfer_id: 提款转帐号
+        transferred_at: 交易时间

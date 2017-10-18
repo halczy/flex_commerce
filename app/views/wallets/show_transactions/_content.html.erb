@@ -7,7 +7,7 @@
     <div class="row">
       <%= render 'shared/paginate', objects: @transactions if @transactions.present? %>
       <div class="col-lg-12">
-        <p>Transaction Count: <%= @transactions.total_count %></p>
+        <p><%= t('.transaction_count') %>: <%= @transactions.total_count %></p>
       </div>
       <div class="col-lg-12">
         <%= render 'shared/no_record' if @transactions.empty? %>

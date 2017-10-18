@@ -1,0 +1,77 @@
+en-US:
+  wallets:
+    shared:
+      action_return:
+        return: Return to Wallet Overview
+      transaction:
+        source: Source
+        amount: Amount
+        note: Note
+        none: None
+        transaction_id: Transaction ID 
+        transacted_at: Transacted at
+      transfer:
+        transferer: Transferer
+        amount: Amount
+        transferee: Transferee
+        transfer_id: Transfer ID
+        transferred_at: Transferred at
+    new_withdraw:
+      title: Create Withdraw
+      withdrawable_amount: Withdrawable Amount
+      form: 
+        withdraw_to: Withdraw To
+        amount: Amount
+        submit: Submit Withdraw
+    show:
+      title: Wallet
+      action_control:
+        new_withdraw: New Withdraw
+        withdraw_list: Withdraw List
+      content:
+        header: Wallet
+        recent_transactions: Recent Transactions
+        all_transactions: All Transactions
+        transfer_ins: Transfer Ins
+        transfer_outs: Transfer Outs
+      snapshot:
+        balance: Balance
+        withdrawable: Withdrawable
+        pending: Pending
+    show_transactions:
+      title: Wallet Transactions
+      content:
+        transaction_count: Transaction Count
+    show_transfer_ins:
+      title: Transfer Ins
+      content:
+        transfer_count: Transfer Count
+    show_transfer_outs:
+      title: Transfer Outs
+      content:
+        transfer_count: Transfer Count
+    show_withdraw:
+      title: Withdraw
+      content:
+        header: Withdraw
+        return: Return to Withdraw List
+        detail: Withdraw Detail
+        withdraw_id: Withdraw ID
+        amount: Amount
+        current_status: Current Status
+        withdraw_to: Withdraw To
+        bank_name: Bank Name
+        bank_branch: Bank Branch
+        bank_account: Bank Account
+        alipay_account: Alipay Account
+        last_update: Last Update
+    show_withdraws:
+      title: Withdraws
+      content:
+        withdraw_count: Withdraw Count
+      transfer:
+        amount: Amount
+        status: Status
+        note: Note
+        transfer_id: Transfer ID
+        transferred_at: Transferred at

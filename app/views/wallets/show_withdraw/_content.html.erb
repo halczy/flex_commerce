@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-    Withdraw
+    <%= t('.header') %>
   </div>
   <div class="card-body">
     <div class="row">
@@ -8,51 +8,51 @@
         <div class="mb-3">
           <%= link_to show_withdraws_wallet_path, class: 'btn btn-secondary' do %>
             <i class="fa fa-arrow-left" aria-hidden="true"></i>
-            Return to Withdraw List
+            <%= t('.return') %>
           <% end %>
         </div>
         <div class="jumbotron">
-      <h4 class="mb-3 mt-0">Withdraw Detail</h4>
+      <h4 class="mb-3 mt-0"<%= t('.detail') %></h4>
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">Withdraw ID</th>
+            <th scope="row"><%= t('.withdraw_id') %></th>
             <td><%= @transfer.id %></td>
           </tr>
           <tr>
-            <th scope="row">Amount</th>
+            <th scope="row"><%= t('.amount') %></th>
             <td><%= humanized_money_with_symbol @transfer.amount %></td>
           </tr>
           <tr>
-            <th scope="row">Current Status</th>
+            <th scope="row"><%= t('.current_status') %></th>
             <td><strong><%= @transfer.status.titleize %></strong></td>
           </tr>
           <tr>
-            <th scope="row">Withdraw To</th>
+            <th scope="row"><%= t('.withdraw_to') %></th>
             <td><%= @transfer.processor.titleize %></td>
           </tr>
           <% if @transfer.bank? %>
             <tr>
-              <th scope="row">Bank Name</th>
+              <th scope="row"><%= t('.bank_name') %></th>
               <td><%= @transfer.transferee.bank_name %></td>
             </tr>
             <tr>
-              <th scope="row">Bank Branch</th>
+              <th scope="row"><%= t('.bank_branch') %></th>
               <td><%= @transfer.transferee.bank_branch %></td>
             </tr>
             <tr>
-              <th scope="row">Bank Account</th>
+              <th scope="row"><%= t('.bank_account') %></th>
               <td><%= @transfer.transferee.bank_account %></td>
             </tr>
           <% end %>
           <% if @transfer.alipay? %>
             <tr>
-              <th scope="row">Alipay Account</th>
+              <th scope="row"><%= t('.alipay_account') %></th>
               <td><%= @transfer.transferee.alipay_account %></td>
             </tr>
           <% end %>
           <tr>
-            <th scope="row">Last Update:</th>
+            <th scope="row"><%= t('.last_update') %></th>
             <td><%= time_ago_in_words @transfer.updated_at %></td>
           </tr>
         </tbody>
