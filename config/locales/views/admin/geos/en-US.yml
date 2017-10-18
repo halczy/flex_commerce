@@ -1,0 +1,29 @@
+en-US:
+  admin:
+    geos:
+      index:
+        title: Geographical Data
+        return: Return
+        geo_count: Geo Count
+      filter:
+        no_filter: No Filter
+        country_region: Country/Region
+        province_state: Province/State
+        city: City
+        district: District
+        community: Community
+        filter_geo_data: Filter Geo Data
+      geos:
+        geo_code: Geo Code
+        name: Name
+        parent_code: Parent Code
+        parent_name: Parent Name
+      search_form:
+        search: Search
+        searching: Searching...
+      search:
+        title: Geo Data Search
+        return: Return to List
+        result: Result
+        matching_geo_data: Matching Geo Data
+        no_match: No Matching Geo Data Found

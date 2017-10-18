@@ -1,0 +1,29 @@
+zh-CN:
+  admin:
+    geos:
+      index:
+        title: 地理信息
+        return: 返回
+        geo_count: 地理代码数
+      filter:
+        no_filter: 不筛选
+        country_region: 国家/地区
+        province_state: 省/州
+        city: 城市
+        district: 区
+        community: 社区
+        filter_geo_data: 筛选地理信息
+      geos:
+        geo_code: 代码
+        name: 名称
+        parent_code: 上级代码
+        parent_name: 上级名称
+      search_form:
+        search: 搜索
+        searching: 搜索中...
+      search:
+        title: 搜索结果
+        return: 返回列表
+        result: 结果
+        matching_geo_data: 个符合条件代码
+        no_match: 无符合条件的地理代码

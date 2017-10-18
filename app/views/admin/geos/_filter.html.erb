@@ -1,11 +1,11 @@
 <%= form_with(url: admin_geos_path, local: true, method: :get) do |form| %>
   <%= form.select :geo_filter, options_for_select([
-                  ['No Filter', ''],
-                  ['Country/Region', 'country_region'],
-                  ['Province/State', 'province_state'],
-                  ['City', 'city'],
-                  ['District', 'district'],
-                  ['Community', 'community']]),
-                  { prompt: "Filter Geo Data" },
+                  [t('.no_filter'), ''],
+                  [t('.country_region'), 'country_region'],
+                  [t('.province_state'), 'province_state'],
+                  [t('.city'), 'city'],
+                  [t('.district'), 'district'],
+                  [t('.community'), 'community']]),
+                  { prompt: t('.filter_geo_data') },
                   class: 'form-control', onchange: 'this.form.submit();' %>
 <% end %>
