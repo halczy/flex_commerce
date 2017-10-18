@@ -15,14 +15,14 @@ describe 'shopping cart control', type: :feature do
     it 'returns shopping cart page as guest' do
       visit cart_path
       expect(page).to have_content('Shopping Cart')
-      expect(page).to have_content('EMPTY')
+      expect(page).to have_content('Empty')
     end
 
     it 'returns shopping cart page as customer' do
       feature_signin_as(customer)
       visit cart_path
       expect(page).to have_content('Shopping Cart')
-      expect(page).to have_content('EMPTY')
+      expect(page).to have_content('Empty')
     end
   end
 
@@ -55,7 +55,7 @@ describe 'shopping cart control', type: :feature do
 
       click_on 'Sign Out'
       visit cart_path
-      expect(page).to have_content('EMPTY')
+      expect(page).to have_content('Empty')
       visit product_path(@product)
       click_on 'Add to Cart'          # Add to cart as guest
 
@@ -123,7 +123,7 @@ describe 'shopping cart control', type: :feature do
         click_on 'Confirm'
       end
       expect(page.current_path).to eq(cart_path)
-      expect(page).to have_content('EMPTY')
+      expect(page).to have_content('Empty')
     end
   end
 

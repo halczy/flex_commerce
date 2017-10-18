@@ -57,14 +57,14 @@ describe 'category_grid', type: :feature do
   context 'side card - sort', js: true do
     it 'sorts product prices from low to high' do
       visit(category_path(@cat))
-      select 'Price From Low to High'
+      select 'Price from Low to High'
       expect(page).not_to have_content("Add to Cart #{@product_2.name}")
       expect(page).to have_content("Add to Cart #{@product_1.name}")
     end
 
     it 'sorts product prices from high to low' do
       visit(category_path(@cat))
-      select 'Price From High to Low'
+      select 'Price from High to Low'
       expect(page).not_to have_content("Add to Cart #{@product_1.name}")
       expect(page).to have_content("Add to Cart #{@product_3.name}")
     end

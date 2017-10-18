@@ -7,7 +7,6 @@ describe 'Customer Address CRUD', type: :feature do
   describe 'access to address list' do
     it 'returns address list when signned in' do
       feature_signin_as(customer)
-      click_on 'Dashboard'
       click_on 'Address'
       expect(page.current_path).to eq(addresses_path)
     end
