@@ -1,0 +1,8 @@
+zh-CN:
+  sessions:
+    new:
+      title: 登录
+      ident: 电子邮箱 / 手机号码 / 会员号
+      password: 密码
+      remember_me: 记住我
+      submit: 提交

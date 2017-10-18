@@ -1,0 +1,8 @@
+en-US:
+  sessions:
+    new:
+      title: Sign In
+      ident: Email / Cell Phone Number / Member ID
+      password: password
+      remember_me: Remember Me
+      submit: Submit
