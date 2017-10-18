@@ -3,16 +3,16 @@
 <hr>
 <%= product.introduction.html_safe %>
 <hr>
-<p>Brand: <%= product.categories.brand.first.try(:name) %></p>
-<p>SKU: <%= product.sku %></p>
-<p>Availability: <%= product.inventories.available.count %></p>
+<p><%= t('.brand') %>: <%= product.categories.brand.first.try(:name) %></p>
+<p><%= t('.sku') %>: <%= product.sku %></p>
+<p><%= t('.availability') %>: <%= product.inventories.available.count %></p>
 <hr>
 <p>
-  Market Price:
+  <%= t('.market_price') %>:
   <s><%= humanized_money_with_symbol(product.price_market) %></s>
 </p>
 <p class="font-weight-bold">
-  Member Price:
+  <%= t('.member_price') %>:
   <strong><%= humanized_money_with_symbol(product.price_member) %></strong>
 </p>
 
@@ -34,8 +34,8 @@
   </div>
   <%= form.hidden_field :pid, value: product.id %>
   <% if product.in_stock? %>
-    <%= form.submit 'Add to Cart', class: 'btn btn-primary' %>
+    <%= form.submit t('.add_to_cart'), class: 'btn btn-primary' %>
   <% else %>
-    <%= link_to 'Out of Stock', '#', class: 'btn btn-primary disabled' %>
+    <%= link_to t('.out_of_stock'), '#', class: 'btn btn-primary disabled' %>
   <% end %>
 <% end %>

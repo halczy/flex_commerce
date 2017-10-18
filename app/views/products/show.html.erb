@@ -1,5 +1,5 @@
 <% cache @product do %>
-  <%= provide :title, 'Product Detail' %>
+  <%= provide :title, t('.product_detail') %>
   <%= render 'shared/header_breadcrumb', title: yield(:title),
               breadcrumb: build_product_breadcrumb(@product)%>
 

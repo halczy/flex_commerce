@@ -1,0 +1,15 @@
+zh-CN:
+  products:
+    descriptions:
+      description: 产品描述
+      specification: 产品规格    
+    purchase_info:
+      brand: 品牌
+      sku: 产品代码
+      availability: 库存
+      market_price: 市场价
+      member_price: 会员价
+      add_to_cart: 加入购物车
+      out_of_stock: 无货
+    show: 
+      product_detail: 产品详情

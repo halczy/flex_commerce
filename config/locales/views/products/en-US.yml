@@ -1,0 +1,15 @@
+en-US:
+  products:
+    descriptions:
+      description: Description
+      specification: Specification
+    purchase_info:
+      brand: Brand
+      sku: SKU
+      availability: Availability
+      market_price: Market Price
+      member_price: Member Price
+      add_to_cart: Add to Cart
+      out_of_stock: Out of Stock
+    show:
+      product_detail: Product Detail
