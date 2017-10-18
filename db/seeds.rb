@@ -29,6 +29,8 @@ puts 'SHIPPING METHOD: Clear old shipping method data'
 RewardMethod.delete_all
 puts 'REWARD METHOD: Clear old reward method data'
 
+# I18n
+I18n.locale = :'en-US'
 
 # Application Name
 ApplicationConfiguration.create(name: 'application_title', plain: 'Flex Commerce')
