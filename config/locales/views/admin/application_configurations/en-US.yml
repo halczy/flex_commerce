@@ -1,0 +1,22 @@
+en-US:
+  admin:
+    application_configurations:
+      index:
+        title: Application Configurations
+        name: Name
+        unencrypt_value: Unencrypt Value
+        encrypted_value: Encrypted Value
+        boolean_value: Boolean Value
+        edit: Edit
+      edit:
+        title: Edit Application Configuration
+        unencrypt_value: Unencrypt Value
+        encrypted_value: Encrypted Value
+        boolean_value: Boolean Value
+      action_delete:
+        delete: Delete
+        delete_app_configs: Delete Application Configuration
+        confirm_msg: Please confirm that you want to delete this application configuration.
+        confirm_warning: "Caution: Removing application configuration may cause some functions to stop working."
+        confirm: Confirm
+        close: Clsoe

@@ -1,0 +1,22 @@
+zh-CN:
+  admin:
+    application_configurations:
+      index:
+        title: 程序设置
+        name: 引用名
+        unencrypt_value: 明文值
+        encrypted_value: 加密值
+        boolean_value: 逻辑值
+        edit: 编辑
+      edit:
+        title: 编辑程序设置
+        unencrypt_value: 明文值
+        encrypted_value: 加密值
+        boolean_value: 逻辑值
+      action_delete:
+        delete: 删除
+        delete_app_configs: 删除设置
+        confirm_msg: 点击确认删除该程序设置
+        confirm_warning: "请注意: 删除程序设置有可能导致部分功能失效。请检查后再删除。"
+        confirm: 确认
+        close: 关闭

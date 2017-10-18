@@ -1,12 +1,12 @@
-<%= provide :title, 'Application Configurations' %>
+<%= provide :title, t('.title') %>
 
 <table class="table table-hover borderless">
   <thead class='thead-inverse'>
     <tr>
-      <th>Name</th>
-      <th>Unencrypt Value</th>
-      <th>Encrypted Value</th>
-      <th>Boolean Value</th>
+      <th><%= t('.name') %></th>
+      <th><%= t('.unencrypt_value') %></th>
+      <th><%= t('.encrypted_value') %></th>
+      <th><%= t('.boolean_value') %></th>
       <th colspan='2'></th>
     </tr>
   </thead>
@@ -18,8 +18,9 @@
         <td><%= app_config.value %></td>
         <td><%= app_config.status.try(:titleize) %></td>
         <td>
-          <%= link_to 'Edit', edit_admin_application_configuration_path(app_config),
-                              class: 'btn btn-warning btn-sm' %>
+          <%= link_to t('.edit'), 
+                      edit_admin_application_configuration_path(app_config),
+                      class: 'btn btn-warning btn-sm' %>
         </td>
         <td>
           <%= render 'action_delete', app_config: app_config %>
