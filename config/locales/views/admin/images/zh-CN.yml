@@ -1,0 +1,24 @@
+zh-CN:
+  admin:
+    images:
+      index:
+        images: 图片
+        title: 标题
+        type: 类别
+        image: 图片
+        detail: 详情
+        delete: 删除
+      show:
+        image_detail: 图片详情
+        return: 返回列表
+        image_id: 图片ID
+        source_channel: 来源
+        display_order: 显示次序
+        in_use: 使用中
+        title: 标题
+        description: 描述
+        file_name: 文件名
+        original_file_name: 源文件名
+        file_size: 文件大小
+        file_type: 文件类别
+        storage_location: 保存地址

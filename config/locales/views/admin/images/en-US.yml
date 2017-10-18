@@ -1,0 +1,24 @@
+en-US:
+  admin:
+    images:
+      index:
+        images: Images
+        title: Title
+        type: Type
+        image: Image
+        detail: Detail
+        delete: Delete
+      show:
+        image_detail: Image Detail
+        return: Return to List
+        image_id: Image ID
+        source_channel: Source Channel
+        display_order: Display Order
+        in_use: In Use
+        title: Title
+        description: Description
+        file_name: File Name
+        original_file_name: Original File Name
+        file_size: File Size
+        file_type: File Type
+        storage_location: Storage Location

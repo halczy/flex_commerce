@@ -1,4 +1,4 @@
-<%= provide :title, 'Images' %>
+<%= provide :title, t('.images') %>
 
 <div class="row">
   <div class="col-lg-12">
@@ -6,9 +6,9 @@
     <table class="table table-hover table-responsive">
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Type</th>
-          <th>Image</th>
+          <th><%= t('.title') %></th>
+          <th><%= t('.type') %></th>
+          <th><%= t('.image') %></th>
           <th colspan="3"></th>
         </tr>
       </thead>
@@ -19,11 +19,11 @@
             <td><%= image.imageable_type.try(:capitalize) %></td>
             <td><%= image_tag image.image_url(:thumb), class: 'img-fluid' %></td>
             <td>
-              <%= link_to 'Detail', admin_image_path(image),
-                                    class: 'btn btn-sm btn-info' %>
+              <%= link_to t('.detail'), admin_image_path(image),
+                                        class: 'btn btn-sm btn-info' %>
             </td>
             <td>
-              <%= link_to 'Delete', admin_image_path(image), method: :delete,
+              <%= link_to t('.delete'), admin_image_path(image), method: :delete,
                                     data: { confirm: 'Are you sure?' },
                                     class: 'btn btn-sm btn-danger' %>
             </td>

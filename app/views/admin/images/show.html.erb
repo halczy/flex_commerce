@@ -1,9 +1,9 @@
-<%= provide :title, 'Image Detail' %>
+<%= provide :title, t('.image_detail') %>
 
 <div class="d-flex justify-content-start mb-3 mt-3">
   <div>
     <%= link_to admin_images_path, class: 'btn btn-info' do %>
-      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('.return') %>
     <% end %>
   </div>
 </div>
@@ -19,27 +19,27 @@
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">Image ID</th>
+            <th scope="row"><%= t('.image_id') %></th>
             <td><%= @image.id %></td>
           </tr>
           <tr>
-            <th scope="row">Source Channel</th>
+            <th scope="row"><%= t('.source_channel') %></th>
             <td><%= @image.source_channel %></td>
           </tr>
           <tr>
-            <th scope="row">Display Order</th>
+            <th scope="row"><%= t('.display_order') %></th>
             <td><%= @image.display_order %></td>
           </tr>
           <tr>
-            <th scope="row">In Use</th>
+            <th scope="row"><%= t('.in_use') %></th>
             <td><%= @image.in_use %></td>
           </tr>
           <tr>
-            <th scope="row">Title</th>
+            <th scope="row"><%= t('.title') %></th>
             <td><%= @image.title %></td>
           </tr>
           <tr>
-            <th scope="row">Deescription</th>
+            <th scope="row"><%= t('.description') %></th>
             <td><%= @image.description %></td>
           </tr>
         </tbody>
@@ -54,25 +54,25 @@
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">File Name</th>
+            <th scope="row"><%= t('.file_name') %></th>
             <td><%= @image_data['original']['id'] %></td>
           </tr>
           <tr>
-            <th scope="row">Original File Name</th>
+            <th scope="row"><%= t('.original_file_name') %></th>
             <td><%= @image_data['original']['metadata']['filename'] %></td>
           </tr>
           <tr>
-            <th scope="row">File Size</th>
+            <th scope="row"><%= t('.file_size') %></th>
             <td>
               <%= (@image_data['original']['metadata']['size'] / 1_000_000.0).to_f.round %> MB
             </td>
           </tr>
           <tr>
-            <th scope="row">File Type</th>
+            <th scope="row"><%= t('.file_type') %></th>
             <td><%= @image_data['original']['metadata']['mime_type'] %></td>
           </tr>
           <tr>
-            <th scope="row">Storage Location</th>
+            <th scope="row"><%= t('.storage_location') %></th>
             <td><%= @image_data['original']['storage'] %></td>
           </tr>
         </tbody>
