@@ -1,18 +1,22 @@
 <div class="col">
   <div class="jumbotron">
-    <h5>Customer Wallet</h5>
+    <h5><%= t('.customer_wallet') %></h5>
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">Balance</th>
+            <th scope="row"><%= t('.balance') %></th>
             <td><%= humanized_money_with_symbol @customer.wallet.balance %></td>
           </tr>
           <tr>
-            <th scope='row'>Pending</th>
+            <th scope='row'><%= t('.pending') %></th>
             <td><%= humanized_money_with_symbol @customer.wallet.pending %></td>
           </tr>
           <tr>
-            <th scope='row'>Available Fund</th>
+            <th scope='row'><%= t('.withdrawable') %></th>
+            <td><%= humanized_money_with_symbol @customer.wallet.withdrawable %></td>
+          </tr>          
+          <tr>
+            <th scope='row'><%= t('.available_fund') %></th>
             <td><%= humanized_money_with_symbol @customer.wallet.available_fund %></td>
           </tr>
         </tbody>

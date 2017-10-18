@@ -1,6 +1,6 @@
 <div class="col">
   <div class="jumbotron">
-    <h5>Basic Information</h5>
+    <h5><%= t('.basic_info') %></h5>
       <table class="table">
         <tbody>
           <tr>
@@ -8,19 +8,19 @@
             <td><%= @customer.id %></td>
           </tr>
           <tr>
-            <th scope='row'>Member ID</th>
+            <th scope='row'><%= t('.member_id') %></th>
             <td><%= @customer.member_id %></td>
           </tr>
           <tr>
-            <th scope='row'>Name</th>
+            <th scope='row'><%= t('.name') %></th>
             <td><%= @customer.name %></td>
           </tr>
           <tr>
-            <th scope='row'>Cell Number</th>
+            <th scope='row'><%= t('.cell_number') %></th>
             <td><%= @customer.cell_number %></td>
           </tr>
           <tr>
-            <th scope="row">Email</th>
+            <th scope="row"><%= t('.email') %></th>
             <td><%= @customer.email %></td>
           </tr>
         </tbody>

@@ -1,0 +1,48 @@
+zh-CN:
+  admin:
+    customers:
+      show: 
+        title: 顾客信息
+        return: 返回列表
+        edit: 编辑顾客信息
+        orders: 顾客订单
+        deposit_btn: 账户增值
+        basic:
+          basic_info: 基本信息
+          member_id: 会员号
+          name: 姓名
+          cell_number: 手机号
+          email: 电子邮箱
+        deposit:
+          deposit_to_customer: 增值顾客钱包
+          amount: 金额
+          deposit: 增值
+          close: 关闭
+        wallet:
+          customer_wallet: 顾客钱包
+          balance: 余额
+          pending: 冻结金额
+          withdrawable: 可提款金额
+          available_fund: 可用金额
+      customers:
+        member_id: 会员号
+        name: 姓名
+        cell_number: 手机号码
+        email: 电子邮箱
+        detail: 查看详情
+      search_form:
+        search: 搜索
+        searching: 正在搜索...         
+      edit:
+        title: 编辑顾客信息
+        member_id: 会员号
+        cell_number: 手机号码
+      index:
+        title: 顾客
+        customer_count: 顾客数量
+      search:
+        title: 搜索顾客
+        return: 返回列表
+        result: 结果
+        matching_customers: 位符合条件顾客
+        no_record: 没有符合条件的顾客

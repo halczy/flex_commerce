@@ -1,0 +1,48 @@
+en-US:
+  admin:
+    customers:
+      show: 
+        title: Customer Detail
+        return: Return to List
+        edit: Edit Customer
+        orders: Customer Orders
+        deposit: Deposit Credit
+        basic:
+          basic_info: Basic Information
+          member_id: Member ID
+          name: Name
+          cell_number: Cell Phone Number
+          email: Email
+        deposit:
+          deposit_to_customer: Deposit to Customer Account
+          amount: Amount
+          deposit: Deposit
+          close: Close
+        wallet:
+          customer_wallet: Customer Wallet
+          balance: Balance
+          pending: Pending
+          withdrawable: Withdrawable Fund
+          available_fund: Available Fund
+      customers:
+        member_id: Member ID
+        name: Name
+        cell_number: Cell Phone Number
+        email: Email
+        detail: Detail
+      search_form:
+        search: Search
+        searching: Searching... 
+      edit:
+        title: Edit Customer Detail
+        member_id: Member ID
+        cell_number: Cell Phone Number
+      index:
+        title: Customers
+        customer_count: Customer Count
+      search:
+        title: Customer Search
+        return: Return to List
+        result: Result
+        matching_customers: Matching Customers
+        no_record: No Matching Customer Found
