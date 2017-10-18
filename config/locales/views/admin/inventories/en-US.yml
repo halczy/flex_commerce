@@ -1,0 +1,46 @@
+en-US:
+  admin:
+    inventories:
+      index:
+        title: Inventories
+        count: Inventory Count
+      inventories:
+        status: Status
+        product: Product
+        customer: Customer
+        detail: Detail
+      action_delete:
+        delete: Delete
+        delete_inventory: Delete Inventory
+        confirm_msg: Please confirm that you want to delete this inventory.
+        warning_msg_1: This inventory has a status of
+        warning_msg_2: You cannot delete this inventory.
+        confirm: Confirm
+        close: Close
+      filter:
+        no_filter: No Filter
+        unsold: Unsold
+        in_cart: In Cart
+        in_order: In Order
+        in_checkout: In Checkout
+        sold: Sold
+        returned: Returned
+        filter_inventories: Filter Inventories
+      show:
+        title: Inventory Detail
+        return: Return to List
+        basic: Basic Properties
+        status: Status
+        purchased_at: Purchased At
+        returned_at: Returned At
+        last_update: Last Update
+        created_at: Created At
+        product_info: Product Information
+        product_id: Product ID
+        product_name: Product Name
+        product_price: Product Price
+        purchase_price: Purchase Price
+        product_weight: Product Weight
+        purchase_weight: Purchase Weight
+        customer_info: Customer Information
+        customer_name: Customer Name

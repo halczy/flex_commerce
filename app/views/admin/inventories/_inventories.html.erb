@@ -2,9 +2,9 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Status</th>
-      <th>Product</th>
-      <th>Customer</th>
+      <th><%= t('.status') %></th>
+      <th><%= t('.product') %></th>
+      <th><%= t('.customer') %></th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -14,10 +14,14 @@
       <td><%= link_to inventory.id, admin_inventory_path(inventory) %></td>
       <td><%= inventory.status.titleize %></td>
       <td><%= inventory.product.name %></td>
-      <td>TBI</td>
       <td>
-        <%= link_to 'Detail', admin_inventory_path(inventory),
-                              class: 'btn btn-sm btn-info' %>
+        <% if inventory.user %>
+          <%= link_to inventory.user.name, admin_customer_path(inventory.user) %>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to t('.detail'), admin_inventory_path(inventory),
+                                  class: 'btn btn-sm btn-info' %>
       </td>
       <%= render 'action_delete', inventory: inventory %>
     </tr>

@@ -1,9 +1,9 @@
-<%= provide :title, 'Inventory Detail' %>
+<%= provide :title, t('.title') %>
 
 <div class="d-flex justify-content-start mb-3 mt-3">
   <div>
     <%= link_to admin_inventories_path, class: 'btn btn-secondary' do %>
-      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('.return') %>
     <% end %>
   </div>
 </div>
@@ -11,7 +11,7 @@
 <div class="row">
   <div class="col">
     <div class="jumbotron">
-      <h4 class="mb-3 mt-0">Basic Properties</h4>
+      <h4 class="mb-3 mt-0"><%= t('.basic') %></h4>
       <table class="table">
         <tbody>
           <tr>
@@ -19,23 +19,23 @@
             <td><%= @inventory.id %></td>
           </tr>
           <tr>
-            <th scope="row">Status</th>
+            <th scope="row"><%= t('.status') %></th>
             <td><%= @inventory.status.titleize %></td>
           </tr>
           <tr>
-            <th scope="row">Purchase At</th>
+            <th scope="row"><%= t('.purchased_at') %></th>
             <td><%= @inventory.purchased_at %></td>
           </tr>
           <tr>
-            <th scope="row">Returned At</th>
+            <th scope="row"><%= t('.returned_at') %></th>
             <td><%= @inventory.returned_at %></td>
           </tr>
           <tr>
-            <th scope="row">Last Update</th>
+            <th scope="row"><%= t('.last_update') %></th>
             <td><%= @inventory.updated_at %></td>
           </tr>
           <tr>
-            <th scope="row">Created At</th>
+            <th scope="row"><%= t('.created_at') %></th>
             <td><%= @inventory.created_at %></td>
           </tr>
         </tbody>
@@ -45,40 +45,40 @@
 
   <div class="col">
     <div class="jumbotron">
-      <h4 class="mb-3 mt-0">Product Information</h4>
+      <h4 class="mb-3 mt-0"><%= t('.product_info') %></h4>
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">Product ID</th>
+            <th scope="row"><%= t('.product_id') %></th>
             <td>
               <%= link_to @inventory.product.id,
                           admin_product_path(@inventory.product) %>
             </td>
           </tr>
           <tr>
-            <th scope="row">Product Name</th>
+            <th scope="row"><%= t('.product_name') %></th>
             <td><%= link_to @inventory.product.name, @inventory.product %></td>
           </tr>
           <tr>
-            <th scope="row">Product Price</th>
+            <th scope="row"><%= t('.product_price') %></th>
             <td>
               <%= humanized_money_with_symbol @inventory.product.price_member %>
             </td>
           </tr>
           <tr>
-            <th scope="row">Purchase Price</th>
+            <th scope="row"><%= t('.purchase_price') %></th>
             <td>
               <%= humanized_money_with_symbol @inventory.try(:purchase_price) %>
             </td>
           </tr>
           <tr>
-            <th scope="row">Product Weight</th>
+            <th scope="row"><%= t('.product_weight') %></th>
             <td>
               <%= @inventory.product.weight %>
             </td>
           </tr>
           <tr>
-            <th scope="row">Purchase Weight</th>
+            <th scope="row"><%= t('.purchase_weight') %></th>
             <td>
               <%= @inventory.purchase_weight %>
             </td>
@@ -92,9 +92,13 @@
 <div class="row">
   <div class="col">
     <div class="jumbotron">
-      <h4 class="mb-3 mt-0">Customer Information</h4>
+      <h4 class="mb-3 mt-0"><%= t('.customer_info') %></h4>
       <table class="table">
         <tbody>
+          <tr>
+            <th scope="row"><%= t('.customer_name') %></th>
+            <td><%= @inventory.try(:user).try(:name) %></td>
+          </tr>
         </tbody>
       </table>
     </div>

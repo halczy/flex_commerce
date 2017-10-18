@@ -1,0 +1,46 @@
+zh-CN:
+  admin:
+    inventories:
+      index:
+        title: 库存
+        count: 库存数量
+      inventories:
+        status: 状态
+        product: 产品
+        customer: 顾客
+        detail: 详情
+      action_delete:
+        delete: 删除
+        delete_inventory: 删除库存
+        confirm_msg: 请确认您将删除该库存
+        warning_msg_1: 库存当前状态为
+        warning_msg_2: 你不可以删除该库存.
+        confirm: 确认
+        close: 关闭
+      filter:
+        no_filter: 无筛选
+        unsold: 未售出
+        in_cart: 购物车内
+        in_order: 订单中
+        in_checkout: 结账中
+        sold: 已售出
+        returned: 退货
+        filter_inventories: 筛选库存
+      show:
+        title: 库存详情
+        return: 返回列表
+        basic: 基本属性
+        status: 状态
+        purchased_at: 售出时间
+        returned_at: 退货时间
+        last_update: 上次更新时间
+        created_at: 创建时间
+        product_info: 产品信息
+        product_id: 产品 ID
+        product_name: 产品名
+        product_price: 产品价格
+        purchase_price: 售出价
+        product_weight: 产品重量
+        purchase_weight: 售出重量
+        customer_info: 顾客信息
+        customer_name: 顾客姓名

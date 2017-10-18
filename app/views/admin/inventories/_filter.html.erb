@@ -1,12 +1,12 @@
 <%= form_with(url: admin_inventories_path, local: true, method: :get) do |form| %>
   <%= form.select :status, options_for_select([
-                  ['No Filter', ''],
-                  ['Unsold', 'unsold'],
-                  ['In Cart', 'in_cart'],
-                  ['In Order', 'in_order'],
-                  ['In Checkout', 'in_checkout'],
-                  ['Sold', 'sold'],
-                  ['Returned', 'returned']]),
-                  { prompt: "Filter Inventories" },
+                  [t('.no_filter'), ''],
+                  [t('.unsold'), 'unsold'],
+                  [t('.in_cart'), 'in_cart'],
+                  [t('.in_order'), 'in_order'],
+                  [t('.in_checkout'), 'in_checkout'],
+                  [t('.sold'), 'sold'],
+                  [t('.returned'), 'returned']]),
+                  { prompt: t('.filter_inventories') },
                   class: 'form-control', onchange: 'this.form.submit();' %>
 <% end %>
