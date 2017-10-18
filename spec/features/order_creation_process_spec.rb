@@ -35,7 +35,7 @@ describe 'customer order creation process', type: :feature do
 
       expect(page.current_path).to eq(address_order_path(Order.last))
       expect(page).to have_content('Self Pickup')
-      expect(page).to have_content('Pickup at')
+      expect(page).to have_content('Pickup At')
       expect(page).to have_content('Contact Number')
       expect(page).to have_content(@product.name)
     end

@@ -118,7 +118,7 @@ en-US:
         transacted_at: Transacted at
     success:
       order_success: Success
-      payment_success: Payment Success
+      payment_success: Successful Payment
       nav:
         navigation: Navigation
         view_order: View Order
