@@ -180,7 +180,9 @@ describe 'Shipping Method CRUD', type: :feature do
 
       visit admin_shipping_methods_path
       click_on 'Edit'
+      sleep 1
       click_on 'Remove'
+      sleep 1
       click_on 'Submit'
 
       expect(page.current_path).to eq(admin_shipping_method_path(ShippingMethod.last))
@@ -192,12 +194,12 @@ describe 'Shipping Method CRUD', type: :feature do
     it 'can change self pick up address', js: true do
       province = FactoryGirl.create(:province)
       self_pickup = FactoryGirl.create(:self_pickup_sa)
-      address = FactoryGirl.create(:address, addressable: self_pickup,
-                                             province_state: province,
-                                             country_region: nil,
-                                             city: nil,
-                                             district: nil,
-                                             community: nil)
+      FactoryGirl.create(:address, addressable: self_pickup,
+                                   province_state: province,
+                                   country_region: nil,
+                                   city: nil,
+                                   district: nil,
+                                   community: nil)
       visit admin_shipping_methods_path
       click_on 'Edit'
       fill_in 'shipping_method[address_attributes][recipient]', with: 'New Recipient'
@@ -240,12 +242,12 @@ describe 'Shipping Method CRUD', type: :feature do
       it 'renders error if address is incomplete' do
         province = FactoryGirl.create(:province)
         self_pickup = FactoryGirl.create(:self_pickup)
-        address = FactoryGirl.create(:address, addressable: self_pickup,
-                                               province_state: province,
-                                               country_region: nil,
-                                               city: nil,
-                                               district: nil,
-                                               community: nil)
+        FactoryGirl.create(:address, addressable: self_pickup,
+                                     province_state: province,
+                                     country_region: nil,
+                                     city: nil,
+                                     district: nil,
+                                     community: nil)
         visit admin_shipping_methods_path
         click_on 'Edit'
         fill_in 'shipping_method[address_attributes][recipient]', with: ''
