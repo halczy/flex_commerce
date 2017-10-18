@@ -4,7 +4,7 @@
     <%= link_to order, class: 'list-group-item list-group-item-action flex-column
                                align-items-start' do %>
       <div class="d-flex w-100 justify-content-between">
-        <small class="text-muted">Order ID: <%= order.id %></small>
+        <small class="text-muted"><%= t('.order_id') %>: <%= order.id %></small>
         <h5 class="mt-1"><%= order.status.titleize %></h5>
       </div>
       <% order.products.each do |product| %>
@@ -20,12 +20,19 @@
       <% end %>
       <div class="d-flex w-100 justify-content-between">
         <small>
-          <%= order.created_at.strftime("Created: %Y/%m/%d") %>
+          <%= t('.created') %>:
+          <%= order.created_at.strftime("%Y/%m/%d") %>
         </small>
         <% if order.status_before_type_cast <= 10 %>
-          <h6>Total: <%= humanized_money_with_symbol order.pre_confirm_total %></h6>
+          <h6>
+            <%= t('.total') %>: 
+            <%= humanized_money_with_symbol order.pre_confirm_total %>
+          </h6>
         <% else %>
-          <h6>Total: <%= humanized_money_with_symbol order.total %></h6>
+          <h6>
+            <%= t('.total') %>: 
+            <%= humanized_money_with_symbol order.total %>
+          </h6>
         <% end %>
       </div>
     <% end %>

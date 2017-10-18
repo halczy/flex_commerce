@@ -1,22 +1,22 @@
 <div class="col-md-6">
   <div class="jumbotron">
-    <h5>Order and Payment Detail</h5>
+    <h5><%= t('.detail') %></h5>
     <table class="table">
       <tbody>
         <tr>
-          <th scope="row">Payment Amount</th>
+          <th scope="row"><%= t('.amount') %></th>
           <td><%= humanized_money_with_symbol @payment.amount %></td>
         </tr>
         <tr>
-          <th scope="row">Payment Type</th>
+          <th scope="row"><%= t('.type') %></th>
           <td><%= @payment.variety.titleize %></td>
         </tr>
         <tr>
-          <th scope="row">Payment Processor</th>
+          <th scope="row"><%= t('.processor') %></th>
           <td><%= @payment.processor.titleize %></td>
         </tr>
         <tr>
-          <th scope="row">Order Status</th>
+          <th scope="row"><%= t('.order_status') %></th>
           <td><%= @order.status.titleize %></td>
         </tr>
       </tbody>

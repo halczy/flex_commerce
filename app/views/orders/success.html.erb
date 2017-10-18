@@ -1,4 +1,4 @@
-<%= provide :title, 'Success' %>
+<%= provide :title, t('.success') %>
 
 <div class="container">
   <div class="card mt-3">
@@ -10,7 +10,7 @@
         <div class="col-md-12">
           <div class="d-flex justify-content-center alert-success p-3">
             <i class="fa fa-check fa-2x" aria-hidden="true"></i>
-            <h3 class="ml-3">Successful Payment</h3>
+            <h3 class="ml-3"><%= t('.payment_success') %></h3>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
               local: true, id: 'address_form') do |f| %>
 
   <% if @customer.addresses.present? %>
-    <div class="mb-2"><strong>Select Shipping Address: </strong></div>
+    <div class="mb-2"><strong><%= t('.select_shipping_address') %>: </strong></div>
     <%= f.collection_radio_buttons(:address_id, @customer.addresses, :id,
                                    :compact_select) do |b| %>
       <div class="form-check">
@@ -13,20 +13,20 @@
     <% end %>
   <% end %>
 
-  <div class="mb-2"><strong>Ship to New Address: </strong></div>
+  <div class="mb-2"><strong><%= t('.ship_to_new_address') %>: </strong></div>
   <%= render 'shared/error_messages', object: f.object %>
 
   <div class="form-group row">
     <div class="col">
-      <%= f.label :recipient, 'Recipient Name' %>
+      <%= f.label :recipient, t('.recipient_name') %>
       <%= f.text_field :recipient, class: 'form-control' %>
     </div>
     <div class="col">
-      <%= f.label :contact_number, 'Contact Number' %>
+      <%= f.label :contact_number, t('.contact_number') %>
       <%= f.text_field :contact_number, class: 'form-control' %>
     </div>
     <div class="col">
-      <%= f.label :name, 'Address Name (Optional)' %>
+      <%= f.label :name, t('.address_name') %>
       <%= f.text_field :name, class: 'form-control' %>
     </div>
   </div>
@@ -35,7 +35,7 @@
   <div class="form-group">
     <div class="row">
       <div class="col">
-        <%= f.label :province_state, 'Address' %>
+        <%= f.label :province_state, t('.address') %>
       </div>
     </div>
     <div class="row">
@@ -75,7 +75,7 @@
   </div>
 
   <div class="form-group">
-    <%= f.text_field :street, placeholder: 'Street Address', class: 'form-control' %>
+    <%= f.text_field :street, placeholder: t('.street_address'), class: 'form-control' %>
   </div>
 <% end %>
 

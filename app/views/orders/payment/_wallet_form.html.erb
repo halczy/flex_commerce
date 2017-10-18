@@ -1,6 +1,6 @@
 <%= form_with(url: wallet_payment_order_path, local: true) do |f| %>
   <div class="form-group row">
-    <%= f.label :amount, 'Pay in Full: ', class: 'col-sm-4 col-form-label' %>
+    <%= f.label :amount, t('.pay_in_full') + ': ', class: 'col-sm-4 col-form-label' %>
     <div class="col-sm-8">
       <%= f.number_field :amount, value: @order.amount_unpaid,
                                   class: 'form-control', readonly: true %>
@@ -8,13 +8,14 @@
   </div>
 
   <div class="form-group row">
-    <%= f.label :custom_amount, 'Custom Amount: ', class: 'col-sm-4 col-form-label' %>
+    <%= f.label :custom_amount, t('.custom_amount') + ': ', 
+                                class: 'col-sm-4 col-form-label' %>
     <div class="col-sm-8">
       <%= f.number_field :custom_amount, step: 0.01, class: 'form-control' %>
     </div>
   </div>
 
-  <%= f.submit 'Pay with Wallet', class: 'btn btn-success btn-lg',
-                                  disabled: @current_user.wallet.available_fund == 0 %>
+  <%= f.submit t('.pay_with_wallet'), class: 'btn btn-success btn-lg',
+               disabled: @current_user.wallet.available_fund == 0 %>
 
 <% end %>

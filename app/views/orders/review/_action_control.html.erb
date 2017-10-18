@@ -2,17 +2,20 @@
   <div class="p-2">
     <% if @order.shipping_method_mix == 'delivery' %>
       <%= link_to address_order_path, class: 'btn btn-dark' do %>
-        <i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> Modify Address
+        <i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> 
+        <%= t('.modify_address') %>
       <% end %>
     <% else %>
       <%= link_to shipping_order_path, class: 'btn btn-dark' do %>
-        <i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> Modify Shipping
+        <i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> 
+        <%= t('.modify_shipping') %>
       <% end %>
     <% end %>
   </div>
   <div class="ml-auto p-2">
     <%= link_to confirm_order_path, method: :patch, class: 'btn btn-primary' do %>
-      Confirm Order <i class="fa fa-arrow-right ml-1" aria-hidden="true"></i>
+      <%= t('.confirm_order') %> 
+      <i class="fa fa-arrow-right ml-1" aria-hidden="true"></i>
     <% end %>
   </div>
 </div>

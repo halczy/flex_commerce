@@ -2,13 +2,10 @@
 <% if @order.status_before_type_cast <= 20  %>
   <div class="mb-3">
     <%= link_to resume_order_path(@order), class: 'btn btn-success' do %>
-      <i class="fa fa-play" aria-hidden="true"></i> Resume Order
+      <i class="fa fa-play" aria-hidden="true"></i> <%= t('.resume_order') %>
     <% end %>
     <%= link_to @order, class: 'btn btn-danger', method: :delete do %>
-      <i class="fa fa-trash" aria-hidden="true"></i> Cancel Order
+      <i class="fa fa-trash" aria-hidden="true"></i> <%= t('.cancel_order') %>
     <% end %>
   </div>
-<% else %>
-  <!-- Hide Order -->
-  <!-- View Tracking Number -->
 <% end %>

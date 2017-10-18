@@ -1,0 +1,136 @@
+zh-CN:
+  orders:
+    address:
+      address: 地址
+      action_control:
+        modify: 修改送货方式
+        next: 下一步
+      deliveries:
+        delivery: 快递
+        quantity: 数量
+      form:
+        select_shipping_address: 选择快递地址
+        ship_to_new_address: 新快递地址
+        recipient_name: 收件人
+        contact_number: 联系电话
+        address_name: 地址别名（选填）
+        address: 地址
+        street_address: 街道及门牌号
+      self_pickup:
+        self_pickup: 自提
+        quantity: 数量
+        customer_contact: 提货联系人
+        contact_number: 联系电话
+        pickup_at: 提货地点
+    index:
+      orders: 订单
+      completed: 已完成
+      pending: 待付款
+      incomplete: 未完成    
+      orders:
+        order_id: 订单号
+        created: 创建时间
+        total: 总额
+    payment:
+      payment: 付款结帐    
+      alipay:
+        pay_with_alipay: 支付宝付款
+        alipay_payment: 付款金额
+      status:
+        payment_summary: 支付总览
+        order_total: 订单总额
+        amount_paid: 已付金额
+        unpaid_balance: 未付金额
+        order_status: 订单状态
+      wallet:
+        pay_with_wallet: 钱包付款
+        wallet_balance: 钱包余额
+      wallet_form:
+        pay_in_full: 全额付款
+        custom_amount: 自定金额
+        pay_with_wallet: 钱包付款
+    review:
+      review: 核实订单
+      action_control: 
+        modify_address: 修改地址
+        modify_shipping: 修改送货方式
+        confirm_order: 确认订单
+      charge_summary:        
+        order_charge_summary: 订单费用
+        product: 产品
+        price: 价钱
+        quantity: 数量
+        subtotal: 小计
+        shipping_method: 送货方式
+        shipping_cost: 运费
+        total: 总额
+      shipping_summary:
+        shipping_summary: 送货方式
+        self_pickup: 自提
+        address: 地址
+        contact_name: 联系人
+        contact_number: 联系电话
+        ship_to: 快递送货地址
+        recipient: 联系人
+    shipping:
+      select_shipping: 选择送货方式
+      select_form:
+        product: 产品
+        quantity: 数量
+        shipping_method: 送货方式
+        next: 下一步
+    show:
+      order_success: 成功
+      payment_success: 交易成功
+      action_control:
+        resume_order: 继续结帐
+        cancel_order: 取消订单        
+      content:
+        order_status: 订单状态
+        product: 产品
+        price: 价钱
+        quantity: 数量
+        subtotal: 小计
+        shipping_method: 送货方式
+        shipping_cost: 运费
+        total: 总额
+      shipping:
+        pickup_address: 提货地址
+        address: 地址
+        contact_name: 提货联系人
+        contact_number: 联系电话
+        pickup_tracking: 提货追踪
+        pickup_readied_at: 预备完成时间
+        pickup_completed_at: 提货完成时间
+        shipping_address: 送货地址
+        recipient: 收件人
+        delivery_tracking: 快递追踪
+        shipping_company: 快递追踪
+        tracking_number: 追踪号码
+        ship_date: 寄出时间
+      transactions:
+        transactions: 交易流水
+        amount: 数额
+        source: 来源
+        note: 备注
+        none: 无记录
+        type: 类型
+        transaction_id: 流水号
+        transacted_at: 产生时间
+    success:
+      nav:
+        navigation: 导航
+        view_order: 查看订单详情
+        dashboard: 前往个人中心
+        frontpage: 前往首页
+      payment_order:
+        detail: 订单及交易详情
+        amount: 交易金额
+        type: 交易类型
+        processor: 处理网关
+        order_status: 订单状态
+    progress:
+      shipping: 选择送货方式
+      address: 填写地址
+      review: 核实订单
+      payment: 结帐付款

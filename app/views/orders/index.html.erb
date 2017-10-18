@@ -12,16 +12,16 @@
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-              <%= link_to 'Completed', orders_path(filter: :service_process),
+              <%= link_to t('.completed'), orders_path(filter: :service_process),
                    class: "nav-link #{completed_tab?(request.query_parameters)}" %>
               </a>
             </li>
             <li class="nav-item">
-              <%= link_to 'Pending Payment', orders_path(filter: :payment_process),
+              <%= link_to t('.pending'), orders_path(filter: :payment_process),
                     class: "nav-link #{pending_tab?(request.query_parameters)}" %>
             </li>
             <li class="nav-item">
-              <%= link_to 'Incomplete', orders_path(filter: :creation_process),
+              <%= link_to t('.incomplete'), orders_path(filter: :creation_process),
                    class: "nav-link #{incomplete_tab?(request.query_parameters)}" %>
             </li>
           </ul>

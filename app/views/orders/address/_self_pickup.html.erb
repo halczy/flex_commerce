@@ -3,7 +3,7 @@
     <div class="text-center">
       <i class="fa fa-2x fa-building" aria-hidden="true"></i>
     </div>
-    <div class="text-center mb-2">Self Pickup</div>
+    <div class="text-center mb-2"><%= t('.self_pickup') %></div>
   </div>
   <div class="col-md-9">
     <div class="row">
@@ -14,7 +14,7 @@
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1"><%= product.name %></h5>
                 <small>
-                  Quantity: <%= @order.inventories_by(product).count %>
+                  <%= t('.quantity') %>: <%= @order.inventories_by(product).count %>
                 </small>
               </div>
             </li>
@@ -24,16 +24,16 @@
     </div>
     <div class="row">
       <div class="col-md-12 mt-5">
-        <strong>Customer Contact: </strong>
+        <strong><%= t('.customer_contact') %>: </strong>
         <%= @order.pick_up_address.recipient %>
       </div>
 
       <div class="col-md-12 mt-2">
-        <strong>Contact Number: </strong>
+        <strong><%= t('.contact_number') %>: </strong>
         <%= @order.pick_up_address.contact_number %>
       </div>
       <div class="col-md-12 mt-2">
-        <strong>Pickup at: </strong>
+        <strong><%= t('.pickup_at') %>: </strong>
         <%= @order.pick_up_address.full_address %>
       </div>
     </div>

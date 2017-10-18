@@ -1,0 +1,140 @@
+en-US:
+  orders:
+    address:
+      address: Address
+      action_control:
+        modify: Modify Shipping
+        next: Next
+      deliveries:
+        delivery: Delivery
+        quantity: Quantity
+      form:
+        select_shipping_address: Select Shipping Address
+        ship_to_new_address: Ship to New Address
+        recipient_name: Recipient Name
+        contact_number: Contact Number
+        address_name: Address Name (Optional)
+        address: Address
+        street_address: Street Address
+      self_pickup:
+        self_pickup: Self Pickup
+        quantity: Quantity
+        customer_contact: Customer Contact
+        contact_number: Contact Number
+        pickup_at: Pickup At
+    index:
+      orders: Orders
+      completed: Completed
+      pending: Pending Payment
+      incomplete: Incomplete    
+      orders:
+        order_id: Order ID
+        created: Created at
+        total: Total
+    payment:
+      payment: Payment
+      alipay:
+        pay_with_alipay: Pay with Alipay
+        alipay_payment: Alipay Payment
+      status:
+        payment_summary: Payment Summary
+        order_total: Order Total
+        amount_paid: Amount Paid
+        unpaid_balance: Unpaid Balance
+        order_status: Order Status
+      wallet:
+        pay_with_wallet: Pay with Wallet
+        wallet_balance: Wallet Balance
+      wallet_form:
+        pay_in_full: Pay in Full
+        custom_amount: Custom Amount
+        pay_with_wallet: Pay with Wallet
+    review:
+      review: Review Order
+      action_control: 
+        modify_address: Modify Address
+        modify_shipping: Modify Shipping
+        confirm_order: Confirm Order
+      charge_summary:
+        order_charge_summary: Order Charge Summary
+        product: Product
+        price: Price
+        quantity: Quantity
+        subtotal: Subtotal
+        shipping_method: Shipping Method
+        shipping_cost: Shipping Cost
+        total: Total
+      shipping_summary:
+        shipping_summary: Shipping Summary
+        self_pickup: Self Pickup
+        address: Address
+        contact_name: Contact Name
+        contact_number: Contact Number
+        ship_to: Ship To
+        recipient: Recipient
+    shipping:
+      select_shipping: Select Shipping
+      select_form:
+        product: Product
+        quantity: Quantity
+        shipping_method: Shipping Method
+        next: Next
+    show:
+      order_detail: Order Detail
+      action_control:
+        resume_order: Resume Order
+        cancel_order: Cancel Order        
+      content:
+        order_status: Order Status
+        product: Product
+        price: Price
+        quantity: Quantity
+        subtotal: Subtotal
+        shipping_method: Shipping Method
+        shipping_cost: Shipping Cost
+        total: Total
+      shipping:
+        pickup_address: Pickup Address
+        address: Address
+        contact_name: Contact Name
+        contact_number: Contact Number
+        pickup_tracking: Pickup Tracking
+        pickup_readied_at: Pickup Readied At
+        pickup_completed_at: Pickup Completed At
+        shipping_address: Shipping Address
+        recipient: Recipient
+        delivery_tracking: Delivery Tracking
+        shipping_company: Shipping Company
+        tracking_number: Tracking Number
+        ship_date: Ship Date
+      transactions:
+        transactions: Transactions
+        amount: Amount
+        source: Source
+        note: Note
+        none: None
+        type: Type
+        transaction_id: Transaction ID
+        transacted_at: Transacted at
+    success:
+      order_success: Success
+      payment_success: Payment Success
+      nav:
+        navigation: Navigation
+        view_order: View Order
+        dashboard: Go to Dashboard
+        frontpage: Go to Frontpage
+      payment_order:
+        detail: Order and Payment Detail
+        amount: Payment Amount
+        type: Payment Type
+        processor: Payment Processor
+        order_status: Order Status
+    progress:
+      shipping: Shipping
+      address: Address
+      review: Review
+      payment: Payment
+
+    
+    

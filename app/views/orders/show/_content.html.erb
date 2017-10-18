@@ -1,12 +1,14 @@
-<h5 class="mt-3 mb-2">Order Status: <%= @order.status.titleize %></h5>
+<h5 class="mt-3 mb-2">
+  <%= t('.order_status') %>: <%= @order.status.titleize %>
+</h5>
 <table class="table table-hover table-responsive">
   <thead>
     <tr>
-      <th>Product</th>
-      <th>Price</th>
-      <th>Quantity</th>
-      <th>Subtotal</th>
-      <th>Shipping Method</th>
+      <th><%= t('.product') %></th>
+      <th><%= t('.price') %></th>
+      <th><%= t('.quantity') %></th>
+      <th><%= t('.subtotal') %></th>
+      <th><%= t('.shipping_method') %></th>
     </tr>
   </thead>
   <tbody>
@@ -32,7 +34,7 @@
     <tr>
       <td colspan="2"></td>
       <td class="text-right">
-        <strong>Shipping Cost: </strong>
+        <strong><%= t('.shipping_cost') %>: </strong>
       </td>
       <td colspan="2">
         <% if @order.status_before_type_cast >= 10 %>
@@ -43,7 +45,7 @@
     <tr>
       <td colspan="2"></td>
       <td class="text-right">
-        <strong>Total: </strong>
+        <strong><%= t('.total') %>: </strong>
       </td>
       <td colspan="2">
         <% if @order.status_before_type_cast <= 10 %>
