@@ -1,0 +1,16 @@
+en-US:
+  rewards:
+    show:
+      reward: Reward
+      content:
+        reward: Reward
+      snapshot:
+        monthly_reward: Monthly Reward
+        total_reward: Total Reward
+      transaction:
+        amount: Amount
+        referee: Referee
+        note: Note
+        none: None
+        transaction_id: Transaction ID
+        transacted_at: Transacted at

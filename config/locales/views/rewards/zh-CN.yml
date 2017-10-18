@@ -1,0 +1,16 @@
+zh-CN:
+  rewards:
+    show:
+      reward: 奖励
+      content:
+        reward: 奖励
+      snapshot:
+        monthly_reward: 月奖励收入
+        total_reward: 总奖励收入
+      transaction:
+        amount: 金额
+        referee: 推荐人
+        note: 备注
+        none: 无记录
+        transaction_id: 交易流水号
+        transacted_at: 流水产生时间

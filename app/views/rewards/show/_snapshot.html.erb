@@ -4,7 +4,7 @@
       <div class="d-md-flex justify-content-between">
         <div class="ml-3">
           <div class="row">
-            <h4>Monthly Reward</h4>
+            <h4><%= t('.monthly_reward') %></h4>
           </div>
           <div class="row">
             <h4><%= humanized_money_with_symbol @user.monthly_reward_income %></h4>
@@ -21,7 +21,7 @@
       <div class="d-md-flex justify-content-between">
         <div class="ml-3">
           <div class="row">
-            <h4>Total Reward</h4>
+            <h4><%= t('.total_reward') %></h4>
           </div>
           <div class="row">
             <h4><%= humanized_money_with_symbol @user.reward_income %></h4>
