@@ -1,0 +1,57 @@
+zh-CN:
+  admin:
+    dashboard:
+      index:
+        title: 控制面板
+        title_orders: 待处理订单
+        title_withdraws: 待处理提款请求
+        title_products: 待处理产品
+        orders:
+          no_action: 无需要处理的订单
+        pending_confirm_orders:
+          title: 待确认
+          review_order: 审核订单
+          amount: 金额
+          status: 状态
+          customer_name: 顾客姓名
+          items: 件数
+        pending_delivery_confirmation_orders:
+          title: 待确认送达
+          confirm: 确认送达
+          customer_name: 顾客姓名
+          shipment: 快递信息
+          shipped_at: 发货时间
+        pending_pickup_confirmation_orders:
+          title: 待确认提货
+          confirm: 确认提货
+          customer_name: 顾客姓名
+          shipment: 提货信息
+          pickup_readied_at: 备货完成时间
+        pending_shipment_orders:
+          title: 待发货订单
+          ship_order: 发货
+          customer_name: 顾客姓名
+          shipment: 物流信息
+          require_delivery: 需要快递
+          request_self_pickup: 要求自提
+          items: 件数
+        products:
+          out_of_stock_products: 缺货产品
+          see_all: 查看全部
+          out_of_stock: 缺货中
+          manage_inventories: 管理库存
+          product_name: 产品名
+          total_inventories: 所有库存数
+          in_cart_inventories: 在顾客购物车件数
+          in_order_inventories: 在未成功订单件数
+          no_action: 无待处理产品
+        snapshot:
+          orders: 订单
+          users: 用户
+          products: 产品
+        withdraws:
+          pending_withdraws: Pending Withdraws
+          customer_name: Customer Name
+          amount: Amount
+          processor: Processor
+          no_action: No Transfer Pending Action

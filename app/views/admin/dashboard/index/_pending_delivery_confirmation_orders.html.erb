@@ -2,19 +2,19 @@
   <div class="col-md-4">
     <div class="card bg-light mb-3">
       <div class="card-header d-flex justify-content-between">
-        <div>Pending Delivery Confirm.</div>
-        <%= link_to 'Confirm Delivery', admin_order_path(order),
+        <div><%= t('.title') %></div>
+        <%= link_to t('.title'), admin_order_path(order),
                                     class: 'btn btn-info btn-sm' %>
       </div>
       <div class="card-body">
         <div class="mb-2">
-          Customer Name: <%= order.user.name %>
+          <%= t('.customer_name') %>: <%= order.user.name %>
         </div>
-        <strong>Shipment:</strong>
+        <strong><%= t('.shipment') %>:</strong>
         <div>
           <%= order.shipping_company %> <%= order.tracking_number %>
         <div>
-          Shipped At:
+          <%= t('.shipped_at') %>:
           <%= DateTime.parse(order.shipped_at).strftime("%Y/%m/%d") %>
         </div>
       </div>

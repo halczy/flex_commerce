@@ -1,11 +1,11 @@
-<%= provide :title, 'Dashboard' %>
+<%= provide :title, t('.title') %>
 
 <div class="container-fluid">
   <%= render 'admin/dashboard/index/snapshot' %>
-  <h3 class="mb-3 mt-5">Orders</h3>
+  <h3 class="mb-3 mt-5"><%= t('.title_orders') %></h3>
   <%= render 'admin/dashboard/index/orders' %>
-  <h3 class="mb-3 mt-3">Withdraws</h3>
+  <h3 class="mb-3 mt-3"><%= t('.title_withdraws') %></h3>
   <%= render 'admin/dashboard/index/withdraws' %>
-  <h3 class="mb-3 mt-3">Products</h3>
+  <h3 class="mb-3 mt-3"><%= t('.title_products') %></h3>
   <%= render 'admin/dashboard/index/products' %>
 </div>

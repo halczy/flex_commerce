@@ -2,22 +2,22 @@
   <div class="col-md-4">
     <div class="card bg-light mb-3">
       <div class="card-header d-flex justify-content-between">
-        <div>Pending Confirmation</div>
-        <%= link_to 'Review Order', admin_order_path(order),
-                                    class: 'btn btn-warning btn-sm' %>
+        <div><%= t('.title') %></div>
+        <%= link_to t('.review_order'), admin_order_path(order),
+                                        class: 'btn btn-warning btn-sm' %>
       </div>
       <div class="card-body">
         <h5>
-          Amount: <%= humanized_money_with_symbol order.total %>
+          <%= t('.amount') %>: <%= humanized_money_with_symbol order.total %>
         </h5>
         <div>
-          Status: <%= order.status.titleize %>
+          <%= t('.status') %>: <%= order.status.titleize %>
         </div>
         <div>
-          Customer Name: <%= order.user.name %>
+          <%= t('.customer_name') %>: <%= order.user.name %>
         </div>
         <div>
-          Items: <%= order.inventories.count %>
+          <%= t('.items') %>: <%= order.inventories.count %>
         </div>
       </div>
     </div>

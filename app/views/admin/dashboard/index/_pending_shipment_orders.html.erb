@@ -2,27 +2,27 @@
   <div class="col-md-4">
     <div class="card bg-light mb-3">
       <div class="card-header d-flex justify-content-between">
-        <div>Pending Shipment</div>
-        <%= link_to 'Ship Order', admin_order_path(order),
-                                  class: 'btn btn-primary btn-sm' %>
+        <div><%= t('.title') %></div>
+        <%= link_to t('.ship_order'), admin_order_path(order),
+                                      class: 'btn btn-primary btn-sm' %>
       </div>
       <div class="card-body">
         <div class="mb-2">
-          Customer Name: <%= order.user.name %>
+          <%= t('.customer_name') %>: <%= order.user.name %>
         </div>
-        <strong>Shipment:</strong>
+        <strong><%= t('.shipment') %>:</strong>
         <div>
           <% if get_delivery_method(order).present? %>
-            Require Delivery
+            <%= t('.require_delivery') %>
           <% end %>
         </div>
         <div>
           <% if get_self_pickup_method(order).present? %>
-            Request Self Pickup
+            <%= t('.request_self_pickup') %>
           <% end %>
         </div>
         <div>
-          Items: <%= order.inventories.count %>
+          <%= t('.items') %>: <%= order.inventories.count %>
         </div>
       </div>
     </div>

@@ -1,0 +1,57 @@
+en-US:
+  admin:
+    dashboard:
+      index:
+        title: Dashboard
+        title_orders: Orders
+        title_withdraws: Withdraws
+        title_products: Products
+        orders:
+          no_action: No Orders Pending Action
+        pending_confirm_orders:
+          title: Pending Confirmation
+          review_order: Review Order
+          amount: Amount
+          status: Status
+          customer_name: Customer Name
+          items: Items
+        pending_delivery_confirmation_orders:
+          title: Pending Delivery Confirm.
+          confirm: Confirm Delivery
+          customer_name: Customer Name
+          shipment: Shipment
+          shipped_at: Shipped At
+        pending_pickup_confirmation_orders:
+          title: Pending Pickup Confirm.
+          confirm: Confirm
+          customer_name: Customer Name
+          shipment: Shipment
+          pickup_readied_at: Pickup Readied At
+        pending_shipment_ordres:
+          title: Pending Shipment
+          ship_order: Ship Order
+          customer_name: Customer Name
+          shipment: Shipment
+          require_delivery: Require Delivery
+          request_self_pickup: Request Self Pickup
+          items: Items
+        products:
+          out_of_stock_products: Out of Stock Products
+          see_all: See All
+          out_of_stock: Out of Stock
+          manage_inventories: Manage Inventories
+          product_name: Product Name
+          total_inventories: Total Inventories
+          in_cart_inventories: In Cart Inventories
+          in_order_inventories: In Order Inventories
+          no_action: No Products Pending Action
+        snapshot:
+          orders: Orders
+          users: Users
+          products: Products
+        withdraws:
+          pending_withdraws: Pending Withdraws
+          customer_name: Customer Name
+          amount: Amount
+          processor: Processor
+          no_action: No Transfer Pending Action
