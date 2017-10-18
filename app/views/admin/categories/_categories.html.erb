@@ -1,10 +1,10 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th colspan="3" class="text-center">Order</th>
-      <th class="w-50">Name</th>
-      <th>Type</th>
-      <th>Products</th>
+      <th colspan="3" class="text-center"><%= t('.order') %></th>
+      <th class="w-50"><%= t('.name') %></th>
+      <th><%= t('.type') %></th>
+      <th><%= t('.products') %></th>
       <th></th>
       <th></th>
     </tr>
@@ -17,12 +17,12 @@
         <td><%= cat.flavor.capitalize %></td>
         <td><%= cat.products.count %></td>
         <td>
-          <%= link_to 'Show Details', admin_category_path(cat),
-                                      class: 'btn btn-sm btn-info' %>
+          <%= link_to t('.show_details'), admin_category_path(cat),
+                                          class: 'btn btn-sm btn-info' %>
         </td>
         <td>
-          <%= link_to 'Edit', edit_admin_category_path(cat),
-                              class: 'btn btn-sm btn-warning' %>
+          <%= link_to t('.edit'), edit_admin_category_path(cat),
+                                  class: 'btn btn-sm btn-warning' %>
         </td>
       </tr>
     <% end %>

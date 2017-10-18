@@ -1,0 +1,51 @@
+en-US:
+  admin:
+    categories:
+      action_control:
+        child_category: Child Category
+        edit: Edit
+        delete: Delete
+        delete_category: Delete Category
+        confirm_msg_part: Please click confirm to delte this
+        category: category
+        associated_msg: The following products are associated with this category.
+        confirm: Confirm
+        close: Close
+      categories:
+        order: Order
+        name: Name
+        type: Type
+        products: Products
+        show_details: Show Details
+        edit: Edit
+      form:
+        parent_category: Parent Category (Leave empty to create top level menu)
+        parent_category_locked: Parent Category
+        display_order: Display Order
+        hidden_category: Hidden Category
+      top_categories:
+        order: Order
+        name: Name
+        hidden: Hidden
+      edit:
+        title: Edit Category
+      index:
+        title: Categories
+        new_reg_cat: New Regular Category
+        new_brand_cat: New Brand Category
+        regular_cats: Regular Categories
+        brand_cats: Brand Categories
+        special_cats: Special Categories
+      new: 
+        title: New Category
+      show:
+        title: Category Detail
+        return_to_list: Return to List
+        category_name: Category Name
+        display_order: Display Order
+        hidden_category: Hidden Category
+        category_type: Category Type
+        parent_category_name: Parent Category Name
+        parent_category_id: Parent Category ID
+        child_categories: Child Categories
+        no_child_cats: This category does not have any child categories.

@@ -1,0 +1,51 @@
+zh-CN:
+  admin:
+    categories:
+      action_control:
+        child_category: 子目录
+        edit: 编辑
+        delete: 删除
+        delete_category: 删除目录
+        confirm_msg_part: 请点确认删除
+        category: 目录
+        associated_msg: 以下产品属于该目录
+        confirm: 确认
+        close: 关闭
+      categories:
+        order: 排序
+        name: 名称
+        type: 类型
+        products: 产品数
+        show_details: 查看详情
+        edit: 编辑
+      form:
+        parent_category: 上级目录（如需创建上级目录，本栏留空）
+        parent_category_locked: 上级目录
+        display_order: 显示次序
+        hidden_category: 隐藏目录
+      top_categories:
+        order: 顺序
+        name: 名称
+        hidden: 隐藏
+      edit:
+        title: 编辑目录
+      index:
+        title: 目录
+        new_reg_cat: 创建普通目录
+        new_brand_cat: 创建品牌目录
+        regular_cats: 普通目录
+        brand_cats: 品牌目录
+        special_cats: 特殊目录
+      new: 
+        title: 新目录
+      show:
+        title: 目录详情
+        return_to_list: 返回列表
+        category_name: 目录名
+        display_order: 显示次序
+        hidden_category: 隐藏目录
+        category_type: 目录类型
+        parent_category_name: 上级目录名
+        parent_category_id: 上级目录ID
+        child_categories: 子目录列表
+        no_child_cats: 这个目录没有子目录

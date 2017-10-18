@@ -4,10 +4,10 @@
 
   <div class="form-group">
     <% if params[:regular] || f.object.parent_id %>
-      <%= f.label :parent_id, 'Parent Category (Leave empty to create top level menu)' %>
+      <%= f.label :parent_id, t('.parent_category') %>
       <%= f.number_field :parent_id, class: 'form-control' %>
     <% elsif params[:parent_id] %>
-      <%= f.label :parent_id, 'Parent Category' %>
+      <%= f.label :parent_id, t('.parent_category_locked') %>
       <%= f.number_field :parent_id, value: params[:parent_id].to_i,
                                      class: 'form-control',
                                      readonly: true %>
@@ -22,12 +22,12 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :display_order, 'Display Order' %>
+    <%= f.label :display_order, t('.display_order') %>
     <%= f.number_field :display_order, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :hide, 'Hidden Category' %>
+    <%= f.label :hide, t('.hidden_category') %>
     <%= f.select :hide, options_for_select([['False', 0], ['True', 1]]),
                  {}, class: "form-control" %>
   </div>

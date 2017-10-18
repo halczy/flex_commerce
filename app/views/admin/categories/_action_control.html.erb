@@ -2,34 +2,35 @@
   <%= link_to new_admin_category_path(parent_id: cat.id),
               id: "new_child_for_#{cat.id}",
               class: "btn btn-sm btn-info" do %>
-    <i class="fa fa-plus" aria-hidden="true"></i> Child Category
+    <i class="fa fa-plus" aria-hidden="true"></i> <%= t('.child_category') %>
   <% end %>
 </td>
 <td>
-  <%= link_to 'Edit', edit_admin_category_path(cat, regular: true),
-                      id: "edit_#{cat.id}",
-                      class: "btn btn-sm btn-warning" %>
+  <%= link_to t('.edit'), edit_admin_category_path(cat, regular: true),
+                          id: "edit_#{cat.id}",
+                          class: "btn btn-sm btn-warning" %>
 </td>
 <td>
-  <%= link_to 'Delete', '#', class: 'btn btn-sm btn-danger', id: "btn_del_#{cat.id}",
+  <%= link_to t('.delete'), '#', class: 'btn btn-sm btn-danger', 
+              id: "btn_del_#{cat.id}",
               data: { toggle: "modal", target: "#delete_#{cat.id}" } %>
 
   <div class="modal fade" id="delete_<%= cat.id %>">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Delete Category</h5>
+          <h5 class="modal-title"><%= t('.delete_category') %></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <p>
-            Please confirm that you want to delete the
-            <strong><%= cat.name %></strong> category.
+            <%= t('.confirm_msg_part') %>
+            <strong><%= cat.name %></strong> <%= t('.category') %>.
           </p>
           <% if cat.products.present? %>
-            The following products are associated with this category.
+            <%= t('.associated_msg') %>
             <ul>
             <% cat.products.each do |product| %>
               <li><%= product.name %></li>
@@ -38,11 +39,11 @@
           <% end %>
         </div>
         <div class="modal-footer">
-          <%= link_to 'Confirm', admin_category_path(cat), method: :delete,
-                                 id: "confirm_del_#{cat.id}",
-                                 class: 'btn btn-danger' %>
+          <%= link_to t('.confirm'), admin_category_path(cat), method: :delete,
+                                     id: "confirm_del_#{cat.id}",
+                                     class: 'btn btn-danger' %>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
+            <%= t('.close') %>
           </button>
         </div>
       </div>
