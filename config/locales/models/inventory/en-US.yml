@@ -1,0 +1,12 @@
+en-US:
+  activerecord:
+    models:
+      inventory: Inventory
+    attributes:
+      inventory:
+          status: Status
+          purchased_at: Purchased at
+          returned_at: Returned at
+          purchase_weight: Purchase Weight
+          purchase_price: Purchase Price
+

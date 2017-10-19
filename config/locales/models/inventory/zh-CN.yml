@@ -1,0 +1,11 @@
+zh-CN:
+  activerecord:
+    models:
+      inventory: 库存
+    attributes:
+      inventory:
+          status: 状态
+          purchased_at: 购买于
+          returned_at: 退货于
+          purchase_weight: 购入重量
+          purchase_price: 购入价钱
