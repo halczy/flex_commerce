@@ -52,7 +52,7 @@ zh-CN:
         withdraws:
           pending_withdraws: 待打款
           review_withdraw: 审核提款
-          customer_name: 顾客名
+          customer_name: 顾客姓名
           amount: 金额
           processor: 交易网关
           no_action: 无待处理提款请求
