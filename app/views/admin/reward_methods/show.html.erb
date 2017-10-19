@@ -1,21 +1,21 @@
-<%= provide :title, 'Reward Method Detail' %>
+<%= provide :title, t('.title') %>
 
 <div class="d-flex justify-content-start mb-3 mt-3">
   <div>
     <%= link_to admin_reward_methods_path, class: 'btn btn-secondary' do %>
-      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('.return') %>
     <% end %>
   </div>
   <div class="ml-2">
     <%= link_to edit_admin_reward_method_path(@reward_method),
                 class: 'btn btn-warning' do %>
-      <i class="fa fa-edit" aria-hidden="true"></i> Edit Reward Method
+      <i class="fa fa-edit" aria-hidden="true"></i> <%= t('.edit_reward_method') %>
     <% end %>
   </div>
   <div class="ml-2">
     <%= link_to '#', class: 'btn btn-danger', id: "btn_del_#{@reward_method.id}",
                 data: { toggle: "modal", target: "#delete_#{@reward_method.id}"} do %>
-      <i class="fa fa-trash" aria-hidden="true"></i>Delete
+      <i class="fa fa-trash" aria-hidden="true"></i> <%= t('.delete') %>
     <% end %>
   </div>
 </div>
@@ -23,15 +23,15 @@
 <div class="row">
   <div class="col">
     <div class="jumbotron">
-      <h4 class="mb-3 mt-0">Basic Properties</h4>
+      <h4 class="mb-3 mt-0"><%= t('.basic_properties') %></h4>
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">Name</th>
+            <th scope="row"><%= t('.name') %></th>
             <td><%= @reward_method.name %></td>
           </tr>
           <tr>
-            <th scope="row">Type</th>
+            <th scope="row"><%= t('.type') %></th>
             <td><%= @reward_method.variety.titleize %></td>
           </tr>
         </tbody>
@@ -39,11 +39,11 @@
     </div>
   </div>
   <div class="col jumbotron">
-    <h4 class="mb-3 mt-0">Method Data</h4>
+    <h4 class="mb-3 mt-0"><%= t('.method_settings') %></h4>
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">Percentage</th>
+            <th scope="row"><%= t('.percentage') %></th>
             <td><%= @reward_method.percentage %>%</td>
           </tr>
         </tbody>
@@ -51,33 +51,29 @@
   </div>
 </div>
 
-<td>
-
-</td>
-
 <!-- Confirm Delete Modal -->
 <div class="modal fade" id="delete_<%= @reward_method.id %>">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Delete Reward Method</h5>
+        <h5 class="modal-title"><%= t('.delete_reward_method') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>Please confirm that you want to delete this reward method.</p>
+        <p><%= t('.delele_msg') %></p>
         <ul>
           <li><%= @reward_method.name %></li>
         </ul>
       </div>
       <div class="modal-footer">
-        <%= link_to 'Confirm', admin_reward_method_path(@reward_method),
-                               method: :delete,
-                               id: "confirm_del_#{@reward_method.id}",
-                               class: 'btn btn-danger' %>
+        <%= link_to t('.confirm'), admin_reward_method_path(@reward_method),
+                                   method: :delete,
+                                   id: "confirm_del_#{@reward_method.id}",
+                                   class: 'btn btn-danger' %>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
+          <%= t('.close') %>
         </button>
       </div>
     </div>

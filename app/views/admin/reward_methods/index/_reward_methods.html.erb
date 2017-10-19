@@ -2,8 +2,8 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Name</th>
-      <th>Type</th>
+      <th><%= t('.name') %></th>
+      <th><%= t('.type') %></th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -24,7 +24,7 @@
       </tr>
     <% end %>
     <% if @reward_methods.empty? %>
-      <tr><td colspan="5">No Reward Method Available</td></tr>
+      <tr><td colspan="5"><%= t('.no_record') %></td></tr>
     <% end %>
   </tbody>
 </table>

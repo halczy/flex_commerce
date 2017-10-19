@@ -1,0 +1,43 @@
+zh-CN:  
+  admin:
+    reward_methods:
+      index:
+        title: 奖励方式
+        new_reward_methods: 创建新奖励方式
+        action_control:
+          detail: 详情
+          edit: 编辑
+          delete: 删除
+          delete_reward_method: 删除奖励方式
+          confirm_del_msg: 请点击确认删除该奖励方式。
+          confirm: 确认
+          close: 关闭
+        reward_methods:
+          name: 名称
+          type: 类型
+          no_record: 无奖励方式
+      shared:
+        form:
+          type: 类型
+          referral: 推荐奖励
+          cash_back: 返现奖励
+          percentage: 奖励百分比
+          submit: 提交
+      new: 
+        title: 创建新奖励方式
+      edit: 
+        title: 编辑奖励方式
+      show:
+        title: 奖励方式详情
+        return: 返回列表
+        edit_reward_method: 编辑
+        delete: 删除
+        basic_properties: 基本信息
+        name: 名称
+        type: 类别
+        method_settings: 奖励设置
+        percentage: 奖励百分比
+        delete_reward_method: 删除奖励方式
+        delele_msg: 请点击确认删除该奖励方式。
+        confirm: 确认
+        close: 关闭   

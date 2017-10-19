@@ -8,7 +8,7 @@ zh-CN:
       filter:
         no_filter: 无筛选
         in_stock: 有货产品
-        out_of_stock: 无货产品
+        out_of_stock: 缺货产品
         filter_products: 筛选产品
       search_form:
         search: 搜索

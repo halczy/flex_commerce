@@ -7,9 +7,9 @@
       <%= f.text_field :name, class: 'form-control' %>
     </div>
     <div class="col-6">
-      <%= f.label :variety, 'Type' %>
-      <%= f.select :variety, options_for_select([['Referral', 'referral'],
-                                                 ['Cash Back', 'cash_back']],
+      <%= f.label :variety, t('.type') %>
+      <%= f.select :variety, options_for_select([[t('.referral'), 'referral'],
+                                                 [t('.cash_back'), 'cash_back']],
                                                 @reward_method.variety),
                              {}, id: 'reward_select', class: 'form-control' %>
     </div>
@@ -17,13 +17,13 @@
   <div id="ref_cash_section">
     <div class="form-group row">
       <div class="col-6">
-        <%= f.label :percentage %>
+        <%= f.label :percentage, t('.percentage') %>
         <%= f.number_field :percentage, class: 'form-control' %>
       </div>
     </div>
   </div>
 
-  <%= f.submit 'Submit', class: 'btn btn-primary btn-block' %>
+  <%= f.submit t('.submit'), class: 'btn btn-primary btn-block' %>
 <% end %>
 
 <%= javascript_include_tag 'reward_form', 'data-turbolinks-track': 'reload' %>
