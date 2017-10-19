@@ -1,0 +1,9 @@
+en-US:
+  activerecord:
+    models:
+      reward_method: Reward Method
+    attributes:
+      reward_method:
+        name: Name
+        variety: variety
+        settings: Settings

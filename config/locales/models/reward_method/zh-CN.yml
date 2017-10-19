@@ -1,0 +1,9 @@
+zh-CN:
+  activerecord:
+    models:
+      reward_method: 奖励方式
+    attributes:
+      reward_method:
+        name: 名称
+        variety: 类别
+        settings: 设置
