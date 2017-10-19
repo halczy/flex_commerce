@@ -1,0 +1,10 @@
+en-US:
+  activerecord:
+    models:
+      application_configuration: Application Configuration
+    attributes:
+      application_configuration: 
+        name: Name
+        status: Status
+        encrypted_value: Encrypted Value
+        plain: Plain
