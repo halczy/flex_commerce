@@ -1,0 +1,12 @@
+en-US:
+  activerecord:
+    models:
+      user: User
+    attributes:
+      user:
+        type: Type
+        name: Name
+        email: Email
+        cell_number: Cell Number
+        member_id: Member ID
+        settings: Settings

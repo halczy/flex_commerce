@@ -1,0 +1,9 @@
+zh-CN:
+  activerecord:
+    models:
+      wallet: 钱包
+    attributes:
+      wallet:
+        balance: 余额
+        pending: 冻结金额
+        withdrawable: 可提款金额

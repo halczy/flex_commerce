@@ -1,0 +1,9 @@
+en-US:
+  activerecord:
+    models:
+      wallet: Wallet
+    attributes:
+      wallet:
+        balance: Balance
+        pending: Pending
+        withdrawable: Withdrawable
