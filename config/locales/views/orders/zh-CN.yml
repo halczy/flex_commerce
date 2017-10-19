@@ -27,13 +27,13 @@ zh-CN:
       orders: 订单
       completed: 已完成
       pending: 待付款
-      incomplete: 未完成    
+      incomplete: 未完成
       orders:
         order_id: 订单号
         created: 创建时间
         total: 总额
     payment:
-      payment: 付款结帐    
+      payment: 付款结帐
       alipay:
         pay_with_alipay: 支付宝付款
         alipay_payment: 付款金额
@@ -52,11 +52,11 @@ zh-CN:
         pay_with_wallet: 钱包付款
     review:
       review: 核实订单
-      action_control: 
+      action_control:
         modify_address: 修改地址
         modify_shipping: 修改送货方式
         confirm_order: 确认订单
-      charge_summary:        
+      charge_summary:
         order_charge_summary: 订单费用
         product: 产品
         price: 价钱
@@ -83,8 +83,9 @@ zh-CN:
     show:
       order_detail: 订单详情
       action_control:
+        order_actions: 订单操作
         resume_order: 继续结帐
-        cancel_order: 取消订单        
+        cancel_order: 取消订单
       content:
         order_status: 订单状态
         product: 产品

@@ -53,7 +53,7 @@ describe 'customer profile edit' do
       click_button 'Update Profile'
 
       expect(page).to have_css('#error_messages')
-      expect(page).to have_content('Cell number is invalid')
+      expect(page).to have_content('Cell Number is invalid')
       expect(page).to have_content('Email is invalid')
       expect(page).to have_content('Password is too short ')
     end

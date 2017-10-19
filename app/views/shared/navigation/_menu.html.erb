@@ -1,7 +1,7 @@
 <li class="nav-item dropdown">
   <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
      aria-haspopup="true" aria-expanded="false">
-    品牌
+    <%= t('.brands') %>
   </a>
   <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
     <% Category.brand.order(display_order: :asc).each do |brand| %>

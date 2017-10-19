@@ -1,6 +1,6 @@
 <div class="list-group-item flex-column">
   <div class="d-flex justify-content-between">
-    <h6><%= t('.source') %>: <%= transaction.transactable.class %></h6>
+    <h6><%= t('.source') %>: <%= I18n.t transaction.transactable.class %></h6>
     <h6><%= t('.amount') %>: <%= humanized_money_with_symbol transaction.amount %></h6>
   </div>
   <div class="d-flex justify-content-between">

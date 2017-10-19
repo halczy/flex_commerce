@@ -3,3 +3,7 @@ zh-CN:
   'false': '否'
   'active': '启用'
   'disable': '禁用'
+  Wallet: 钱包
+  Order: 订单
+  Transfer: 提款
+  Product: 产品

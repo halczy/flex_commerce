@@ -27,7 +27,7 @@ en-US:
       orders: Orders
       completed: Completed
       pending: Pending Payment
-      incomplete: Incomplete    
+      incomplete: Incomplete
       orders:
         order_id: Order ID
         created: Created at
@@ -52,7 +52,7 @@ en-US:
         pay_with_wallet: Pay with Wallet
     review:
       review: Review Order
-      action_control: 
+      action_control:
         modify_address: Modify Address
         modify_shipping: Modify Shipping
         confirm_order: Confirm Order
@@ -83,8 +83,9 @@ en-US:
     show:
       order_detail: Order Detail
       action_control:
+        order_actions: Order Actions
         resume_order: Resume Order
-        cancel_order: Cancel Order        
+        cancel_order: Cancel Order
       content:
         order_status: Order Status
         product: Product
@@ -137,5 +138,5 @@ en-US:
       review: Review
       payment: Payment
 
-    
-    
+
+
