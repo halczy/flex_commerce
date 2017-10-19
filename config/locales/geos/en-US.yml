@@ -1,0 +1,7 @@
+en-US:
+  activerecord:
+    models:
+      geo: Geo
+    attributes:
+      name: name
+      level: Level

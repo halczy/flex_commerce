@@ -1,0 +1,7 @@
+zh-CN:
+  activerecord:
+    models:
+      geo: 地理
+    attributes:
+      name: 名称
+      level: 级别
