@@ -18,8 +18,8 @@
   <div class="row form-group">
     <div class="col-sm-3">
       <%= f.label :status, t('.status') %>
-      <%= f.select :status, options_for_select([['Active',  'active'],
-                                                ['Disable', 'disabled']]),
+      <%= f.select :status, options_for_select([[t('active'),  'active'],
+                                                [t('disable'), 'disabled']]),
                             {}, class: 'form-control' %>
     </div>
     <div class="col-sm-3">

@@ -85,6 +85,7 @@ en-US:
         sku: SKU
         enforce_strict_inventory: Enforce Strict Inventory
         set_as_digital: Set as Digital Product
+        pricing: Pricing
         member_price: Member Price
         reward_price: Reward Price
         market_price: Market Price

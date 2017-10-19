@@ -32,3 +32,5 @@
 en-US:
   'true': 'True'
   'false': 'False'
+  'active': 'Active'
+  'disable': 'Disable'

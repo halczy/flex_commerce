@@ -1,0 +1,20 @@
+zh-CN:
+  activerecord:
+    models:
+      product: 产品
+    attributes:
+      product:
+        name: 名称
+        tag_line: 副标题
+        sku: 货号
+        weight: 重量
+        introduction: 简介
+        description: 描述
+        specification: 规格
+        price_market: 市场价
+        price_member: 会员价
+        price_reward: 奖励价
+        cost: 成本
+        strict_inventory: 严格库存控制
+        Digital: 数码产品
+        status: 状态

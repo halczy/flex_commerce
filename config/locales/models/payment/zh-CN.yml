@@ -1,7 +1,7 @@
 zh-CN:
   activerecord:
-      models:
-        payment: 付款单
+    models:
+      payment: 付款单
     attributes:
       payment:
         amount: 金额

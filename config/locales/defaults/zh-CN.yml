@@ -1,3 +1,5 @@
 zh-CN:
   'true': '是'
   'false': '否'
+  'active': '启用'
+  'disable': '禁用'

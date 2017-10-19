@@ -1,0 +1,20 @@
+en-US:
+  activerecord:
+    models:
+      product: Product
+    attributes:
+      product:
+        name: Name
+        tag_line: Tag Line
+        sku: SKU
+        weight: Weight
+        introduction: Introduction
+        description: Description
+        specification: Specification
+        price_market: Market Price
+        price_member: Member Price
+        price_reward: Reward Price
+        cost: Cost
+        strict_inventory: Strict Inventory
+        Digital: Digital
+        status: Status

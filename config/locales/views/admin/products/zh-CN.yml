@@ -44,7 +44,7 @@ zh-CN:
         man_invs: 管理库存
         basic: 基本信息
         name: 名称
-        tag_line: 描述
+        tag_line: 副标题
         sku: 货号
         weight: 重量（公斤）
         status: 状态
@@ -85,6 +85,7 @@ zh-CN:
         true_opt: 是
         false_opt: 否
         set_as_digital: 标为数码产品
+        pricing: 价格
         member_price: 会员价
         reward_price: 奖励价
         market_price: 市场价
