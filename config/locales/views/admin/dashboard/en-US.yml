@@ -51,6 +51,7 @@ en-US:
           products: Products
         withdraws:
           pending_withdraws: Pending Withdraws
+          review_withdraw: Review Withdraw
           customer_name: Customer Name
           amount: Amount
           processor: Processor

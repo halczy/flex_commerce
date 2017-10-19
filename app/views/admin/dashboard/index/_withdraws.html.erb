@@ -3,21 +3,21 @@
     <div class="col-md-4">
       <div class="card bg-light mb-3">
         <div class="card-header d-flex justify-content-between">
-          <div>Pending Withdraw</div>
-          <%= link_to 'Review Withdraw', admin_transfer_path(transfer),
-                                         class: 'btn btn-warning btn-sm' %>
+          <div><%= t('.pending_withdraws') %></div>
+          <%= link_to t('.review_withdraw'), admin_transfer_path(transfer),
+                                             class: 'btn btn-warning btn-sm' %>
         </div>
         <div class="card-body">
           <div>
-            Customer Name:
+            <%= t('.customer_name') %>:
             <%= transfer.transferer.name %>
           </div>
           <div>
-            Amount:
+            <%= t('.amount') %>:
             <%= humanized_money_with_symbol transfer.amount %>
           </div>
           <div>
-            Processor:
+            <%= t('.processor') %>:
             <%= transfer.processor.titleize %>
           </div>
         </div>
@@ -31,7 +31,7 @@
     <div class="col-12 jumbotron">
       <div class="d-flex justify-content-center">
         <div>
-          <h5 class="mb-3">No Transfers Pending Action</h5>
+          <h5 class="mb-3"><%= t('no_action') %></h5>
         </div>
       </div>
     </div>

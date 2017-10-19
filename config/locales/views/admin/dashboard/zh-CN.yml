@@ -36,7 +36,7 @@ zh-CN:
           request_self_pickup: 要求自提
           items: 件数
         products:
-          out_of_stock_products: 缺货产品
+          out_of_stock_products: 件缺货产品
           see_all: 查看全部
           out_of_stock: 缺货中
           manage_inventories: 管理库存
@@ -50,8 +50,9 @@ zh-CN:
           users: 用户
           products: 产品
         withdraws:
-          pending_withdraws: Pending Withdraws
-          customer_name: Customer Name
-          amount: Amount
-          processor: Processor
-          no_action: No Transfer Pending Action
+          pending_withdraws: 待打款
+          review_withdraw: 审核提款
+          customer_name: 顾客名
+          amount: 金额
+          processor: 交易网关
+          no_action: 无待处理提款请求
