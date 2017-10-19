@@ -1,20 +1,20 @@
 <% unless f.object.source_channel == 'editor' %>
 <div class="row">
   <div class="mb-1 mt-1 col-md-3">
-    <%= f.label :image, 'Upload Image' %>
+    <%= f.label :image, t('.upload_image') %>
     <%= f.hidden_field :image, value: f.object.cached_image_data %>
     <%= f.file_field :image, class: 'form-control' %>
   </div>
   <div class="mb-1 mt-1 col-md-3">
-    <%= f.label :title, 'Title' %>
+    <%= f.label :title, t('.title') %>
     <%= f.text_field :title, class: 'form-control' %>
   </div>
   <div class="mb-1 mt-1 col-md-4">
-    <%= f.label :description, 'Description' %>
+    <%= f.label :description, t('.description') %>
     <%= f.text_field :description, class: 'form-control' %>
   </div>
   <div class="mb-1 mt-1 col-md-2">
-    <%= f.label :display_order, 'Display Order' %>
+    <%= f.label :display_order, t('.display_order') %>
     <%= f.number_field :display_order, class: 'form-control' %>
   </div>
   <% if f.object.image.present? %>

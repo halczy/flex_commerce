@@ -1,0 +1,131 @@
+en-US:
+  admin:
+    products:
+      index:
+        title: Products
+        new_product: New Product
+        product_count: Product Count
+      filter:
+        no_filter: No Filter
+        in_stock: In Stock
+        out_of_stock: Out of Stock
+        filter_products: Filter Products
+      search_form:
+        search: Search
+        searching: Searching...
+      products:
+        name: Name
+        sku: SKU
+        member_price: Member Price
+        stock: Stock
+        sold: Sold
+      action_control:
+        edit: Edit
+        delete: Delete
+        delete_product: Delete Product
+        delete_msg: Please confirm that you want to delete this product.
+        delete_warning: The following product cannot be deleted. Please confirm that you want to disable this product.
+        confirm: Confirm
+        close: Close
+      search:
+        title: Product Search
+        return: Return to List
+        result: Result
+        matching: Matching Products
+        no_match: No Matching Product Found
+      new:
+        title: New Product
+      edit:
+        title: Edit Product
+      show:
+        title: Product Detail
+        return: Return to List
+        edit: Edit Product
+        man_invs: Manage Inventories
+        basic: Basic Properties
+        name: Name
+        tag_line: Tag Line
+        sku: SKU
+        weight: Weight (KG)
+        status: Status
+        strict_inventory: Strict Inventory
+        true_opt: 'True'
+        false_opt: 'False'
+        digital_product: Digital Product
+        categories: Categories
+        shipping_methods: Shipping Methods
+        reward_methods: Reward Methods
+        pricing: Pricing
+        market_price: Market Price
+        member_price: Member Price
+        reward_price: Reward Price
+        cost: Cost
+        inventories: Inventories
+        total_inventories: Total Inventories
+        unsold: Unsold
+        in_cart: In Cart
+        in_order: In Order
+        in_checkout: In Checkout
+        sold: Sold
+        returned: Returned
+        introduction: Introduction
+        specification: Specification
+        description: Description
+        attached_images: Attached Images
+        no_image: No Image
+        view: View
+        delete: Delete
+        editor_image_files: Editor Image Files
+      form:
+        basic: Basic Properties
+        status: Status
+        weight: Weight (KG)
+        select_shipping: Select Shipping Methods
+        select_reward: Select Reward Methods
+        sku: SKU
+        enforce_strict_inventory: Enforce Strict Inventory
+        set_as_digital: Set as Digital Product
+        member_price: Member Price
+        reward_price: Reward Price
+        market_price: Market Price
+        cost: Cost
+        categories: Categories
+        select_categories: Select Categories
+        select_brand_categories: Select Brand Categories
+        select_special_categories: Select Special Categories
+        images: Images
+        add_image: Add Image
+        one_moment: One Moment...
+      image_fields:
+        upload_image: Upload Image
+        title: Title
+        description: Description
+        display_order: Display Order
+      inventories:
+        title: Inventory Management
+        return: Return
+        add_invs: Add Inventories
+        delete_invs: Delete Inventories
+        total: Total
+        unsold: Unsold
+        in_cart: In Cart
+        in_order: In Order
+        in_checkout: In Checkout
+        sold: Sold
+        returned: Returned
+        amount: Amount
+        submit: Submit
+        close: Close
+        delete_msg: You can delete up to the amount of unsold inventories. If you need to delete more than unsold inventories. You can try
+        force_delete: force delete.
+        unsold_inventories: Unsold Inventories
+        delete: Delete
+        close: Close
+        force_delete_inventories: Force Delete Inventories
+        deleteable_inventories: Deletable Inventories
+        force_delete_btn: Force Delete
+      inventories_list:
+        status: Status
+        in_order: In Order
+        customer: Customer
+        no_match: No Matching Inventories

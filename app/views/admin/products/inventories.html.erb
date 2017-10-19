@@ -1,17 +1,17 @@
-<%= provide :title, 'Inventory Management' %>
+<%= provide :title, t('.title') %>
 
 <div class="d-flex justify-content-start mb-3 mt-3">
   <div>
     <%= link_to admin_product_path(@product), class: 'btn btn-secondary' do %>
-      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('.return') %>
     <% end %>
     <%= link_to '#', class: 'btn btn-primary',
                 data: { toggle: "modal", target: "#add_inventories"} do %>
-      <i class="fa fa-plus" aria-hidden="true"></i> Add Inventories
+      <i class="fa fa-plus" aria-hidden="true"></i> <%= t('.add_invs') %>
     <% end %>
     <%= link_to '#', class: 'btn btn-danger',
                 data: { toggle: "modal", target: "#delete_inventories"} do %>
-      <i class="fa fa-minus" aria-hidden="true"></i> Delete Inventories
+      <i class="fa fa-minus" aria-hidden="true"></i> <%= t('.delete_invs') %>
     <% end %>
   </div>
 </div>
@@ -19,31 +19,31 @@
 <nav class="nav nav-pills nav-justified" id="inventoriesTab" role="tablist">
   <a class="nav-item nav-link active" id="nav-total-tab" data-toggle="tab"
      href="#nav-total" role="tab" aria-controls="nav-total" aria-expanded="true">
-    Total (<%= @inventories.count %>)
+    <%= t('.total') %> (<%= @inventories.count %>)
   </a>
   <a class="nav-item nav-link" id="nav-unsold-tab" data-toggle="tab"
      href="#nav-unsold" role="tab" aria-controls="nav-unsold">
-    Unsold (<%= @inventories.unsold.count %>)
+    <%= t('.unsold') %> (<%= @inventories.unsold.count %>)
   </a>
   <a class="nav-item nav-link" id="nav-in-cart-tab" data-toggle="tab"
      href="#nav-in-cart" role="tab" aria-controls="nav-in-cart">
-    In Cart (<%= @inventories.in_cart.count %>)
+    <%= t('.in_cart') %> (<%= @inventories.in_cart.count %>)
   </a>
   <a class="nav-item nav-link" id="nav-in-order-tab" data-toggle="tab"
      href="#nav-in-order" role="tab" aria-controls="nav-in-order">
-    In Order (<%= @inventories.in_order.count %>)
+    <%= t('.in_order') %> (<%= @inventories.in_order.count %>)
   </a>
   <a class="nav-item nav-link" id="nav-in-checkout-tab" data-toggle="tab"
      href="#nav-in-checkout" role="tab" aria-controls="nav-in-checkout">
-    In Checkout (<%= @inventories.in_checkout.count %>)
+    <%= t('.in_checkout') %> (<%= @inventories.in_checkout.count %>)
   </a>
   <a class="nav-item nav-link" id="nav-sold-tab" data-toggle="tab"
      href="#nav-sold" role="tab" aria-controls="nav-sold">
-    Sold (<%= @inventories.sold.count %>)
+    <%= t('.sold') %> (<%= @inventories.sold.count %>)
   </a>
   <a class="nav-item nav-link" id="nav-returned-tab" data-toggle="tab"
      href="#nav-returned" role="tab" aria-controls="nav-returned">
-    Returned (<%= @inventories.returned.count %>)
+    <%= t('.returned') %> (<%= @inventories.returned.count %>)
   </a>
 </nav>
 <div class="tab-content" id="nav-tabContent">
@@ -82,7 +82,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Add Inventories</h5>
+        <h5 class="modal-title"><%= t('.add_invs') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -91,16 +91,16 @@
                     local: true) do |form| %>
       <div class="modal-body">
         <div class="form-group row">
-          <%= form.label :amount, class: 'col-sm-2 col-form-label' %>
+          <%= form.label :amount, t('.amount'), class: 'col-sm-2 col-form-label' %>
           <div class="col-sm-10">
             <%= form.number_field :amount, class: 'form-control' %>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <%= form.submit 'Submit', class: 'btn btn-primary' %>
+        <%= form.submit t('.submit'), class: 'btn btn-primary' %>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
+          <%= t('.close') %>
         </button>
       <% end %>
       </div>
@@ -113,39 +113,37 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Delete Inventories</h5>
+        <h5 class="modal-title"><%= t('.delete_invs') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="mb-3">
-          You can delete up to the amount of unsold inventories.
-          If you need to delete more than unsold inventories.
-          You can try
+          <%= t('.delete_msg') %>
           <strong>
             <a href="#force_delete_inventories" data-toggle="modal"
                data-dismiss="modal">
-              force delete.
+              <%= t('.force_delete') %>
             </a>
           </strong>
         </div>
       <div class="mb-3">
-        Unsold Inventories: <strong><%= @inventories.unsold.count %></strong>
+        <%= t('.unsold_inventories') %>: <strong><%= @inventories.unsold.count %></strong>
       </div>
       <%= form_with(url: remove_inventories_admin_product_path(@product),
                    local: true, id: 'del_inv', method: :patch) do |form| %>
         <div class="form-group row">
-          <%= form.label :amount, class: 'col-sm-2 col-form-label' %>
+          <%= form.label :amount, t('.amount'), class: 'col-sm-2 col-form-label' %>
           <div class="col-sm-10">
             <%= form.number_field :amount, class: 'form-control' %>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <%= form.submit 'Delete', class: 'btn btn-danger' %>
+        <%= form.submit t('.delete'), class: 'btn btn-danger' %>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
+          <%= t('.close') %>
         </button>
       <% end %>
       </div>
@@ -158,28 +156,28 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Force Delete Inventories</h5>
+        <h5 class="modal-title"><%= t('.force_delete_inventories') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="mb-3">
-          Deletable Inventories: <strong><%= @inventories.destroyable.count %></strong>
+          <%= t('.deleteable_inventories') %>: <strong><%= @inventories.destroyable.count %></strong>
         </div>
       <%= form_with(url: force_remove_inventories_admin_product_path(@product),
                     local: true, id: 'f_del_inv', method: :patch) do |form| %>
         <div class="form-group row">
-          <%= form.label :amount, class: 'col-sm-2 col-form-label' %>
+          <%= form.label :amount, t('.amount'), class: 'col-sm-2 col-form-label' %>
           <div class="col-sm-10">
             <%= form.number_field :amount, class: 'form-control' %>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <%= form.submit 'Force Delete', class: 'btn btn-danger' %>
+        <%= form.submit t('.force_delete_btn'), class: 'btn btn-danger' %>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
+          <%= t('.close') %>
         </button>
       <% end %>
       </div>

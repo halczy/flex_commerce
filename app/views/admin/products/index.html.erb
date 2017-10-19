@@ -1,10 +1,10 @@
-<%= provide :title, 'Products' %>
+<%= provide :title, t('.title') %>
 
 <div class="d-flex justify-content-start mb-3 mt-3">
   <div>
     <%= link_to new_admin_product_path, class: "btn btn-primary" do %>
       <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
-      New Product
+      <%= t('.new_product') %>
     <% end %>
   </div>
   <div class="ml-2">
@@ -18,7 +18,7 @@
 <div class="row">
   <%= render 'shared/paginate', objects: @products if @products.present? %>
   <div class="col-lg-12">
-    <p>Product Count: <%= @products.total_count %></p>
+    <p><%= t('.product_count') %>: <%= @products.total_count %></p>
   </div>
   <div class="col-lg-12">
     <%= render 'products', products: @products %>

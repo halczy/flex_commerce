@@ -1,8 +1,8 @@
 <%= form_with(url: admin_products_path, local: true, method: :get) do |form| %>
   <%= form.select :display, options_for_select([
-                  ['No Filter', ''],
-                  ['In Stock', 'in_stock'], 
-                  ['Out of Stock', 'out_of_stock']]),
-                  { prompt: "Filter Products" },
+                  [t('.no_filter'), ''],
+                  [t('.in_stock'), 'in_stock'], 
+                  [t('.out_of_stock'), 'out_of_stock']]),
+                  { prompt: t('.filter_products') },
                   class: 'form-control', onchange: 'this.form.submit();' %>
 <% end %>

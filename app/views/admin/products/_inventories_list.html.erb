@@ -2,9 +2,9 @@
   <thead>
     <tr>
       <th class="w-50">ID</th>
-      <th>Status</th>
-      <th>In Order</th>
-      <th>Customer</th>
+      <th><%= t('.status') %></th>
+      <th><%= t('.in_order') %></th>
+      <th><%= t('.customer') %></th>
       <th></th>
     </tr>
   </thead>
@@ -24,7 +24,7 @@
     <% else %>
       <tr>
         <td colspan="6" class="text-center">
-          No Matching Inventories
+          <%= t('.no_match') %>
         </td>
       </tr>
     <% end %>

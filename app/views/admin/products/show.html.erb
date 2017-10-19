@@ -1,15 +1,15 @@
-<%= provide :title, 'Product Detail' %>
+<%= provide :title, t('.title') %>
 
 <div class="d-flex justify-content-start mb-3 mt-3">
   <div>
     <%= link_to admin_products_path, class: 'btn btn-secondary' do %>
-      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('.return') %>
     <% end %>
     <%= link_to edit_admin_product_path(@product), class: 'btn btn-warning' do %>
-      <i class="fa fa-edit" aria-hidden="true"></i> Edit Product
+      <i class="fa fa-edit" aria-hidden="true"></i> <%= t('.edit') %>
     <% end %>
     <%= link_to inventories_admin_product_path(@product), class: 'btn btn-info' do %>
-      <i class="fa fa-archive" aria-hidden="true"></i> Manage Inventories
+      <i class="fa fa-archive" aria-hidden="true"></i> <%= t('.man_invs') %>
     <% end %>
   </div>
 </div>
@@ -17,7 +17,7 @@
 <div class="row">
   <div class="col">
     <div class="jumbotron">
-      <h4 class="mb-3 mt-0">Basic Properties</h4>
+      <h4 class="mb-3 mt-0"><%= t('.basic') %></h4>
       <table class="table">
         <tbody>
           <tr>
@@ -25,35 +25,35 @@
             <td><%= @product.id %></td>
           </tr>
           <tr>
-            <th scope="row">Name</th>
+            <th scope="row"><%= t('.name') %></th>
             <td><%= @product.name %></td>
           </tr>
           <tr>
-            <th scope="row">Tag Line</th>
+            <th scope="row"><%= t('.tag_line') %></th>
             <td><%= @product.tag_line %></td>
           </tr>
           <tr>
-            <th scope="row">SKU</th>
+            <th scope="row"><%= t('.sku') %></th>
             <td><%= @product.sku %></td>
           </tr>
           <tr>
-            <th scope="row">Weight (KG)</th>
+            <th scope="row"><%= t('.weight') %></th>
             <td><%= @product.weight %></td>
           </tr>
           <tr>
-            <th scope="row">Status</th>
+            <th scope="row"><%= t('.status') %></th>
             <td><%= @product.status.capitalize %></td>
           </tr>
           <tr>
-            <th scope="row">Strict Inventory</th>
+            <th scope="row"><%= t('.strict_inventory') %></th>
             <td><%= @product.strict_inventory.to_s.try(:capitalize) %></td>
           </tr>
           <tr>
-            <th scope="row">Digital Product</th>
+            <th scope="row"><%= t('.digital_product') %></th>
             <td><%= @product.digital.to_s.try(:capitalize) %></td>
           </tr>
           <tr>
-            <th scope="row">Categories</th>
+            <th scope="row"><%= t('.categories') %></th>
             <td>
               <ul>
               <% @product.categories.each do |category| %>
@@ -63,7 +63,7 @@
             </td>
           </tr>
           <tr>
-            <th scope="row">Shipping Methods</th>
+            <th scope="row"><%= t('.shipping_methods') %></th>
             <td>
               <ul>
               <% @product.shipping_methods.each do |shipping_method| %>
@@ -73,7 +73,7 @@
             </td>
           </tr>
           <tr>
-            <th scope="row">Reward Methods</th>
+            <th scope="row"><%= t('.reward_methods') %></th>
             <td>
               <ul>
               <% @product.reward_methods.each do |reward_method| %>
@@ -88,23 +88,23 @@
   </div>
   <div class="col">
     <div class="jumbotron">
-      <h4 class="mb-3 mt-0">Pricing</h4>
+      <h4 class="mb-3 mt-0"><%= t('.pricing') %></h4>
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">Market Price</th>
+            <th scope="row"><%= t('.market_price') %></th>
             <td><%= humanized_money_with_symbol(@product.price_market) %></td>
           </tr>
           <tr>
-            <th scope="row">Member Price</th>
+            <th scope="row"><%= t('.member_price') %></th>
             <td><%= humanized_money_with_symbol(@product.price_member) %></td>
           </tr>
           <tr>
-            <th scope="row">Reward Price</th>
+            <th scope="row"><%= t('.reward_price') %></th>
             <td><%= humanized_money_with_symbol(@product.price_reward) %></td>
           </tr>
           <tr>
-            <th scope="row">Cost</th>
+            <th scope="row"><%= t('.cost') %></th>
             <td><%= humanized_money_with_symbol(@product.cost) %></td>
           </tr>
         </tbody>
@@ -116,17 +116,17 @@
 <div class="row">
   <div class="col-12">
     <div class="jumbotron">
-      <h5 class="mb-3">Inventories</h5>
+      <h5 class="mb-3"><%= t('.inventories') %></h5>
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th class="text-center">Total Inventories</th>
-            <th class="text-center">Unsold</th>
-            <th class="text-center">In Cart</th>
-            <th class="text-center">In Order</th>
-            <th class="text-center">In Checkout</th>
-            <th class="text-center">Sold</th>
-            <th class="text-center">Returned</th>
+            <th class="text-center"><%= t('.total_inventories') %></th>
+            <th class="text-center"><%= t('.unsold') %></th>
+            <th class="text-center"><%= t('.in_cart') %></th>
+            <th class="text-center"><%= t('.in_order') %></th>
+            <th class="text-center"><%= t('.in_checkout') %></th>
+            <th class="text-center"><%= t('.sold') %></th>
+            <th class="text-center"><%= t('.returned') %></th>
           </tr>
         </thead>
         <tbody>
@@ -148,19 +148,19 @@
 <div class="row">
   <div class="col-12">
     <div class="jumbotron">
-      <h5 class="mb-3">Introduction</h5>
+      <h5 class="mb-3"><%= t('.introduction') %></h5>
       <%= @product.introduction.html_safe %>
     </div>
   </div>
   <div class="col-12">
     <div class="jumbotron">
-      <h5 class="mb-3">Specification</h5>
+      <h5 class="mb-3"><%= t('.specification') %></h5>
       <%= @product.specification.html_safe %>
     </div>
   </div>
   <div class="col-12">
     <div class="jumbotron">
-      <h5 class="mb-3">Description</h5>
+      <h5 class="mb-3"><%= t('.description') %></h5>
       <%= @product.description.html_safe %>
     </div>
   </div>
@@ -169,9 +169,9 @@
 <div class="jumbotron">
   <div class="row">
     <div class="col">
-      <h5 class="mb-3">Attached Images</h5>
+      <h5 class="mb-3"><%= t('.attached_images') %></h5>
       <% if @product.images.attachment.empty? %>
-        <p>No Image</p>
+        <p><%= t('.no_image') %></p>
       <% end %>
     </div>
   </div>
@@ -181,13 +181,13 @@
         <p><%= image.title %></p>
         <p><%= image_tag(image.image_url(:thumb)) %></p>
         <p>
-          <%= link_to 'View', admin_image_path(image),
-                              class: 'btn btn-sm btn-info' %>
+          <%= link_to t('.view'), admin_image_path(image),
+                                  class: 'btn btn-sm btn-info' %>
           <% if image.source_channel == 'attachment' %>
-            <%= link_to 'Delete', admin_image_path(image, return_back: true),
-                                  method: :delete,
-                                  class: 'btn btn-sm btn-danger',
-                                  data: { confirm: 'Are you sure?' } %>
+            <%= link_to t('.delete'), admin_image_path(image, return_back: true),
+                                      method: :delete,
+                                      class: 'btn btn-sm btn-danger',
+                                      data: { confirm: 'Are you sure?' } %>
           <% end %>
         </p>
       </div>
@@ -197,9 +197,9 @@
 <div class="jumbotron">
   <div class="row">
     <div class="col">
-      <h5 class="mb-3">Editor Image Files</h5>
+      <h5 class="mb-3"><%= t('.editor_image_files') %></h5>
       <% if @product.images.editor.empty? %>
-        <p>No Image</p>
+        <p><%= t('.no_image') %></p>
       <% end %>
     </div>
   </div>
@@ -209,13 +209,13 @@
         <p><%= image.title %></p>
         <p><%= image_tag(image.image_url(:thumb)) %></p>
         <p>
-          <%= link_to 'View', admin_image_path(image),
-                              class: 'btn btn-sm btn-info' %>
+          <%= link_to t('.view'), admin_image_path(image),
+                                  class: 'btn btn-sm btn-info' %>
           <% if image.source_channel == 'attachment' %>
-            <%= link_to 'Delete', admin_image_path(image, return_back: true),
-                                  method: :delete,
-                                  class: 'btn btn-sm btn-danger',
-                                  data: { confirm: 'Are you sure?' } %>
+            <%= link_to t('.delete'), admin_image_path(image, return_back: true),
+                                      method: :delete,
+                                      class: 'btn btn-sm btn-danger',
+                                      data: { confirm: 'Are you sure?' } %>
           <% end %>
         </p>
       </div>

@@ -6,9 +6,9 @@
                                       class: "form-control" %>
 
   <span class="input-group-btn">
-    <%= button_tag class: 'btn btn-success', data: { disable_with: "Searching..." } do %>
+    <%= button_tag class: 'btn btn-success', data: { disable_with: t('.searching') } do %>
       <i class="fa fa-search fa-lg" aria-hidden="true"></i>
-      Search
+      <%= t('.search') %>
     <% end %>
   </span>
 <% end %>

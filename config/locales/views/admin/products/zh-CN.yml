@@ -1,0 +1,131 @@
+zh-CN:
+  admin:
+    products:
+      index:
+        title: 产品
+        new_product: 创建新产品
+        product_count: 产品数量
+      filter:
+        no_filter: 无筛选
+        in_stock: 有货产品
+        out_of_stock: 无货产品
+        filter_products: 筛选产品
+      search_form:
+        search: 搜索
+        searching: 搜索中...
+      products:
+        name: 名称
+        sku: 货号
+        member_price: 会员价
+        stock: 库存
+        sold: 已售出
+      action_control:
+        edit: 编辑
+        delete: 删除
+        delete_product: 删除产品
+        delete_msg: 你确认你需要删除该产品。
+        delete_warning: 该产品不可删除。可选择隐藏该产品。
+        confirm: 确认
+        close: 关闭
+      search:
+        title: 产品搜索
+        return: 返回列表
+        result: 搜索结果
+        matching: 件符合条件产品
+        no_match: 无符合条件产品
+      new:
+        title: 创建新产品
+      edit:
+        title: 编辑产品
+      show:
+        title: 产品详情
+        return: 返回列表
+        edit: 编辑产品
+        man_invs: 管理库存
+        basic: 基本信息
+        name: 名称
+        tag_line: 描述
+        sku: 货号
+        weight: 重量（公斤）
+        status: 状态
+        strict_inventory: 严格库存控制
+        digital_product: 数码产品
+        categories: 目录
+        shipping_methods: 送货方式
+        reward_methods: 奖励方式
+        pricing: 价格
+        market_price: 市场价
+        member_price: 会员价
+        reward_price: 奖励价
+        cost: 成本
+        inventories: 库存
+        total_inventories: 全部库存
+        unsold: 未售出
+        in_cart: 购物车内
+        in_order: 结帐中
+        in_checkout: 付款中
+        sold: 已售出
+        returned: 退货
+        introduction: 产品简介
+        specification: 产品规格
+        description: 详细描述
+        attached_images: 图片附件
+        no_image: 无图片
+        view: 查看
+        delete: 删除
+        editor_image_files: 产品信息附属文件
+      form:
+        basic: 基本信息
+        status: 状态
+        weight: 重量（公斤）
+        select_shipping: 选择可用送货方式
+        select_reward: 选择可用奖励方式
+        sku: 货号
+        enforce_strict_inventory: 启用严格库存控制
+        true_opt: 是
+        false_opt: 否
+        set_as_digital: 标为数码产品
+        member_price: 会员价
+        reward_price: 奖励价
+        market_price: 市场价
+        cost: 成本
+        categories: 目录
+        select_categories: 选择目录
+        select_brand_categories: 选择品牌目录
+        select_special_categories: 选择特殊目录
+        images: 图片
+        add_image: 添加图片
+        one_moment: 请稍候...
+      image_fields:
+        upload_image: 上传图片
+        title: 标题
+        description: 简介
+        display_order: 显示次序
+      inventories:
+        title: 库存管理
+        return: 返回
+        add_invs: 添加库存
+        delete_invs: 删除库存
+        total: 全部库存
+        unsold: 未售出
+        in_cart: 购物车内
+        in_order: 订单内
+        in_checkout: 结帐中
+        sold: 已售出
+        returned: 退货
+        amount: 数量
+        submit: 提价
+        close: 关闭
+        delete_msg: 你可删除未售出库存。如果你需要更多的库存，你可以尝试
+        force_delete: 强制删除。
+        unsold_inventories: 未售出
+        delete: 删除
+        close: 关闭
+        force_delete_inventories: 强制删除库存
+        deleteable_inventories: 可删除库存
+        force_delete_btn: 强制删除
+      inventories_list:
+        status: 状态
+        in_order: 订单内
+        customer: 顾客
+        no_match: 无库存

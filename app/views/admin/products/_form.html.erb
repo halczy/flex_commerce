@@ -1,7 +1,7 @@
 <%= form_with(model: [:admin, product], local: true) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
-  <h4>Basic Properties</h4>
+  <h4><%= t('.basic') %></h4>
   <hr \>
   <div class="row form-group">
     <div class="col-sm-6">
@@ -17,24 +17,24 @@
 
   <div class="row form-group">
     <div class="col-sm-3">
-      <%= f.label :status, 'Status' %>
+      <%= f.label :status, t('.status') %>
       <%= f.select :status, options_for_select([['Active',  'active'],
                                                 ['Disable', 'disabled']]),
                             {}, class: 'form-control' %>
     </div>
     <div class="col-sm-3">
-      <%= f.label :weight, 'Weight (KG)' %>
+      <%= f.label :weight, t('.weight') %>
       <%= f.number_field :weight, step: :any, class: 'form-control' %>
     </div>
     <div class="col-sm-3">
-      <%= f.label :shipping_method_ids, 'Select Shipping Methods' %>
+      <%= f.label :shipping_method_ids, t('.select_shipping') %>
       <%= f.collection_select :shipping_method_ids, ShippingMethod.all,
                               :id, :name, {},
                               { multiple: true, class: 'form-control',
                                 id: 'shipping_method_select' } %>
     </div>
     <div class="col-sm-3">
-      <%= f.label :reward_method_ids, 'Select Reward Methods' %>
+      <%= f.label :reward_method_ids, t('.select_reward') %>
       <%= f.collection_select :reward_method_ids, RewardMethod.all,
                               :id, :name, {},
                               { multiple: true, class: 'form-control',
@@ -45,20 +45,21 @@
   <div class="row form-group">
     <div class="col-sm-6">
       <div class="mb-2">
-        <%= f.label :sku, 'SKU' %>
+        <%= f.label :sku, t('.sku') %>
         <%= f.text_field :sku, class: 'form-control' %>
       </div>
       <div class="row">
         <div class="col">
-          <%= f.label :strict_inventory, 'Enforce Strict Inventory' %>
-          <%= f.select :strict_inventory, options_for_select([['False', 0],
-                                                             ['True',  1]]),
+          <%= f.label :strict_inventory, t('.enforce_strict_inventory') %>
+          <%= f.select :strict_inventory, options_for_select(
+                                            [[t('.false_opt'), 0],
+                                             [t('.true_opt'),  1]]),
                                           {}, class: 'form-control' %>
         </div>
         <div class="col">
-          <%= f.label :digital, 'Set As Digital Product' %>
-          <%= f.select :digital, options_for_select([['False', 0],
-                                                     ['True',  1]]),
+          <%= f.label :digital, t('.set_as_digital') %>
+          <%= f.select :digital, options_for_select([[t('.false_opt'), 0],
+                                                     [t('.true_opt'),  1]]),
                                  {}, class: 'form-control' %>
         </div>
       </div>
@@ -87,53 +88,53 @@
     </div>
   </div>
 
-  <h4 class='mt-5'>Pricing</h4>
+  <h4 class='mt-5'><%= t('.pricing') %></h4>
   <hr \>
 
   <div class="row form-group">
     <div class="col-sm-3">
-      <%= f.label :price_member, 'Member Price' %>
+      <%= f.label :price_member, t('.member_price') %>
       <%= f.number_field :price_member, step: :any, class: 'form-control' %>
     </div>
     <div class="col-sm-3">
-      <%= f.label :price_reward, 'Reward Price' %>
+      <%= f.label :price_reward, t('.reward_price') %>
       <%= f.number_field :price_reward, step: :any, class: 'form-control' %>
     </div>
     <div class="col-sm-3">
-      <%= f.label :price_market, 'Market Price' %>
+      <%= f.label :price_market, t('.market_price') %>
       <%= f.number_field :price_market, step: :any, class: 'form-control' %>
     </div>
     <div class="col-sm-3">
-      <%= f.label :cost, 'Cost' %>
+      <%= f.label :cost, t('.cost') %>
       <%= f.number_field :cost, step: :any, class: 'form-control' %>
     </div>
   </div>
 
-  <h4 class="mt-5">Categories</h4>
+  <h4 class="mt-5"><%= t('.categories') %></h4>
   <hr \>
 
   <div class="row form-group">
     <div class="col-sm-4">
-      <%= f.label :category_ids, "Select Categories" %>
+      <%= f.label :category_ids, t('.select_categories') %>
       <%= f.collection_select :category_ids, Category.regular, :id, :name, {},
                               { multiple: true, class: 'form-control',
                                 id: 'reg_cat_sel' } %>
     </div>
     <div class="col-sm-4">
-      <%= f.label :category_ids, "Select Brand Categoies" %>
+      <%= f.label :category_ids, t('.select_brand_categories') %>
       <%= f.collection_select :category_ids, Category.brand, :id, :name, {},
                               { multiple: true, class: 'form-control',
                                 id: 'brand_cat_sel' } %>
     </div>
     <div class="col-sm-4">
-      <%= f.label :category_ids, "Select Special Categoies" %>
+      <%= f.label :category_ids, t('.select_special_categories') %>
       <%= f.collection_select :category_ids, Category.special, :id, :name, {},
                               { multiple: true, class: 'form-control',
                                 id: 'spc_cat_sel' } %>
     </div>
   </div>
 
-  <h4 class="mt-5">Images</h4>
+  <h4 class="mt-5"><%= t('.images') %></h4>
   <hr \>
   <div class='images'>
     <%= f.fields_for :images do |image_form| %>
@@ -141,12 +142,12 @@
     <% end %>
   </div>
 
-  <%= link_to_add_association 'Add Image', f, :images, class: 'btn btn-success mb-3',
+  <%= link_to_add_association t('.add_image'), f, :images, class: 'btn btn-success mb-3',
                               data: { association_insertion_node: '.images',
                               association_insertion_method: :append } %>
 
   <%= f.submit class: 'btn btn-block btn-primary mb-5',
-               data: { disable_with: "One Moment..." } %>
+               data: { disable_with: t('.one_moment') } %>
 
 <% end %>
 
