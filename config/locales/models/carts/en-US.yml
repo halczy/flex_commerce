@@ -1,0 +1,7 @@
+en-US:
+  activerecord:
+    models:
+      cart: Cart
+    attributes:
+      cart:
+        status: Status

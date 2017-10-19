@@ -1,0 +1,7 @@
+zh-CN:
+  activerecord:
+    models:
+      cart: 购物车
+    attributes:
+      cart:
+        status: 状态
