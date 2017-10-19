@@ -1,0 +1,11 @@
+en-US:
+  activerecord:
+    models:
+      category: Category
+    attributes:
+      category: 
+        name: Name
+        display_order: Display Order
+        flavor: Flavor
+        hide: Hide
+        

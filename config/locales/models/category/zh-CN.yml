@@ -1,0 +1,10 @@
+zh-CN:
+  activerecord:
+    models:
+      category: 目录
+    attributes:
+      category: 
+        name: 名称
+        display_order: 显示次序
+        flavor: 类型
+        hide: 隐藏
