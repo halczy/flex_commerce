@@ -1,15 +1,15 @@
-<%= provide :title, 'Shipping Method' %>
+<%= provide :title, t('.title') %>
 
 <div class="d-flex justify-content-start mb-3 mt-3">
   <div>
     <%= link_to admin_shipping_methods_path, class: 'btn btn-secondary' do %>
-      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('.return') %>
     <% end %>
   </div>
   <div class="ml-2">
     <%= link_to edit_admin_shipping_method_path(@shipping_method),
                 class: 'btn btn-warning' do %>
-      <i class="fa fa-edit" aria-hidden="true"></i> Edit Shipping Method
+      <i class="fa fa-edit" aria-hidden="true"></i> <%= t('.edit_shipping_method') %>
     <% end %>
   </div>
 </div>
@@ -17,15 +17,15 @@
 <div class="row">
   <div class="col">
     <div class="jumbotron">
-      <h4 class="mb-3 mt-0">Basic Properties</h4>
+      <h4 class="mb-3 mt-0"><%= t('.basic') %></h4>
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">Name</th>
+            <th scope="row"><%= t('.name') %></th>
             <td><%= @shipping_method.name %></td>
           </tr>
           <tr>
-            <th scope="row">Type</th>
+            <th scope="row"><%= t('.type') %></th>
             <td><%= @shipping_method.variety.titleize %></td>
           </tr>
         </tbody>
@@ -33,19 +33,19 @@
     </div>
   </div>
   <div class="col jumbotron">
-    <h4 class="mb-3 mt-0">Method Data</h4>
+    <h4 class="mb-3 mt-0"><%= t('.method_data') %></h4>
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">Shipping Rates</th>
+            <th scope="row"><%= t('.shipping_rates') %></th>
             <td><%= @shipping_rates.count %></td>
           </tr>
           <tr>
-            <th scope="row">Pickup Address</th>
+            <th scope="row"><%= t('.pickup_address') %></th>
             <td><%= (@address.present?).to_s.titleize %></td>
           </tr>
           <tr>
-            <th scope="row">Proudcts</th>
+            <th scope="row"><%= t('.products') %></th>
             <td><%= @shipping_method.products.count %></td>
           </tr>
         </tbody>
@@ -56,14 +56,14 @@
 <div class="row">
   <div class="col">
     <div class="jumbotron">
-      <h4 class="mb-3 mt-0">Shipping Rates</h4>
+      <h4 class="mb-3 mt-0"><%= t('.shipping_rates') %></h4>
       <table class="table">
         <thead>
           <tr>
-            <th>Geo Code</th>
-            <th>Geo Name</th>
-            <th>Init. Rate</th>
-            <th>Add-On Rate</th>
+            <th><%= t('.geo_code') %></th>
+            <th><%= t('.geo_name') %></th>
+            <th><%= t('.init_rate') %></th>
+            <th><%= t('.add_on_rate') %></th>
           </tr>
         </thead>
         <tbody>
@@ -80,19 +80,19 @@
     </div>
   </div>
   <div class="col jumbotron">
-    <h4 class="mb-3 mt-0">Self Pickup Address</h4>
+    <h4 class="mb-3 mt-0"><%= t('.self_pickup_address') %></h4>
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">Pickup Contact</th>
+            <th scope="row"><%= t('.pickup_contact') %></th>
             <td><%= @address.try(:recipient) %></td>
           </tr>
           <tr>
-            <th scope="row">Contact Number</th>
+            <th scope="row"><%= t('.contact_number') %></th>
             <td><%= @address.try(:contact_number) %></td>
           </tr>
           <tr>
-            <th scope="row">Address</th>
+            <th scope="row"><%= t('.address') %></th>
             <td><%= @address.try(:full_address) %></td>
           </tr>
         </tbody>

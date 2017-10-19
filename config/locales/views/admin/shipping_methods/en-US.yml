@@ -1,0 +1,67 @@
+en-US:
+  admin:
+    shipping_methods:
+      index:
+        title: Shipping Methods
+        new_shipping_method: New Shipping Method
+        geo_date_reference: Geo Data Reference
+      shipping_methods:
+        name: Name
+        type: Type
+        rate_items: Rate Items
+        no_record: No Shipping Method Available
+      action_control:
+        edit: Edit
+        delete: Delete
+        delete_shipping_method: Delete Shipping Method
+        delete_msg: Please confirm that you want to delete this shipping method.
+        confirm: Confirm
+        close: Close
+      new:
+        title: New Shipping Method
+      edit:
+        title: Edit Shipping Method
+      form:
+        method_type: Method Type
+        no_shipping: No Shipping
+        delivery: Delivery
+        self_pickup: Self Pickup
+        geo_code_guide: Geo Code Matching Guide
+        geo_msg_1: Geo Code
+        geo_msg_2: will match all locations
+        geo_msg_3: will match orders shipping to Beijing
+        shipping_rates: Shipping Rates
+        geo_code: Geo Code
+        init_rate: Initial Rate (First KG)
+        add_on_rate: Add-on Rate (Rate/KG > 1KG)
+        add_rate: Add Rate
+        self_pickup_address: Self Pickup Address
+        self_pickup_msg: Please only fill this address if method type is self pickup.
+        submit: Submit
+        cn_province_geo_code: CN Province Geo Code
+      shipping_rate_fields:
+        remove: Remove
+      address_fields:
+        pickup_contact: Pickup Contact
+        province: Province
+        address: Address
+      show:
+        title: Shipping Method
+        return: Return
+        edit_shipping_method: Edit Shipping Method
+        basic: Basic Properties
+        name: Name
+        type: Type
+        method_data: Method Data
+        shipping_rates: Shipping Rates
+        pickup_address: Pickup Address
+        products: Products
+        shipping_rates: Shipping Rates
+        geo_code: Geo Code
+        geo_name: Geo Name
+        init_rate: Init. Rate
+        add_on_rate: Add-on Rate
+        self_pickup_address: Self Pickup Address
+        pickup_contact: Pickup Contact
+        contact_number: Contact Number
+        address: Address

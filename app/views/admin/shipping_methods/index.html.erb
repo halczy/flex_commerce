@@ -1,16 +1,16 @@
-<%= provide :title, 'Shipping Methods' %>
+<%= provide :title, t('.title') %>
 
 <div class="d-flex justify-content-start mb-3 mt-3">
   <div>
     <%= link_to new_admin_shipping_method_path, class: "btn btn-primary" do %>
       <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
-      New Shipping Method
+      <%= t('.new_shipping_method') %>
     <% end %>
   </div>
   <div class="ml-2">
     <%= link_to admin_geos_path, class: "btn btn-success" do %>
       <i class="fa fa-globe fa-lg" aria-hidden="true"></i>
-      Geo Data Reference
+      <%= t('.geo_date_reference') %>
     <% end %>
   </div>
 </div>

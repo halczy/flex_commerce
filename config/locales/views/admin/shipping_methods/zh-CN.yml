@@ -1,0 +1,67 @@
+zh-CN:
+  admin:
+    shipping_methods:
+      index:
+        title: 送货方式
+        new_shipping_method: 创建新送货方式
+        geo_date_reference: 地理代码对照表
+      shipping_methods:
+        name: 名称
+        type: 类型
+        rate_items: 费用项目
+        no_record: 无送货方式
+      action_control:
+        edit: 编辑
+        delete: 删除
+        delete_shipping_method: 删除送货方式
+        delete_msg: 请点击确认删除该送货方式
+        confirm: 确认
+        close: 关闭
+      new:
+        title: 创建新送货方法
+      edit:
+        title: 编辑送货方式
+      form:
+        method_type: 送货类型
+        no_shipping: 无送货需求
+        delivery: 快递
+        self_pickup: 自提
+        geo_code_guide: 快递费用项简介
+        geo_msg_1: 地理代码
+        geo_msg_2: 会配对所有地址
+        geo_msg_3: 会配对到北京的费用项
+        shipping_rates: 快递费用项
+        geo_code: 地理代码
+        init_rate: 首重（第一公斤）
+        add_on_rate: 续重 （一公斤后附加费）
+        add_rate: 添加费用项
+        self_pickup_address: 自提地址
+        self_pickup_msg: 非自提类送货方式请不要填写以下地址
+        submit: 提交
+        cn_province_geo_code: 中国省级地理代码
+      shipping_rate_fields:
+        remove: 删除
+      address_fields:
+        pickup_contact: 提货联系人
+        province: 省/直辖市
+        address: 地址
+      show:
+        title: 送货方式
+        return: 返回
+        edit_shipping_method: 编辑送货方式
+        basic: 基本信息
+        name: 名称
+        type: 类别
+        method_data: 送货方式设置
+        shipping_rates: 费用项
+        pickup_address: 提货地址
+        products: 使用产品
+        shipping_rates: 费用项
+        geo_code: 地理代码
+        geo_name: 地理名称
+        init_rate: 首重费用
+        add_on_rate: 续重费用
+        self_pickup_address: 自提地址
+        pickup_contact: 自提联系人
+        contact_number: 联系电话
+        address: 详细地址

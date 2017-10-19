@@ -1,16 +1,16 @@
 <div class="row form-group">
   <div class="col">
-    <%= f.label  :recipient, 'Pickup Contact' %>
+    <%= f.label  :recipient, t('.pickup_contact') %>
     <%= f.text_field :recipient, class: 'form-control' %>
   </div>
   <div class="col">
-    <%= f.label :contact_number, 'Pickup Contact' %>
+    <%= f.label :contact_number, t('.pickup_contact') %>
     <%= f.text_field :contact_number, class: 'form-control' %>
   </div>
 </div>
 <div class="row form-group">
   <div class="col-3">
-    <%= f.label  :province_state, 'Province' %>
+    <%= f.label  :province_state, t('.province') %>
     <%= f.select :province_state,
                  options_for_select(
                  @provinces.collect { |province| [province.name, province.id] },
@@ -19,7 +19,7 @@
                                             class: 'form-control' } %>
   </div>
   <div class="col-9">
-    <%= f.label :street, 'Address' %>
+    <%= f.label :street, t('.address') %>
     <%= f.text_field :street, class: 'form-control' %>
   </div>
 </div>

@@ -1,9 +1,9 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Rate Items</th>
+      <th><%= t('.name') %></th>
+      <th><%= t('.type') %></th>
+      <th><%= t('.rate_items') %></th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -19,7 +19,7 @@
     </tr>
     <% end %>
     <% if shipping_methods.empty? %>
-      <tr><td colspan="5">No Shipping Method Available</td></tr>
+      <tr><td colspan="5"><%= t('.no_record') %></td></tr>
     <% end %>
   </tbody>
 </table>

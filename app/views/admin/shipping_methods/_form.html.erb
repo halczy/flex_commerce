@@ -9,28 +9,29 @@
           <%= f.text_field :name, class: 'form-control' %>
         </div>
         <div class="col">
-          <%= f.label :variety, 'Method Type' %>
+          <%= f.label :variety, t('.method_type') %>
           <%= f.select :variety,
-                       options_for_select([['No Shipping', 'no_shipping'],
-                                           ['Delivery', 'delivery'],
-                                           ['Self Pickup', 'self_pickup']],
+                       options_for_select([[t('.no_shipping'), 'no_shipping'],
+                                           [t('.delivery'), 'delivery'],
+                                           [t('.self_pickup'), 'self_pickup']],
                                            shipping_method.variety),
                        {}, id: 'method_select', class: 'form-control' %>
         </div>
       </div>
       <div id="shipping_rates_section">
         <div class="jumbotron p-3 m-0">
-          <strong>Geo Code Matching Guide:</strong>
-          <p class="mt-3">Geo code <code>*</code> will match all locations.</p>
-          <p>Geo code <code>110000</code> will match orders shipping to Beijing.</p>
+          <strong><%= t('.geo_code_guide') %>:</strong>
+          <p class="mt-3"><%= t('.geo_msg_1') %> <code>*</code> 
+          <%= t('.geo_msg_2') %></p>
+          <p><%= t('.geo_msg_1') %> <code>110000</code> <%= t('.geo_msg_3') %></p>
         </div>
-        <h5 class="mt-3">Shipping Rates</h5>
+        <h5 class="mt-3"><%= t('.shipping_rates') %></h5>
         <table class="table">
           <thead>
             <tr>
-              <th>Geo Code</th>
-              <th>Initial Rate (First KG)</th>
-              <th colspan="2">Add-On Rate (Rate/KG > 1KG)</th>
+              <th><%= t('.geo_code') %></th>
+              <th><%= t('.init_rate') %></th>
+              <th colspan="2"><%= t('.add_on_rate') %></th>
             </tr>
           </thead>
           <tbody class="shipping_rates">
@@ -39,15 +40,15 @@
             <% end %>
           </tbody>
         </table>
-        <%= link_to_add_association 'Add Rate', f, :shipping_rates,
+        <%= link_to_add_association t('.add_rate'), f, :shipping_rates,
                                     class: 'btn btn-success mb-3',
                                     data: { association_insertion_node: '.shipping_rates',
                                             association_insertion_method: :append } %>
       </div>
 
       <div id="address_section">
-        <h5 class="mt-3">Self Pickup Address</h5>
-        <p>Please only fill this address if method type is self pickup.</p>
+        <h5 class="mt-3"><%= t('.self_pickup_address') %></h5>
+        <p><%= t('.self_pickup_msg') %></p>
         <div class="address">
           <%= f.fields_for :address do |address| %>
             <%= render 'address_fields', f: address %>
@@ -56,14 +57,14 @@
       </div>
 
 
-      <%= f.submit 'Submit', class: 'btn btn-primary btn-block mt-5' %>
+      <%= f.submit t('.submit'), class: 'btn btn-primary btn-block mt-5' %>
     </div>
 
     <div class="col-md-4 jumbotron">
-      <h5>CN Province Geo Code</h5>
+      <h5><%= t('.cn_province_geo_code') %></h5>
       <% @provinces.each do |province| %>
         <div>
-          Geo Code: <%= province.id %> | <%= province.name %>
+          <%= t('.geo_code') %>: <%= province.id %> | <%= province.name %>
         </div>
       <% end %>
     </div>
