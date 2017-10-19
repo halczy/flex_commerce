@@ -1,0 +1,11 @@
+en-US:
+  activerecord:
+    models:
+      transfer: Transfer
+    attributes:
+      transfer:
+        amount: Amount
+        processor: Processor
+        status: Status
+        processor_response: Processor Response
+        processor_query_result: Processor Query Result

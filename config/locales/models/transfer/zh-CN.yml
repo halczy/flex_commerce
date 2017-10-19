@@ -1,0 +1,11 @@
+zh-CN:
+  activerecord:
+    models:
+      transfer: 转帐
+    attributes:
+      transfer:
+        amount: 金额
+        processor: 交易网关
+        status: 状态
+        processor_response: 交易网关通知
+        processor_query_result: 交易网关查询结果

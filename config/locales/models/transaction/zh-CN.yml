@@ -1,0 +1,8 @@
+zh-CN:
+  activerecord:
+    models:
+      transaction: 流水记录
+    attributes:
+      transaction:
+        amount: 金额
+        note: 备注

@@ -1,0 +1,8 @@
+en-US:
+  activerecord:
+    models:
+      transaction: Transaction
+    attributes:
+      transaction:
+        amount: Amount
+        note: Note
