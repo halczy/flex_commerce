@@ -1,31 +1,31 @@
 <% if @delivery.present? %>
   <div class="col">
     <div class="jumbotron">
-      <h4>Delivery</h4>
+      <h4><%= t('.delivery') %></h4>
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">Address</th>
+            <th scope="row"><%= t('.address') %></th>
             <td><%= @order.address.full_address %></td>
           </tr>
           <tr>
-            <th scope="row">Recipient</th>
+            <th scope="row"><%= t('.recipient') %></th>
             <td><%= @order.address.recipient %></td>
           </tr>
           <tr>
-            <th scope="row">Contact Number</th>
+            <th scope="row"><%= t('.contact_number') %></th>
             <td><%= @order.address.contact_number %></td>
           </tr>
           <tr>
-            <th scope="row">Shipping Company</th>
+            <th scope="row"><%= t('.shipping_company') %></th>
             <td><%= @order.shipping_company %></td>
           </tr>
           <tr>
-            <th scope='row'>Tracking Number</th>
+            <th scope='row'><%= t('.tracking_number') %></th>
             <td><%= @order.tracking_number %></td>
           </tr>
           <tr>
-            <th scope='row'>Shipped At</th>
+            <th scope='row'><%= t('.shipped_at') %></th>
             <td>
               <% if @order.shipped_at %>
                 <%= DateTime.parse(@order.shipped_at).strftime("%Y/%m/%d") %>
@@ -33,7 +33,7 @@
             </td>
           </tr>
           <tr>
-            <th scope="row">Shipping Completed At</th>
+            <th scope="row"><%= t('.shipping_completed_at') %></th>
             <td>
               <% if @order.shipping_completed_at %>
                 <%= DateTime.parse(@order.shipping_completed_at).strftime("%Y/%m/%d") %>
@@ -48,15 +48,15 @@
 <% if @self_pickup.present? %>
   <div class="col">
     <div class="jumbotron">
-      <h4>Self Pickup</h4>
+      <h4><%= t('.self_pickup') %></h4>
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">Address</th>
+            <th scope="row"><%= t('.address') %></th>
             <td><%= @self_pickup.address.full_address %></td>
           </tr>
           <tr>
-            <th scope="row">Pickup Readied At</th>
+            <th scope="row"><%= t('.pickup_readied_at') %></th>
             <td>
               <% if @order.pickup_readied_at %>
                 <%= DateTime.parse(@order.pickup_readied_at).strftime("%Y/%m/%d") %>
@@ -64,7 +64,7 @@
             </td>
           </tr>
           <tr>
-            <th scope="row">Pickup Completed At</th>
+            <th scope="row"><%= t('.pickup_completed_at') %></th>
             <td>
               <% if @order.pickup_completed_at %>
                 <%= DateTime.parse(@order.pickup_completed_at).strftime("%Y/%m/%d") %>

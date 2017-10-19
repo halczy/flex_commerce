@@ -1,6 +1,6 @@
 <div class="col">
   <div class="jumbotron">
-    <h4>Basic Information</h4>
+    <h4><%= t('.basic_info') %></h4>
     <table class="table">
       <tbody>
         <tr>
@@ -8,19 +8,19 @@
           <td><%= @order.id %></td>
         </tr>
         <tr>
-          <th scope='row'>Status</th>
+          <th scope='row'><%= t('.status') %></th>
           <td><%= @order.status.titleize %></td>
         </tr>
         <tr>
-          <th scope='row'>Shipping Cost</th>
+          <th scope='row'><%= t('.shipping_cost') %></th>
           <td><%= humanized_money_with_symbol @order.shipping_cost %></td>
         </tr>
         <tr>
-          <th scope='row'>Confrimed Total</th>
+          <th scope='row'><%= t('.confirm_total') %></th>
           <td><%= humanized_money_with_symbol @order.total %></td>
         </tr>
         <tr>
-          <th scope="row">Pre-confirm Total</th>
+          <th scope="row"><%= t('.pre_confirm_total') %></th>
           <td><%= humanized_money_with_symbol @order.pre_confirm_total %></td>
         </tr>
       </tbody>
@@ -29,23 +29,23 @@
 </div>
 <div class="col">
   <div class="jumbotron">
-    <h4>Customer Information</h4>
+    <h4><%= t('.customer_info') %></h4>
     <table class="table">
       <tbody>
         <tr>
-          <th scope="row">Name</th>
+          <th scope="row"><%= t('.name') %></th>
           <td><%= @order.user.name %></td>
         </tr>
         <tr>
-          <th scope="row">Member ID</th>
+          <th scope="row"><%= t('.member_id') %></th>
           <td><%= @order.user.member_id %></td>
         </tr>
         <tr>
-          <th scope="row">Email</th>
+          <th scope="row"><%= t('.email') %></th>
           <td><%= @order.user.email %></td>
         </tr>
         <tr>
-          <th scope="row">Cell Number</th>
+          <th scope="row"><%= t('.cell_number') %></th>
           <td><%= @order.user.cell_number %></td>
         </tr>
       </tbody>

@@ -1,9 +1,9 @@
-<%= provide :title, "Order Search" %>
+<%= provide :title, t('.title') %>
 
 <div class="d-flex justify-content-start mb-3 mt-3">
   <div>
     <%= link_to admin_orders_path, class: 'btn btn-info' do %>
-      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('.return') %>
     <% end %>
   </div>
   <div class="ml-auto">
@@ -15,15 +15,15 @@
   <% if @search_result.present? %>
     <%= render 'shared/paginate', objects: @search_result %>
     <div class="col-lg-12">
-      <strong>Result: </strong>
-      <small><em><%= @search_run.count %> Matching Orders</em></small>
+      <strong><%= t('.result') %>: </strong>
+      <small><em><%= @search_run.count %> <%= t('.matching') %></em></small>
       <%= render 'admin/orders/shared/orders', orders: @search_result %>
     </div>
     <%= render 'shared/paginate', objects: @search_result %>
   <% else %>
     <div class="col-12">
       <div class="jumbotron">
-        <h5 class="text-center">No Matching Product Found</h5>
+        <h5 class="text-center"><%= t('.no_record') %></h5>
       </div>
     </div>
   <% end %>

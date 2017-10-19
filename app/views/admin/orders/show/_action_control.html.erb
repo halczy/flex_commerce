@@ -1,36 +1,37 @@
 <div class="d-flex justify-content-start mb-3 mt-3">
   <div>
     <%= link_to admin_orders_path, class: 'btn btn-secondary' do %>
-      <i class="fa fa-arrow-left" aria-hidden="true"></i> Return to List
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('.return') %>
     <% end %>
   </div>
   <div class="ml-2">
     <% if @order.payment_success? %>
-      <%= link_to 'Confirm Order', confirm_admin_order_path(@order),
-                                   method: :patch,
-                                   class: 'btn btn-primary' %>
+      <%= link_to t('.confirm_order'), confirm_admin_order_path(@order),
+                                       method: :patch,
+                                       class: 'btn btn-primary' %>
     <% end %>
   </div>
   <div>
     <% if display_ship_order?(@order) %>
-      <%= link_to 'Ship Order', '#', class: 'btn btn-success',
+      <%= link_to t('.ship_order'), '#', class: 'btn btn-success',
                   id: 'btn_ship_#{@order.id}',
                   data: { toggle: 'modal', target: "#ship_#{@order.id}"} %>
     <% end %>
     <% if display_mark_as_shipping_completed?(@order) %>
-      <%= link_to 'Mark as Shipping Completed', complete_shipping_admin_order_path(@order),
-                                                method: :patch,
-                                                class: 'btn btn-success' %>
+      <%= link_to t('.mark_as_shipping_completed'), 
+                  complete_shipping_admin_order_path(@order),
+                  method: :patch, class: 'btn btn-success' %>
     <% end %>
     <% if display_mark_as_pickup_ready?(@order) %>
-      <%= link_to 'Mark as Pickup Ready', set_pickup_ready_admin_order_path(@order),
-                                          method: :patch,
-                                          class: 'btn btn-success' %>
+      <%= link_to t('.mark_as_pickup_ready'), 
+                  set_pickup_ready_admin_order_path(@order),
+                  method: :patch,
+                  class: 'btn btn-success' %>
     <% end %>
     <% if display_mark_as_pickup_completed?(@order) %>
-      <%= link_to 'Mark as Pickup Completed', complete_pickup_admin_order_path(@order),
-                                              method: :patch,
-                                              class: 'btn btn-success' %>
+      <%= link_to t('.mark_as_pickup_completed'), 
+                  complete_pickup_admin_order_path(@order),
+                  method: :patch, class: 'btn btn-success' %>
     <% end %>
   </div>
 

@@ -1,0 +1,98 @@
+en-US:
+  admin:
+    orders:
+      index:
+        title: Orders
+        order_count: Order Count
+      search:
+        title: Order Search
+        return: Return to List
+        result: Result
+        matching: Matching Orders
+        no_record: No Matching Order Record
+      shared:
+        filter:
+          no_filter: No Filter
+          created: Created
+          shipping_confirmed: Shipping Confirmed
+          confirmed: Confirmed
+          payment_pending: Payment Pending
+          partial_payment: Partial Payment
+          payment_fail: Payment Fail
+          payment_success: Payment Success
+          staff_confirmed: Staff Confirmed
+          pickup_pending: Pickup Pending
+          shipped: Shipped
+          completed: Completed
+          filter_orders: Filter Orders
+        orders:
+          status: Status
+          customer: Customer
+          total: Total
+          detail: Detail
+          no_match: No Matching Order
+        search_form:
+          search: Search
+          searching: Searching...
+          placeholder: ID or Customer Info
+      show:
+        title: Order
+        action_control:
+          return: Return to List
+          confirm_order: Confirm Order
+          ship_order: Ship Order
+          mark_as_shipping_completed: Mark as Shipping Completed
+          mark_as_pickup_ready: Mark as Pickup Ready
+          mark_as_pickup_completed: Mark as Pickup Completed
+        basic:
+          basic_info: Basic Information
+          status: Status
+          shipping_cost: Shipping Cost
+          confirm_total: Confirm Total
+          pre_confirm_total: Pre-confirm Total
+          customer_info: Customer Information
+          name: Name
+          member_id: Member ID
+          email: Email
+          cell_number: Cell Number
+        inventories:
+          order_inventories: Order Inventories
+          product_name: Product Name
+          inventory_id: Inventory ID
+          inventory_status: Inventory Status
+          purchase_price: Purchase Price
+          shipping_method: Shipping Method
+          purchase_date: Purchase Date
+        payment:
+          payment: Payment
+          payment_id: Payment ID
+          payment_amount: Payment Amount
+          payment_status: Payment Status
+          payment_type: Payment Type
+          payment_processor: Payment Processor
+        shipment:
+          delivery: Delivery
+          address: Address
+          recipient: Recipient
+          contact_number: Contact Number
+          shipping_company: Shipping Company
+          tracking_number: Tracking Number
+          shipped_at: Shipped At
+          shipping_completed_at: Shipping Completed At
+          self_pickup: Self Pickup
+          address: Address
+          pickup_readied_at: Pickup Readied At
+          pickup_completed_at: Pickup Completed At
+        shipment_form:
+          add_shipment: Add Shipment
+          shipping_company_label: Select or Enter New Shipping Company
+          tracking_number: Tracking Number
+          submit: Submit
+          close: Close
+        transaction:
+          transaction: Transaction
+          amount: Amount
+          payment_id: Payment ID
+          processor_id: Processor ID
+          note: Note
+          process_date: Process Date

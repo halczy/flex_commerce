@@ -1,9 +1,9 @@
 <table class="table table-hover">
   <thead>
     <th>ID</th>
-    <th>Status</th>
-    <th>Customer</th>
-    <th>Total</th>
+    <th><%= t('.status') %></th>
+    <th><%= t('.customer') %></th>
+    <th><%= t('.total') %></th>
     <th></th>
   </thead>
   <tbody>
@@ -21,13 +21,13 @@
           <% end %>
         </td>
         <td>
-          <%= link_to 'Detail', admin_order_path(order), class: 'btn btn-info btn-sm' %>
+          <%= link_to t('.detail'), admin_order_path(order), class: 'btn btn-info btn-sm' %>
         </td>
       </tr>
       <% end %>
     <% else %>
       <tr>
-        <td colspan="5">No Matching Order</td>
+        <td colspan="5"><%= t('.no_match') %></td>
       </tr>
     <% end %>
   </tbody>

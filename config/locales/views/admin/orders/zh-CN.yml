@@ -1,0 +1,98 @@
+zh-CN:
+  admin:
+    orders:
+      index:
+        title: 订单
+        order_count: 订单数
+      search:
+        title: 订单搜索
+        return: 返回列表
+        result: 搜索结果
+        matching: 张符合条件订单
+        no_record: 无符合条件订单
+      shared:
+        filter:
+          no_filter: 无筛选
+          created: 新创建订单
+          shipping_confirmed: 已选送货方式
+          confirmed: 订单已确认
+          payment_pending: 等候付款
+          partial_payment: 部分付款
+          payment_fail: 付款失败
+          payment_success: 成功付款
+          staff_confirmed: 员工已确认
+          pickup_pending: 等候提货
+          shipped: 已发货
+          completed: 已完成
+          filter_orders: 筛选订单
+        orders:
+          status: 状态
+          customer: 顾客
+          total: 总额
+          detail: 详情
+          no_match: 无订单
+        search_form:
+          search: 搜索
+          searching: 搜索中...
+          placeholder: 顾客 ID 或顾客信息
+      show:
+        title: 订单
+        action_control:
+          return: 返回列表
+          confirm_order: 确认订单
+          ship_order: 发货
+          mark_as_shipping_completed: 确认收货成功
+          mark_as_pickup_ready: 确认备货完成
+          mark_as_pickup_completed: 确认提货成功
+        basic:
+          basic_info: 基本信息
+          status: 状态
+          shipping_cost: 邮费
+          confirm_total: 订单总额（已确认）
+          pre_confirm_total: 订单总额（未确认）
+          customer_info: 顾客信息
+          name: 姓名
+          member_id: 会员号
+          email: 电邮
+          cell_number: 手机号码
+        inventories:
+          order_inventories: 订单库存
+          product_name: 产品名
+          inventory_id: 库存 ID
+          inventory_status: 库存状态
+          purchase_price: 购买价钱
+          shipping_method: 送货方式
+          purchase_date: 购买日期
+        payment:
+          payment: 交易信息
+          payment_id: 交易 ID
+          payment_amount: 交易金额
+          payment_status: 交易状态
+          payment_type: 交易类型
+          payment_processor: 交易网关
+        shipment:
+          delivery: 快递
+          address: 地址
+          recipient: 收件人
+          contact_number: 联系电话
+          shipping_company: 快递公司
+          tracking_number: 快递单号
+          shipped_at: 发货时间
+          shipping_completed_at: 发货完成时间
+          self_pickup: 自提
+          address: 地址
+          pickup_readied_at: 备货完成时间
+          pickup_completed_at: 提货完成时间
+        shipment_form:
+          add_shipment: 添加快递信息
+          shipping_company_label: 选择已有快递公司或填写新快递公司
+          tracking_number: 快递单号
+          submit: 提交
+          close: 关闭
+        transaction:
+          transaction: 流水记录
+          amount: 金额
+          payment_id: 付款单 ID
+          processor_id: 交易网关 ID
+          note: 备注
+          process_date: 处理时间
