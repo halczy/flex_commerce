@@ -28,7 +28,7 @@
 
   <div class="form-group">
     <%= f.label :hide, t('.hidden_category') %>
-    <%= f.select :hide, options_for_select([['False', 0], ['True', 1]]),
+    <%= f.select :hide, options_for_select([[t('false'), 0], [t('true'), 1]]),
                  {}, class: "form-control" %>
   </div>
 
