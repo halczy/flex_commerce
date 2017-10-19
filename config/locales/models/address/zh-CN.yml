@@ -1,0 +1,16 @@
+zh-CN:
+  activerecord:
+    models:
+      address: 地址
+    attributes:
+      address:
+        name: 别名
+        recipient: 收件人
+        contact_number: 联系电话
+        country_region: 国家地区
+        province_state: 省
+        city: 市
+        district: 区
+        community: 社区
+        street: 地址
+        full_address: 详细地址

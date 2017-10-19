@@ -1,0 +1,16 @@
+en-US:
+  activerecord:
+    models:
+      address: Address
+    attributes:
+      address:
+        name: Name
+        recipient: Recipient
+        contact_number: Contact Number
+        country_region: Country Region
+        province_state: Province State
+        city: City
+        district: Distrct
+        community: Community
+        street: Street
+        full_address: Full Address
