@@ -1,0 +1,11 @@
+en-US:
+  activerecord:
+    models:
+      image: Image
+    attributes:
+      image:
+        display_order: Display Order
+        description: Description
+        title: Title
+        in_use: In Use
+        source_channel: Source Channel

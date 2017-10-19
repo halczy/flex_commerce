@@ -1,0 +1,11 @@
+zh-CN:
+  activerecord:
+    models:
+      image: 图片
+    attributes:
+      image:
+        display_order: 显示次序
+        description: 描述
+        title: 标题
+        in_use: 使用中
+        source_channel: 来源
