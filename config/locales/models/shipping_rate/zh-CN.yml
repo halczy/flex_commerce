@@ -1,0 +1,9 @@
+zh-CN:
+  activerecord:
+    models:
+      shipping_rate: 快递费用项
+    attributes:
+      shipping_rate:
+        geo_code: 地理代码
+        init_rate: 首重
+        add_on_rate: 续重

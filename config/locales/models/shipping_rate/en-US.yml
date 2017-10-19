@@ -1,0 +1,9 @@
+en-US:
+  activerecord:
+    models:
+      shipping_rate: Shipping Rate
+    attributes:
+      shipping_rate:
+        geo_code: Geo Code
+        init_rate: Initial Rate
+        adD_on_rate: Add-on Rate

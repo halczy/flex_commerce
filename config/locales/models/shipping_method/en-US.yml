@@ -1,0 +1,8 @@
+en-US:
+  activerecord:
+    models:
+      shipping_method: Shipping Method
+    attributes:
+      shipping_method:
+        name: Name
+        variety: Variety

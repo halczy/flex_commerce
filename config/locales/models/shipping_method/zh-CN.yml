@@ -1,0 +1,8 @@
+zh-CN:
+  activerecord:
+    models:
+      shipping_method: 购物方式
+    attributes:
+      shipping_method:
+        name: 名称
+        variety: 类别
