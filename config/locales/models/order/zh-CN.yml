@@ -3,6 +3,7 @@ zh-CN:
     models:
       order: 订单
     attributes:
-      status: 状态
-      shipping_cost: 运费
-      shipment: 送货
+      order:
+        status: 状态
+        shipping_cost: 运费
+        shipment: 送货

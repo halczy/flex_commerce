@@ -3,6 +3,7 @@ en-US:
     models:
       order: Order
     attributes:
-      status: Status
-      shipping_cost: Shipping Cost
-      shipment: Shipment
+      order:
+        status: Status
+        shipping_cost: Shipping Cost
+        shipment: Shipment

@@ -1,0 +1,13 @@
+en-US:
+  activerecord:
+    models:
+      payment: Payment
+    attributes:
+      payment:
+        amount: Amount
+        status: Status
+        processor: Processor
+        variety: Variety
+        processor_request: Processor Request
+        processor_response_return: Processor Response Return
+        processor_response_notify: Processor Response Notify

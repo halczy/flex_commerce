@@ -1,0 +1,13 @@
+zh-CN:
+  activerecord:
+      models:
+        payment: 付款单
+    attributes:
+      payment:
+        amount: 金额
+        status: 状态
+        processor: 交易网关
+        variety: 类别
+        processor_request: 交易网关请求
+        processor_response_return: 交易网关同步通知
+        processor_response_notify: 交易网关异步通知
