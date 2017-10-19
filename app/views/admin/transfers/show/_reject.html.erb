@@ -2,19 +2,19 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Reject Transfer</h5>
+        <h5 class="modal-title"><%= t('.reject_transfer') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>Please confrim that you would like to reject this transfer.</p>
+        <p><%= t('.reject_msg') %></p>
       </div>
       <div class="modal-footer">
-        <%= link_to 'Confrim', reject_admin_transfer_path(@transfer),
-                               method: :patch, class: 'btn btn-danger' %>
+        <%= link_to t('.confirm'), reject_admin_transfer_path(@transfer),
+                                   method: :patch, class: 'btn btn-danger' %>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
+          <%= t('.close') %>
         </button>
       </div>
     </div>

@@ -1,9 +1,9 @@
 <%= form_with(url: admin_transfers_path, local: true, method: :get) do |form| %>
   <%= form.select :filter, options_for_select([
-                  ['No Filter', ''],
-                  ['Wallet', 'wallet'],
-                  ['Bank', 'bank'],
-                  ['Alipay', 'alipay']]),
-                  { prompt: "Filter By Processor" },
+                  [t('.no_filter'), ''],
+                  [t('.wallet'), 'wallet'],
+                  [t('.bank'), 'bank'],
+                  [t('.alipay'), 'alipay']]),
+                  { prompt: t('.filter_by_processor') },
                   class: 'form-control', onchange: 'this.form.submit();' %>
 <% end %>

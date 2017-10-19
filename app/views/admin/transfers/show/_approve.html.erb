@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Approve Transfer</h5>
+        <h5 class="modal-title"><%= t('.approve_transfer') %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -10,46 +10,46 @@
       <div class="modal-body">
         <% if @transfer.alipay? %>
           <p>
-            Please confrim the follow Alipay transfer.
+            <%= t('.approve_msg') %>
           </p>
           <table class="table">
             <tbody>
               <tr>
-                <th scope="row">Name</th>
+                <th scope="row"><%= t('.name') %></th>
                 <td><%= @transfer.transferee.name %></td>
               </tr>
               <tr>
-                <th scope="row">Alipay Account</th>
+                <th scope="row"><%= t('.alipay_account') %></th>
                 <td><%= @transfer.transferee.alipay_account %></td>
               </tr>
               <tr>
-                <th scope="row">Amount</th>
+                <th scope="row"><%= t('.amount') %></th>
                 <td><%= humanized_money_with_symbol @transfer.amount %></td>
               </tr>
             </tbody>
           </table>
         <% elsif @transfer.bank? %>
           <p>
-            Please transfer
+            <%= t('.transfer_msg_1') %>
             <strong><%= humanized_money_with_symbol @transfer.amount %></strong>
-            to the following bank account. Once completed, click confirm transfer.
+            <%= t('.transfer_msg_2') %>
           </p>
           <table class="table">
             <tbody>
               <tr>
-                <th scope="row">Name</th>
+                <th scope="row"><%= t('.name') %></th>
                 <td><%= @transfer.transferee.name %></td>
               </tr>
               <tr>
-                <th scope="row">Bank Name</th>
+                <th scope="row"><%= t('.bank_name') %></th>
                 <td><%= @transfer.transferee.bank_name %></td>
               </tr>
               <tr>
-                <th scope="row">Bank Branch</th>
+                <th scope="row"><%= t('.bank_branch') %></th>
                 <td><%= @transfer.transferee.bank_branch %></td>
               </tr>
               <tr>
-                <th scope="row">Bank Account</th>
+                <th scope="row"><%= t('.bank_account') %></th>
                 <td><%= @transfer.transferee.bank_account %></td>
               </tr>
             </tbody>
@@ -58,19 +58,19 @@
       </div>
       <div class="modal-footer">
         <% if @transfer.alipay? %>
-          <%= link_to 'Automatic Transfer',
+          <%= link_to t('.auto_transfer'),
                        approve_admin_transfer_path(@transfer),
                        method: :patch, class: 'btn btn-success' %>
-          <%= link_to 'Manual Transfer',
+          <%= link_to t('.manual_transfer'),
                        manual_approve_alipay_admin_transfer_path(@transfer),
                        method: :patch, class: 'btn btn-warning' %>
         <% else %>
-          <%= link_to 'Confirm Transferred',
+          <%= link_to t('.confirm_transferred'),
                        approve_admin_transfer_path(@transfer),
                        method: :patch, class: 'btn btn-success' %>
         <% end %>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
+          <%= t('.close') %>
         </button>
       </div>
     </div>

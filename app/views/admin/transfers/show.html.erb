@@ -1,11 +1,11 @@
-<%= provide :title, 'Transfer Detail' %>
+<%= provide :title, t('.title') %>
 
 <%= render 'admin/transfers/show/action_control' %>
 
 <div class="row">
   <div class="col-md">
     <div class="jumbotron">
-      <h4>Transfer Information</h4>
+      <h4><%= t('.transfer_info') %></h4>
       <table class="table">
         <tbody>
           <tr>
@@ -13,31 +13,31 @@
             <td><%= @transfer.id %></td>
           </tr>
           <tr>
-            <th scope="row">Amount</th>
+            <th scope="row"><%= t('.amount') %></th>
             <td><%= humanized_money_with_symbol @transfer.amount %></td>
           </tr>
           <tr>
-            <th scope="row">Processor</th>
+            <th scope="row"><%= t('.processor') %></th>
             <td><%= @transfer.processor.titleize %></td>
           </tr>
           <tr>
-            <th scope="row">Status</th>
+            <th scope="row"><%= t('.status') %></th>
             <td><%= @transfer.status.titleize %></td>
           </tr>
           <tr>
-            <th scope="row">Transferer</th>
+            <th scope="row"><%= t('.transferer') %></th>
             <td><%= @transfer.transferer.name %></td>
           </tr>
           <tr>
-            <th scope="row">Transferee</th>
+            <th scope="row"><%= t('.transferee') %></th>
             <td><%= @transfer.transferee.name %></td>
           </tr>
           <tr>
-            <th scope="row">Processor Response</th>
+            <th scope="row"><%= t('.processor_response') %></th>
             <td><%= @transfer.processor_response %></td>
           </tr>
           <tr>
-            <th scope="row">Processor Query Result</th>
+            <th scope="row"><%= t('.processor_query_result') %></th>
             <td><%= @transfer.processor_query_result %></td>
           </tr>
         </tbody>
@@ -49,23 +49,23 @@
 <div class="row">
   <div class="col-md">
     <div class="jumbotron">
-      <h4>Transferee Financial Information</h4>
+      <h4><%= t('.transferee_fin_info') %></h4>
       <table class="table">
         <tbody>
           <tr>
-            <th scope="row">Alipay Account</th>
+            <th scope="row"><%= t('.alipay_account') %></th>
             <td><%= @transfer.transferee.alipay_account %></td>
           </tr>
           <tr>
-            <th scope="row">Bank Name</th>
+            <th scope="row"><%= t('.bank_name') %></th>
             <td><%= @transfer.transferee.bank_name %></td>
           </tr>
           <tr>
-            <th scope="row">Bank Branch</th>
+            <th scope="row"><%= t('.bank_branch') %></th>
             <td><%= @transfer.transferee.bank_branch %></td>
           </tr>
           <tr>
-            <th scope="row">Bank Account</th>
+            <th scope="row"><%= t('.bank_account') %></th>
             <td><%= @transfer.transferee.bank_account %></td>
           </tr>
         </tbody>

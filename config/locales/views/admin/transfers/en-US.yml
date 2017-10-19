@@ -1,0 +1,65 @@
+en-US:
+  admin:
+    transfers:
+      index:
+        title: Transfers
+        transfer_count: Transfer Count
+        processor_filter: 
+          no_filter: No Filter
+          wallet: Wallet
+          bank: Bank
+          alipay: Alipay
+          filter_by_processor: Filter By Processor
+        status_filter:
+          no_filter: No Filter
+          created: Created
+          pending: Pending
+          failure: Failure
+          success: Success
+          filter_by_status: Filter By Status
+        transfers:
+          processor: Processor
+          status: Status
+          amount: Amount
+          detail: Detail
+          no_match: No Matching Transfers
+      show:
+        title: Transfer Detail
+        transfer_info: Transfer Information
+        amount: Amount
+        processor: Processor
+        status: Status
+        transferer: Transferer
+        transferee: Transferee
+        processor_response: Processor Response
+        processor_query_result: Processor Query Result
+        transferee_fin_info: Transferee Financial Information
+        alipay_account: Alipay Account
+        bank_name: Bank Name
+        bank_branch: Bank Branch
+        bank_account: Bank Account
+        action_control:
+          return: Return to List
+          approve_transfer: Approve Transfer
+          reject_transfer: Reject Transfer
+        approve:
+          approve_transfer: Approve Transfer
+          approve_msg: Please confirm the following Alipay transfer.
+          name: Name
+          alipay_account: Alipay Account
+          amount: Amount
+          transfer_msg_1: Please transfer
+          transfer_msg_2: to the following bank account. Once completed, click confirm transfer.
+          name: Name
+          bank_name: Bank Name
+          bank_branch: Bank Branch
+          bank_account: Bank Account
+          auto_transfer: Automatic Transfer
+          manual_transfer: Manual Transfer
+          confirm_transferred: Confirm Transferred
+          close: Close
+        reject:
+          reject_transfer: Reject Transfer
+          reject_msg: Please confrim that you would like to reject this transfer.
+          confirm: Confirm
+          close: Close

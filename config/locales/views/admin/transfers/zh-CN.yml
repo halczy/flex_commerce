@@ -1,0 +1,65 @@
+zh-CN:
+  admin:
+    transfers:
+      index:
+        title: 转帐
+        transfer_count: 转帐单数
+        processor_filter: 
+          no_filter: 无筛选
+          wallet: 钱包转帐
+          bank: 银行转帐
+          alipay: 支付宝转帐
+          filter_by_processor: 按交易网关筛选
+        status_filter:
+          no_filter: 无筛选
+          created: 转帐创建
+          pending: 等候审核
+          failure: 失败
+          success: 成功
+          filter_by_status: 按转帐单状态
+        transfers:
+          processor: 交易网关
+          status: 状态
+          amount: 金额
+          detail: 详情
+          no_match: 无转帐单
+      show:
+        title: 转帐详情
+        transfer_info: 转帐信息
+        amount: 金额
+        processor: 交易网关
+        status: 状态
+        transferer: 转帐人
+        transferee: 收款人
+        processor_response: 交易网关回馈
+        processor_query_result: 交易网关回复
+        transferee_fin_info: 转帐人财务信息
+        alipay_account: 支付宝帐号
+        bank_name: 银行名称
+        bank_branch: 银行分行
+        bank_account: 银行帐号
+        action_control:
+          return: 返回列表
+          approve_transfer: 批准转帐
+          reject_transfer: 拒绝转帐
+        approve:
+          approve_transfer: 批准转账
+          approve_msg: 请确认你将批准该支付宝转帐。
+          name: 顾客姓名
+          alipay_account: 支付宝帐号
+          amount: 金额
+          transfer_msg_1: 请转
+          transfer_msg_2: 到以下银行帐号。成功后点击确认。
+          name: 收款人
+          bank_name: 银行名称
+          bank_branch: 银行分行
+          bank_account: 银行帐号
+          auto_transfer: 自动执行
+          manual_transfer: 手动执行
+          confirm_transferred: 确认转帐完成
+          close: 关闭
+        reject:
+          reject_transfer: 拒绝转帐
+          reject_msg: 请点击确认拒绝该转帐请求。
+          confirm: 确认
+          close: 关闭

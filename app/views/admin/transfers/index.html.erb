@@ -1,4 +1,4 @@
-<%= provide :title, 'Transfers' %>
+<%= provide :title, t('.title') %>
 
 <div class="d-flex justify-content-start mb-3 mt-3">
   <div>
@@ -12,7 +12,7 @@
 <div class="row">
   <%= render 'shared/paginate', objects: @transfers if @transfers.present? %>
   <div class="col-lg-12">
-    <p>Transfer Count: <%= @transfers.total_count %></p>
+    <p><%= t('.transfer_count') %>: <%= @transfers.total_count %></p>
   </div>
   <div class="col-lg-12">
     <%= render 'admin/transfers/index/transfers', transfers: @transfers %>

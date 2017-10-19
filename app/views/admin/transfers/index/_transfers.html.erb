@@ -1,9 +1,9 @@
 <table class="table table-hover">
   <thead>
     <th>ID</th>
-    <th>Proceesor</th>
-    <th>Status</th>
-    <th>Amount</th>
+    <th><%= t('.processor') %></th>
+    <th><%= t('.status') %></th>
+    <th><%= t('.amount') %></th>
     <th></th>
   </thead>
   <tbody>
@@ -14,13 +14,13 @@
           <td><%= transfer.processor.titleize %></td>
           <td><%= transfer.status.titleize %></td>
           <td><%= humanized_money_with_symbol transfer.amount %></td>
-          <td><%= link_to 'Detail', admin_transfer_path(transfer),
-                                    class: 'btn btn-info btn-sm' %></td>
+          <td><%= link_to t('.detail'), admin_transfer_path(transfer),
+                                        class: 'btn btn-info btn-sm' %></td>
         </tr>
       <% end %>
     <% else %>
       <tr>
-        <td colspan="5">No Matching Transfers</td>
+        <td colspan="5"><%= t('.no_match') %></td>
       </tr>
     <% end %>
 
