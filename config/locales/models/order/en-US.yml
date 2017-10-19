@@ -1,0 +1,8 @@
+en-US:
+  activerecord:
+    models:
+      order: Order
+    attributes:
+      status: Status
+      shipping_cost: Shipping Cost
+      shipment: Shipment
