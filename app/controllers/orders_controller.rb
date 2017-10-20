@@ -26,7 +26,7 @@ class OrdersController < UsersController
     if order
       redirect_to shipping_order_path(order)
     else
-      flash[:danger] = 'Unable to create order.'
+      flash[:danger] = t('.danger')
       redirect_to cart_path
     end
   end
@@ -73,8 +73,7 @@ class OrdersController < UsersController
       @customer = @order.user
       set_address_params
       populate_selector
-      flash.now[:warning] = "Please select an existing address or enter a valid
-                             new address!"
+      flash.now[:warning] = t('.warning')
       render :address
     end
   end
@@ -98,8 +97,7 @@ class OrdersController < UsersController
     if @order_service.confirm
       redirect_to payment_order_path
     else
-      flash[:warning] = "Unable to confirm order. Please re-enter your
-                         shipping information."
+      flash[:warning] = t('.warning')
       redirect_to review_order_path
     end
   end
@@ -112,17 +110,17 @@ class OrdersController < UsersController
     if @order.reload.payment_success?
       redirect_to success_order_path(id: @order.id, payment_id: @payment.id)
     elsif charge_result && @order.reload.partial_payment?
-      flash[:success] = "Partial payment successful!"
+      flash[:success] = t('.success')
       redirect_to payment_order_path
     end
   end
 
-  def create_alipay_payment
+  def alipay_payment
     payment_service = PaymentService.new(order_id: @order.id, processor: 'alipay')
     if payment_service.create
       redirect_to payment_service.charge
     else
-      flash[:warning] = 'Unable to create Alipay payment at this time.'
+      flash[:warning] = t('.success')
       redirect_to payment_order_path
     end
   end
@@ -139,10 +137,10 @@ class OrdersController < UsersController
 
   def destroy
     if @order.cancel
-      flash[:success] = "Successfully cancelled your order. "
+      flash[:success] = t('.success')
       redirect_to orders_path
     else
-      flash[:danger] = 'Order cannot be cancelled at its current stage.'
+      flash[:danger] = t('.danger')
       redirect_to @order
     end
   end
@@ -195,7 +193,7 @@ class OrdersController < UsersController
 
     def validate_access
       unless helpers.current_user?(@order.user) || helpers.current_user.admin?
-        flash[:danger] = "You do not have access to view that order!"
+        flash[:danger] = t('orders.validate_access.danger')
         redirect_to root_url
       end
     end
@@ -216,7 +214,7 @@ class OrdersController < UsersController
       validity = false unless @amount.between?(0.01.to_money, @order.amount_unpaid)
 
       unless validity && @amount
-        flash[:warning] = 'Invalid payment amount. Please try again.'
+        flash[:warning] = t('orders.set_payment_amount.warning')
         redirect_to payment_order_path and return
       end
     end
@@ -229,7 +227,7 @@ class OrdersController < UsersController
       if @payment
         payment_service.charge
       else
-        flash[:danger] = "Unable to create payment."
+        flash[:danger] = t('orders.pay_via_wallet.danger')
         redirect_to payment_order_path and return
       end
     end

@@ -52,7 +52,7 @@ Rails.application.routes.draw do
       patch :confirm
       get   :payment
       post  :wallet_payment
-      post  :create_alipay_payment
+      post  :alipay_payment
       get   :success
       get   :resume
     end
