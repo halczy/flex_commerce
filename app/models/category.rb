@@ -1,4 +1,6 @@
 class Category < ApplicationRecord
+  include TranslateEnum
+  
   # Relationships
   belongs_to :parent,           class_name: 'Category', optional: true
   has_many   :child_categories, class_name: 'Category', foreign_key: 'parent_id'
@@ -18,6 +20,7 @@ class Category < ApplicationRecord
 
   # Enum
   enum flavor: { regular: 0, brand: 1, feature: 2 }
+  translate_enum :flavor
 
   def unassociate_children
     child_categories.each { |c| c.update(parent_id: nil) }

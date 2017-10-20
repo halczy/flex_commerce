@@ -23,11 +23,11 @@
           </tr>
           <tr>
             <th scope="row"><%= t('.hidden_category') %></th>
-            <td><%= @category.hide %></td>
+            <td><%= I18n.t @category.hide %></td>
           </tr>
           <tr>
             <th scope="row"><%= t('.category_type') %></th>
-            <td><%= @category.flavor %></td>
+            <td><%= @category.translated_flavor %></td>
           </tr>
           <% unless @category.parent.nil? %>
             <tr>

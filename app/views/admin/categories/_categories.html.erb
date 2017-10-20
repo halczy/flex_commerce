@@ -14,7 +14,7 @@
       <tr>
         <%= render 'order_control', cat: cat %>
         <td><%= link_to cat.name, admin_category_path(cat) %></td>
-        <td><%= cat.flavor.capitalize %></td>
+        <td><%= cat.translated_flavor %></td>
         <td><%= cat.products.count %></td>
         <td>
           <%= link_to t('.show_details'), admin_category_path(cat),

@@ -8,4 +8,7 @@ en-US:
         display_order: Display Order
         flavor: Flavor
         hide: Hide
-        
+        flavor_list:
+          regular: Regular
+          brand: Brand
+          feature: Feature

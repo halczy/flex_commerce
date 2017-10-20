@@ -17,7 +17,7 @@
           <i class="fa fa-arrow-circle-down mr-2" aria-hidden="true"></i>
           <%= link_to cat.name, admin_category_path(cat) %>
         </td>
-        <td><%= cat.hide %></td>
+        <td><%= I18n.t cat.hide %></td>
         <%= render 'action_control', cat: cat %>
       </tr>
       <%= render 'child_categories', child_categories: cat.child_categories %>

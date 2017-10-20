@@ -8,3 +8,7 @@ zh-CN:
         display_order: 显示次序
         flavor: 类型
         hide: 隐藏
+        flavor_list:
+          regular: 普通
+          brand: 品牌
+          feature: 特殊
