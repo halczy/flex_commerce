@@ -44,7 +44,7 @@ describe 'Category CRUD', type: :feature do
       fill_in 'category[display_order]', with: 0
       click_button 'Create Category'
       expect(page).to have_content('Test Brand')
-      expect(page).to have_content('brand')
+      expect(page).to have_content('Brand')
     end
   end
 
