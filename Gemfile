@@ -28,6 +28,7 @@ gem 'attr_encrypted'
 gem 'alipay'
 gem 'sidekiq'
 gem 'rails-i18n'
+gem 'translate_enum', '~> 0.1.1'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
