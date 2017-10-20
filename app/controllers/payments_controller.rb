@@ -12,8 +12,7 @@ class PaymentsController < ApplicationController
       redirect_to success_order_path(id: payment.order.id,
                                      payment_id: payment.id)
     else
-      flash[:danger] = 'Unable to confirm your order at the moment.
-                        Please contact customer service'
+      flash[:danger] = t('.danger')
       redirect_to root_url
     end
   end
@@ -35,8 +34,7 @@ class PaymentsController < ApplicationController
     def verify_return_params
       alipay_client = helpers.create_alipay_client
       unless alipay_client.verify?(request.query_parameters)
-        flash[:danger] = 'Invalid response from ALIPAY. Please contact customer
-                          service.'
+        flash[:danger] = t('payments.verify_return_params.danger')
         redirect_to root_url
       end
     end

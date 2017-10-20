@@ -53,7 +53,7 @@ RSpec.describe SessionsController, type: :controller do
                                          password: 'wrong pass' } }
 
       expect(response).to render_template(:new)
-      expect(flash[:warning]).to eq('Incorrect account / password combination.')
+      expect(flash[:warning]).to eq('Incorrect account / password combination')
       expect(session[:user_id]).to be_nil
     end
 
@@ -62,7 +62,7 @@ RSpec.describe SessionsController, type: :controller do
                                          password: 'wrongpass' } }
 
       expect(response).to render_template(:new)
-      expect(flash[:warning]).to eq('Incorrect account / password combination.')
+      expect(flash[:warning]).to eq('Incorrect account / password combination')
       expect(session[:user_id]).to be_nil
     end
 
@@ -92,7 +92,7 @@ RSpec.describe SessionsController, type: :controller do
     it 'redirects to root' do
       delete :destroy, params: { id: user.id }
       expect(response).to redirect_to root_url
-      expect(flash[:info]).to eq('You are now logged out of your account.')
+      expect(flash[:info]).to eq('You are now logged out of your account')
     end
   end
 

@@ -41,11 +41,10 @@ class WalletsController < UsersController
     )
 
     if ts.create
-      flash[:success] = "Successfully created a withdraw request."
+      flash[:success] = t('.success')
       redirect_to show_withdraw_wallet_path(id: @user.id, transfer_id: ts.transfer.id)
     else
-      flash[:warning] = "Unable to initialize transfer request. Please double
-                         check your withdrawable amount."
+      flash[:warning] = t('.warning')
       redirect_to new_withdraw_wallet_path(@user)
     end
   end
@@ -67,16 +66,14 @@ class WalletsController < UsersController
 
     def set_processors
       @processors =  Array.new.tap do |processor|
-        processor << ['Alipay', 'alipay'] if @user.alipay_account.present?
-        processor << ['Bank', 'bank'] if @user.bank_account.present?
+        processor << [t('alipay'), 'alipay'] if @user.alipay_account.present?
+        processor << [t('bank'), 'bank'] if @user.bank_account.present?
       end
     end
 
     def require_financial
       if @processors.empty?
-        flash[:warning] = "Please provide your Alipay account or
-                           bank account information before requesting a
-                           withdraw"
+        flash[:warning] = t('wallets.require_financial.warning')
         redirect_to edit_customer_path(@user)
       end
     end

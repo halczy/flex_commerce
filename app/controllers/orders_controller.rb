@@ -120,7 +120,7 @@ class OrdersController < UsersController
     if payment_service.create
       redirect_to payment_service.charge
     else
-      flash[:warning] = t('.success')
+      flash[:warning] = t('.warning')
       redirect_to payment_order_path
     end
   end

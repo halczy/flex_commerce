@@ -1,0 +1,6 @@
+en-US:
+  payments:
+    alipay_return:
+      danger: Unable to confirm your order at the moment. Please contact customer service.
+    verify_return_params:
+      danger: Invalid response from Alipay. Please contact customer service.

@@ -10,11 +10,11 @@ module TransactionsHelper
 
   def amount_direction(wallet, transaction)
     if transaction.originable.try(:charge?)
-      'Debit'
+      I18n.t 'debit'
     elsif transaction.originable.try(:reward?)
-      'Credit'
+      I18n.t 'credit'
     else
-      transaction.processable == wallet ? 'Debit' : 'Credit'
+      transaction.processable == wallet ? I18n.t('debit') : I18n.t('credit')
     end
   end
 

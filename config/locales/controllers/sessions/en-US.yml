@@ -1,0 +1,6 @@
+en-US:
+  sessions:
+    create:
+      warning: Incorrect account / password combination
+    destroy:
+      info: You are now logged out of your account

@@ -1,0 +1,21 @@
+en-US:
+  orders:
+    create:
+      danger: Unable to create order
+    create_address:
+      warning: Please select an existing address or enter a valid new address.
+    confirm:
+      warning: Unable to confirm order. Please re-enter your shipping information.
+    wallet_payment:
+      success: Partial payment to order is successful!
+    alipay_payment:
+      warning: Unable to create Alipay payment at this time.
+    destroy:
+      success: Your order is successful cancelled.
+      warning: Your order cannot be cancelled at its current stage.
+    validate_access:
+      danger: You do not have access to view that order!
+    set_payment_amount:
+      warning: Invalid payment amount. Please check your available fund and submit again.
+    pay_via_wallet:
+      danger: Unable to create payment.

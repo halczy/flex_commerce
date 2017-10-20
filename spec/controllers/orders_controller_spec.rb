@@ -343,7 +343,7 @@ RSpec.describe OrdersController, type: :controller do
         order_confirmed.user.wallet.update(balance: 1)
         post :wallet_payment, params: { id: order_confirmed.id,
                                         amount: order_confirmed.total }
-        expect(flash[:warning]).to eq('Invalid payment amount. Please try again.')
+        expect(flash[:warning]).to include('Invalid payment amount')
         expect(response).to redirect_to(payment_order_path)
       end
 

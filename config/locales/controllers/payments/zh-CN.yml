@@ -1,0 +1,6 @@
+en-US:
+  payments:
+    alipay_return:
+      danger: 暂时无法确认您的订单。请联系客服。
+    verify_return_params:
+      danger: 支付宝返回数据不正确。请联系客服。

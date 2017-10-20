@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       helpers.remember(@user) if params[:session][:remember_me] == '1'
       redirect_by_class(@user)
     else
-      flash.now[:warning] = 'Incorrect account / password combination.'
+      flash.now[:warning] = t('.warning')
       render :new
     end
   end
@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
   def destroy
     user = User.find(params[:id])
     helpers.logout(user)
-    flash[:info] = 'You are now logged out of your account.'
+    flash[:info] = t('.info')
     redirect_to root_url
   end
 

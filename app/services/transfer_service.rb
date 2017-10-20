@@ -90,7 +90,7 @@ class TransferService
       Transfer.transaction do
         @transfer.fund_source.withdraw(@amount)
         @transfer.transaction_log.update(
-          note: "SUCCESS: Withdrawn to bank account."
+          note: I18n.t('services.transfer.bank_transfer')
         )
         @transfer.success!
         true

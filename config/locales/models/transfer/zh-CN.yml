@@ -18,3 +18,6 @@ zh-CN:
           pending: 处理中
           failure: 失败
           success: 成功
+  services:
+    transfer:
+      bank_transfer: '成功：提款到银行帐已完成。'

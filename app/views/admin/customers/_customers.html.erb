@@ -11,7 +11,7 @@
   <tbody>
     <% customers.each do |customer| %>
     <tr>
-      <td><%= link_to customer.member_id %></td>
+      <td><%= link_to customer.member_id, admin_customer_path(customer) %></td>
       <td><%= link_to customer.name, admin_customer_path(customer) %></td>
       <td><%= customer.cell_number %></td>
       <td><%= customer.email %></td>

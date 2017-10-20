@@ -1,0 +1,4 @@
+zh-CN:
+  users:
+    validate_permission:
+      danger: 禁止访问

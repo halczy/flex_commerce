@@ -1,0 +1,6 @@
+zh-CN:
+  sessions:
+    create:
+      warning: 帐号或密码不正确
+    destroy:
+      info: 您已登出您的账户

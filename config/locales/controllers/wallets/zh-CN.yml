@@ -1,0 +1,7 @@
+zh-CN:
+  wallets:
+    create_withdraw:
+      success: 成功创建提款单
+      warning: 无法创建提款单，请检查您所填写的提款金额。
+    require_financial:
+      warning: 请提供您的支付宝帐号或银行帐号后再创建提款单。

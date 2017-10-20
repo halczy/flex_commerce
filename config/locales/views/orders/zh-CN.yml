@@ -134,6 +134,6 @@ zh-CN:
         order_status: 订单状态
     progress:
       shipping: 选择送货方式
-      address: 填写地址
+      address: 地址
       review: 核实订单
       payment: 结帐付款

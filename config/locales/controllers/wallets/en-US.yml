@@ -1,0 +1,7 @@
+en-US:
+  wallets:
+    create_withdraw:
+      success: A withdraw request is created successfully.
+      warning: Unable to initialize transfer request. Please double check your withdrawable amount.
+    require_financial:
+      warning: Please provide your Alipay account or bank account information before requesting a withdraw.

@@ -1,0 +1,21 @@
+zh-CN:
+  orders:
+    create:
+      danger: 无法创建订单
+    create_address:
+      warning: 请选择已有地址或填写地址表格以创建一个新地址。
+    confirm:
+      warning: 无法确认订单，请检查您的送货方式。
+    wallet_payment:
+      success: 成功支付部分订单款项。
+    alipay_payment:
+      warning: 暂时无法使用支付宝付款，请稍候再试用。
+    destroy:
+      success: 您的订单已成功取消。
+      warning: 您的订单无法取消。
+    validate_access:
+      danger: 您没有权限查看该订单。
+    set_payment_amount:
+      warning: 付款金额不正确。请检查您的钱包可用余额后再重试付款。
+    pay_via_wallet:
+      danger: 无法付款

@@ -1,0 +1,4 @@
+en-US:
+  users:
+    validate_permission:
+      danger: 'Access Denied'
