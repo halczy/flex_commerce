@@ -1,30 +1,28 @@
 class CartsController < ApplicationController
   # Filters
-  before_action :smart_return,            only: [ :remove, :update ]
+  before_action :smart_return,            only:   [ :remove, :update ]
   before_action :set_product,             except: [ :show ]
-  after_action  :validate_product,        only: [ :set_product ]
-  before_action :set_quantity_for_add,    only: [ :add ]
-  before_action :set_quantity_for_remove, only: [ :remove ]
+  before_action :validate_product,        only:   [ :add ]
+  before_action :set_quantity_for_add,    only:   [ :add ]
+  before_action :set_quantity_for_remove, only:   [ :remove ]
   before_action :set_cart
-
 
   def add
     if @current_cart.add(@product, @quantity)
-      flash[:success] = "Successfully added #{@product.name} to your shopping cart."
+      flash[:success] = t('carts.add.success', product: @product.name)
       redirect_to cart_path
     else
       smart_return
-      flash[:warning] = 'The product you have selected is out of stock
-                         or does not have enough stock to fill your request.'
+      flash[:warning] = t('carts.add.warning', product: @product.name)
       redirect_back_or cart_path
     end
   end
 
   def remove
     if @current_cart.remove(@product, @quantity)
-      flash[:success] = "Successfully removed #{@product.name} from your shopping cart."
+      flash[:success] = t('controller.carts.success', product: @product.name)
     else
-      flash[:danger] = "Fail to remove #{@product.name} from you shopping cart."
+      flash[:danger] = t('carts.remove.danger', product: @product.name)
     end
     redirect_back_or cart_path
   end
@@ -52,13 +50,16 @@ class CartsController < ApplicationController
     def set_product
       @product = Product.find_by(id: params[:pid])
       unless @product
-        flash[:danger] = "The product you have selected is unavailable."
+        flash[:danger] = t('carts.set_product.danger')
         redirect_to root_url
       end
     end
 
     def validate_product
-      # TODO: PREVENT USER FROM ADDING DISABLED PRODUCT
+      if @product.disabled?
+        flash[:danger] = t('.carts.validate_product.danger')
+        redirect_to(root_url) and return
+      end
     end
 
     def set_quantity_for_add

@@ -6,7 +6,6 @@ RSpec.describe CartsController, type: :controller do
   let(:cart) { FactoryGirl.create(:cart) }
 
   describe 'POST add' do
-
     before do
       @product = FactoryGirl.create(:product)
       3.times { FactoryGirl.create(:inventory, product: @product) }
@@ -48,10 +47,23 @@ RSpec.describe CartsController, type: :controller do
         expect(Cart.last.inventories.count).to eq(1)
       end
     end
+    
+    context 'validate_product' do
+      it "does not add disabled product to cart" do
+        @product.disabled!
+        post :add, params: { pid: @product.id }
+        expect(flash[:danger]).to be_present
+      end
+      
+      it "redirects to root_url when attempt to add disabled product" do
+        @product.disabled!
+        post :add, params: { pid: @product.id }
+        expect(response).to redirect_to(root_url)
+      end
+    end
   end
 
   describe 'DELETE remove' do
-
     before do
       @product = FactoryGirl.create(:product)
       @cart = FactoryGirl.create(:cart)
@@ -81,7 +93,6 @@ RSpec.describe CartsController, type: :controller do
   end
 
   describe 'PATCH update' do
-
     before do
       @product = FactoryGirl.create(:product, strict_inventory: false)
       @cart = FactoryGirl.create(:cart)
