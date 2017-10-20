@@ -3,7 +3,6 @@ en-US:
   'false': 'False'
   'active': 'Active'
   'disable': 'Disable'
-  'disabled': 'Disabled'
   Wallet: Wallet
   Order: Order
   Transfer: Transfer

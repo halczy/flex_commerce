@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  include TranslateEnum
+  
   # Realtionships
   has_many :categorizations, dependent: :destroy
   has_many :categories,      through: :categorizations
@@ -26,7 +28,8 @@ class Product < ApplicationRecord
 
   # Enum
   enum status: { disabled: 0, active: 1 }
-
+  translate_enum :status
+  
   def associate_images
     return if extract_images.empty?
     image_files = extract_images
