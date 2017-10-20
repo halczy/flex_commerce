@@ -7,3 +7,15 @@ en-US:
         status: Status
         shipping_cost: Shipping Cost
         shipment: Shipment
+        status_list:
+          created: Created
+          shipping_confirmed: Shipping Confirmed
+          confirmed: Confirmed
+          payment_pending: Payment Pending
+          partial_payment: Partial Payment
+          payment_fail: Payment Fail
+          payment_success: Payment Success
+          staff_confirmed: Staff Confirmed
+          pickup_pending: Pickup Pending
+          shipped: Shipped
+          completed: Completed

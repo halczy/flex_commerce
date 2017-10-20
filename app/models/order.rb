@@ -1,4 +1,6 @@
 class Order < ApplicationRecord
+  include TranslateEnum
+  
   # Relationships
   belongs_to :user
   has_one   :address, as: :addressable
@@ -27,6 +29,7 @@ class Order < ApplicationRecord
     payment_success: 60, staff_confirmed: 70, pickup_pending: 80, shipped: 90,
     completed: 100
   }
+  translate_enum :status
 
   # Scope
   scope :creation_process, -> (user) { user.orders.where(status: 0..20) }

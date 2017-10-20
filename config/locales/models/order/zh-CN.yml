@@ -7,3 +7,15 @@ zh-CN:
         status: 状态
         shipping_cost: 运费
         shipment: 送货
+        status_list:
+          created: 订单创建
+          shipping_confirmed: 已选送货方式
+          confirmed: 顾客确认
+          payment_pending: 等待付款
+          partial_payment: 部分付款
+          payment_fail: 付款失败
+          payment_success: 付款成功
+          staff_confirmed: 员工确认
+          pickup_pending: 等候提货
+          shipped: 已发货
+          completed: 订单完成

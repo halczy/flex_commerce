@@ -22,7 +22,7 @@
               <%= link_to inv.id, admin_inventory_path(inv) %>
             </td>
             <td>
-              <%= inv.status.titleize %>
+              <%= inv.translated_status %>
             </td>
             <td>
               <%= humanized_money_with_symbol inv.purchase_price %>

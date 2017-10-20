@@ -11,7 +11,7 @@
           <%= t('.amount') %>: <%= humanized_money_with_symbol order.total %>
         </h5>
         <div>
-          <%= t('.status') %>: <%= order.status.titleize %>
+          <%= t('.status') %>: <%= order.translated_status %>
         </div>
         <div>
           <%= t('.customer_name') %>: <%= order.user.name %>

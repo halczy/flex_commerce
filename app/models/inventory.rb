@@ -1,5 +1,6 @@
 class Inventory < ApplicationRecord
   include TranslateEnum
+  
   # Relationships
   belongs_to :product, touch: true
   belongs_to :user,            optional: true, touch: true
