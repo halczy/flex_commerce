@@ -1,9 +1,7 @@
 <div class="row">
   <% feature_products.each do |product| %>
-    <% cache product do %>
-      <div class="col-md-4 mb-3">
-        <%= render 'shared/product_card', product: product %>
-      </div>
-    <% end %>
+    <div class="col-md-4 mb-3">
+      <%= render 'shared/product_card', product: product, cache: true %>
+    </div>
   <% end %>
 </div>

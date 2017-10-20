@@ -2,8 +2,7 @@
   <div class="container">
     <h3><%= t '.feature_products' %></h3>
     <% unless @feature_products.nil? %>
-      <%= render 'feature_products', feature_products: @feature_products,
-                                     cache: true %>
+      <%= render 'feature_products', feature_products: @feature_products %>
     <% end %>
   </div>
 </section>
