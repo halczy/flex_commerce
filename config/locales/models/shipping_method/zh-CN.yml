@@ -6,3 +6,10 @@ zh-CN:
       shipping_method:
         name: 名称
         variety: 类别
+        variety_list:
+          no_shipping: 无须物流
+          delivery: 快递
+          self_pickup: 自提
+    validators:
+      shipping_method:
+        unique_variety: 同一类别送货方式不能同时添加到同一产品

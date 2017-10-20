@@ -1,4 +1,6 @@
 class ShippingMethod < ApplicationRecord
+  include TranslateEnum
+  
   # Relationships
   has_and_belongs_to_many :products
   has_many :shipping_rates, dependent: :destroy
@@ -18,6 +20,7 @@ class ShippingMethod < ApplicationRecord
   enum variety: { no_shipping: 0,
                   delivery: 1,
                   self_pickup: 2 }
+  translate_enum :variety
 
   def destroyable?
     products.empty? && inventories.empty?

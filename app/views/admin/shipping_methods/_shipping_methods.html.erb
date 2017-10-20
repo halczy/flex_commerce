@@ -13,7 +13,7 @@
       <td>
         <%= link_to shipping_method.name, admin_shipping_method_path(shipping_method) %>
       </td>
-      <td><%= shipping_method.variety.titleize %></td>
+      <td><%= shipping_method.translated_variety %></td>
       <td><%= shipping_method.shipping_rates.count %></td>
       <%= render 'action_control', shipping_method: shipping_method %>
     </tr>

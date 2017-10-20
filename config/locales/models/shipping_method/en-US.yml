@@ -6,3 +6,10 @@ en-US:
       shipping_method:
         name: Name
         variety: Variety
+        variety_list:
+          no_shipping: No Shipping
+          delivery: Delivery
+          self_pickup: Self Pickup
+    validators:
+      shipping_method:
+        unique_variety: You can only assign one of each type of shipping method to product
