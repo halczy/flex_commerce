@@ -25,11 +25,11 @@
           </tr>
           <tr>
             <th scope="row"><%= t('.current_status') %></th>
-            <td><strong><%= @transfer.status.titleize %></strong></td>
+            <td><strong><%= @transfer.translated_status %></strong></td>
           </tr>
           <tr>
             <th scope="row"><%= t('.withdraw_to') %></th>
-            <td><%= @transfer.processor.titleize %></td>
+            <td><%= @transfer.translated_processor %></td>
           </tr>
           <% if @transfer.bank? %>
             <tr>

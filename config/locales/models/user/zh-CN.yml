@@ -11,3 +11,6 @@ zh-CN:
         member_id: 会员号
         settings: 设置
         password: 密码
+    validators:
+      user:
+        ident: 请提供一个有效的电邮地址或手机号码

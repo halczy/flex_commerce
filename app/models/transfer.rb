@@ -1,4 +1,6 @@
 class Transfer < ApplicationRecord
+  include TranslateEnum
+  
   # Relationships
   has_one    :transaction_log, class_name: 'Transaction', as: :transactable
   belongs_to :transferer,  class_name: 'User', foreign_key: 'transferer_id'
@@ -16,4 +18,6 @@ class Transfer < ApplicationRecord
   # Enums
   enum processor: { wallet: 0, alipay: 1, bank: 2 }
   enum status: { created: 0, pending: 1, failure: 2, success: 3 }
+  translate_enum :processor
+  translate_enum :status
 end

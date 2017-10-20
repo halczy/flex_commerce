@@ -2,8 +2,10 @@ class RewardMethodValidator < ActiveModel::Validator
 
   def validate(record)
     unless unique_variety?(record.reward_method_ids)
-      record.errors.add(:base,
-        'You can only assign one of each type of reward method to product.')
+      record.errors.add(
+        :base, 
+        I18n.t('activerecord.validators.reward_method.unique_variety')
+      )
     end
   end
 

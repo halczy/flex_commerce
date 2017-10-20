@@ -1,4 +1,6 @@
 class RewardMethod < ApplicationRecord
+  include TranslateEnum
+  
   # Relationships
   has_and_belongs_to_many :products
 
@@ -8,7 +10,8 @@ class RewardMethod < ApplicationRecord
 
   # Enum
   enum variety: { referral: 0, cash_back: 1 }
-
+  translate_enum :variety
+  
   # Attributes
   attribute :percentage
 

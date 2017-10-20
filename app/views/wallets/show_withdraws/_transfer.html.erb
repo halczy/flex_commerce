@@ -4,13 +4,13 @@
     <h6>
       <%= t('.amount') %>: <%= humanized_money_with_symbol transfer.amount %>
     </h6>
-    <h6><%= t('.status') %>: <%= transfer.status.titleize %></h6>
+    <h6><%= t('.status') %>: <%= transfer.translated_status %></h6>
   </div>
   <div class="d-flex justify-content-between">
     <small>
       <%= t('.note') %>: <%= transfer.try(:transaction_log).try(:note) %>
     </small>
-    <h6><%= transfer.processor.titleize %></h6>
+    <h6><%= transfer.translated_processor %></h6>
   </div>
   <div class="d-flex justify-content-between">
     <small class="text-muted">

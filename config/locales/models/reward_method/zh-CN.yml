@@ -7,3 +7,9 @@ zh-CN:
         name: 名称
         variety: 类别
         settings: 设置
+        variety_list:
+          referral: 推荐
+          cash_back: 返现
+    validators:
+      reward_method:
+        unique_variety: 同一类别奖励方式不能同时添加到同一产品

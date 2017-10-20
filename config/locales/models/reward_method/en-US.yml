@@ -7,3 +7,9 @@ en-US:
         name: Name
         variety: variety
         settings: Settings
+        variety_list:
+          referral: Referral
+          cash_back: Cash Back
+    validators:
+      reward_method:
+        unique_variety: You can only add one of each type of reward method to product.

@@ -1,0 +1,5 @@
+zh-CN:
+  activerecord:
+    validators:
+      referral:
+        invalid_relation: '不能自己成为自己的推荐人'

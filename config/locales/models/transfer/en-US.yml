@@ -9,3 +9,12 @@ en-US:
         status: Status
         processor_response: Processor Response
         processor_query_result: Processor Query Result
+        processor_list:
+          wallet: Wallet
+          alipay: Alipay
+          bank: Bank
+        status_list:
+          created: Created
+          pending: Pending
+          failure: Failure
+          success: Success

@@ -2,7 +2,9 @@ class ReferralValidator < ActiveModel::Validator
 
   def validate(record)
     if record.referer == record.referee
-      record.errors.add(:base, 'Referer and referee cannot be the same user.')
+      record.errors.add(
+        :base, 
+        I18n.t('activerecord.validators.referral.invalid_relation'))
     end
   end
 

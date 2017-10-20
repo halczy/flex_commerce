@@ -11,8 +11,8 @@
       <% transfers.each do |transfer| %>
         <tr>
           <td><%= link_to transfer.id, admin_transfer_path(transfer) %></td>
-          <td><%= transfer.processor.titleize %></td>
-          <td><%= transfer.status.titleize %></td>
+          <td><%= transfer.translated_processor %></td>
+          <td><%= transfer.translated_status %></td>
           <td><%= humanized_money_with_symbol transfer.amount %></td>
           <td><%= link_to t('.detail'), admin_transfer_path(transfer),
                                         class: 'btn btn-info btn-sm' %></td>
@@ -23,6 +23,5 @@
         <td colspan="5"><%= t('.no_match') %></td>
       </tr>
     <% end %>
-
   </tbody>
 </table>

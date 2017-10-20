@@ -11,3 +11,6 @@ en-US:
         member_id: Member ID
         settings: Settings
         password: Password
+    validators:
+      user:
+        ident: A valid email address or a valid cell phone number is required

@@ -45,8 +45,10 @@ class CustomersController < UsersController
     def set_referral
       referer = User.find_by(id: params[:customer][:referer_id])
       if referer
-        Referral.create!(referer: referer, referee: helpers.current_user)
+        ref = Referral.create(referer: referer, referee: helpers.current_user)
+        flash[:warning] = "#{ref.errors.full_messages.first}"
       end
+      
     end
 
     def set_financial

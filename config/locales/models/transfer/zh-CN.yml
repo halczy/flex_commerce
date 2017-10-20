@@ -9,3 +9,12 @@ zh-CN:
         status: 状态
         processor_response: 交易网关通知
         processor_query_result: 交易网关查询结果
+        processor_list:
+          wallet: 钱包
+          alipay: 支付宝
+          bank: 银行
+        status_list:
+          created: 已创建
+          pending: 处理中
+          failure: 失败
+          success: 成功
