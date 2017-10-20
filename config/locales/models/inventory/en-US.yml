@@ -4,9 +4,15 @@ en-US:
       inventory: Inventory
     attributes:
       inventory:
-          status: Status
-          purchased_at: Purchased at
-          returned_at: Returned at
-          purchase_weight: Purchase Weight
-          purchase_price: Purchase Price
-
+        status: Status
+        purchased_at: Purchased at
+        returned_at: Returned at
+        purchase_weight: Purchase Weight
+        purchase_price: Purchase Price
+        status_list:
+          unsold: Unsold
+          in_cart: In Cart
+          in_order: In Order
+          in_checkout: In Checkout
+          sold: Sold
+          returned: Returned

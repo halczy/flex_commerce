@@ -110,10 +110,10 @@ zh-CN:
         total: 全部库存
         unsold: 未售出
         in_cart: 购物车内
-        in_order: 订单内
-        in_checkout: 结帐中
+        in_order: 结帐中
+        in_checkout: 付款中
         sold: 已售出
-        returned: 退货
+        returned: 已退货
         amount: 数量
         submit: 提价
         close: 关闭

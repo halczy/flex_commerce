@@ -1,4 +1,5 @@
 class Inventory < ApplicationRecord
+  include TranslateEnum
   # Relationships
   belongs_to :product, touch: true
   belongs_to :user,            optional: true, touch: true
@@ -21,6 +22,7 @@ class Inventory < ApplicationRecord
                  in_checkout: 3,
                  sold: 4,
                  returned: 5 }
+  translate_enum :status
 
   def restock
     raise(StandardError, "Inventory Locked!") unless status_before_type_cast <= 2

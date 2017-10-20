@@ -19,7 +19,8 @@
           <p><%= t('.confirm_msg') %></p>
         <% else %>
           <p>
-            <%= t('.warning_msg_1') %> <strong><%= inventory.status %></strong>.
+            <%= t('.warning_msg_1') %>
+            <strong><%= inventory.translated_status %></strong>.
             <%= t('.warning_msg_2') %>
           </p>
         <% end %>

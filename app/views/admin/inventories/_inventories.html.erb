@@ -12,7 +12,7 @@
     <% inventories.each do |inventory| %>
     <tr>
       <td><%= link_to inventory.id, admin_inventory_path(inventory) %></td>
-      <td><%= inventory.status.titleize %></td>
+      <td><%= inventory.translated_status %></td>
       <td><%= inventory.product.name %></td>
       <td>
         <% if inventory.user %>

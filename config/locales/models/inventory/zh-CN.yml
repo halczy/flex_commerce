@@ -4,8 +4,15 @@ zh-CN:
       inventory: 库存
     attributes:
       inventory:
-          status: 状态
-          purchased_at: 购买于
-          returned_at: 退货于
-          purchase_weight: 购入重量
-          purchase_price: 购入价钱
+        status: 状态
+        purchased_at: 购买于
+        returned_at: 退货于
+        purchase_weight: 购入重量
+        purchase_price: 购入价钱
+        status_list:
+          unsold: 未售出
+          in_cart: 购物车内
+          in_order: 结帐中
+          in_checkout: 付款中
+          sold: 已售出
+          returned: 已退货

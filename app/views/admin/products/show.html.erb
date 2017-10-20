@@ -42,15 +42,15 @@
           </tr>
           <tr>
             <th scope="row"><%= t('.status') %></th>
-            <td><%= @product.status.capitalize %></td>
+            <td><%= I18n.t @product.status %></td>
           </tr>
           <tr>
             <th scope="row"><%= t('.strict_inventory') %></th>
-            <td><%= @product.strict_inventory.to_s.try(:capitalize) %></td>
+            <td><%= I18n.t @product.strict_inventory %></td>
           </tr>
           <tr>
             <th scope="row"><%= t('.digital_product') %></th>
-            <td><%= @product.digital.to_s.try(:capitalize) %></td>
+            <td><%= I18n.t @product.digital %></td>
           </tr>
           <tr>
             <th scope="row"><%= t('.categories') %></th>
