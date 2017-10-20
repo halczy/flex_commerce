@@ -18,7 +18,7 @@ class AddressesController < UsersController
     @address = @user.addresses.new(address_params)
     if @address.save
       @address.build_full_address
-      flash[:success] = "Successfully added a new address to your account."
+      flash[:success] = t('.success')
       redirect_to addresses_path
     else
       set_address_params
@@ -33,7 +33,7 @@ class AddressesController < UsersController
   def update
     if @address.update(address_params)
       @address.build_full_address
-      flash[:success] = "Successfully updated your address!"
+      flash[:success] = t('.success')
       redirect_to addresses_path
     else
       set_address_params
@@ -45,9 +45,9 @@ class AddressesController < UsersController
   def destroy
     if @address.destroyable?
       @address.destroy
-      flash[:success] = "Successfully deleted an address from your account."
+      flash[:success] = t('.success')
     else
-      flash[:warning] = "The address cannot be deleted."
+      flash[:warning] = t('.warning')
     end
     redirect_to addresses_path
   end

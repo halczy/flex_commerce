@@ -1,0 +1,6 @@
+zh-CN:
+  customers:
+    create:
+      success: 注册成功！
+    update:
+      success: 成功更新您的帐号信息。

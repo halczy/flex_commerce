@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user
     unless helpers.signed_in?
-      flash[:warning] = "You must log in to perform this action."
+      flash[:warning] = t('application.authenticate_user.warning')
       helpers.store_location
       redirect_to signin_path
     end
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_admin
     unless helpers.current_user.admin?
-      flash[:warning] = "You must log in as administrator to perform this action."
+      flash[:warning] = t('application.authenticate_admin.warning')
       helpers.store_location
       redirect_to root_url
     end

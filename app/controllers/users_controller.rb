@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     end
 
     def validate_permission
-      unless helpers.current_user?(@user) || helpers.current_user.admin?
+      unless helpers.current_user?(@user) || helpers.current_user.try(:admin?)
         flash[:danger] = "Access Denied"
         redirect_to root_url
       end

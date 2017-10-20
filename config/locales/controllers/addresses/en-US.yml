@@ -1,0 +1,9 @@
+en-US:
+  addresses:
+    create: 
+      success: A new address is successfully added to your account.
+    update:
+      success: Your address is updated successfully.
+    destroy:
+      success: The address is deleted from your account.
+      warning: The address cannot be deleted.

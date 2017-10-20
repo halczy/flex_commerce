@@ -1,0 +1,6 @@
+en-US:
+  application:
+    authenticate_user:
+      warning: You must log in to perform this action.
+    authenticate_admin:
+      warning: You must log in as administrator to perform this action.

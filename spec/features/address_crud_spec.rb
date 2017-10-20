@@ -111,7 +111,7 @@ describe 'Customer Address CRUD', type: :feature do
 
     it 'can delete address' do
       click_on "confirm_del_#{@address.id}"
-      expect(page).to have_content('Successfully deleted')
+      expect(page).to have_content('address is deleted')
     end
   end
 

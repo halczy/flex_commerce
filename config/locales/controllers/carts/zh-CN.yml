@@ -1,0 +1,12 @@
+zh-CN:
+  carts:
+    add:
+      success: "成功添加 %{product} 到您的购物车。"
+      warning: "%{product} 库存不足，暂无法添加到您的购物车。"
+    remove:
+      success: "成功从您的购物车中移除 %{product}。"
+      danger: "无法从您的购物车内移除 %{product}。"
+    set_product:
+      danger: 您所选的商品不存在。
+    validate_product:
+      danger: 您所选择的商品已下架，请稍候再试。

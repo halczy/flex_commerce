@@ -1,0 +1,12 @@
+en-US:
+  carts:
+    add:
+      success: "%{product} is successfully added to your shopping cart."
+      warning: "%{product} is out of stock or does not have enough stock to fill your request."
+    remove:
+      success: "%{product} is successfully removed from your shopping cart."
+      danger: "Unable to remove %{product} from your shopping cart."
+    set_product:
+      danger: The product you have selected is unavailable at the moment.
+    validate_product:
+      danger: The product is unavailable at the moment. Please try again later.

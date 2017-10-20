@@ -17,7 +17,7 @@ describe 'customer profile edit' do
       fill_in 'customer[password_confirmation]', with: 'newpassword'
       click_button 'Update Profile'
 
-      expect(page).to have_content('Successfully updated')
+      expect(page).to have_content('updated successfully')
       expect(page).to have_content('New Name')
       expect(page).to have_content('18612344321')
       expect(page).to have_content('new@email.com')

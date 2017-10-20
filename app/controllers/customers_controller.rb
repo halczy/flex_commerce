@@ -12,7 +12,7 @@ class CustomersController < UsersController
     helpers.convert_ident
     @customer = Customer.new(customer_params)
     if @customer.save
-      flash[:success] = 'Your account has been created successfully.'
+      flash[:success] = t('.success')
       helpers.login(@customer)
       helpers.organize_cart(@customer)
       redirect_back_or dashboard_path(@customer)
@@ -26,7 +26,7 @@ class CustomersController < UsersController
 
   def update
     if @user.update(customer_params)
-      flash[:success] = "Successfully updated your profile."
+      flash[:success] = t('.success')
       set_referral if params[:customer][:referer_id].present? && !@user.referer
       set_financial
       redirect_to @user

@@ -1,0 +1,6 @@
+zh-CN:
+  application:
+    authenticate_user:
+      warning: 你需要登录后才能访问该页面。
+    authenticate_admin:
+      warning: 仅限管理员访问此页面。

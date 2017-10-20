@@ -1,0 +1,6 @@
+en-US:
+  customers:
+    create:
+      success: Your account is created successfully.
+    update:
+      success: Your profile is updated successfully.

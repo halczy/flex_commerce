@@ -1,0 +1,9 @@
+zh-CN:
+  addresses:
+    create: 
+      success: 成功添加地址到您的账户。
+    update:
+      success: 成功更新您的地址。
+    destroy:
+      success: 成功从您的账户中删除地址。
+      warning: 无法删除该地址。
