@@ -26,11 +26,15 @@
           </tr>
           <tr>
             <th scope="row"><%= t('.transferer') %></th>
-            <td><%= @transfer.transferer.name %></td>
+            <td>
+              <%= @transfer.transferer.name %> (<%= @transfer.transferer.member_id %>)
+            </td>
           </tr>
           <tr>
             <th scope="row"><%= t('.transferee') %></th>
-            <td><%= @transfer.transferee.name %></td>
+            <td>
+              <%= @transfer.transferee.name %> (<%= @transfer.transferee.member_id %>)
+            </td>
           </tr>
           <tr>
             <th scope="row"><%= t('.processor_response') %></th>
