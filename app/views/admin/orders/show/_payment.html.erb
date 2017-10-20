@@ -16,9 +16,9 @@
           <tr>
             <td><%= payment.id %></td>
             <td><%= humanized_money_with_symbol payment.amount %></td>
-            <td><%= payment.status.titleize %></td>
-            <td><%= payment.variety.titleize %></td>
-            <td><%= payment.processor.titleize %></td>
+            <td><%= payment.translated_status %></td>
+            <td><%= payment.translated_variety %></td>
+            <td><%= payment.translated_processor %></td>
           </tr>
         <% end %>
       </tbody>

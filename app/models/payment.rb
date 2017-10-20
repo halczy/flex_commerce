@@ -1,4 +1,6 @@
 class Payment < ApplicationRecord
+  include TranslateEnum
+  
   # Relationships
   belongs_to :order, optional: true
   has_one    :transaction_log, class_name: 'Transaction', as: :originable
@@ -15,5 +17,8 @@ class Payment < ApplicationRecord
     insufficient_fund: 10, expired: 11,
     client_side_confirmed: 20, processor_confirmed: 21, confirmed: 22
   }
+  translate_enum :processor
+  translate_enum :variety
+  translate_enum :status
 
 end

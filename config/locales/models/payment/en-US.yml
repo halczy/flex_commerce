@@ -11,3 +11,17 @@ en-US:
         processor_request: Processor Request
         processor_response_return: Processor Response Return
         processor_response_notify: Processor Response Notify
+        processor_list:
+          wallet: Wallet
+          alipay: Alipay
+        variety_list:
+          charge: Charge
+          refund: Refund
+          reward: Reward
+        status_list:
+          created: Created
+          insufficient_fund: Insufficient Fund
+          expired: Expired
+          client_side_confirmed: Client Side Confirmed
+          processor_confirmed: Processor Confirmed
+          confirmed: Confirmed

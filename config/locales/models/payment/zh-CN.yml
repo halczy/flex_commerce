@@ -11,3 +11,17 @@ zh-CN:
         processor_request: 交易网关请求
         processor_response_return: 交易网关同步通知
         processor_response_notify: 交易网关异步通知
+        processor_list:
+          wallet: 钱包
+          alipay: 支付宝
+        variety_list:
+          charge: 付款
+          refund: 退款
+          reward: 奖励
+        status_list:
+          created: 已创建
+          insufficient_fund: 资金不足
+          expired: 超时
+          client_side_confirmed: 网关同步确认成功
+          processor_confirmed: 网关确认成功
+          confirmed: 已确认
