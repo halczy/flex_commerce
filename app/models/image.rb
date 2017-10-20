@@ -1,6 +1,6 @@
 class Image < ApplicationRecord
-  # Shrine
   include ImageUploader::Attachment.new(:image)
+  include TranslateEnum
 
   # Relationships
   belongs_to :imageable, polymorphic: true, optional: true, touch: true
@@ -15,7 +15,8 @@ class Image < ApplicationRecord
 
   # Enum
   enum source_channel: { attachment: 0, editor: 1 }
-
+  translate_enum :source_channel
+  
   def self.associate(object, filename, source_channel)
     Image.orphans.each do |img|
       if img.image[:fit].data['id'] == filename

@@ -24,7 +24,7 @@
           </tr>
           <tr>
             <th scope="row"><%= t('.source_channel') %></th>
-            <td><%= @image.source_channel %></td>
+            <td><%= @image.translated_source_channel %></td>
           </tr>
           <tr>
             <th scope="row"><%= t('.display_order') %></th>
@@ -32,7 +32,7 @@
           </tr>
           <tr>
             <th scope="row"><%= t('.in_use') %></th>
-            <td><%= @image.in_use %></td>
+            <td><%= I18n.t @image.in_use %></td>
           </tr>
           <tr>
             <th scope="row"><%= t('.title') %></th>

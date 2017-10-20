@@ -9,3 +9,6 @@ en-US:
         title: Title
         in_use: In Use
         source_channel: Source Channel
+        source_channel_list:
+          attachment: Attachment
+          editor: Editor

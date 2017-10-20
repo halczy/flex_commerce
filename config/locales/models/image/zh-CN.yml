@@ -9,3 +9,6 @@ zh-CN:
         title: 标题
         in_use: 使用中
         source_channel: 来源
+        source_channel_list:
+          attachment: 附件
+          editor: 产品编辑
