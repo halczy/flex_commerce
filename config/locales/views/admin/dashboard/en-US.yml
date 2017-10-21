@@ -27,7 +27,7 @@ en-US:
           customer_name: Customer Name
           shipment: Shipment
           pickup_readied_at: Pickup Readied At
-        pending_shipment_ordres:
+        pending_shipment_orders:
           title: Pending Shipment
           ship_order: Ship Order
           customer_name: Customer Name
