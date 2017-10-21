@@ -27,4 +27,21 @@ RSpec.describe ApplicationConfiguration, type: :model do
       expect(dup_sample).not_to be_valid
     end
   end
+
+  describe '#self.get' do
+    it 'gets encrypted value' do
+      ApplicationConfiguration.create(name: 'v_test', value: 'encrypted_value')
+      expect(ApplicationConfiguration.get('v_test')).to eq('encrypted_value')
+    end
+
+    it 'gets plain value' do
+      ApplicationConfiguration.create(name: 'p_test', plain: 'plain_value')
+      expect(ApplicationConfiguration.get('p_test')).to eq('plain_value')
+    end
+
+    it 'gets boolean value' do
+      ApplicationConfiguration.create(name: 'b_test', status: false)
+      expect(ApplicationConfiguration.get('b_test')).to eq(false)
+    end
+  end
 end

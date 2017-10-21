@@ -11,6 +11,10 @@ class ApplicationConfiguration < ApplicationRecord
   # Validations
   validates :name, presence: true, uniqueness: true
 
+  def self.get(name)
+    config = ApplicationConfiguration.find_by(name: name)
+    config.try(:value) || config.try(:plain) || config.try(:status)
+  end
 
   private
 
