@@ -43,5 +43,9 @@ RSpec.describe ApplicationConfiguration, type: :model do
       ApplicationConfiguration.create(name: 'b_test', status: false)
       expect(ApplicationConfiguration.get('b_test')).to eq(false)
     end
+
+    it 'returns nil when no config is found' do
+      expect(ApplicationConfiguration.get('random')).to be_nil
+    end
   end
 end
