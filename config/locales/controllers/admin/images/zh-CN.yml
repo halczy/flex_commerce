@@ -1,0 +1,6 @@
+zh-CN:
+  admin:
+    images:
+      destroy:
+        success: 图片更新成功
+        danger: 无法删除该图片

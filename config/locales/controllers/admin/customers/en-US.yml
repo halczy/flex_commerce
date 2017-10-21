@@ -2,6 +2,6 @@ en-US:
   admin:
     customers:
       search:
-        warning: Please enter one or more search terms.
+        warning: Please provide a valid search term.
       update:
         success: Successfully updated customer profile.

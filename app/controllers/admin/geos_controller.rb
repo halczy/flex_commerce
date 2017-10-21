@@ -12,7 +12,7 @@ class Admin::GeosController < Admin::AdminController
       @search_run = GeoSearchService.new(search_term).full_search
       @search_result = @search_run.page params[:page]
     else
-      flash.now[:warning] = "Please provide a valid search term"
+      flash.now[:warning] = t('.warning')
       render :search
     end
   end

@@ -2,6 +2,6 @@ zh-CN:
   admin:
     customers:
       search:
-        warning: 请提供至少一个关键字
+        warning: 请提供至少一个搜索关键字
       update:
         success: 成功更新顾客资料

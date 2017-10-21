@@ -23,9 +23,9 @@ class Admin::ImagesController < Admin::AdminController
 
   def destroy
     if @image.destroy
-      flash[:success] = 'Image was successfully destroyed.'
+      flash[:success] = t('.success')
     else
-      flash[:danger] = "Unable to delete this image."
+      flash[:danger] = t('.danger')
     end
     redirect_back_or admin_images_path
   end

@@ -1,0 +1,6 @@
+en-US:
+  admin:
+    images:
+      destroy:
+        success: The images is updated successfully.
+        danger: Unable to delete this image.

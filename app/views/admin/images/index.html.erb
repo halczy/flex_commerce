@@ -16,7 +16,7 @@
         <% @images.each do |image| %>
           <tr>
             <td><%= image.title %></td>
-            <td><%= I18n.t image.imageable_type.try(:capitalize) %></td>
+            <td><%= I18n.t image.imageable_type if image.imageable_type %></td>
             <td><%= image_tag image.image_url(:thumb), class: 'img-fluid' %></td>
             <td>
               <%= link_to t('.detail'), admin_image_path(image),
