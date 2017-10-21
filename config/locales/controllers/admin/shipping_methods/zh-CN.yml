@@ -1,0 +1,10 @@
+zh-CN:
+  admin:
+    shipping_methods:
+      create:
+        success: 成功创建送货方式
+      update:
+        success: 成功编辑送货方式
+      destroy:
+        success: 成功删除所选送货方式
+        danger: 该送货方式无法删除

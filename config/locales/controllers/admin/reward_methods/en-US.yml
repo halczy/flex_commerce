@@ -1,0 +1,10 @@
+en-US:
+  admin:
+    reward_methods:
+      create:
+        success: Successfully created a reward method.
+      update:
+        success: Successfully updated the reward method.
+      destroy:
+        success: Successfully deleted the reward method.
+        warning: This reward method cannot be deleted.

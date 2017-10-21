@@ -23,7 +23,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
     end
 
     if @shipping_method.save
-      flash[:success] = 'Successfully created a shipping method.'
+      flash[:success] = t('.success')
       @shipping_method.try(:address).try(:build_full_address)
       redirect_to admin_shipping_method_path(@shipping_method)
     else
@@ -37,8 +37,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
     @address = @shipping_method.try(:address)
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     case params[:shipping_method][:variety]
@@ -51,7 +50,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
     end
 
     if update_status
-      flash[:success] = 'Successfully edited shipping method.'
+      flash[:success] = t('.success')
       @shipping_method.try(:address).try(:build_full_address)
       redirect_to admin_shipping_method_path(@shipping_method)
     else
@@ -62,9 +61,9 @@ class Admin::ShippingMethodsController < Admin::AdminController
 
   def destroy
     if @shipping_method.destroyable? && @shipping_method.destroy
-      flash[:success] = "Successfully removed the selected shipping method."
+      flash[:success] = t('.success')
     else
-      flash[:danger] = "This shipping method cannot be deleted."
+      flash[:danger] = t('.danger')
     end
     redirect_to admin_shipping_methods_path
   end

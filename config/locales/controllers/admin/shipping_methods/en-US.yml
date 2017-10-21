@@ -1,0 +1,10 @@
+en-US:
+  admin:
+    shipping_methods:
+      create:
+        success: Successfully created a shipping method.
+      update:
+        success: Successfully edited the shipping method.
+      destroy:
+        success: Successfully removed the selected shipping method.
+        danger: This shipping method cannot be deleted.

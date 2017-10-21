@@ -9,7 +9,7 @@ class ReferralsController < ApplicationController
     if user
       redirect_to(signup_path(referer_id: user.id))
     else
-      flash[:warning] = 'The referral link is invalid.'
+      flash[:warning] = t('.warning')
       redirect_to(signup_path)
     end
   end

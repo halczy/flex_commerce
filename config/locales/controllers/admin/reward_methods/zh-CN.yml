@@ -1,0 +1,10 @@
+zh-CN:
+  admin:
+    reward_methods:
+      create:
+        success: 成功创建奖励方式
+      update:
+        success: 成功更新奖励方式
+      destroy:
+        success: 成功删除该奖励方式
+        warning: 无法删除该奖励方式
