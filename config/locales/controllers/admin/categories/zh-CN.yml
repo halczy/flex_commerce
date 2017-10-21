@@ -1,0 +1,11 @@
+zh-CN:
+  admin:
+    categories:
+      create:
+        success: 成功创建目录
+      update: 
+        success: 成功更新目录
+      destroy:
+        success: 成功删除目录
+      move:
+        danger: 目录无法移动到指定位置

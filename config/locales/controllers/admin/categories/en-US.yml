@@ -1,0 +1,11 @@
+en-US:
+  admin:
+    categories:
+      create:
+        success: A category is successfully created.
+      update: 
+        success: Successfully updated the category.
+      destroy:
+        success: Successfully deleted the category.
+      move:
+        danger: Unable to move the category to that position.

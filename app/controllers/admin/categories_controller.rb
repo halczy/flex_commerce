@@ -15,7 +15,7 @@ class Admin::CategoriesController < Admin::AdminController
   def create
     @category = Category.new(category_params)
     if @category.save
-      flash[:success] = 'Category was successfully created.'
+      flash[:success] = t('.success')
       redirect_to admin_category_path(@category)
     else
       render :new
@@ -30,7 +30,7 @@ class Admin::CategoriesController < Admin::AdminController
 
   def update
     if @category.update(category_params)
-      flash[:success] = "Category was successfully updated."
+      flash[:success] = t('.success')
       redirect_to admin_category_path(@category)
     else
       render :edit
@@ -40,7 +40,7 @@ class Admin::CategoriesController < Admin::AdminController
   def destroy
     @category.unassociate_children
     @category.destroy
-    flash[:success] = "Category was successfully destroyed."
+    flash[:success] = t('.success')
     redirect_to admin_categories_path
   end
 
@@ -49,7 +49,7 @@ class Admin::CategoriesController < Admin::AdminController
     if @category.move(position)
       redirect_to admin_categories_path
     else
-      flash[:danger] = "Cannot move category to that position."
+      flash[:danger] = t('.danger')
       redirect_to admin_categories_path
     end
   end

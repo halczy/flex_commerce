@@ -9,7 +9,7 @@ class Admin::ApplicationConfigurationsController < Admin::AdminController
 
   def update
     if @app_config.update(app_config_params)
-      flash[:success] = "Successfully updated the configuration."
+      flash[:success] = t('.success')
       redirect_to admin_application_configurations_path
     else
       render :edit
@@ -18,7 +18,7 @@ class Admin::ApplicationConfigurationsController < Admin::AdminController
 
   def destroy
     @app_config.destroy
-    flash[:success] = 'Successfully deleted a application configuration.'
+    flash[:success] = t('.success')
     redirect_to admin_application_configurations_path
   end
 

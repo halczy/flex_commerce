@@ -1,0 +1,7 @@
+en-US:
+  admin:
+    application_configurations:
+      update: 
+        success: Successfully updated the configuration.
+      destroy:
+        success: An application configuration had been successfully deleted.

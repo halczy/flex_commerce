@@ -152,7 +152,7 @@ RSpec.describe Admin::CategoriesController, type: :controller do
       patch :move, params: { id: cat_order_init_1.id, position: -100 }
       expect(response).to redirect_to admin_categories_path
       expect(cat_order_init_1.reload.display_order).to eq(1)
-      expect(flash[:danger]).to eq('Cannot move category to that position.')
+      expect(flash[:danger]).to eq('Unable to move the category to that position.')
     end
 
     it 'does not move category when no position params is given' do

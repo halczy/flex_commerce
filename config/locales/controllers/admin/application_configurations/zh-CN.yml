@@ -1,0 +1,7 @@
+zh-CN:
+  admin:
+    application_configurations:
+      update: 
+        success: 程序设置更新成功
+      destroy:
+        success: 程序设置删除成功
