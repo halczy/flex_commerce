@@ -115,7 +115,7 @@ zh-CN:
         sold: 已售出
         returned: 已退货
         amount: 数量
-        submit: 提价
+        submit: 提交
         close: 关闭
         delete_msg: 你可删除未售出库存。如果你需要更多的库存，你可以尝试
         force_delete: 强制删除。

@@ -1,0 +1,21 @@
+en-US:
+  admin:
+    products:
+      create:
+        success: Successfully created a product.
+      update:
+        success: Successfully updated the product.
+      destroy:
+        success_destroy: The product is successfully destroy.
+        success_disable: The product is successfully disabled.
+      search:
+        warning: Please provide a valid search term.
+      add_inventories: 
+        success: "Successfully created %{amount} inventories."
+      remove_inventories:
+        success: "Successfully deleted %{amount} inventories."
+        danger: The requested amount exceeds unsold inventories.
+      force_remove_inventories:
+        info: "Successfully force deleted %{amount} inventories."
+      validate_amount:
+        danger: Invalid amount. Please enter a valid number.

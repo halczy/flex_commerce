@@ -14,7 +14,7 @@ class Admin::OrdersController < Admin::AdminController
       @search_run = OrderSearchService.new(search_term).search
       @search_result = Kaminari.paginate_array(@search_run).page(params[:page])
     else
-      flash.now[:warning] = "Please enter one or more search terms."
+      flash.now[:warning] = t('.warning')
       render :search
     end
   end
@@ -26,18 +26,18 @@ class Admin::OrdersController < Admin::AdminController
 
   def confirm
     if @order_service.staff_confirm
-      flash[:success] = "The order status is now #{@order.reload.status.titleize}."
+      flash[:success] = t('.success', status: @order.translated_status)
     else
-      flash[:danger] = "Unable to confirm this order."
+      flash[:danger] = t('.danger')
     end
     redirect_to admin_order_path(@order)
   end
 
   def set_pickup_ready
     if @order_service.set_pickup_ready
-      flash[:success] = "The order is now marked as ready for pickup"
+      flash[:success] = t('.success')
     else
-      flash[:danger] = "Unable to mark order as pickup ready."
+      flash[:danger] = t('.danger')
     end
     redirect_to admin_order_path(@order)
   end
@@ -49,27 +49,25 @@ class Admin::OrdersController < Admin::AdminController
 
     if params['tracking_number'].present? && params['shipping_company'].present?
       if @order_service.add_tracking(params)
-        flash[:success] = "Successfully added tracking information to order."
+        flash[:success] = t('.success')
       else
-        flash[:danger] = 'Unable to save tracking information to order. Please
-                          double check the value provided.'
+        flash[:danger] = t('.danger')
       end
     else
-      flash[:warning] = 'Please provide or select and shipping company and
-                         enter the tracking number.'
+      flash[:warning] = t('.warning')
     end
     redirect_to admin_order_path(@order)
   end
 
   def complete_pickup
     @order_service.complete_pickup
-    flash[:success] = 'Mark self pickup as completed.'
+    flash[:success] = t('.success')
     redirect_to admin_order_path(@order)
   end
 
   def complete_shipping
     @order_service.complete_shipping
-    flash[:success] = 'Mark shipping as completed.'
+    flash[:success] = t('.success')
     redirect_to admin_order_path(@order)
   end
 
@@ -79,5 +77,4 @@ class Admin::OrdersController < Admin::AdminController
       @order = Order.find(params[:id])
       @order_service = OrderService.new(order_id: @order.id)
     end
-
 end

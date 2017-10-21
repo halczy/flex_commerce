@@ -1,0 +1,6 @@
+en-US:
+  admin:
+    inventories:
+      destroy:
+        success: 成功删除库存
+        danger: 该库存不能删除

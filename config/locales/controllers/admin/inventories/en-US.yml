@@ -1,0 +1,6 @@
+en-US:
+  admin:
+    inventories:
+      destroy:
+        success: Successfully deleted the inventory.
+        danger: This inventory cannot be deleted.

@@ -26,7 +26,7 @@ class Admin::ProductsController < Admin::AdminController
     @product = Product.new(product_params)
     if @product.save
       @product.associate_images
-      flash[:success] = "Successfully created a product."
+      flash[:success] = t('.success')
       redirect_to admin_product_path(@product)
     else
       render :new
@@ -40,7 +40,7 @@ class Admin::ProductsController < Admin::AdminController
   def update
     if @product.update(product_params)
       @product.reassociate_images
-      flash[:success] = "Successfully updated product."
+      flash[:success] = t('.success')
       redirect_to admin_product_path(@product)
     else
       render :edit
@@ -51,10 +51,10 @@ class Admin::ProductsController < Admin::AdminController
     @product.unassociate_images
     if @product.destroyable?
       @product.destroy
-      flash[:success] = "Successfully destroyed the product."
+      flash[:success] = t('.success_destroy')
     else
       @product.disable
-      flash[:success] = "Successfully disabled the product."
+      flash[:success] = t('.success_disable')
     end
     redirect_to admin_products_path
   end
@@ -65,7 +65,7 @@ class Admin::ProductsController < Admin::AdminController
       @search_run = ProductSearchService.new(search_term).quick_search
       @search_result = @search_run.page params[:page]
     else
-      flash.now[:warning] = "Please enter one or more search terms."
+      flash.now[:warning] = t('.warning')
       render :search
     end
   end
@@ -76,16 +76,16 @@ class Admin::ProductsController < Admin::AdminController
 
   def add_inventories
     if @product.add_inventories(@amount)
-      flash[:success] = "Successfully created #{@amount} inventories."
+      flash[:success] = t('.success', amount: @amount)
       redirect_to(inventories_admin_product_path(@product))
     end
   end
 
   def remove_inventories
     if @product.remove_inventories(@amount)
-      flash[:success] = "Successfully deleted #{@amount} inventories."
+      flash[:success] = t('.success', amount: @amount)
     else
-      flash[:danger] = "The requested amount exceeds unsold inventories."
+      flash[:danger] = t('.danger')
     end
     redirect_to(inventories_admin_product_path(@product))
   end
@@ -94,7 +94,7 @@ class Admin::ProductsController < Admin::AdminController
     inv_before = @product.inventories.count
     @product.force_remove_inventories(@amount)
     inv_deleted = inv_before - @product.inventories.count
-    flash[:info] = "Successfully force deleted #{inv_deleted} inventories."
+    flash[:info] = t('.info', amount: inv_deleted)
     redirect_to(inventories_admin_product_path(@product))
   end
 
@@ -116,7 +116,7 @@ class Admin::ProductsController < Admin::AdminController
 
     def validate_amount(action = 'add')
       if params[:amount] && params[:amount].to_i <= 0
-        flash[:danger] = "Invalid Amount. Please enter a valid number."
+        flash[:danger] = t('admin.products.validate_amount.danger')
         redirect_to(inventories_admin_product_path(@product))
       else
         @amount = params[:amount].to_i

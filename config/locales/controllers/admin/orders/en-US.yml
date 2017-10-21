@@ -1,0 +1,19 @@
+en-US:
+  admin:
+    orders:
+      search:
+        warning: Please enter a valid search term.
+      confirm:
+        success: "The order status is now %{status}."
+        danger: Unable to confirm this order.
+      set_pickup_ready:
+        success: The order is now marked as ready for pickup.
+        danger: Unable to mark order as pickup ready.
+      add_tracking:
+        success: Tracking information successfully added to order.
+        danger: Unable to save tracking information to the order. Please double check the value provided.
+        warning: Please provide or select shipping company and enter a tracking number.
+      complete_pickup:
+        success: Marked self pickup as completed.
+      complete_shipping:
+        success: Marked shipping as completed.

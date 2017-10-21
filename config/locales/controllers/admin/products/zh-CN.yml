@@ -1,0 +1,21 @@
+zh-CN:
+  admin:
+    products:
+      create:
+        success: 产品创建成功
+      update:
+        success: 产品更新成功
+      destroy:
+        success_destroy: 产品成功删除
+        success_disable: 产品禁用成功
+      search:
+        warning: 请提供一个有效的搜索关键字
+      add_inventories: 
+        success: "成功创建 %{amount} 件库存"
+      remove_inventories:
+        success: "成功删除 %{amount} 件库存"
+        danger: 请求删除数量大于可删除数量
+      force_remove_inventories:
+        info: "成功强制删除 %{amount} 件库存"
+      validate_amount:
+        danger: 无效数量，请输入有效数字。

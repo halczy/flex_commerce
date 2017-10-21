@@ -16,10 +16,10 @@ class Admin::InventoriesController < Admin::AdminController
   def destroy
     if @inventory.status_before_type_cast < 3
       @inventory.destroy
-      flash[:success] = "Successfully deleted inventory."
+      flash[:success] = t('.success')
       redirect_back_or admin_inventories_path
     else
-      flash[:danger] = "This inventory cannot be deleted."
+      flash[:danger] = t('.danger')
       redirect_to admin_inventory_path(@inventory)
     end
   end

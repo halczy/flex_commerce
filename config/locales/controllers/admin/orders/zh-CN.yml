@@ -1,0 +1,19 @@
+zh-CN:
+  admin:
+    orders:
+      search:
+        warning: 请输入至少一个有效的搜索关键字
+      confirm:
+        success: "目前订单状态设为：%{status}"
+        danger: 无法确认该订单
+      set_pickup_ready:
+        success: 订单标记为等候提货
+        danger: 无法标记订单为等候提货
+      add_tracking:
+        success: 快递单号成功添加到订单
+        danger: 无法添加快递单号到订单。请确认输入信息后重试。
+        warning: 请选择或提供快递公司名并提供单号
+      complete_pickup:
+        success: 订单标记为提货成功
+      complete_shipping:
+        success: 订单标记为签收成功
