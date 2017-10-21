@@ -32,6 +32,22 @@ RSpec.describe ApplicationHelper, :type => :helper do
     end
   end
 
+  describe '#icp_license' do
+    it 'returns icp license when present' do
+      ApplicationConfiguration.create(name: 'icp_license', plain: '12-345')
+      expect(helper.icp_license).to eq('12-345')
+    end
+
+    it 'returns nil if icp license is not setup' do
+      expect(helper.icp_license).to be_nil
+    end
+
+    it 'returns nil if value is empty' do
+      ApplicationConfiguration.create(name: 'icp_license', plain: '')
+      expect(helper.icp_license).to be_nil
+    end
+  end
+
   describe '#alert_icon' do
     it 'returns success icon class' do
       expect(helper.alert_icon('success')).to eq('fa-check-circle')
@@ -41,5 +57,4 @@ RSpec.describe ApplicationHelper, :type => :helper do
       expect(helper.alert_icon('random')).to be_nil
     end
   end
-
 end

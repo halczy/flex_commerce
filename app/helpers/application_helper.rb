@@ -21,6 +21,11 @@ module ApplicationHelper
     'Flex Commerce'
   end
 
+  def icp_license
+    license = ApplicationConfiguration.get('icp_license')
+    license.present? ? license : nil
+  end
+
   def admin_controller?(controller)
     controller.controller_path.match?(/admin/)
   end
