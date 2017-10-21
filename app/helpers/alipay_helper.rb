@@ -1,5 +1,4 @@
 module AlipayHelper
-
   def create_alipay_client
     get_alipay_params
     Alipay::Client.new(

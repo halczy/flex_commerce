@@ -1,4 +1,6 @@
 class PaymentService
+  include ApplicationHelper
+  include AlipayHelper
   attr_accessor :order, :payment, :amount, :user, :processor, :processor_client
 
   def initialize(order_id: nil, payment_id: nil, processor: nil, amount: nil,
@@ -90,7 +92,7 @@ class PaymentService
       h[:out_trade_no] = @payment.id
       h[:product_code] = 'FAST_INSTANT_TRADE_PAY'
       h[:total_amount] = @payment.order.amount_unpaid.to_f
-      h[:subject] = "[#{app_name}] Payment for order: #{@payment.order.id}"
+      h[:subject] = "[#{app_title}] Payment for order: #{@payment.order.id}"
     end
     @payment.update(processor_request: biz_content)
   end
@@ -240,10 +242,5 @@ class PaymentService
     def distribute_rewards
       reward_service = RewardService.new(order_id: @order.id)
       reward_service.distribute
-    end
-
-    def app_name
-      ApplicationConfiguration.find_by(name: 'application_title').try(:plain) ||
-      'Flex Commerce'
     end
 end

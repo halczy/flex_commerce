@@ -24,9 +24,9 @@ RSpec.describe PaymentService, type: :model do
       end
     end
 
-    describe '#create_processor_client' do
+    describe 'alipay_helper' do
       it 'creates an alipay client' do
-        client = alipay_created.create_processor_client
+        client = alipay_created.create_alipay_client
         expect(client).to be_an_instance_of Alipay::Client
       end
     end

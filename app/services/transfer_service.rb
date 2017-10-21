@@ -1,4 +1,5 @@
 class TransferService
+  include AlipayHelper
   attr_accessor :transfer, :transferer, :transferee, :amount,
                 :fund_source, :fund_target, :processor, :status
 
@@ -101,7 +102,7 @@ class TransferService
   end
 
   def alipay_transfer
-    create_alipay_client
+    @client = create_alipay_client
     @retry_limit = 0
 
     begin
@@ -210,15 +211,6 @@ class TransferService
         originable: @transfer.fund_source,
         processable: @transfer.fund_source,
         note: "PENDING: Withdraw to #{@processor} account."
-      )
-    end
-
-    def create_alipay_client
-      @client = Alipay::Client.new(
-        url: ENV['ALIPAY_GATEWAY'],
-        app_id: ENV['ALIPAY_APP_ID'],
-        app_private_key: ENV['ALIPAY_APP_PRIVATE_KEY'],
-        alipay_public_key: ENV['ALIPAY_PUBLIC_KEY']
       )
     end
 
