@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe ProductsHelper, type: :helper do
 
-  let(:product) { FactoryGirl.create(:product) }
-  let(:brand)   { FactoryGirl.create(:brand) }
+  let(:product) { FactoryBot.create(:product) }
+  let(:brand)   { FactoryBot.create(:brand) }
   describe '#build_product_breadcrumb' do
 
     it 'returns an array with brand name and url' do

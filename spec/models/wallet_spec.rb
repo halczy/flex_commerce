@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Wallet, type: :model do
 
-  let(:customer)         { FactoryGirl.create(:customer) }
-  let(:wealthy_customer) { FactoryGirl.create(:wealthy_customer) }
+  let(:customer)         { FactoryBot.create(:customer) }
+  let(:wealthy_customer) { FactoryBot.create(:wealthy_customer) }
 
   describe 'creation' do
     it 'can be created with user' do

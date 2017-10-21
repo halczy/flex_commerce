@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe PaymentService, type: :model do
 
-  let(:wealthy_customer)      { FactoryGirl.create(:wealthy_customer) }
-  let(:order_set)             { FactoryGirl.create(:order, set: true) }
-  let(:order_confirmed)       { FactoryGirl.create(:order, confirmed: true) }
-  let(:payment_success_order) { FactoryGirl.create(:payment_order, success: true) }
-  let(:payment_wallet)        { FactoryGirl.create(:payment) }
-  let(:payment_alipay)        { FactoryGirl.create(:payment, processor: 1) }
+  let(:wealthy_customer)      { FactoryBot.create(:wealthy_customer) }
+  let(:order_set)             { FactoryBot.create(:order, set: true) }
+  let(:order_confirmed)       { FactoryBot.create(:order, confirmed: true) }
+  let(:payment_success_order) { FactoryBot.create(:payment_order, success: true) }
+  let(:payment_wallet)        { FactoryBot.create(:payment) }
+  let(:payment_alipay)        { FactoryBot.create(:payment, processor: 1) }
   let(:wallet_created)        { PaymentService.new(payment_id: payment_wallet.id) }
   let(:alipay_created)        { PaymentService.new(payment_id: payment_alipay.id) }
 
@@ -113,7 +113,7 @@ RSpec.describe PaymentService, type: :model do
 
     describe '#validate_customer_fund' do
       it 'returns true if customer have sufficient fund to complete order' do
-        order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
+        order = FactoryBot.create(:order, confirmed: true, user: wealthy_customer)
         payment_service = PaymentService.new(order_id: order, processor: 'wallet')
         payment_service.build_charge
         expect(payment_service.send(:validate_customer_fund)).to be_truthy
@@ -132,7 +132,7 @@ RSpec.describe PaymentService, type: :model do
     describe '#create' do
       context 'with validate arguments' do
         it 'creates wallet payment' do
-          order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
+          order = FactoryBot.create(:order, confirmed: true, user: wealthy_customer)
           payment_service = PaymentService.new(order_id: order, processor: 'wallet')
           result = payment_service.create
           expect(result).to be_an_instance_of Payment
@@ -142,7 +142,7 @@ RSpec.describe PaymentService, type: :model do
         end
 
         it 'creates alipay payment' do
-          order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
+          order = FactoryBot.create(:order, confirmed: true, user: wealthy_customer)
           payment_service = PaymentService.new(order_id: order, processor: 'alipay')
           result = payment_service.create
           expect(result).to be_an_instance_of Payment
@@ -213,7 +213,7 @@ RSpec.describe PaymentService, type: :model do
       end
 
       it 'sets order status to partial payment if some amount paid' do
-        payment = FactoryGirl.create(:payment, order: order_confirmed)
+        payment = FactoryBot.create(:payment, order: order_confirmed)
         payment.order.user.wallet.update(balance: 9999999)
         payment_service = PaymentService.new(payment_id: payment.id,
                                              amount: Money.new(100))
@@ -278,7 +278,7 @@ RSpec.describe PaymentService, type: :model do
       end
 
       it 'calls #charge_aliapy if alipay type payment is called' do
-        order = FactoryGirl.create(:order, confirmed: true)
+        order = FactoryBot.create(:order, confirmed: true)
         payment_service = PaymentService.new(order_id: order, processor: 'alipay')
         payment_service.create
         expect(payment_service).to receive(:charge_alipay)
@@ -288,7 +288,7 @@ RSpec.describe PaymentService, type: :model do
 
     describe '#alipay_confirm' do
       before do
-        order = FactoryGirl.create(:order, confirmed: true, user: wealthy_customer)
+        order = FactoryBot.create(:order, confirmed: true, user: wealthy_customer)
         @payment_service = PaymentService.new(order_id: order, processor: 'alipay')
         @payment_service.create
         @res = {
@@ -471,7 +471,7 @@ RSpec.describe PaymentService, type: :model do
     end
 
     it 'deposits reward into referer wallet', skip_before: true do
-      referer = FactoryGirl.create(:customer)
+      referer = FactoryBot.create(:customer)
       reward_ps = PaymentService.new(order_id: payment_success_order,
                                      amount: 100.to_money,
                                      variety: 'reward',
@@ -483,7 +483,7 @@ RSpec.describe PaymentService, type: :model do
     end
 
     it 'deposits reward conditionally into referer wallet', skip_before: true do
-      referer = FactoryGirl.create(:customer)
+      referer = FactoryBot.create(:customer)
       reward_ps = PaymentService.new(order_id: payment_success_order,
                                      amount: 100.to_money,
                                      variety: 'reward',

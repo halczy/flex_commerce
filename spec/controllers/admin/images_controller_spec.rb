@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Admin::ImagesController, type: :controller do
 
-  let(:admin) { FactoryGirl.create(:admin) }
-  let(:image) { FactoryGirl.create(:image) }
+  let(:admin) { FactoryBot.create(:admin) }
+  let(:image) { FactoryBot.create(:image) }
 
   before { signin_as(admin) }
 

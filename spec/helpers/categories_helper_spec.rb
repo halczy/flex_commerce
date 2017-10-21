@@ -14,11 +14,11 @@ RSpec.describe CategoriesHelper, type: :helper do
   describe '#parent_count' do
 
     before do
-      @top_cat = FactoryGirl.create(:category)
-      @child_cat_1 = FactoryGirl.create(:category, parent: @top_cat)
-      @child_cat_2 = FactoryGirl.create(:category, parent: @child_cat_1)
-      @child_cat_3 = FactoryGirl.create(:category, parent: @child_cat_2)
-      @child_cat_4 = FactoryGirl.create(:category, parent: @child_cat_3)
+      @top_cat = FactoryBot.create(:category)
+      @child_cat_1 = FactoryBot.create(:category, parent: @top_cat)
+      @child_cat_2 = FactoryBot.create(:category, parent: @child_cat_1)
+      @child_cat_3 = FactoryBot.create(:category, parent: @child_cat_2)
+      @child_cat_4 = FactoryBot.create(:category, parent: @child_cat_3)
     end
 
     it 'returns the parent count' do

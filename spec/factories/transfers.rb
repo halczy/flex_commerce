@@ -1,9 +1,9 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :wallet_transfer, class: Transfer do
     amount { Money.new(10000) }
     processor 'wallet'
-    transferer { FactoryGirl.create(:wealthy_customer) }
-    transferee { FactoryGirl.create(:customer) }
+    transferer { FactoryBot.create(:wealthy_customer) }
+    transferee { FactoryBot.create(:customer) }
 
     transient do
       success false
@@ -21,7 +21,7 @@ FactoryGirl.define do
   factory :bank_transfer, class: Transfer do
     amount { Money.new(10000) }
     processor 'bank'
-    transferer { FactoryGirl.create(:wealthy_customer) }
+    transferer { FactoryBot.create(:wealthy_customer) }
     transferee { transferer }
     fund_target { transferer.wallet }
     fund_source { transferer.wallet }
@@ -48,7 +48,7 @@ FactoryGirl.define do
   factory :alipay_transfer, class: Transfer do
     amount { Money.new(10000) }
     processor 'alipay'
-    transferer { FactoryGirl.create(:wealthy_customer) }
+    transferer { FactoryBot.create(:wealthy_customer) }
     transferee { transferer }
     fund_target { transferer.wallet }
     fund_source { transferer.wallet }

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Customer, type: :model do
 
-  let(:customer)        { FactoryGirl.create(:customer) }
-  let(:completed_order) { FactoryGirl.create(:service_order, completed: true) }
+  let(:customer)        { FactoryBot.create(:customer) }
+  let(:completed_order) { FactoryBot.create(:service_order, completed: true) }
 
   describe 'creation' do
     it 'can be created' do

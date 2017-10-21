@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe CartsHelper, type: :helper do
 
-  let(:customer) { FactoryGirl.create(:customer) }
-  let(:cart) { FactoryGirl.create(:cart) }
+  let(:customer) { FactoryBot.create(:customer) }
+  let(:cart) { FactoryBot.create(:cart) }
 
   describe '#current_cart' do
     it 'returns cart when user is logged in' do
       signin_as(customer)
-      user_cart = FactoryGirl.create(:cart, user: customer)
+      user_cart = FactoryBot.create(:cart, user: customer)
       expect(helper.current_cart).to eq(user_cart)
     end
 
@@ -55,14 +55,14 @@ RSpec.describe CartsHelper, type: :helper do
 
   describe '#organize_cart' do
     it 'does not run if session cart_id is not present' do
-      FactoryGirl.create(:cart, user: customer)
+      FactoryBot.create(:cart, user: customer)
       helper.organize_cart(customer)
       expect(customer.cart).not_to be_changed
     end
 
     it 'runs cart migration is valid session cart id is present' do
       session[:cart_id] = cart.id
-      FactoryGirl.create(:inventory, cart: cart)
+      FactoryBot.create(:inventory, cart: cart)
       expect(organize_cart(customer)).to be_truthy
       expect(customer.cart.inventories.count).to eq(1)
     end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Customer Address CRUD', type: :feature do
 
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   describe 'access to address list' do
     it 'returns address list when signned in' do
@@ -19,7 +19,7 @@ describe 'Customer Address CRUD', type: :feature do
 
   describe 'create' do
     before do
-      @community = FactoryGirl.create(:community)
+      @community = FactoryBot.create(:community)
       @district = @community.parent
       @city = @district.parent
       @province = @city.parent
@@ -67,7 +67,7 @@ describe 'Customer Address CRUD', type: :feature do
 
   describe 'edit' do
     before do
-      @address = FactoryGirl.create(:address, addressable: customer)
+      @address = FactoryBot.create(:address, addressable: customer)
       @province = Geo.find(@address.province_state)
       @city = Geo.find(@address.city)
       @district = Geo.find(@address.district)
@@ -104,7 +104,7 @@ describe 'Customer Address CRUD', type: :feature do
 
   describe 'delete' do
     before do
-      @address = FactoryGirl.create(:address, addressable: customer)
+      @address = FactoryBot.create(:address, addressable: customer)
       feature_signin_as(customer)
       visit addresses_path
     end

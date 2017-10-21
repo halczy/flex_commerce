@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Transfer, type: :model do
 
-  let(:customer)       { FactoryGirl.create(:customer) }
-  let(:transfer)       { FactoryGirl.create(:wallet_transfer) }
-  let(:wallet_success) { FactoryGirl.create(:wallet_transfer, success: true) }
+  let(:customer)       { FactoryBot.create(:customer) }
+  let(:transfer)       { FactoryBot.create(:wallet_transfer) }
+  let(:wallet_success) { FactoryBot.create(:wallet_transfer, success: true) }
 
   describe 'creation' do
     it 'creates a transfer' do
@@ -13,22 +13,22 @@ RSpec.describe Transfer, type: :model do
 
     context 'validations' do
       it 'cannot create a transfer without amount' do
-        transfer = FactoryGirl.build(:wallet_transfer, amount: nil)
+        transfer = FactoryBot.build(:wallet_transfer, amount: nil)
         expect(transfer).not_to be_valid
       end
 
       it 'cannot create a transfer with zero as amount' do
-        transfer = FactoryGirl.build(:wallet_transfer, amount: Money.new(0))
+        transfer = FactoryBot.build(:wallet_transfer, amount: Money.new(0))
         expect(transfer).not_to be_valid
       end
 
       it 'cannot create a transfer without transferer' do
-        transfer = FactoryGirl.build(:wallet_transfer, transferee: nil)
+        transfer = FactoryBot.build(:wallet_transfer, transferee: nil)
         expect(transfer).not_to be_valid
       end
 
       it 'cannot create a transfer without transferee' do
-        transfer = FactoryGirl.build(:wallet_transfer, transferer: nil)
+        transfer = FactoryBot.build(:wallet_transfer, transferer: nil)
         expect(transfer).not_to be_valid
       end
     end

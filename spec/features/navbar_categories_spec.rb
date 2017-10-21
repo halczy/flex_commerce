@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe 'menu', type: :feature do
   before do
-    @cat_1 = FactoryGirl.create(:category, display_order: 0)
-    @cat_2 = FactoryGirl.create(:category, display_order: 2)
-    @cat_3 = FactoryGirl.create(:category, display_order: 1)
+    @cat_1 = FactoryBot.create(:category, display_order: 0)
+    @cat_2 = FactoryBot.create(:category, display_order: 2)
+    @cat_3 = FactoryBot.create(:category, display_order: 1)
   end
 
   it 'displays parent categories on navbar' do
@@ -21,8 +21,8 @@ describe 'menu', type: :feature do
 
   context 'child categories' do
     before do
-      @child_cat_1 = FactoryGirl.create(:category, parent_id: @cat_2, display_order: 2)
-      @child_cat_2 = FactoryGirl.create(:category, parent_id: @cat_2, display_order: 1)
+      @child_cat_1 = FactoryBot.create(:category, parent_id: @cat_2, display_order: 2)
+      @child_cat_2 = FactoryBot.create(:category, parent_id: @cat_2, display_order: 1)
     end
 
     it 'displays on dropdown' do
@@ -44,9 +44,9 @@ end
 
 describe 'brand' do
   before do
-    @brand_1 = FactoryGirl.create(:brand, display_order: 0)
-    @brand_2 = FactoryGirl.create(:brand, display_order: 2)
-    @brand_3 = FactoryGirl.create(:brand, display_order: 1)
+    @brand_1 = FactoryBot.create(:brand, display_order: 0)
+    @brand_2 = FactoryBot.create(:brand, display_order: 2)
+    @brand_3 = FactoryBot.create(:brand, display_order: 1)
   end
 
   it 'displays brands' do

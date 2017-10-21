@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'sign up as customer', type: :feature do
 
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   it 'allows sign up with email' do
     visit signup_path

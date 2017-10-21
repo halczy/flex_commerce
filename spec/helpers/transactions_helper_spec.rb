@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe TransactionsHelper, type: :helper do
 
-  let(:completed_order) { FactoryGirl.create(:service_order, completed: true)}
+  let(:completed_order) { FactoryBot.create(:service_order, completed: true)}
 
   describe '#payment_source' do
     before do
@@ -31,8 +31,8 @@ RSpec.describe TransactionsHelper, type: :helper do
 
   describe '#amount_direction' do
     before do
-      @c1 = FactoryGirl.create(:wealthy_customer)
-      @c2 = FactoryGirl.create(:customer)
+      @c1 = FactoryBot.create(:wealthy_customer)
+      @c2 = FactoryBot.create(:customer)
       @transfer_service = TransferService.new(
         transferer_id: @c1.id,
         transferee_id: @c2.id,

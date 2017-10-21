@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 describe 'shopping cart control', type: :feature do
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   before do |example|
     unless example.metadata[:skip_before]
       create_placeholder_image
-      @product = FactoryGirl.create(:product)
-      3.times { FactoryGirl.create(:inventory, product: @product) }
+      @product = FactoryBot.create(:product)
+      3.times { FactoryBot.create(:inventory, product: @product) }
     end
   end
 

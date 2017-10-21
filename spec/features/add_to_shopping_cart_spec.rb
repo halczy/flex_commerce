@@ -2,19 +2,19 @@ require 'rails_helper'
 
 describe 'add product to shopping cart', type: :feature do
 
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   before do
     create_placeholder_image
-    @feature_cat = FactoryGirl.create(:feature)
-    @brand = FactoryGirl.create(:brand)
-    @product = FactoryGirl.create(:product)
-    @product_oos = FactoryGirl.create(:product)
+    @feature_cat = FactoryBot.create(:feature)
+    @brand = FactoryBot.create(:brand)
+    @product = FactoryBot.create(:product)
+    @product_oos = FactoryBot.create(:product)
     Categorization.create(product: @product, category: @feature_cat)
     Categorization.create(product: @product_oos, category: @feature_cat)
     Categorization.create(product: @product, category: @brand)
     Categorization.create(product: @product_oos, category: @brand)
-    3.times { FactoryGirl.create(:inventory, product: @product) }
+    3.times { FactoryBot.create(:inventory, product: @product) }
   end
 
   describe 'front page' do

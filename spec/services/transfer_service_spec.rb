@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe TransferService, type: :model do
 
-  let(:customer) { FactoryGirl.create(:customer) }
-  let(:transfer) { FactoryGirl.create(:wallet_transfer) }
+  let(:customer) { FactoryBot.create(:customer) }
+  let(:transfer) { FactoryBot.create(:wallet_transfer) }
 
   describe '#initialize' do
     it 'can be initialize with transferer transferee and amount' do
-      c1 = FactoryGirl.create(:customer)
-      c2 = FactoryGirl.create(:customer)
+      c1 = FactoryBot.create(:customer)
+      c2 = FactoryBot.create(:customer)
       transfer_service = TransferService.new(
         transferer_id: c1,
         transferee_id: c2,
@@ -33,8 +33,8 @@ RSpec.describe TransferService, type: :model do
   describe '#create' do
     context 'with valid params' do
       it 'returns true if a wallet transfer is created' do
-        c1 = FactoryGirl.create(:wealthy_customer)
-        c2 = FactoryGirl.create(:customer)
+        c1 = FactoryBot.create(:wealthy_customer)
+        c2 = FactoryBot.create(:customer)
         ts = TransferService.new(
           transferer_id: c1.id,
           transferee_id: c2.id,
@@ -45,7 +45,7 @@ RSpec.describe TransferService, type: :model do
       end
 
       it 'returns true if a bank transfer is created' do
-        cstm = FactoryGirl.create(:wealthy_customer)
+        cstm = FactoryBot.create(:wealthy_customer)
         ts = TransferService.new(
           transferer_id: cstm.id,
           transferee_id: cstm.id,
@@ -57,7 +57,7 @@ RSpec.describe TransferService, type: :model do
       end
 
       it 'returns true if an alipay transfer is created' do
-        cstm = FactoryGirl.create(:wealthy_customer)
+        cstm = FactoryBot.create(:wealthy_customer)
         ts = TransferService.new(
           transferer_id: cstm.id,
           transferee_id: cstm.id,
@@ -69,7 +69,7 @@ RSpec.describe TransferService, type: :model do
       end
 
       it 'withhold funds upon external transfer creation' do
-        cstm = FactoryGirl.create(:wealthy_customer)
+        cstm = FactoryBot.create(:wealthy_customer)
         ts = TransferService.new(
           transferer_id: cstm.id,
           transferee_id: cstm.id,
@@ -84,7 +84,7 @@ RSpec.describe TransferService, type: :model do
       end
 
       it 'creates transaction upon external transfer creation' do
-        cstm = FactoryGirl.create(:wealthy_customer)
+        cstm = FactoryBot.create(:wealthy_customer)
         ts = TransferService.new(
           transferer_id: cstm.id,
           transferee_id: cstm.id,
@@ -111,8 +111,8 @@ RSpec.describe TransferService, type: :model do
       end
 
       it 'returns false if amount is not set' do
-        c1 = FactoryGirl.create(:wealthy_customer)
-        c2 = FactoryGirl.create(:customer)
+        c1 = FactoryBot.create(:wealthy_customer)
+        c2 = FactoryBot.create(:customer)
         ts = TransferService.new(transferer_id: c1.id, transferee_id: c2.id)
         expect(ts.create).to be_falsey
       end
@@ -129,8 +129,8 @@ RSpec.describe TransferService, type: :model do
 
   describe '#wallet_transfer' do
     before do
-      @c1 = FactoryGirl.create(:wealthy_customer)
-      @c2 = FactoryGirl.create(:customer)
+      @c1 = FactoryBot.create(:wealthy_customer)
+      @c2 = FactoryBot.create(:customer)
       @transfer_service = TransferService.new(
         transferer_id: @c1.id,
         transferee_id: @c2.id,
@@ -186,7 +186,7 @@ RSpec.describe TransferService, type: :model do
 
   describe '#bank_transfer' do
     before do
-        @cstm = FactoryGirl.create(:wealthy_customer)
+        @cstm = FactoryBot.create(:wealthy_customer)
         ts = TransferService.new(
           transferer_id: @cstm.id,
           transferee_id: @cstm.id,
@@ -235,7 +235,7 @@ RSpec.describe TransferService, type: :model do
 
   describe '#alipay_transfer' do
     before do
-      @cstm = FactoryGirl.create(:wealthy_customer)
+      @cstm = FactoryBot.create(:wealthy_customer)
       @cstm.update(settings: { alipay_account: 'abc@example.com' })
       @ts = TransferService.new(
          transferer_id: @cstm.id,

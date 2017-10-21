@@ -2,17 +2,17 @@ require 'rails_helper'
 
 RSpec.describe AddressesController, type: :controller do
 
-  let(:customer)    { FactoryGirl.create(:customer) }
-  let(:community)   { FactoryGirl.create(:community) }
-  let(:valid_attrs) { FactoryGirl.attributes_for(:address) }
-  let(:new_attrs)   { FactoryGirl.attributes_for(:address) }
-  let(:address)     { FactoryGirl.create(:address, addressable: customer) }
+  let(:customer)    { FactoryBot.create(:customer) }
+  let(:community)   { FactoryBot.create(:community) }
+  let(:valid_attrs) { FactoryBot.attributes_for(:address) }
+  let(:new_attrs)   { FactoryBot.attributes_for(:address) }
+  let(:address)     { FactoryBot.create(:address, addressable: customer) }
 
   before { community }  # populate selector
 
   describe 'GET index' do
     before do
-      5.times { FactoryGirl.create(:address, addressable: customer) }
+      5.times { FactoryBot.create(:address, addressable: customer) }
     end
 
     it 'returns a success response' do
@@ -22,7 +22,7 @@ RSpec.describe AddressesController, type: :controller do
     end
 
     it 'only returns current customer addresses' do
-      another_customer = FactoryGirl.create(:customer)
+      another_customer = FactoryBot.create(:customer)
       signin_as(another_customer)
       get :index
     expect(assigns(:addresses)).to be_empty
@@ -148,7 +148,7 @@ RSpec.describe AddressesController, type: :controller do
 
     context 'undestroyable address' do
       it 'renders warning and returns to address list' do
-        order = FactoryGirl.create(:order, set: true)
+        order = FactoryBot.create(:order, set: true)
         delete :destroy, params: { id: order.address.id }
         expect(flash[:warning]).to be_present
       end

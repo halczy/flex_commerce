@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Image, type: :model do
 
-  let(:image)   { FactoryGirl.create(:image) }
-  let(:product) { FactoryGirl.create(:product) }
+  let(:image)   { FactoryBot.create(:image) }
+  let(:product) { FactoryBot.create(:product) }
 
   describe 'creation' do
     it 'can be created' do
@@ -18,7 +18,7 @@ RSpec.describe Image, type: :model do
 
   describe 'validation' do
     it 'cannot be created without image file' do
-      no_img_file = FactoryGirl.build(:image, image: nil)
+      no_img_file = FactoryBot.build(:image, image: nil)
       no_img_file.valid?
       expect(no_img_file.errors.messages[:image]).to include("can't be blank")
     end

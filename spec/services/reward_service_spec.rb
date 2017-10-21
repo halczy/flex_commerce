@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe RewardService, type: :model do
 
   before do
-    @ref_reward = FactoryGirl.create(:ref_reward, no_products: true)
-    @cash_back  = FactoryGirl.create(:cash_back,  no_products: true)
-    @success_order = FactoryGirl.create(:payment_order, success: true)
-    @referer = FactoryGirl.create(:customer)
+    @ref_reward = FactoryBot.create(:ref_reward, no_products: true)
+    @cash_back  = FactoryBot.create(:cash_back,  no_products: true)
+    @success_order = FactoryBot.create(:payment_order, success: true)
+    @referer = FactoryBot.create(:customer)
     Referral.create(referer: @referer, referee: @success_order.user)
     @success_order.products.each do |product|
       product.update(price_reward: Money.new(10000))
@@ -78,7 +78,7 @@ RSpec.describe RewardService, type: :model do
       end
 
       it 'distributes cash back to customer' do
-        FactoryGirl.create(:service_order, completed: true, user: @success_order.user)
+        FactoryBot.create(:service_order, completed: true, user: @success_order.user)
         old_balance = @success_order.user.wallet.reload.balance
         @reward_service.distribute
         new_balance = @success_order.user.wallet.reload.balance
@@ -87,7 +87,7 @@ RSpec.describe RewardService, type: :model do
 
       it 'distributes cash back to customer reguardless of referer' do
         Referral.delete_all
-        FactoryGirl.create(:service_order, completed: true, user: @success_order.user)
+        FactoryBot.create(:service_order, completed: true, user: @success_order.user)
         old_balance = @success_order.user.wallet.reload.balance
         @reward_service.distribute
         new_balance = @success_order.user.wallet.reload.balance

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "Friendly Forwarding", type: :request do
 
-  let(:admin)    { FactoryGirl.create(:admin) }
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:admin)    { FactoryBot.create(:admin) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   it 'stores request location in session' do
     get "/customers/#{customer.id}"

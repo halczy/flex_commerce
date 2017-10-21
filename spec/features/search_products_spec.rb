@@ -10,10 +10,10 @@ describe 'Product Search' do
                           Rails.root, 'public', 'placeholder_img',
                           'no-image-slide.png'), 'image/png'))
 
-    @product_1 = FactoryGirl.create(:product, name: 'Red Sun')
-    @product_2 = FactoryGirl.create(:product, name: 'Blue Sun')
-    @product_3 = FactoryGirl.create(:product, name: 'Green Sun')
-    @category = FactoryGirl.create(:category)
+    @product_1 = FactoryBot.create(:product, name: 'Red Sun')
+    @product_2 = FactoryBot.create(:product, name: 'Blue Sun')
+    @product_3 = FactoryBot.create(:product, name: 'Green Sun')
+    @category = FactoryBot.create(:category)
     Categorization.create(category: @category, product: @product_1)
     Categorization.create(category: @category, product: @product_2)
   end

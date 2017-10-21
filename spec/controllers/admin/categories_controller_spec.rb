@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Admin::CategoriesController, type: :controller do
 
-  let(:admin) { FactoryGirl.create(:admin) }
-  let(:customer) { FactoryGirl.create(:customer) }
-  let(:category) { FactoryGirl.create(:category) }
+  let(:admin) { FactoryBot.create(:admin) }
+  let(:customer) { FactoryBot.create(:customer) }
+  let(:category) { FactoryBot.create(:category) }
 
   before { signin_as(admin) }
 
@@ -16,19 +16,19 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     end
 
     it 'returns an instance of regular categories' do
-      FactoryGirl.create(:category)
+      FactoryBot.create(:category)
       get :index
       expect(assigns(:top_level).first.flavor).to eq('regular')
     end
 
     it 'returns an instance of brand categoreis' do
-      FactoryGirl.create(:brand)
+      FactoryBot.create(:brand)
       get :index
       expect(assigns(:brands).first.flavor).to eq('brand')
     end
 
     it 'returns an instance of special categories' do
-      FactoryGirl.create(:feature)
+      FactoryBot.create(:feature)
       get :index
       expect(assigns(:special).first.flavor).to eq('feature')
     end
@@ -54,7 +54,7 @@ RSpec.describe Admin::CategoriesController, type: :controller do
     describe 'category creation' do
       context 'with valid params' do
 
-        let(:category_attrs) { FactoryGirl.attributes_for(:category) }
+        let(:category_attrs) { FactoryBot.attributes_for(:category) }
 
         it 'creates regular category' do
           category_attrs[:flavor] = 'regular'
@@ -125,7 +125,7 @@ RSpec.describe Admin::CategoriesController, type: :controller do
   describe 'DELETE destroy' do
     it 'destroys category' do
       cat_1 = category
-      cat_2 = FactoryGirl.create(:category, parent: cat_1)
+      cat_2 = FactoryBot.create(:category, parent: cat_1)
       delete :destroy, params: { id: cat_1.id }
       expect(response).to redirect_to(admin_categories_path)
       expect{cat_1.reload}.to raise_error(ActiveRecord::RecordNotFound)
@@ -134,7 +134,7 @@ RSpec.describe Admin::CategoriesController, type: :controller do
   end
 
   describe 'PATCH move' do
-    let(:cat_order_init_1) { FactoryGirl.create(:category, display_order: 1) }
+    let(:cat_order_init_1) { FactoryBot.create(:category, display_order: 1) }
 
     it 'increase category position' do
       patch :move, params: { id: cat_order_init_1.id, position: 1 }

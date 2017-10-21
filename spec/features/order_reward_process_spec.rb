@@ -2,12 +2,12 @@ require 'rails_helper'
 
 describe 'customer order reward process', type: :feature do
 
-  let(:customer) { FactoryGirl.create(:wealthy_customer) }
-  let(:referer)  { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:wealthy_customer) }
+  let(:referer)  { FactoryBot.create(:customer) }
 
   before do
     feature_signin_as customer
-    @product =  FactoryGirl.create(:product, price_reward: 100.to_money,
+    @product =  FactoryBot.create(:product, price_reward: 100.to_money,
                                              reward: true, purchase_ready: true)
     visit product_path(@product)
     click_on 'Add to Cart'
@@ -44,7 +44,7 @@ describe 'customer order reward process', type: :feature do
     end
 
     it 'rewards cash back to customer' do
-      FactoryGirl.create(:service_order, user: customer, completed: true)
+      FactoryBot.create(:service_order, user: customer, completed: true)
       Referral.create(referer: referer, referee: customer)
       click_on 'Pay with Wallet'
       visit reward_path(customer)

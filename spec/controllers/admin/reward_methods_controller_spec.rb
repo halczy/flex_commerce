@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Admin::RewardMethodsController, type: :controller do
 
-  let(:admin)      { FactoryGirl.create(:admin) }
-  let(:ref_reward) { FactoryGirl.create(:ref_reward) }
-  let(:cash_back)  { FactoryGirl.create(:cash_back) }
+  let(:admin)      { FactoryBot.create(:admin) }
+  let(:ref_reward) { FactoryBot.create(:ref_reward) }
+  let(:cash_back)  { FactoryBot.create(:cash_back) }
 
   before { signin_as admin }
 

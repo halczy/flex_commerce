@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe WalletsController, type: :controller do
 
-  let(:customer)        { FactoryGirl.create(:customer) }
-  let(:admin)           { FactoryGirl.create(:admin) }
-  let(:bank_transfer)   { FactoryGirl.create(:bank_transfer, transferer: customer) }
-  let(:alipay_transfer) { FactoryGirl.create(:alipay_transfer, transferer: customer) }
+  let(:customer)        { FactoryBot.create(:customer) }
+  let(:admin)           { FactoryBot.create(:admin) }
+  let(:bank_transfer)   { FactoryBot.create(:bank_transfer, transferer: customer) }
+  let(:alipay_transfer) { FactoryBot.create(:alipay_transfer, transferer: customer) }
 
   before { signin_as customer }
 

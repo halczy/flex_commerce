@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Admin::GeosController, type: :controller do
 
-  let(:admin)    { FactoryGirl.create(:admin) }
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:admin)    { FactoryBot.create(:admin) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   before { signin_as(admin) }
 
@@ -54,8 +54,8 @@ RSpec.describe Admin::GeosController, type: :controller do
 
   describe 'GET search' do
     before do
-      @city = FactoryGirl.create(:city)
-      @community = FactoryGirl.create(:community)
+      @city = FactoryBot.create(:city)
+      @community = FactoryBot.create(:community)
     end
 
     it 'responses with search result' do

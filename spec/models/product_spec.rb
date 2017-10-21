@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Product, type: :model do
 
-  let(:product) { FactoryGirl.create(:product) }
+  let(:product) { FactoryBot.create(:product) }
 
   describe 'creation' do
     it 'can be created' do
@@ -10,7 +10,7 @@ RSpec.describe Product, type: :model do
     end
 
     it 'has the correct default properties' do
-      p = FactoryGirl.build_stubbed(:product)
+      p = FactoryBot.build_stubbed(:product)
       expect(p.strict_inventory).to be_truthy
       expect(p.digital).to be_falsey
       expect(p.active?).to be_truthy
@@ -19,19 +19,19 @@ RSpec.describe Product, type: :model do
 
   describe 'validation' do
     it 'requires product to have a name' do
-      no_name = FactoryGirl.build(:product, name: nil)
+      no_name = FactoryBot.build(:product, name: nil)
       no_name.valid?
       expect(no_name.errors.messages[:name]).to be_present
     end
 
     it 'requires product name to be shorter than 31 characters' do
-      long_name = FactoryGirl.build(:product, name: "#{'x' * 31}")
+      long_name = FactoryBot.build(:product, name: "#{'x' * 31}")
       long_name.valid?
       expect(long_name.errors.messages[:name]).to be_present
     end
 
     it 'requires product to have a positive value' do
-      neg_price_market = FactoryGirl.build(:product, price_market_cents: -100)
+      neg_price_market = FactoryBot.build(:product, price_market_cents: -100)
       neg_price_market.valid?
       expect(neg_price_market.errors.messages[:price_market]).to be_present
     end
@@ -42,8 +42,8 @@ RSpec.describe Product, type: :model do
     desc = 't;/uploads/store/a1350f1dca616cc4f8dca4f46c136c54.jpgpe=\"image/jpeg\"'
     spec = '<img src=\"/uploads/store/123.png\"> <img src=\"/uploads/store/789.png\">'
 
-    let(:prod_image_1) { FactoryGirl.create(:product, description: desc) }
-    let(:prod_image_3) { FactoryGirl.create(:product, introduction: intro,
+    let(:prod_image_1) { FactoryBot.create(:product, description: desc) }
+    let(:prod_image_3) { FactoryBot.create(:product, introduction: intro,
                                                       description: desc,
                                                       specification: spec) }
 
@@ -71,12 +71,12 @@ RSpec.describe Product, type: :model do
 
   context 'image association' do
     before do
-      @img_1 = FactoryGirl.create(:image)
-      @img_2 = FactoryGirl.create(:image)
-      @unrelated_img_3 = FactoryGirl.create(:image)
+      @img_1 = FactoryBot.create(:image)
+      @img_2 = FactoryBot.create(:image)
+      @unrelated_img_3 = FactoryBot.create(:image)
       desc = "/" + @img_1.image[:fit].data['id']
       spec = "/" + @img_2.image[:fit].data['id']
-      @product = FactoryGirl.create(:product, description: desc,
+      @product = FactoryBot.create(:product, description: desc,
                                               specification: spec)
     end
 
@@ -108,7 +108,7 @@ RSpec.describe Product, type: :model do
 
   describe '#cover_image' do
     it 'reutrns a cover image' do
-      image = FactoryGirl.create(:image, imageable_type: 'Product', imageable_id: product.id)
+      image = FactoryBot.create(:image, imageable_type: 'Product', imageable_id: product.id)
       expect(product.cover_image).to eq(image)
     end
 
@@ -126,7 +126,7 @@ RSpec.describe Product, type: :model do
 
       it 'does not remove associated categories on destroy' do
         3.times do
-          product.categorizations.create(category: FactoryGirl.create(:category))
+          product.categorizations.create(category: FactoryBot.create(:category))
         end
         product.destroy
         expect(Categorization.count).to eq(0)
@@ -135,7 +135,7 @@ RSpec.describe Product, type: :model do
 
       it 'removes attached images on destroy' do
         3.times do
-          FactoryGirl.create(:image, imageable_type: 'Product',
+          FactoryBot.create(:image, imageable_type: 'Product',
                                      imageable_id: product.id)
         end
         product.destroy
@@ -182,15 +182,15 @@ RSpec.describe Product, type: :model do
         end
 
         it 'removes destroyable inventory if no unsold inventory is available' do
-          FactoryGirl.create(:inventory, product: product, status: 1)
-          order_inv = FactoryGirl.create(:inventory, product: product, status: 2)
+          FactoryBot.create(:inventory, product: product, status: 1)
+          order_inv = FactoryBot.create(:inventory, product: product, status: 2)
           product.send(:remove_inventory)
           expect(product.inventories).to match_array([order_inv])
         end
 
         it 'removes the most recently changed inventory first' do
-          inv_a = FactoryGirl.create(:inventory, product: product)
-          inv_b = FactoryGirl.create(:inventory, product: product,
+          inv_a = FactoryBot.create(:inventory, product: product)
+          inv_b = FactoryBot.create(:inventory, product: product,
                                                  status: 2,
                                                  created_at: 3.days.ago,
                                                  updated_at: 2.days.ago)
@@ -200,9 +200,9 @@ RSpec.describe Product, type: :model do
         end
 
         it 'does not remove undestroyable inventory' do
-          FactoryGirl.create(:inventory, product: product, status: 3)
-          FactoryGirl.create(:inventory, product: product, status: 4)
-          FactoryGirl.create(:inventory, product: product, status: 5)
+          FactoryBot.create(:inventory, product: product, status: 3)
+          FactoryBot.create(:inventory, product: product, status: 4)
+          FactoryBot.create(:inventory, product: product, status: 5)
           expect(product.send(:remove_inventory)).to be_falsey
           expect(product.inventories.count).to eq(3)
         end
@@ -210,20 +210,20 @@ RSpec.describe Product, type: :model do
 
       describe '#remove_inventories' do
         it 'removes inventories' do
-          5.times { FactoryGirl.create(:inventory, product: product) }
+          5.times { FactoryBot.create(:inventory, product: product) }
           product.remove_inventories(2)
           expect(product.inventories.count).to eq(3)
         end
 
         it 'removes all unsold inventories by default' do
-          5.times { FactoryGirl.create(:inventory, product: product) }
+          5.times { FactoryBot.create(:inventory, product: product) }
           product.remove_inventories
           expect(product.inventories).to be_empty
         end
 
         it 'returns false if requested exceeds unsold inventories' do
-          5.times { FactoryGirl.create(:inventory, product: product) }
-          5.times { FactoryGirl.create(:inventory, product: product, status: 1) }
+          5.times { FactoryBot.create(:inventory, product: product) }
+          5.times { FactoryBot.create(:inventory, product: product, status: 1) }
           expect(product.remove_inventories(10)).to be_falsey
           expect(product.inventories.count).to eq(10)
         end
@@ -231,36 +231,36 @@ RSpec.describe Product, type: :model do
 
       describe '#force_remove_inventories' do
         it 'removes destroyable inventories' do
-          5.times { FactoryGirl.create(:inventory, product: product, status: 1) }
+          5.times { FactoryBot.create(:inventory, product: product, status: 1) }
           product.force_remove_inventories(3)
           expect(product.inventories.count).to eq(2)
         end
 
         it 'removes all destroyable inventories by default' do
-          2.times { FactoryGirl.create(:inventory, product: product, status: 1) }
-          3.times { FactoryGirl.create(:inventory, product: product, status: 2) }
+          2.times { FactoryBot.create(:inventory, product: product, status: 1) }
+          3.times { FactoryBot.create(:inventory, product: product, status: 2) }
           product.force_remove_inventories
           expect(product.inventories).to be_empty
         end
 
         it 'prioritize remove by status' do
-          2.times { FactoryGirl.create(:inventory, product: product, status: 0) }
-          2.times { FactoryGirl.create(:inventory, product: product, status: 1) }
-          2.times { FactoryGirl.create(:inventory, product: product, status: 2) }
+          2.times { FactoryBot.create(:inventory, product: product, status: 0) }
+          2.times { FactoryBot.create(:inventory, product: product, status: 1) }
+          2.times { FactoryBot.create(:inventory, product: product, status: 2) }
           product.force_remove_inventories(5)
           expect(product.inventories.in_order.count).to eq(1)
         end
 
         it 'return false when no destroyable is available' do
-          FactoryGirl.create(:inventory, product: product, status: 3)
-          FactoryGirl.create(:inventory, product: product, status: 4)
-          FactoryGirl.create(:inventory, product: product, status: 5)
+          FactoryBot.create(:inventory, product: product, status: 3)
+          FactoryBot.create(:inventory, product: product, status: 4)
+          FactoryBot.create(:inventory, product: product, status: 5)
           expect(product.force_remove_inventories(1)).to be_falsey
           expect(product.inventories.count).to eq(3)
         end
 
         it 'allows deletion amount less than destroyable' do
-          10.times { FactoryGirl.create(:inventory, product: product) }
+          10.times { FactoryBot.create(:inventory, product: product) }
           product.force_remove_inventories(3)
           expect(product.inventories.count).to eq(7)
         end
@@ -271,17 +271,17 @@ RSpec.describe Product, type: :model do
   describe 'scope' do
     before do |example|
       unless example.metadata[:skip_before]
-        @product_in_stock = FactoryGirl.create(:product)
-        FactoryGirl.create(:inventory, product: @product_in_stock)
+        @product_in_stock = FactoryBot.create(:product)
+        FactoryBot.create(:inventory, product: @product_in_stock)
 
-        @product_oos_destroyable = FactoryGirl.create(:product)
-        FactoryGirl.create(:inventory, product: @product_oos_destroyable, status: 1)
-        FactoryGirl.create(:inventory, product: @product_oos_destroyable, status: 2)
+        @product_oos_destroyable = FactoryBot.create(:product)
+        FactoryBot.create(:inventory, product: @product_oos_destroyable, status: 1)
+        FactoryBot.create(:inventory, product: @product_oos_destroyable, status: 2)
 
-        @product_oos_undestroyable = FactoryGirl.create(:product)
-        FactoryGirl.create(:inventory, product: @product_oos_undestroyable, status: 3)
-        FactoryGirl.create(:inventory, product: @product_oos_undestroyable, status: 4)
-        FactoryGirl.create(:inventory, product: @product_oos_undestroyable, status: 5)
+        @product_oos_undestroyable = FactoryBot.create(:product)
+        FactoryBot.create(:inventory, product: @product_oos_undestroyable, status: 3)
+        FactoryBot.create(:inventory, product: @product_oos_undestroyable, status: 4)
+        FactoryBot.create(:inventory, product: @product_oos_undestroyable, status: 5)
       end
     end
 
@@ -301,8 +301,8 @@ RSpec.describe Product, type: :model do
 
       # BUG CASE
       it 'does not return product with unsold inventories', skip_before: true do
-        FactoryGirl.create(:inventory, product: product)
-        FactoryGirl.create(:inventory, product: product, status: 2)
+        FactoryBot.create(:inventory, product: product)
+        FactoryBot.create(:inventory, product: product, status: 2)
         expect(Product.count).to eq(1)
         expect(Product.out_of_stock).to be_empty
       end
@@ -323,9 +323,9 @@ RSpec.describe Product, type: :model do
 
     before do
       @product = product
-      FactoryGirl.create(:inventory, product: @product)
-      FactoryGirl.create(:inventory, product: @product, status: 1)
-      FactoryGirl.create(:inventory, product: @product, status: 2)
+      FactoryBot.create(:inventory, product: @product)
+      FactoryBot.create(:inventory, product: @product, status: 1)
+      FactoryBot.create(:inventory, product: @product, status: 2)
     end
 
     context '#destroyable' do
@@ -334,14 +334,14 @@ RSpec.describe Product, type: :model do
       end
 
       it 'returns false if product have undestroyable inventories' do
-        FactoryGirl.create(:inventory, product: @product, status: 3)
+        FactoryBot.create(:inventory, product: @product, status: 3)
         expect(@product.destroyable?).to be_falsey
       end
     end
 
     context '#disable' do
       it 'disables undestroyable product' do
-        FactoryGirl.create(:inventory, product: @product, status: 3)
+        FactoryBot.create(:inventory, product: @product, status: 3)
         expect(@product.disable).to be_truthy
         expect(@product.disabled?).to be_truthy
       end

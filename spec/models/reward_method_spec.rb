@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe RewardMethod, type: :model do
 
-  let(:ref_reward) { FactoryGirl.create(:ref_reward) }
+  let(:ref_reward) { FactoryBot.create(:ref_reward) }
 
   describe 'creation' do
     it 'can be created' do
@@ -12,12 +12,12 @@ RSpec.describe RewardMethod, type: :model do
 
   describe 'validations' do
     it 'cannot be created without name' do
-      no_name = FactoryGirl.build(:ref_reward, name: nil)
+      no_name = FactoryBot.build(:ref_reward, name: nil)
       expect(no_name).not_to be_valid
     end
 
     it 'cannot be created without variety' do
-      no_variety = FactoryGirl.build(:ref_reward, variety: nil)
+      no_variety = FactoryBot.build(:ref_reward, variety: nil)
       expect(no_variety).not_to be_valid
     end
   end

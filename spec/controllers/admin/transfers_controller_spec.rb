@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Admin::TransfersController, type: :controller do
 
-  let(:admin)            { FactoryGirl.create(:admin) }
-  let(:wallet_transfer)  { FactoryGirl.create(:wallet_transfer) }
-  let(:wallet_success)   { FactoryGirl.create(:wallet_transfer, success: true) }
-  let(:bank_transfer)    { FactoryGirl.create(:bank_transfer) }
-  let(:bank_success)     { FactoryGirl.create(:bank_transfer, success: true) }
-  let(:alipay_transfer)  { FactoryGirl.create(:alipay_transfer) }
-  let(:alipay_success)   { FactoryGirl.create(:alipay_transfer, success: true) }
+  let(:admin)            { FactoryBot.create(:admin) }
+  let(:wallet_transfer)  { FactoryBot.create(:wallet_transfer) }
+  let(:wallet_success)   { FactoryBot.create(:wallet_transfer, success: true) }
+  let(:bank_transfer)    { FactoryBot.create(:bank_transfer) }
+  let(:bank_success)     { FactoryBot.create(:bank_transfer, success: true) }
+  let(:alipay_transfer)  { FactoryBot.create(:alipay_transfer) }
+  let(:alipay_success)   { FactoryBot.create(:alipay_transfer, success: true) }
 
   before { signin_as admin }
 

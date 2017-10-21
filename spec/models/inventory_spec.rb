@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Inventory, type: :model do
 
-  let(:product)         { FactoryGirl.create(:product) }
-  let(:inventory)       { FactoryGirl.create(:inventory) }
-  let(:inv_in_cart)     { FactoryGirl.create(:inventory, status: 1) }
-  let(:inv_in_order)    { FactoryGirl.create(:inventory, status: 2) }
-  let(:inv_in_checkout) { FactoryGirl.create(:inventory, status: 3) }
-  let(:inv_sold)        { FactoryGirl.create(:inventory, status: 4) }
+  let(:product)         { FactoryBot.create(:product) }
+  let(:inventory)       { FactoryBot.create(:inventory) }
+  let(:inv_in_cart)     { FactoryBot.create(:inventory, status: 1) }
+  let(:inv_in_order)    { FactoryBot.create(:inventory, status: 2) }
+  let(:inv_in_checkout) { FactoryBot.create(:inventory, status: 3) }
+  let(:inv_sold)        { FactoryBot.create(:inventory, status: 4) }
 
   describe 'creation' do
     it 'can be created' do
@@ -17,13 +17,13 @@ RSpec.describe Inventory, type: :model do
 
   describe 'scope and enum' do
     before do
-      @inv_0_1 = FactoryGirl.create(:inventory, product: product)
-      @inv_0_2 = FactoryGirl.create(:inventory, product: product)
-      @inv_1_1 = FactoryGirl.create(:inventory, product: product, status: 1)
-      @inv_2_1 = FactoryGirl.create(:inventory, product: product, status: 2)
-      @inv_3_1 = FactoryGirl.create(:inventory, product: product, status: 3)
-      @inv_4_1 = FactoryGirl.create(:inventory, product: product, status: 4)
-      @inv_5_1 = FactoryGirl.create(:inventory, product: product, status: 5)
+      @inv_0_1 = FactoryBot.create(:inventory, product: product)
+      @inv_0_2 = FactoryBot.create(:inventory, product: product)
+      @inv_1_1 = FactoryBot.create(:inventory, product: product, status: 1)
+      @inv_2_1 = FactoryBot.create(:inventory, product: product, status: 2)
+      @inv_3_1 = FactoryBot.create(:inventory, product: product, status: 3)
+      @inv_4_1 = FactoryBot.create(:inventory, product: product, status: 4)
+      @inv_5_1 = FactoryBot.create(:inventory, product: product, status: 5)
     end
 
     it '#available returns unsold inventories' do

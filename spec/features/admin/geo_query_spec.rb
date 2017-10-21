@@ -2,16 +2,16 @@ require 'rails_helper'
 
 describe 'Geo Data Query', type: :feature do
 
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin) { FactoryBot.create(:admin) }
   before { feature_signin_as(admin) }
 
   describe 'index page' do
     before do
-      @country = FactoryGirl.create(:country)
-      @province = FactoryGirl.create(:province)
-      @city = FactoryGirl.create(:city)
-      @district = FactoryGirl.create(:district)
-      @community = FactoryGirl.create(:community)
+      @country = FactoryBot.create(:country)
+      @province = FactoryBot.create(:province)
+      @city = FactoryBot.create(:city)
+      @district = FactoryBot.create(:district)
+      @community = FactoryBot.create(:community)
       visit admin_geos_path
     end
 
@@ -54,9 +54,9 @@ describe 'Geo Data Query', type: :feature do
 
   describe 'search' do
     before do
-      @illinois = FactoryGirl.create(:province, id: '600000', name: 'Illinois')
-      @rockford = FactoryGirl.create(:city, id: '650000000000', name: 'Rockford', parent: @illinois)
-      @evanston = FactoryGirl.create(:city, id: '670000000000', name: 'Evanston', parent: @illinois)
+      @illinois = FactoryBot.create(:province, id: '600000', name: 'Illinois')
+      @rockford = FactoryBot.create(:city, id: '650000000000', name: 'Rockford', parent: @illinois)
+      @evanston = FactoryBot.create(:city, id: '670000000000', name: 'Evanston', parent: @illinois)
     end
 
     it 'can search from index and return result at search page' do

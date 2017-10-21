@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   before do
     @user_with_email = User.create(email: 'spec_email@example.com',
@@ -13,7 +13,7 @@ RSpec.describe User, type: :model do
                                    password_confirmation: 'example')
   end
 
-  let(:user) { FactoryGirl.create(:customer) }
+  let(:user) { FactoryBot.create(:customer) }
 
   describe 'creation' do
     it 'can be created' do
@@ -117,9 +117,9 @@ RSpec.describe User, type: :model do
       end
 
       it 'cannot dupliate' do
-        existing_user = FactoryGirl.create(:user)
+        existing_user = FactoryBot.create(:user)
         expect {
-          FactoryGirl.create(:user, member_id: existing_user.member_id)
+          FactoryBot.create(:user, member_id: existing_user.member_id)
         }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
@@ -162,7 +162,7 @@ RSpec.describe User, type: :model do
 
   describe '#set_as_customer' do
     it 'can be set_as_customer' do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       expect(user.customer?).to be_falsey
       user.set_as_customer
       expect(user.customer?).to be_truthy
@@ -173,7 +173,7 @@ RSpec.describe User, type: :model do
 
   describe '#assign_member_id' do
     it "assigns a six digit member id upon creation" do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       expect(user.member_id).to be_present
       expect(user.member_id.to_s.length).to eq(6)
     end
@@ -200,9 +200,9 @@ RSpec.describe User, type: :model do
 
   describe '#total_spent' do
     it 'sums up customer payment success orders total' do
-      qo_1 = FactoryGirl.create(:service_order, user: customer, completed: true)
-      qo_2 = FactoryGirl.create(:payment_order, user: customer, success: true)
-      FactoryGirl.create(:order, user: customer)
+      qo_1 = FactoryBot.create(:service_order, user: customer, completed: true)
+      qo_2 = FactoryBot.create(:payment_order, user: customer, success: true)
+      FactoryBot.create(:order, user: customer)
       exp_total = qo_1.total + qo_2.total
       expect(customer.total_spent).to eq(exp_total)
     end
@@ -212,7 +212,7 @@ RSpec.describe User, type: :model do
     it 'sums up customer reward amount' do
       3.times do
         payment_service = PaymentService.new(
-          order_id: FactoryGirl.create(:service_order, completed: true).id,
+          order_id: FactoryBot.create(:service_order, completed: true).id,
           amount: 150.to_money,
           user_id: customer.id,
           variety: 'reward'
@@ -228,7 +228,7 @@ RSpec.describe User, type: :model do
     it 'sums up customer reward amount created this month' do
       3.times do
         payment_service = PaymentService.new(
-          order_id: FactoryGirl.create(:service_order, completed: true).id,
+          order_id: FactoryBot.create(:service_order, completed: true).id,
           amount: 150.to_money,
           user_id: customer.id,
           variety: 'reward'
@@ -243,7 +243,7 @@ RSpec.describe User, type: :model do
   it 'does not sum up reward from a month ago' do
       3.times do
         payment_service = PaymentService.new(
-          order_id: FactoryGirl.create(:service_order, completed: true).id,
+          order_id: FactoryBot.create(:service_order, completed: true).id,
           amount: 150.to_money,
           user_id: customer.id,
           variety: 'reward'

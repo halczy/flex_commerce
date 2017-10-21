@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe 'withdraw from wallet', type: :feature do
 
-  let(:customer) { FactoryGirl.create(:customer) }
-  let(:admin)    { FactoryGirl.create(:admin) }
-  let(:bank_transfer) { FactoryGirl.create(:bank_transfer) }
+  let(:customer) { FactoryBot.create(:customer) }
+  let(:admin)    { FactoryBot.create(:admin) }
+  let(:bank_transfer) { FactoryBot.create(:bank_transfer) }
 
   before { feature_signin_as customer }
 

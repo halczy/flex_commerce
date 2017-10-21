@@ -2,24 +2,24 @@ require 'rails_helper'
 
 describe 'customer checkout process', type: :feature do
 
-  let(:customer) { FactoryGirl.create(:customer) }
-  let(:cart)     { FactoryGirl.create(:cart) }
+  let(:customer) { FactoryBot.create(:customer) }
+  let(:cart)     { FactoryBot.create(:cart) }
 
   before do |example|
     unless example.metadata[:skip_before]
       create_placeholder_image
-      @feature_cat = FactoryGirl.create(:feature)
-      @product = FactoryGirl.create(:product)
+      @feature_cat = FactoryBot.create(:feature)
+      @product = FactoryBot.create(:product)
       Categorization.create(product: @product, category: @feature_cat)
-      3.times { FactoryGirl.create(:inventory, product: @product) }
+      3.times { FactoryBot.create(:inventory, product: @product) }
     end
   end
 
 
   context 'checkout as a signed in user' do
     it 'checks out the cart and redirects to shipping selection', skip_before: true do
-      cart = FactoryGirl.create(:cart, user: customer)
-      3.times { cart.inventories << FactoryGirl.create(:inventory, cart: cart) }
+      cart = FactoryBot.create(:cart, user: customer)
+      3.times { cart.inventories << FactoryBot.create(:inventory, cart: cart) }
       feature_signin_as(customer)
 
       visit cart_path

@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Admin::ShippingMethodsController, type: :controller do
 
-  let(:admin)       { FactoryGirl.create(:admin) }
-  let(:delivery)    { FactoryGirl.create(:delivery) }
-  let(:no_shipping) { FactoryGirl.create(:no_shipping) }
-  let(:self_pickup) { FactoryGirl.create(:self_pickup) }
-  let(:province)    { FactoryGirl.create(:province) }
-  let(:product)     { FactoryGirl.create(:product) }
+  let(:admin)       { FactoryBot.create(:admin) }
+  let(:delivery)    { FactoryBot.create(:delivery) }
+  let(:no_shipping) { FactoryBot.create(:no_shipping) }
+  let(:self_pickup) { FactoryBot.create(:self_pickup) }
+  let(:province)    { FactoryBot.create(:province) }
+  let(:product)     { FactoryBot.create(:product) }
 
   before { signin_as(admin) }
 
@@ -26,7 +26,7 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
 
   describe 'GET new' do
     it 'response successfully' do
-      FactoryGirl.create(:province)
+      FactoryBot.create(:province)
       get :new
       expect(response).to be_success
       expect(assigns(:shipping_method)).to be_an_instance_of(ShippingMethod)
@@ -145,8 +145,8 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
 
   describe 'GET show' do
     before do
-      @shipping_method = FactoryGirl.create(:delivery)
-      FactoryGirl.create(:shipping_rate, geo_code: province.id,
+      @shipping_method = FactoryBot.create(:delivery)
+      FactoryBot.create(:shipping_rate, geo_code: province.id,
                                          init_rate: 10,
                                          add_on_rate: 2,
                                          shipping_method: @shipping_method)
@@ -164,14 +164,14 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
     end
 
     it 'has address instance' do
-      FactoryGirl.create(:address, addressable: @shipping_method)
+      FactoryBot.create(:address, addressable: @shipping_method)
       get :show, params: { id: @shipping_method.id }
       expect(assigns(:address)).to be_present
     end
   end
 
   describe 'GET edit' do
-    before { @shipping_method = FactoryGirl.create(:self_pickup) }
+    before { @shipping_method = FactoryBot.create(:self_pickup) }
 
     it 'response successfully' do
       get :edit, params: { id: @shipping_method.id }
@@ -182,7 +182,7 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
 
   describe 'PATCH update' do
     before do
-      @shipping_method = FactoryGirl.create(:self_pickup)
+      @shipping_method = FactoryBot.create(:self_pickup)
     end
 
     context 'with valid params' do
@@ -213,7 +213,7 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
   describe 'DELETE destroy' do
 
     context 'destroyable' do
-      before { @shipping_method = FactoryGirl.create(:self_pickup) }
+      before { @shipping_method = FactoryBot.create(:self_pickup) }
       it 'can be destroy' do
         expect {
           delete :destroy, params: { id: @shipping_method.id }
@@ -248,7 +248,7 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
       end
 
       it 'does not destroy shipping method referred by inventory' do
-        FactoryGirl.create(:inventory, shipping_method: self_pickup)
+        FactoryBot.create(:inventory, shipping_method: self_pickup)
         expect {
           delete :destroy, params: { id: self_pickup }
         }.not_to change(ShippingMethod, :count)

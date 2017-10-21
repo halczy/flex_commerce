@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe Address, type: :model do
 
-  let(:address)   { FactoryGirl.create(:address) }
-  let(:province)  { FactoryGirl.create(:province) }
-  let(:city)      { FactoryGirl.create(:city) }
-  let(:district)  { FactoryGirl.create(:district) }
-  let(:community) { FactoryGirl.create(:community) }
-  let(:customer)  { FactoryGirl.create(:customer) }
-  let(:order)     { FactoryGirl.create(:order) }
+  let(:address)   { FactoryBot.create(:address) }
+  let(:province)  { FactoryBot.create(:province) }
+  let(:city)      { FactoryBot.create(:city) }
+  let(:district)  { FactoryBot.create(:district) }
+  let(:community) { FactoryBot.create(:community) }
+  let(:customer)  { FactoryBot.create(:customer) }
+  let(:order)     { FactoryBot.create(:order) }
 
-  let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true,
+  let(:order_delivery_selected) { FactoryBot.create(:order, selected: true,
                                                              only_delivery: true) }
 
   describe 'creation' do
@@ -20,23 +20,23 @@ RSpec.describe Address, type: :model do
 
     context 'validation' do
       it 'cannot be created without recipient' do
-        addr = FactoryGirl.build(:address, recipient: nil)
+        addr = FactoryBot.build(:address, recipient: nil)
         expect(addr).not_to be_valid
       end
 
       it 'cannot be created without contact number' do
-        addr = FactoryGirl.build(:address, contact_number: nil)
+        addr = FactoryBot.build(:address, contact_number: nil)
         expect(addr).not_to be_valid
       end
 
       it 'cannot be created without street address' do
-        addr = FactoryGirl.build(:address, street: nil)
+        addr = FactoryBot.build(:address, street: nil)
         expect(addr).not_to be_valid
       end
 
       it 'cannot be created without province_state' do
         expect {
-          FactoryGirl.build(:address, province_state: nil)
+          FactoryBot.build(:address, province_state: nil)
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe Address, type: :model do
 
   describe '#build_full_address' do
     before do
-      @address = FactoryGirl.create(:address, province_state: province.id,
+      @address = FactoryBot.create(:address, province_state: province.id,
                                               city: city.id,
                                               district: district.id,
                                               community: community.id)
@@ -68,7 +68,7 @@ RSpec.describe Address, type: :model do
 
   describe '#destroyable?' do
     it 'returns true if address is associated with customer' do
-      customer_address = FactoryGirl.create(:address, addressable: customer)
+      customer_address = FactoryBot.create(:address, addressable: customer)
       expect(customer_address.destroyable?).to be_truthy
     end
 
@@ -77,14 +77,14 @@ RSpec.describe Address, type: :model do
     end
 
     it 'returns false if address is associated with order' do
-      order_address = FactoryGirl.create(:address, addressable: order)
+      order_address = FactoryBot.create(:address, addressable: order)
       expect(order_address.destroyable?).to be_falsey
     end
   end
 
   describe '#copy_to' do
     it 'returns duplicated address with belongs to the given object' do
-      customer_address = FactoryGirl.create(:address, addressable: customer)
+      customer_address = FactoryBot.create(:address, addressable: customer)
       expect(customer_address.copy_to(order_delivery_selected)).to be_truthy
       order_address = Address.find_by(addressable_id: order_delivery_selected.id)
       expect(order_address).to be_an_instance_of(Address)

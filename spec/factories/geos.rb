@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :country, class: Geo do
     id { Faker::Number.number }
     name { Faker::Address.country + Faker::Number.number(2) }

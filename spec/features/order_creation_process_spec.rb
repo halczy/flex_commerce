@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 describe 'customer order creation process', type: :feature do
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   before do
     feature_signin_as customer
-    @product = FactoryGirl.create(:product, purchase_ready: true)
+    @product = FactoryBot.create(:product, purchase_ready: true)
 
     @s_method = @product.shipping_methods.delivery.first
     s_rate = @s_method.shipping_rates.sample
@@ -111,7 +111,7 @@ describe 'customer order creation process', type: :feature do
     end
 
     it 'can handle multiple products with different shipping method' do
-      another_product = FactoryGirl.create(:product, purchase_ready: true)
+      another_product = FactoryBot.create(:product, purchase_ready: true)
       another_s_method = another_product.shipping_methods.self_pickup.first
       visit product_path(@product)
       click_on 'Add to Cart'

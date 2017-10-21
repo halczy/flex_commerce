@@ -2,17 +2,17 @@ require 'rails_helper'
 
 RSpec.describe Admin::OrdersController, type: :controller do
 
-  let(:admin)                   { FactoryGirl.create(:admin) }
-  let(:order)                   { FactoryGirl.create(:order) }
-  let(:order_selected)          { FactoryGirl.create(:order, selected: true) }
-  let(:order_set)               { FactoryGirl.create(:order, set: true) }
-  let(:order_confirmed)         { FactoryGirl.create(:order, confirmed: true) }
-  let(:payment_order)           { FactoryGirl.create(:payment_order) }
-  let(:payment_success_order)   { FactoryGirl.create(:payment_order, success: true) }
-  let(:service_order)           { FactoryGirl.create(:service_order) }
-  let(:service_order_ppending)  { FactoryGirl.create(:service_order, pickup_pending: true) }
-  let(:service_order_shipped)   { FactoryGirl.create(:service_order, shipped: true) }
-  let(:completed_order)         { FactoryGirl.create(:service_order, completed: true) }
+  let(:admin)                   { FactoryBot.create(:admin) }
+  let(:order)                   { FactoryBot.create(:order) }
+  let(:order_selected)          { FactoryBot.create(:order, selected: true) }
+  let(:order_set)               { FactoryBot.create(:order, set: true) }
+  let(:order_confirmed)         { FactoryBot.create(:order, confirmed: true) }
+  let(:payment_order)           { FactoryBot.create(:payment_order) }
+  let(:payment_success_order)   { FactoryBot.create(:payment_order, success: true) }
+  let(:service_order)           { FactoryBot.create(:service_order) }
+  let(:service_order_ppending)  { FactoryBot.create(:service_order, pickup_pending: true) }
+  let(:service_order_shipped)   { FactoryBot.create(:service_order, shipped: true) }
+  let(:completed_order)         { FactoryBot.create(:service_order, completed: true) }
 
   before { signin_as admin }
 
@@ -47,8 +47,8 @@ RSpec.describe Admin::OrdersController, type: :controller do
 
   describe 'GET search' do
     before do
-      @customer = FactoryGirl.create(:customer, name: 'TEST 1')
-      @order = FactoryGirl.create(:order, user: @customer)
+      @customer = FactoryBot.create(:customer, name: 'TEST 1')
+      @order = FactoryBot.create(:order, user: @customer)
     end
 
     it 'responses successfully with search result' do

@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe 'customer order service process', type: :feature do
 
-  let(:admin)            { FactoryGirl.create(:admin) }
-  let(:pm_success_order) { FactoryGirl.create(:payment_order, success: true) }
-  let(:service_order)    { FactoryGirl.create(:service_order) }
+  let(:admin)            { FactoryBot.create(:admin) }
+  let(:pm_success_order) { FactoryBot.create(:payment_order, success: true) }
+  let(:service_order)    { FactoryBot.create(:service_order) }
 
   before { feature_signin_as admin }
 

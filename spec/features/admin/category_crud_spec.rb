@@ -2,11 +2,11 @@ require 'rails_helper'
 
 describe 'Category CRUD', type: :feature do
 
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin) { FactoryBot.create(:admin) }
 
   before do
-    @parent_cat = FactoryGirl.create(:category)
-    @child_cat  = FactoryGirl.create(:category, parent: @parent, display_order: 5)
+    @parent_cat = FactoryBot.create(:category)
+    @child_cat  = FactoryBot.create(:category, parent: @parent, display_order: 5)
     feature_signin_as(admin)
     visit admin_categories_path
   end
@@ -81,7 +81,7 @@ describe 'Category CRUD', type: :feature do
     end
 
     it 'can delete category with products' do
-      product = FactoryGirl.create(:product)
+      product = FactoryBot.create(:product)
       product.categorizations.create(category: @child_cat)
       visit admin_categories_path
       click_on("btn_del_#{@child_cat.id}")

@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe RewardsController, type: :controller do
 
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   before do |example|
     unless example.metadata[:skip_before]
-      @ref_reward = FactoryGirl.create(:ref_reward, no_products: true)
-      @cash_back  = FactoryGirl.create(:cash_back,  no_products: true)
-      @success_order = FactoryGirl.create(:payment_order, success: true)
-      @referer = FactoryGirl.create(:customer)
+      @ref_reward = FactoryBot.create(:ref_reward, no_products: true)
+      @cash_back  = FactoryBot.create(:cash_back,  no_products: true)
+      @success_order = FactoryBot.create(:payment_order, success: true)
+      @referer = FactoryBot.create(:customer)
       Referral.create(referer: @referer, referee: @success_order.user)
       @success_order.products.each do |product|
         product.update(price_reward: Money.new(10000))

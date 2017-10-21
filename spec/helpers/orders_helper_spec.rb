@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe OrdersHelper, type: :helper do
 
-  let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true,
+  let(:order_delivery_selected) { FactoryBot.create(:order, selected: true,
                                                              only_delivery: true) }
-  let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
+  let(:order_pickup_selected)   { FactoryBot.create(:order, selected: true,
                                                              only_pickup: true) }
-  let(:order_confirmed)         { FactoryGirl.create(:order, confirmed: true) }
-  let(:service_order)           { FactoryGirl.create(:service_order) }
+  let(:order_confirmed)         { FactoryBot.create(:order, confirmed: true) }
+  let(:service_order)           { FactoryBot.create(:service_order) }
 
   before do
-    @order = FactoryGirl.create(:order, set: true)
+    @order = FactoryBot.create(:order, set: true)
     order_service = OrderService.new(order_id: @order)
     order_service.confirm
   end
@@ -170,14 +170,14 @@ RSpec.describe OrdersHelper, type: :helper do
 
   describe '#get_shipping_companies' do
     it 'returns an array of shipping companies' do
-      FactoryGirl.create(:order, shipment: { shipping_company: 'Fedex' })
-      FactoryGirl.create(:order, shipment: { shipping_company: 'UPS' })
+      FactoryBot.create(:order, shipment: { shipping_company: 'Fedex' })
+      FactoryBot.create(:order, shipment: { shipping_company: 'UPS' })
       expect(get_shipping_companies).to match_array(['Fedex', 'UPS'])
     end
 
     it 'returns an unique array of shipping companies' do
-      FactoryGirl.create(:order, shipment: { shipping_company: 'UPS' })
-      FactoryGirl.create(:order, shipment: { shipping_company: 'UPS' })
+      FactoryBot.create(:order, shipment: { shipping_company: 'UPS' })
+      FactoryBot.create(:order, shipment: { shipping_company: 'UPS' })
       expect(get_shipping_companies).to match_array(['UPS'])
     end
   end

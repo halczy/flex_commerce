@@ -4,10 +4,10 @@ RSpec.describe GuestCartCleanupJob, type: :job do
 
   before do
     ActiveJob::Base.queue_adapter = :test
-    @empty_cart = FactoryGirl.create(:cart, created_at: 2.weeks.ago)
-    @cart_with_invs = FactoryGirl.create(:cart, created_at: 3.week.ago)
-    3.times { @cart_with_invs.inventories << FactoryGirl.create(:inventory) }
-    @user_cart = FactoryGirl.create(:user_cart)
+    @empty_cart = FactoryBot.create(:cart, created_at: 2.weeks.ago)
+    @cart_with_invs = FactoryBot.create(:cart, created_at: 3.week.ago)
+    3.times { @cart_with_invs.inventories << FactoryBot.create(:inventory) }
+    @user_cart = FactoryBot.create(:user_cart)
   end
 
   describe "#perform_later" do
@@ -34,7 +34,7 @@ RSpec.describe GuestCartCleanupJob, type: :job do
     end
 
     it 'leaves fresh empty cart alone' do
-      fresh_cart = FactoryGirl.create(:cart)
+      fresh_cart = FactoryBot.create(:cart)
       GuestCartCleanupJob.perform_now
       expect(Cart.all).to include(fresh_cart)
     end

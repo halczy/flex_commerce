@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Cart, type: :model do
 
-  let(:cart)      { FactoryGirl.create(:cart) }
-  let(:product)   { FactoryGirl.create(:product) }
-  let(:inventory) { FactoryGirl.create(:inventory) }
-  let(:customer)  { FactoryGirl.create(:customer) }
+  let(:cart)      { FactoryBot.create(:cart) }
+  let(:product)   { FactoryBot.create(:product) }
+  let(:inventory) { FactoryBot.create(:inventory) }
+  let(:customer)  { FactoryBot.create(:customer) }
 
   describe 'creation' do
     it 'can be created' do
@@ -18,7 +18,7 @@ RSpec.describe Cart, type: :model do
     before do |example|
       unless example.metadata[:skip_before]
         @product = product
-        3.times { FactoryGirl.create(:inventory, product: @product) }
+        3.times { FactoryBot.create(:inventory, product: @product) }
       end
     end
 
@@ -48,8 +48,8 @@ RSpec.describe Cart, type: :model do
     end
 
     it 'adds inventories to cart if product has loose inv. propertiy' do
-      loose_product = FactoryGirl.create(:product, strict_inventory: false)
-      FactoryGirl.create(:inventory, product: loose_product)
+      loose_product = FactoryBot.create(:product, strict_inventory: false)
+      FactoryBot.create(:inventory, product: loose_product)
       expect(cart.add(loose_product, 10)).to be_truthy
       expect(cart.inventories.count).to eq(10)
       expect(loose_product.inventories.available.count).to eq(0)
@@ -59,9 +59,9 @@ RSpec.describe Cart, type: :model do
   describe 'remove product inventoires' do
 
     before do
-      @product = FactoryGirl.create(:product)
-      @cart = FactoryGirl.create(:cart)
-      5.times { FactoryGirl.create(:inventory, status: 1, product: @product,
+      @product = FactoryBot.create(:product)
+      @cart = FactoryBot.create(:cart)
+      5.times { FactoryBot.create(:inventory, status: 1, product: @product,
                                    cart: @cart) }
     end
 
@@ -90,14 +90,14 @@ RSpec.describe Cart, type: :model do
 
   describe 'migrate session cart to user cart' do
     it 'returns true if session cart is empty' do
-      existing_user_cart = FactoryGirl.build_stubbed(:cart, user: customer)
+      existing_user_cart = FactoryBot.build_stubbed(:cart, user: customer)
       expect(cart.migrate_to(customer)).to be_truthy
       expect(existing_user_cart).not_to be_changed
     end
 
     it 'creates a user cart and transfer inventories' do
-      session_cart = FactoryGirl.create(:cart)
-      3.times { FactoryGirl.create(:inventory, cart: session_cart) }
+      session_cart = FactoryBot.create(:cart)
+      3.times { FactoryBot.create(:inventory, cart: session_cart) }
       expect(customer.cart).to be_nil
       expect(session_cart.migrate_to(customer)).to be_truthy
       expect(customer.cart).to be_truthy
@@ -105,10 +105,10 @@ RSpec.describe Cart, type: :model do
     end
 
     it 'transfer inventories to existing user cart with inventories' do
-      session_cart = FactoryGirl.create(:cart)
-      user_cart = FactoryGirl.create(:cart, user: customer)
-      2.times { FactoryGirl.create(:inventory, cart: session_cart) }
-      3.times { FactoryGirl.create(:inventory, cart: user_cart) }
+      session_cart = FactoryBot.create(:cart)
+      user_cart = FactoryBot.create(:cart, user: customer)
+      2.times { FactoryBot.create(:inventory, cart: session_cart) }
+      3.times { FactoryBot.create(:inventory, cart: user_cart) }
       expect(session_cart.migrate_to(customer)).to be_truthy
       expect(customer.cart.inventories.count).to eq(5)
     end
@@ -119,11 +119,11 @@ RSpec.describe Cart, type: :model do
     before do |example|
       unless example.metadata[:skip_before]
         @cart = cart
-        @product_1 = FactoryGirl.create(:product)
-        @product_2 = FactoryGirl.create(:product)
-        2.times { FactoryGirl.create(:inventory, cart: @cart, product: @product_1 ) }
-        4.times { FactoryGirl.create(:inventory, cart: @cart, product: @product_2 ) }
-        3.times { FactoryGirl.create(:inventory, cart: @cart) }
+        @product_1 = FactoryBot.create(:product)
+        @product_2 = FactoryBot.create(:product)
+        2.times { FactoryBot.create(:inventory, cart: @cart, product: @product_1 ) }
+        4.times { FactoryBot.create(:inventory, cart: @cart, product: @product_2 ) }
+        3.times { FactoryBot.create(:inventory, cart: @cart) }
       end
     end
 
@@ -156,10 +156,10 @@ RSpec.describe Cart, type: :model do
 
     context '#total', skip_before: true do
       it 'returns the total price of all products in cart' do
-        product_1 = FactoryGirl.create(:product, price_member: 11)
-        product_2 = FactoryGirl.create(:product, price_member: 22)
-        2.times { FactoryGirl.create(:inventory, cart: cart, product: product_1 ) }
-        4.times { FactoryGirl.create(:inventory, cart: cart, product: product_2 ) }
+        product_1 = FactoryBot.create(:product, price_member: 11)
+        product_2 = FactoryBot.create(:product, price_member: 22)
+        2.times { FactoryBot.create(:inventory, cart: cart, product: product_1 ) }
+        4.times { FactoryBot.create(:inventory, cart: cart, product: product_2 ) }
         expect(cart.total.to_i).to eq(110)
       end
     end
@@ -167,9 +167,9 @@ RSpec.describe Cart, type: :model do
 
   describe '#inventories_diff' do
     before do
-      @product = FactoryGirl.create(:product)
-      @cart = FactoryGirl.create(:cart)
-      3.times { FactoryGirl.create(:inventory, cart: @cart, product: @product) }
+      @product = FactoryBot.create(:product)
+      @cart = FactoryBot.create(:cart)
+      3.times { FactoryBot.create(:inventory, cart: @cart, product: @product) }
     end
 
     it 'returns positive integer if quantity is more than current' do

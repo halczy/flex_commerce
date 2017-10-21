@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Admin::CustomersController, type: :controller do
 
-  let(:admin)    { FactoryGirl.create(:admin) }
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:admin)    { FactoryBot.create(:admin) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   before { signin_as(admin) }
 
@@ -17,7 +17,7 @@ RSpec.describe Admin::CustomersController, type: :controller do
 
   describe 'GET search' do
     before do
-      @c1 = FactoryGirl.create(:customer, name: 'John Doe')
+      @c1 = FactoryBot.create(:customer, name: 'John Doe')
     end
 
     it 'responses successfully with search result' do

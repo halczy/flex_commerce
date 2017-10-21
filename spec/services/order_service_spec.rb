@@ -2,27 +2,27 @@ require 'rails_helper'
 
 RSpec.describe OrderService do
 
-  let(:cart)        { FactoryGirl.create(:cart) }
-  let(:customer)    { FactoryGirl.create(:customer) }
-  let(:delivery)    { FactoryGirl.create(:delivery) }
-  let(:self_pickup) { FactoryGirl.create(:self_pickup) }
-  let(:address)     { FactoryGirl.create(:address) }
+  let(:cart)        { FactoryBot.create(:cart) }
+  let(:customer)    { FactoryBot.create(:customer) }
+  let(:delivery)    { FactoryBot.create(:delivery) }
+  let(:self_pickup) { FactoryBot.create(:self_pickup) }
+  let(:address)     { FactoryBot.create(:address) }
 
-  let(:order)                   { FactoryGirl.create(:order) }
-  let(:order_selected)          { FactoryGirl.create(:order, selected: true) }
-  let(:order_set)               { FactoryGirl.create(:order, set: true) }
-  let(:order_confirmed)         { FactoryGirl.create(:order, confirmed: true) }
-  let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true, only_pickup: true) }
-  let(:order_pickup_set)        { FactoryGirl.create(:order, set: true, only_pickup: true) }
-  let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true, only_delivery: true) }
-  let(:order_delivery_set)      { FactoryGirl.create(:order, set:true, only_delivery: true) }
-  let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true, no_shipping: true) }
-  let(:payment_order)           { FactoryGirl.create(:payment_order) }
-  let(:payment_success_order)   { FactoryGirl.create(:payment_order, success: true) }
-  let(:service_order)           { FactoryGirl.create(:service_order) }
-  let(:service_order_ppending)  { FactoryGirl.create(:service_order, pickup_pending: true) }
-  let(:service_order_shipped)   { FactoryGirl.create(:service_order, shipped: true) }
-  let(:completed_order)         { FactoryGirl.create(:service_order, completed: true) }
+  let(:order)                   { FactoryBot.create(:order) }
+  let(:order_selected)          { FactoryBot.create(:order, selected: true) }
+  let(:order_set)               { FactoryBot.create(:order, set: true) }
+  let(:order_confirmed)         { FactoryBot.create(:order, confirmed: true) }
+  let(:order_pickup_selected)   { FactoryBot.create(:order, selected: true, only_pickup: true) }
+  let(:order_pickup_set)        { FactoryBot.create(:order, set: true, only_pickup: true) }
+  let(:order_delivery_selected) { FactoryBot.create(:order, selected: true, only_delivery: true) }
+  let(:order_delivery_set)      { FactoryBot.create(:order, set:true, only_delivery: true) }
+  let(:order_no_shipping_set)   { FactoryBot.create(:order, set: true, no_shipping: true) }
+  let(:payment_order)           { FactoryBot.create(:payment_order) }
+  let(:payment_success_order)   { FactoryBot.create(:payment_order, success: true) }
+  let(:service_order)           { FactoryBot.create(:service_order) }
+  let(:service_order_ppending)  { FactoryBot.create(:service_order, pickup_pending: true) }
+  let(:service_order_shipped)   { FactoryBot.create(:service_order, shipped: true) }
+  let(:completed_order)         { FactoryBot.create(:service_order, completed: true) }
 
   describe '#initialize' do
     it 'initializes new order service with cart instance' do
@@ -40,8 +40,8 @@ RSpec.describe OrderService do
 
   describe '#create' do
     before do
-      @cart = FactoryGirl.create(:cart, user: customer)
-      3.times { FactoryGirl.create(:inventory, cart: @cart) }
+      @cart = FactoryBot.create(:cart, user: customer)
+      3.times { FactoryBot.create(:inventory, cart: @cart) }
     end
 
     describe '#build' do
@@ -73,7 +73,7 @@ RSpec.describe OrderService do
     end
 
     it 'does not create new order if cart is empty' do
-      empty_cart = FactoryGirl.create(:cart, user: customer)
+      empty_cart = FactoryBot.create(:cart, user: customer)
       order_service = OrderService.new(cart_id: empty_cart)
       expect(order_service.create).to be_falsey
       expect(Order.count).to eq(0)
@@ -180,7 +180,7 @@ RSpec.describe OrderService do
   describe 'set_address' do
     before do
       @order_service = OrderService.new(order_id: order_selected.id)
-      @customer_address = FactoryGirl.create(:address, addressable: customer)
+      @customer_address = FactoryBot.create(:address, addressable: customer)
     end
 
     it 'duplicates customer address to mixed order' do
@@ -198,14 +198,14 @@ RSpec.describe OrderService do
     end
 
     it 'confirms shipping for delivery order' do
-      FactoryGirl.create(:address, addressable: order_delivery_selected)
+      FactoryBot.create(:address, addressable: order_delivery_selected)
       order_service = OrderService.new(order_id: order_delivery_selected)
       expect(order_service.confirm_shipping).to be_truthy
       expect(order_service.order.status).to eq('shipping_confirmed')
     end
 
     it 'confirms shipping for mixed order' do
-      FactoryGirl.create(:address, addressable: order_selected)
+      FactoryBot.create(:address, addressable: order_selected)
       order_service = OrderService.new(order_id: order_selected)
       expect(order_service.confirm_shipping).to be_truthy
       expect(order_service.order.status).to eq('shipping_confirmed')
@@ -256,7 +256,7 @@ RSpec.describe OrderService do
 
     describe '#compatible_shipping_rate' do
       it 'returns the lowest compatible shipping rate with order address' do
-        test_rate = ShippingRate.new(geo_code: FactoryGirl.create(:community).id,
+        test_rate = ShippingRate.new(geo_code: FactoryBot.create(:community).id,
                                      init_rate: 999.99, add_on_rate: 111.11)
         shipping_method = order_delivery_set.shipping_methods.first
         shipping_method.shipping_rates << test_rate

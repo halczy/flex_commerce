@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :shipping_rate do
     geo_code "*"
     init_rate 0
@@ -7,7 +7,7 @@ FactoryGirl.define do
   end
 
   factory :shipping_rate_province, class: ShippingRate do
-    geo_code { FactoryGirl.create(:province).id }
+    geo_code { FactoryBot.create(:province).id }
     init_rate 10
     add_on_rate 5
     # association :shipping_method, factory: :delivery

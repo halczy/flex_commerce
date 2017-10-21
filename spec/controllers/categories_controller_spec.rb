@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe CategoriesController, type: :controller do
 
-  let(:category) { FactoryGirl.create(:category) }
-  let(:product)  { FactoryGirl.create(:product)  }
+  let(:category) { FactoryBot.create(:category) }
+  let(:product)  { FactoryBot.create(:product)  }
 
   describe 'GET show' do
     it "returns a success response" do
@@ -23,7 +23,7 @@ RSpec.describe CategoriesController, type: :controller do
     end
 
     it 'does not reutrn disabled products' do
-      disabled_product = FactoryGirl.create(:product, status: 0)
+      disabled_product = FactoryBot.create(:product, status: 0)
       Categorization.create(category: category, product: disabled_product)
       get :show, params: { id: category.id }
       expect(assigns(:products)).to be_empty
@@ -31,9 +31,9 @@ RSpec.describe CategoriesController, type: :controller do
 
     context 'sort products' do
       before do
-        @p_expensive = FactoryGirl.create(:product, price_member: 99999)
-        @p_medium = FactoryGirl.create(:product, price_member: 100)
-        @p_cheap = FactoryGirl.create(:product, price_member: 10)
+        @p_expensive = FactoryBot.create(:product, price_member: 99999)
+        @p_medium = FactoryBot.create(:product, price_member: 100)
+        @p_cheap = FactoryBot.create(:product, price_member: 10)
         Categorization.create(category: category, product: @p_expensive)
         Categorization.create(category: category, product: @p_medium)
         Categorization.create(category: category, product: @p_cheap)
@@ -55,11 +55,11 @@ RSpec.describe CategoriesController, type: :controller do
 
   describe 'GET search' do
     before do
-      @product_1 = FactoryGirl.create(:product, name: 'Red Sun')
-      @product_2 = FactoryGirl.create(:product, name: 'Blue Sun')
-      @product_3 = FactoryGirl.create(:product, name: 'Green Sun')
-      @product_disabled = FactoryGirl.create(:product, name: 'Disabled Sun', status: 0)
-      @category = FactoryGirl.create(:category)
+      @product_1 = FactoryBot.create(:product, name: 'Red Sun')
+      @product_2 = FactoryBot.create(:product, name: 'Blue Sun')
+      @product_3 = FactoryBot.create(:product, name: 'Green Sun')
+      @product_disabled = FactoryBot.create(:product, name: 'Disabled Sun', status: 0)
+      @category = FactoryBot.create(:category)
       Categorization.create(category: @category, product: @product_1)
       Categorization.create(category: @category, product: @product_2)
       Categorization.create(category: @category, product: @product_disabled)

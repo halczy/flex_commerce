@@ -2,23 +2,23 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
 
-  let(:customer)                { FactoryGirl.create(:customer) }
-  let(:order)                   { FactoryGirl.create(:order) }
-  let(:order_selected)          { FactoryGirl.create(:order, selected: true) }
-  let(:order_set)               { FactoryGirl.create(:order, set: true) }
-  let(:order_confirmed)         { FactoryGirl.create(:order, confirmed: true) }
-  let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true, only_pickup: true) }
-  let(:order_pickup_set)        { FactoryGirl.create(:order, set: true,      only_pickup: true) }
-  let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true, only_delivery: true) }
-  let(:order_delivery_set)      { FactoryGirl.create(:order, set:true,       only_delivery: true) }
-  let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true,      no_shipping: true) }
-  let(:payment_order)           { FactoryGirl.create(:payment_order) }
-  let(:payment_wallet)          { FactoryGirl.create(:payment) }
-  let(:payment_alipay)          { FactoryGirl.create(:payment, processor: 1) }
-  let(:service_order)           { FactoryGirl.create(:service_order) }
-  let(:service_order_ppending)  { FactoryGirl.create(:service_order, pickup_pending: true) }
-  let(:service_order_shipped)   { FactoryGirl.create(:service_order, shipped: true) }
-  let(:completed_order)         { FactoryGirl.create(:service_order, completed: true) }
+  let(:customer)                { FactoryBot.create(:customer) }
+  let(:order)                   { FactoryBot.create(:order) }
+  let(:order_selected)          { FactoryBot.create(:order, selected: true) }
+  let(:order_set)               { FactoryBot.create(:order, set: true) }
+  let(:order_confirmed)         { FactoryBot.create(:order, confirmed: true) }
+  let(:order_pickup_selected)   { FactoryBot.create(:order, selected: true, only_pickup: true) }
+  let(:order_pickup_set)        { FactoryBot.create(:order, set: true,      only_pickup: true) }
+  let(:order_delivery_selected) { FactoryBot.create(:order, selected: true, only_delivery: true) }
+  let(:order_delivery_set)      { FactoryBot.create(:order, set:true,       only_delivery: true) }
+  let(:order_no_shipping_set)   { FactoryBot.create(:order, set: true,      no_shipping: true) }
+  let(:payment_order)           { FactoryBot.create(:payment_order) }
+  let(:payment_wallet)          { FactoryBot.create(:payment) }
+  let(:payment_alipay)          { FactoryBot.create(:payment, processor: 1) }
+  let(:service_order)           { FactoryBot.create(:service_order) }
+  let(:service_order_ppending)  { FactoryBot.create(:service_order, pickup_pending: true) }
+  let(:service_order_shipped)   { FactoryBot.create(:service_order, shipped: true) }
+  let(:completed_order)         { FactoryBot.create(:service_order, completed: true) }
   let(:wallet_created)          { PaymentService.new(payment_id: payment_wallet.id) }
   let(:alipay_created)          { PaymentService.new(payment_id: payment_alipay.id) }
 
@@ -31,7 +31,7 @@ RSpec.describe Order, type: :model do
     context 'validation' do
       it 'cannot be created without user|customer' do
         expect {
-          FactoryGirl.create(:order, user: nil)
+          FactoryBot.create(:order, user: nil)
         }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
@@ -137,7 +137,7 @@ RSpec.describe Order, type: :model do
     end
 
     it 'returns the partial amount paid' do
-      payment = FactoryGirl.create(:payment, order: order_confirmed)
+      payment = FactoryBot.create(:payment, order: order_confirmed)
       service = PaymentService.new(payment_id: payment.id, amount: Money.new(100))
       service.user.wallet.update(balance: 9999999)
       service.charge
@@ -157,7 +157,7 @@ RSpec.describe Order, type: :model do
     end
 
     it 'returns unpaid balance if partial payment exist' do
-      payment = FactoryGirl.create(:payment, order: order_confirmed)
+      payment = FactoryBot.create(:payment, order: order_confirmed)
       service = PaymentService.new(payment_id: payment.id, amount: Money.new(100))
       service.user.wallet.update(balance: 9999999)
       service.charge
@@ -178,15 +178,15 @@ RSpec.describe Order, type: :model do
       @orders_in_creation = [order, order_selected, order_set, order_confirmed]
       @orders_in_creation.each { |o| o.update(user: @customer)}
       @orders_in_payment = []
-      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 30)
-      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 40)
-      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 50)
+      @orders_in_payment << FactoryBot.create(:order, user: @customer, status: 30)
+      @orders_in_payment << FactoryBot.create(:order, user: @customer, status: 40)
+      @orders_in_payment << FactoryBot.create(:order, user: @customer, status: 50)
       @orders_in_service = []
-      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 60)
-      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 70)
-      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 80)
-      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 90)
-      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 100)
+      @orders_in_service << FactoryBot.create(:order, user: @customer, status: 60)
+      @orders_in_service << FactoryBot.create(:order, user: @customer, status: 70)
+      @orders_in_service << FactoryBot.create(:order, user: @customer, status: 80)
+      @orders_in_service << FactoryBot.create(:order, user: @customer, status: 90)
+      @orders_in_service << FactoryBot.create(:order, user: @customer, status: 100)
     end
 
     it 'returns orders in creation process' do

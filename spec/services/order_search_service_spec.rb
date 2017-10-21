@@ -2,18 +2,18 @@ require 'rails_helper'
 
 RSpec.describe OrderSearchService, type: :model do
 
-  let(:customer)        { FactoryGirl.create(:customer) }
-  let(:order)           { FactoryGirl.create(:order, user: customer) }
-  let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true, user: customer) }
+  let(:customer)        { FactoryBot.create(:customer) }
+  let(:order)           { FactoryBot.create(:order, user: customer) }
+  let(:order_confirmed) { FactoryBot.create(:order, confirmed: true, user: customer) }
 
   describe '#search' do
     before do
-      @customer_1 = FactoryGirl.create(:customer)
-      @customer_2 = FactoryGirl.create(:customer, name: 'TESTNAME')
-      @c1_order_1 = FactoryGirl.create(:order, user: @customer_1)
-      @c1_order_2 = FactoryGirl.create(:order, user: @customer_1, confirmed: true)
-      @c2_order_1 = FactoryGirl.create(:order, user: @customer_2)
-      @c2_order_2 = FactoryGirl.create(:order, user: @customer_2, confirmed: true)
+      @customer_1 = FactoryBot.create(:customer)
+      @customer_2 = FactoryBot.create(:customer, name: 'TESTNAME')
+      @c1_order_1 = FactoryBot.create(:order, user: @customer_1)
+      @c1_order_2 = FactoryBot.create(:order, user: @customer_1, confirmed: true)
+      @c2_order_1 = FactoryBot.create(:order, user: @customer_2)
+      @c2_order_2 = FactoryBot.create(:order, user: @customer_2, confirmed: true)
     end
 
     it 'can search order by customer id' do

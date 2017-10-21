@@ -2,14 +2,14 @@ require 'rails_helper'
 
 describe 'Product Index Filter', type: :feature do
 
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin) { FactoryBot.create(:admin) }
   before { feature_signin_as(admin) }
 
   before do
-    @product_in_stock = FactoryGirl.create(:product)
-    @product_oos = FactoryGirl.create(:product)
-    FactoryGirl.create(:inventory, product: @product_in_stock)
-    FactoryGirl.create(:inventory, product: @product_oos, status: 4)
+    @product_in_stock = FactoryBot.create(:product)
+    @product_oos = FactoryBot.create(:product)
+    FactoryBot.create(:inventory, product: @product_in_stock)
+    FactoryBot.create(:inventory, product: @product_oos, status: 4)
     visit admin_products_path
   end
 

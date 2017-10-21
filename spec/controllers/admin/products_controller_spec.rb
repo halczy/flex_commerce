@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Admin::ProductsController, type: :controller do
 
-  let(:product)    { FactoryGirl.create(:product) }
-  let(:admin)      { FactoryGirl.create(:admin) }
-  let(:customer)   { FactoryGirl.create(:customer) }
-  let(:image)      { FactoryGirl.create(:image) }
-  let(:inventory)  { FactoryGirl.create(:inventory) }
+  let(:product)    { FactoryBot.create(:product) }
+  let(:admin)      { FactoryBot.create(:admin) }
+  let(:customer)   { FactoryBot.create(:customer) }
+  let(:image)      { FactoryBot.create(:image) }
+  let(:inventory)  { FactoryBot.create(:inventory) }
 
   before { signin_as(admin) }
 
@@ -18,7 +18,7 @@ RSpec.describe Admin::ProductsController, type: :controller do
     end
 
     it 'products a list of products' do
-      5.times { FactoryGirl.create(:product) }
+      5.times { FactoryBot.create(:product) }
       get :index
       expect(assigns(:products).count).to eq(5)
     end
@@ -33,17 +33,17 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
     context 'filter' do
       before do
-        @product_in_stock = FactoryGirl.create(:product)
-        FactoryGirl.create(:inventory, product: @product_in_stock)
+        @product_in_stock = FactoryBot.create(:product)
+        FactoryBot.create(:inventory, product: @product_in_stock)
 
-        @product_oos_destroyable = FactoryGirl.create(:product)
-        FactoryGirl.create(:inventory, product: @product_oos_destroyable, status: 1)
-        FactoryGirl.create(:inventory, product: @product_oos_destroyable, status: 2)
+        @product_oos_destroyable = FactoryBot.create(:product)
+        FactoryBot.create(:inventory, product: @product_oos_destroyable, status: 1)
+        FactoryBot.create(:inventory, product: @product_oos_destroyable, status: 2)
 
-        @product_oos_undestroyable = FactoryGirl.create(:product)
-        FactoryGirl.create(:inventory, product: @product_oos_undestroyable, status: 3)
-        FactoryGirl.create(:inventory, product: @product_oos_undestroyable, status: 4)
-        FactoryGirl.create(:inventory, product: @product_oos_undestroyable, status: 5)
+        @product_oos_undestroyable = FactoryBot.create(:product)
+        FactoryBot.create(:inventory, product: @product_oos_undestroyable, status: 3)
+        FactoryBot.create(:inventory, product: @product_oos_undestroyable, status: 4)
+        FactoryBot.create(:inventory, product: @product_oos_undestroyable, status: 5)
       end
 
       it "returns products that are in stock" do
@@ -158,8 +158,8 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
     context 'with inventories' do
       before do
-        FactoryGirl.create(:inventory, product: @product, status: 0)
-        FactoryGirl.create(:inventory, product: @product, status: 2)
+        FactoryBot.create(:inventory, product: @product, status: 0)
+        FactoryBot.create(:inventory, product: @product, status: 2)
       end
 
       it 'also destroys inventories by default' do
@@ -169,8 +169,8 @@ RSpec.describe Admin::ProductsController, type: :controller do
       end
 
       it 'disables product if undestroyable' do
-        FactoryGirl.create(:inventory, product: @product, status: 3)
-        FactoryGirl.create(:inventory, product: @product, status: 5)
+        FactoryBot.create(:inventory, product: @product, status: 3)
+        FactoryBot.create(:inventory, product: @product, status: 5)
         delete :destroy, params: { id: @product.id }
         expect(@product.reload.disabled?).to be_truthy
         expect(@product.inventories.count).to eq(2)
@@ -181,8 +181,8 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
   describe 'GET search' do
     before do
-      @product_blue = FactoryGirl.create(:product, name: 'Blue Book')
-      @product_red  = FactoryGirl.create(:product, name: 'Red Book')
+      @product_blue = FactoryBot.create(:product, name: 'Blue Book')
+      @product_red  = FactoryBot.create(:product, name: 'Red Book')
     end
 
     it 'responses successfully with search result' do
@@ -206,10 +206,10 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
   describe 'GET inventoreis' do
     before do
-      @product = FactoryGirl.create(:product)
-      2.times { FactoryGirl.create(:inventory, product: @product) }
-      3.times { FactoryGirl.create(:inventory, product: @product, status: 1) }
-      2.times { FactoryGirl.create(:inventory, product: @product, status: 5) }
+      @product = FactoryBot.create(:product)
+      2.times { FactoryBot.create(:inventory, product: @product) }
+      3.times { FactoryBot.create(:inventory, product: @product, status: 1) }
+      2.times { FactoryBot.create(:inventory, product: @product, status: 5) }
     end
 
     it 'response successfully' do
@@ -243,10 +243,10 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
   describe 'PATCH remove_inventories' do
     before do
-      @product = FactoryGirl.create(:product)
-      3.times { FactoryGirl.create(:inventory, product: @product) }
-      2.times { FactoryGirl.create(:inventory, product: @product, status: 1) }
-      3.times { FactoryGirl.create(:inventory, product: @product, status: 3) }
+      @product = FactoryBot.create(:product)
+      3.times { FactoryBot.create(:inventory, product: @product) }
+      2.times { FactoryBot.create(:inventory, product: @product, status: 1) }
+      3.times { FactoryBot.create(:inventory, product: @product, status: 3) }
     end
 
     it 'removes inventories from product' do
@@ -268,11 +268,11 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
   describe 'PATCH force_remove_inventories' do
     before do
-      @product = FactoryGirl.create(:product)
-      2.times { FactoryGirl.create(:inventory, product: @product) }
-      2.times { FactoryGirl.create(:inventory, product: @product, status: 1) }
-      2.times { FactoryGirl.create(:inventory, product: @product, status: 3) }
-      4.times { FactoryGirl.create(:inventory, product: @product, status: 5) }
+      @product = FactoryBot.create(:product)
+      2.times { FactoryBot.create(:inventory, product: @product) }
+      2.times { FactoryBot.create(:inventory, product: @product, status: 1) }
+      2.times { FactoryBot.create(:inventory, product: @product, status: 3) }
+      4.times { FactoryBot.create(:inventory, product: @product, status: 5) }
     end
 
     it 'removes inventories from product' do

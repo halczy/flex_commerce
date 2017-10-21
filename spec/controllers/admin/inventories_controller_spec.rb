@@ -2,21 +2,21 @@ require 'rails_helper'
 
 RSpec.describe Admin::InventoriesController, type: :controller do
 
-  let(:admin)     { FactoryGirl.create(:admin) }
-  let(:inventory) { FactoryGirl.create(:inventory) }
-  let(:product)   { FactoryGirl.create(:product) }
+  let(:admin)     { FactoryBot.create(:admin) }
+  let(:inventory) { FactoryBot.create(:inventory) }
+  let(:product)   { FactoryBot.create(:product) }
 
   before { signin_as admin }
 
   describe 'GET index' do
 
     before do
-      @unsold =       FactoryGirl.create(:inventory)
-      @in_cart =      FactoryGirl.create(:inventory, status: 1)
-      @in_order =     FactoryGirl.create(:inventory, status: 2)
-      @in_checkout =  FactoryGirl.create(:inventory, status: 3)
-      @sold =         FactoryGirl.create(:inventory, status: 4)
-      @returned =     FactoryGirl.create(:inventory, status: 5)
+      @unsold =       FactoryBot.create(:inventory)
+      @in_cart =      FactoryBot.create(:inventory, status: 1)
+      @in_order =     FactoryBot.create(:inventory, status: 2)
+      @in_checkout =  FactoryBot.create(:inventory, status: 3)
+      @sold =         FactoryBot.create(:inventory, status: 4)
+      @returned =     FactoryBot.create(:inventory, status: 5)
     end
 
     it 'response successfully' do
@@ -81,7 +81,7 @@ RSpec.describe Admin::InventoriesController, type: :controller do
 
   describe 'DELETE destroy' do
     it 'can be destroy if its status is destroyable' do
-      unsold = FactoryGirl.create(:inventory)
+      unsold = FactoryBot.create(:inventory)
       expect {
         delete :destroy, params: { id: unsold.id }
       }.to change(Inventory, :count).by(-1)
@@ -90,7 +90,7 @@ RSpec.describe Admin::InventoriesController, type: :controller do
     end
 
     it 'cannot be destroy if its status is undestroyable' do
-      in_checkout = FactoryGirl.create(:inventory, status: 3)
+      in_checkout = FactoryBot.create(:inventory, status: 3)
       expect {
         delete :destroy, params: { id: in_checkout.id }
       }.to change(Inventory, :count).by(0)

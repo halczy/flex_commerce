@@ -2,16 +2,16 @@ require 'rails_helper'
 
 describe 'Inventory CURD', type: :feature do
 
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin) { FactoryBot.create(:admin) }
 
   before do
     feature_signin_as(admin)
-    @unsold =       FactoryGirl.create(:inventory)
-    @in_cart =      FactoryGirl.create(:inventory, status: 1)
-    @in_order =     FactoryGirl.create(:inventory, status: 2)
-    @in_checkout =  FactoryGirl.create(:inventory, status: 3)
-    @sold =         FactoryGirl.create(:inventory, status: 4)
-    @returned =     FactoryGirl.create(:inventory, status: 5)
+    @unsold =       FactoryBot.create(:inventory)
+    @in_cart =      FactoryBot.create(:inventory, status: 1)
+    @in_order =     FactoryBot.create(:inventory, status: 2)
+    @in_checkout =  FactoryBot.create(:inventory, status: 3)
+    @sold =         FactoryBot.create(:inventory, status: 4)
+    @returned =     FactoryBot.create(:inventory, status: 5)
     visit admin_inventories_path
   end
 

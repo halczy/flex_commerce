@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Geo, type: :model do
 
-  let(:country)  { FactoryGirl.create(:country) }
-  let(:province) { FactoryGirl.create(:province) }
-  let(:city)     { FactoryGirl.create(:city) }
+  let(:country)  { FactoryBot.create(:country) }
+  let(:province) { FactoryBot.create(:province) }
+  let(:city)     { FactoryBot.create(:city) }
   describe 'creation' do
     it 'can be created' do
       expect(country).to be_valid
@@ -22,7 +22,7 @@ RSpec.describe Geo, type: :model do
       end
 
       it 'must have a name' do
-        nameless = FactoryGirl.build_stubbed(:country, name: nil)
+        nameless = FactoryBot.build_stubbed(:country, name: nil)
         expect(nameless).not_to be_valid
       end
     end
@@ -30,9 +30,9 @@ RSpec.describe Geo, type: :model do
 
   describe 'relationships' do
     before do
-      @parent = FactoryGirl.create(:province)
-      @child_1 = FactoryGirl.create(:city, parent: @parent)
-      @child_2 = FactoryGirl.create(:city, parent: @parent)
+      @parent = FactoryBot.create(:province)
+      @child_1 = FactoryBot.create(:city, parent: @parent)
+      @child_2 = FactoryBot.create(:city, parent: @parent)
     end
 
     it 'returns its parent' do
@@ -47,15 +47,15 @@ RSpec.describe Geo, type: :model do
 
   describe 'scope' do
     before do
-      @cn = FactoryGirl.create(:country, id: '86')
-      @province_1 = FactoryGirl.create(:province, parent: @cn)
-      @province_2 = FactoryGirl.create(:province, parent: @cn)
-      @city_1 = FactoryGirl.create(:city, parent: @province_1)
-      @city_2 = FactoryGirl.create(:city, parent: @province_2)
-      @district_1 = FactoryGirl.create(:district, parent: @city_1)
-      @district_2 = FactoryGirl.create(:district, parent: @city_2)
-      @community_1 = FactoryGirl.create(:community, parent: @district_1)
-      @community_2 = FactoryGirl.create(:community, parent: @district_2)
+      @cn = FactoryBot.create(:country, id: '86')
+      @province_1 = FactoryBot.create(:province, parent: @cn)
+      @province_2 = FactoryBot.create(:province, parent: @cn)
+      @city_1 = FactoryBot.create(:city, parent: @province_1)
+      @city_2 = FactoryBot.create(:city, parent: @province_2)
+      @district_1 = FactoryBot.create(:district, parent: @city_1)
+      @district_2 = FactoryBot.create(:district, parent: @city_2)
+      @community_1 = FactoryBot.create(:community, parent: @district_1)
+      @community_2 = FactoryBot.create(:community, parent: @district_2)
     end
 
     it '#cn returns china' do

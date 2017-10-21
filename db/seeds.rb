@@ -178,8 +178,8 @@ end
 puts "INVENTORY: #{Inventory.count} inventories created."
 
 # SHIPPING METHOD
-FactoryGirl.create(:no_shipping)
-shipping_pickup = FactoryGirl.create(:self_pickup_sa)
+FactoryBot.create(:no_shipping)
+shipping_pickup = FactoryBot.create(:self_pickup_sa)
 pickup_rate = ShippingRate.new(geo_code: '*', init_rate: '0', add_on_rate: '0')
 shipping_pickup.shipping_rates << pickup_rate
 pickup_address = Address.new(province_state: Geo.province_state.sample.id,

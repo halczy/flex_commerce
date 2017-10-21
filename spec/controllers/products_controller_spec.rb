@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ProductsController, type: :controller  do
 
-  let(:product) { FactoryGirl.create(:product) }
+  let(:product) { FactoryBot.create(:product) }
 
   describe "GET show" do
     it 'returns a success response' do

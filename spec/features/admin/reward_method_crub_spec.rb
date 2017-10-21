@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe 'Reward Method CRUD', type: :feature do
 
-  let(:admin)      { FactoryGirl.create(:admin) }
-  let(:ref_reward) { FactoryGirl.create(:ref_reward) }
+  let(:admin)      { FactoryBot.create(:admin) }
+  let(:ref_reward) { FactoryBot.create(:ref_reward) }
 
   before { feature_signin_as admin }
 

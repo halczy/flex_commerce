@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe ShippingRate, type: :model do
 
-  let(:delivery_sa)   { FactoryGirl.create(:delivery_sa) }
-  let(:shipping_rate) { FactoryGirl.create(:shipping_rate,
+  let(:delivery_sa)   { FactoryBot.create(:delivery_sa) }
+  let(:shipping_rate) { FactoryBot.create(:shipping_rate,
                                             shipping_method: delivery_sa) }
 
   describe 'creation' do

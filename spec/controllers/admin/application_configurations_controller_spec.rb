@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Admin::ApplicationConfigurationsController, type: :controller do
 
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin) { FactoryBot.create(:admin) }
   let(:app_config) { ApplicationConfiguration.create(name: 'test_config',
                                                      value: 'test_value') }
 

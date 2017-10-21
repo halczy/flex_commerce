@@ -10,7 +10,7 @@ RSpec.describe SessionsController, type: :controller do
   end
 
   describe 'POST create' do
-    let(:user) { FactoryGirl.create(:customer) }
+    let(:user) { FactoryBot.create(:customer) }
 
     it 'allows sign in through email' do
       post :create, params: { session: { ident: user.email,
@@ -67,14 +67,14 @@ RSpec.describe SessionsController, type: :controller do
     end
 
     it 'cleans up session cart_id' do
-      session[:cart_id] = FactoryGirl.create(:cart).id
+      session[:cart_id] = FactoryBot.create(:cart).id
       post :create, params: { session: { ident: user.email, password: 'example' } }
       expect(session[:cart_id]).to be_nil
     end
   end
 
   describe 'DELETE destroy' do
-    let(:user) { FactoryGirl.create(:customer) }
+    let(:user) { FactoryBot.create(:customer) }
 
     before do
       post :create, params: { session: { ident: user.email,

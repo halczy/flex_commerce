@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :payment do
     association :order, factory: :order, confirmed: true
     amount { order.total }

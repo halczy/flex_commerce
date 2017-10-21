@@ -8,7 +8,7 @@ describe 'visit homepage as guest', type: :feature do
   end
 
   context 'fault tolerant' do
-    let(:customer) { FactoryGirl.create(:customer) }
+    let(:customer) { FactoryBot.create(:customer) }
 
     before do
       visit signin_path
@@ -29,14 +29,14 @@ end
 
 describe 'frontpage displays feature products' do
   before do
-    feature_cat = FactoryGirl.create(:feature)
-    @product_1 = FactoryGirl.create(:product)
-    FactoryGirl.create(:image, imageable_type: 'Product', imageable_id: @product_1.id)
-    @product_2 = FactoryGirl.create(:product)
+    feature_cat = FactoryBot.create(:feature)
+    @product_1 = FactoryBot.create(:product)
+    FactoryBot.create(:image, imageable_type: 'Product', imageable_id: @product_1.id)
+    @product_2 = FactoryBot.create(:product)
     Categorization.create(category: feature_cat, product: @product_1)
     Categorization.create(category: feature_cat, product: @product_2)
-    FactoryGirl.create(:inventory, product: @product_1)
-    FactoryGirl.create(:inventory, product: @product_2)
+    FactoryBot.create(:inventory, product: @product_1)
+    FactoryBot.create(:inventory, product: @product_2)
     Image.create(title: "Placeholder Image",
                  in_use: true,
                  source_channel: 0,

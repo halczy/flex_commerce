@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Admin::WalletsController, type: :controller do
 
-  let(:admin)    { FactoryGirl.create(:admin) }
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:admin)    { FactoryBot.create(:admin) }
+  let(:customer) { FactoryBot.create(:customer) }
 
 
   describe 'POST deposit' do

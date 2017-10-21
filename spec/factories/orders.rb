@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :order do
     status 0
     association :user, factory: :customer
@@ -15,14 +15,14 @@ FactoryGirl.define do
     after(:create) do |order, evaluator|
       # Add inventories to order
       3.times do
-        FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
+        FactoryBot.create(:inventory, status: 2, user: order.user, order: order)
       end
 
       # Add shipping methods to order
       if evaluator.selected || evaluator.set || evaluator.confirmed
-        delivery = FactoryGirl.create(:delivery)
-        pickup = FactoryGirl.create(:self_pickup)
-        no_shipping = FactoryGirl.create(:no_shipping)
+        delivery = FactoryBot.create(:delivery)
+        pickup = FactoryBot.create(:self_pickup)
+        no_shipping = FactoryBot.create(:no_shipping)
 
         if evaluator.only_pickup
           order.inventories.each { |i| i.update(shipping_method: pickup) }
@@ -41,8 +41,8 @@ FactoryGirl.define do
         order.update(status: 10)
 
         unless evaluator.only_pickup
-          address = FactoryGirl.create(:address, addressable: order)
-          FactoryGirl.create(:shipping_rate, geo_code: address.community,
+          address = FactoryBot.create(:address, addressable: order)
+          FactoryBot.create(:shipping_rate, geo_code: address.community,
                                              init_rate: 999.99,
                                              add_on_rate: 111.11,
                                              shipping_method: delivery)
@@ -79,14 +79,14 @@ FactoryGirl.define do
     after(:create) do |order, evaluator|
       # Build order to confirm status
       3.times do
-        FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
+        FactoryBot.create(:inventory, status: 2, user: order.user, order: order)
       end
-      delivery = FactoryGirl.create(:delivery)
-      pickup = FactoryGirl.create(:self_pickup)
+      delivery = FactoryBot.create(:delivery)
+      pickup = FactoryBot.create(:self_pickup)
       order.inventories.each { |i| i.update(shipping_method: delivery) }
       order.inventories.first.update(shipping_method: pickup)
-      address = FactoryGirl.create(:address, addressable: order)
-      FactoryGirl.create(:shipping_rate, geo_code: address.community,
+      address = FactoryBot.create(:address, addressable: order)
+      FactoryBot.create(:shipping_rate, geo_code: address.community,
                                          init_rate: 999.99,
                                          add_on_rate: 111.11,
                                          shipping_method: delivery)
@@ -127,14 +127,14 @@ FactoryGirl.define do
     after(:create) do |order, evaluator|
       # Build order to confirm status
       3.times do
-        FactoryGirl.create(:inventory, status: 2, user: order.user, order: order)
+        FactoryBot.create(:inventory, status: 2, user: order.user, order: order)
       end
-      delivery = FactoryGirl.create(:delivery)
-      pickup = FactoryGirl.create(:self_pickup)
+      delivery = FactoryBot.create(:delivery)
+      pickup = FactoryBot.create(:self_pickup)
       order.inventories.each { |i| i.update(shipping_method: delivery) }
       order.inventories.first.update(shipping_method: pickup)
-      address = FactoryGirl.create(:address, addressable: order)
-      FactoryGirl.create(:shipping_rate, geo_code: address.community,
+      address = FactoryBot.create(:address, addressable: order)
+      FactoryBot.create(:shipping_rate, geo_code: address.community,
                                          init_rate: 999.99,
                                          add_on_rate: 111.11,
                                          shipping_method: delivery)

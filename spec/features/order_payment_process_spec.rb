@@ -2,11 +2,11 @@ require 'rails_helper'
 
 describe 'customer order payment process', type: :feature do
 
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   before do
     feature_signin_as customer
-    @product = FactoryGirl.create(:product, purchase_ready: true)
+    @product = FactoryBot.create(:product, purchase_ready: true)
     @province = Geo.find(@product.shipping_methods.delivery.first.shipping_rates
                                  .first.geo_code)
     visit product_path(@product)

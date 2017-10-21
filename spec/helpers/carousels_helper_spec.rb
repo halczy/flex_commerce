@@ -24,9 +24,9 @@ RSpec.describe CarouselsHelper, type: :helper do
 
   describe '#build_carousel_inner' do
     it 'returns carousel-inner html' do
-      img_1 = FactoryGirl.create(:image)
-      img_2 = FactoryGirl.create(:image)
-      img_3 = FactoryGirl.create(:image)
+      img_1 = FactoryBot.create(:image)
+      img_2 = FactoryBot.create(:image)
+      img_3 = FactoryBot.create(:image)
       imgs = [img_1, img_2, img_3]
       result = helper.build_carousel_inner(imgs)
       expect(result).to have_css("div.carousel-item", count: 3)
@@ -35,8 +35,8 @@ RSpec.describe CarouselsHelper, type: :helper do
     end
 
     it 'returns one carousel-inner if image array is empty' do
-      product = FactoryGirl.create(:product)
-      FactoryGirl.create(:image, title: 'Placeholder Image')
+      product = FactoryBot.create(:product)
+      FactoryBot.create(:image, title: 'Placeholder Image')
       result = helper.build_carousel_inner(product.images)
       expect(result).to have_css("div.carousel-item.active", count: 1)
       expect(result).to have_css("img.d-block.w-100", count: 1)

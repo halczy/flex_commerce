@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Category, type: :model do
 
-  let(:cat)   { FactoryGirl.create(:category) }
-  let(:brand) { FactoryGirl.create(:brand) }
+  let(:cat)   { FactoryBot.create(:category) }
+  let(:brand) { FactoryBot.create(:brand) }
 
   describe 'creation' do
     it 'can be created with valid data' do
@@ -12,27 +12,27 @@ RSpec.describe Category, type: :model do
 
     context 'validation' do
       it 'cannot create without a name' do
-        no_name_cat = FactoryGirl.build(:category, name: "")
+        no_name_cat = FactoryBot.build(:category, name: "")
         no_name_cat.valid?
         expect(no_name_cat.errors.messages[:name]).to include("can't be blank")
       end
 
       it 'cannot create with duplicate name' do
-        FactoryGirl.create(:category, name: 'ABCD Cat')
-        dup_cat = FactoryGirl.build(:category, name: 'ABCD Cat')
+        FactoryBot.create(:category, name: 'ABCD Cat')
+        dup_cat = FactoryBot.build(:category, name: 'ABCD Cat')
         dup_cat.valid?
         expect(dup_cat.errors.messages[:name]).to include('has already been taken')
       end
 
       it 'cannot create with negative display order' do
-        neg_order = FactoryGirl.build(:category, display_order: -1)
+        neg_order = FactoryBot.build(:category, display_order: -1)
         neg_order.valid?
         expect(neg_order.errors.messages[:display_order]).
           to include('must be greater than or equal to 0')
       end
 
       it 'cannot have an non-existence parent' do
-        fake_parent = FactoryGirl.build(:category, parent_id: 9999999)
+        fake_parent = FactoryBot.build(:category, parent_id: 9999999)
         fake_parent.valid?
         expect(fake_parent.errors.messages[:parent_id]).
           to include('category with this ID does not exist')
@@ -42,11 +42,11 @@ RSpec.describe Category, type: :model do
 
   describe 'relationships' do
     before do
-      @main_cat = FactoryGirl.create(:category)
-      @hidden_cat = FactoryGirl.create(:category, hide: true)
-      @child_cat_1 = FactoryGirl.create(:category, parent: @main_cat)
-      @child_cat_2 = FactoryGirl.create(:category, parent: @main_cat)
-      @special_cat = FactoryGirl.create(:feature)
+      @main_cat = FactoryBot.create(:category)
+      @hidden_cat = FactoryBot.create(:category, hide: true)
+      @child_cat_1 = FactoryBot.create(:category, parent: @main_cat)
+      @child_cat_2 = FactoryBot.create(:category, parent: @main_cat)
+      @special_cat = FactoryBot.create(:feature)
     end
 
     it 'can have child categories' do
@@ -88,12 +88,12 @@ RSpec.describe Category, type: :model do
 
     context 'enum' do
       it 'can set category as feature' do
-        feature_cat = FactoryGirl.create(:feature)
+        feature_cat = FactoryBot.create(:feature)
         expect(feature_cat.flavor).to eq('feature')
       end
 
       it 'can set category as brand' do
-        brand_cat = FactoryGirl.create(:brand)
+        brand_cat = FactoryBot.create(:brand)
         expect(brand_cat.flavor).to eq('brand')
       end
 
@@ -105,7 +105,7 @@ RSpec.describe Category, type: :model do
   end
 
   describe '#move' do
-    let(:cat_order_init_5) { FactoryGirl.create(:category, display_order: 5) }
+    let(:cat_order_init_5) { FactoryBot.create(:category, display_order: 5) }
 
     it 'lower display order by 1' do
       cat_order_init_5.move(-1)
@@ -126,10 +126,10 @@ RSpec.describe Category, type: :model do
   describe '#refine' do
     context 'brand category' do
       it 'returns regular categories associted with category products' do
-        product_1 = FactoryGirl.create(:product)
-        product_2 = FactoryGirl.create(:product)
-        cat_1 = FactoryGirl.create(:category)
-        cat_2 = FactoryGirl.create(:category)
+        product_1 = FactoryBot.create(:product)
+        product_2 = FactoryBot.create(:product)
+        cat_1 = FactoryBot.create(:category)
+        cat_2 = FactoryBot.create(:category)
         Categorization.create(category: brand, product: product_1)
         Categorization.create(category: brand, product: product_2)
         Categorization.create(category: cat_1, product: product_1)
@@ -141,8 +141,8 @@ RSpec.describe Category, type: :model do
 
     context 'regular category' do
       it 'returns brand categories associted with category products' do
-        product_1 = FactoryGirl.create(:product)
-        product_2 = FactoryGirl.create(:product)
+        product_1 = FactoryBot.create(:product)
+        product_2 = FactoryBot.create(:product)
         Categorization.create(category: cat, product: product_1)
         Categorization.create(category: cat, product: product_2)
         Categorization.create(category: brand, product: product_1)

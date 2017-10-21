@@ -2,33 +2,33 @@ require 'rails_helper'
 
 RSpec.describe OrdersController, type: :controller do
 
-  let(:customer)    { FactoryGirl.create(:customer) }
-  let(:cart)        { FactoryGirl.create(:cart) }
-  let(:inventory)   { FactoryGirl.create(:inventory) }
-  let(:delivery)    { FactoryGirl.create(:delivery) }
-  let(:self_pickup) { FactoryGirl.create(:self_pickup) }
-  let(:no_shipping) { FactoryGirl.create(:no_shipping) }
+  let(:customer)    { FactoryBot.create(:customer) }
+  let(:cart)        { FactoryBot.create(:cart) }
+  let(:inventory)   { FactoryBot.create(:inventory) }
+  let(:delivery)    { FactoryBot.create(:delivery) }
+  let(:self_pickup) { FactoryBot.create(:self_pickup) }
+  let(:no_shipping) { FactoryBot.create(:no_shipping) }
 
-  let(:order)           { FactoryGirl.create(:order, user: customer) }
-  let(:order_selected)  { FactoryGirl.create(:order, selected: true, user: customer) }
-  let(:order_set)       { FactoryGirl.create(:order, set: true, user: customer) }
-  let(:order_confirmed) { FactoryGirl.create(:order, confirmed: true, user: customer) }
-  let(:payment_order)   { FactoryGirl.create(:payment_order, user: customer) }
-  let(:p_payment_order) { FactoryGirl.create(:payment_order, user: customer, partial: true) }
+  let(:order)           { FactoryBot.create(:order, user: customer) }
+  let(:order_selected)  { FactoryBot.create(:order, selected: true, user: customer) }
+  let(:order_set)       { FactoryBot.create(:order, set: true, user: customer) }
+  let(:order_confirmed) { FactoryBot.create(:order, confirmed: true, user: customer) }
+  let(:payment_order)   { FactoryBot.create(:payment_order, user: customer) }
+  let(:p_payment_order) { FactoryBot.create(:payment_order, user: customer, partial: true) }
 
-  let(:order_pickup_selected)   { FactoryGirl.create(:order, selected: true,
+  let(:order_pickup_selected)   { FactoryBot.create(:order, selected: true,
                                                              only_pickup: true,
                                                              user: customer) }
-  let(:order_pickup_set)        { FactoryGirl.create(:order, set: true,
+  let(:order_pickup_set)        { FactoryBot.create(:order, set: true,
                                                              only_pickup: true,
                                                              user: customer) }
-  let(:order_delivery_selected) { FactoryGirl.create(:order, selected: true,
+  let(:order_delivery_selected) { FactoryBot.create(:order, selected: true,
                                                              only_delivery: true,
                                                              user: customer) }
-  let(:order_delivery_set)      { FactoryGirl.create(:order, set:true,
+  let(:order_delivery_set)      { FactoryBot.create(:order, set:true,
                                                              only_delivery: true,
                                                              user: customer) }
-  let(:order_no_shipping_set)   { FactoryGirl.create(:order, set: true,
+  let(:order_no_shipping_set)   { FactoryBot.create(:order, set: true,
                                                              no_shipping: true,
                                                              user: customer) }
 
@@ -44,15 +44,15 @@ RSpec.describe OrdersController, type: :controller do
       @orders_in_creation = [order, order_selected, order_set, order_confirmed]
       @orders_in_creation.each { |o| o.update(user: @customer)}
       @orders_in_payment = []
-      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 30)
-      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 40)
-      @orders_in_payment << FactoryGirl.create(:order, user: @customer, status: 50)
+      @orders_in_payment << FactoryBot.create(:order, user: @customer, status: 30)
+      @orders_in_payment << FactoryBot.create(:order, user: @customer, status: 40)
+      @orders_in_payment << FactoryBot.create(:order, user: @customer, status: 50)
       @orders_in_service = []
-      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 60)
-      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 70)
-      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 80)
-      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 90)
-      @orders_in_service << FactoryGirl.create(:order, user: @customer, status: 100)
+      @orders_in_service << FactoryBot.create(:order, user: @customer, status: 60)
+      @orders_in_service << FactoryBot.create(:order, user: @customer, status: 70)
+      @orders_in_service << FactoryBot.create(:order, user: @customer, status: 80)
+      @orders_in_service << FactoryBot.create(:order, user: @customer, status: 90)
+      @orders_in_service << FactoryBot.create(:order, user: @customer, status: 100)
     end
 
     context 'completed orders' do
@@ -99,8 +99,8 @@ RSpec.describe OrdersController, type: :controller do
   describe 'POST create' do
     context 'with valid attributes' do
       before do
-        @cart = FactoryGirl.create(:cart, user: customer)
-        3.times { @cart.inventories << FactoryGirl.create(:inventory, cart: @cart) }
+        @cart = FactoryBot.create(:cart, user: customer)
+        3.times { @cart.inventories << FactoryBot.create(:inventory, cart: @cart) }
       end
 
       it 'creates order and redirect to select shipping' do
@@ -113,14 +113,14 @@ RSpec.describe OrdersController, type: :controller do
 
     context 'with invalid attributes' do
       it 'flash error when cart is empty' do
-        empty_cart = FactoryGirl.create(:cart, user: customer)
+        empty_cart = FactoryBot.create(:cart, user: customer)
         post :create, params: { cart_id: empty_cart.id }
         expect(flash[:danger]).to be_present
         expect(response).to redirect_to(cart_path)
       end
 
       it 'redirect_to to sign in if not logged in', skip_before: true do
-        3.times { cart.inventories << FactoryGirl.create(:inventory, cart: cart) }
+        3.times { cart.inventories << FactoryBot.create(:inventory, cart: cart) }
         post :create, params: { cart_id: cart.id }
         expect(response).to redirect_to(signin_path)
       end
@@ -142,7 +142,7 @@ RSpec.describe OrdersController, type: :controller do
 
     context 'access control' do
       it 'only allows user to view their own order' do
-        another_customer = FactoryGirl.create(:customer)
+        another_customer = FactoryBot.create(:customer)
         signin_as another_customer
         get :shipping, params: { id: order.id }
         expect(flash[:danger]).to be_present
@@ -215,7 +215,7 @@ RSpec.describe OrdersController, type: :controller do
     context 'with valid params' do
       context 'create new address' do
         before do
-          @valid_attrs = FactoryGirl.attributes_for(:address,
+          @valid_attrs = FactoryBot.attributes_for(:address,
                                                     addressable: customer)
         end
 
@@ -238,7 +238,7 @@ RSpec.describe OrdersController, type: :controller do
 
       context 'select existing address' do
         before do
-          @addr_id = FactoryGirl.create(:address, addressable: customer).id
+          @addr_id = FactoryBot.create(:address, addressable: customer).id
         end
 
         it 'creates address for order' do

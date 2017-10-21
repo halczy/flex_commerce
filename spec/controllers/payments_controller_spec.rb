@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PaymentsController, type: :controller do
 
-  let(:payment_alipay)   { FactoryGirl.create(:payment, processor: 1) }
+  let(:payment_alipay)   { FactoryBot.create(:payment, processor: 1) }
 
   before do |example|
     unless example.metadata[:skip_before]

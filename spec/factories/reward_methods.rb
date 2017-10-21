@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :ref_reward, class: RewardMethod do
     name 'Referral Reward'
     variety 0
@@ -10,7 +10,7 @@ FactoryGirl.define do
 
     after(:create) do |reward, evaluator|
       unless evaluator.no_products
-        3.times { reward.products << FactoryGirl.create(:product) }
+        3.times { reward.products << FactoryBot.create(:product) }
       end
     end
   end
@@ -26,7 +26,7 @@ FactoryGirl.define do
 
     after(:create) do |reward, evaluator|
       unless evaluator.no_products
-        3.times { reward.products << FactoryGirl.create(:product) }
+        3.times { reward.products << FactoryBot.create(:product) }
       end
     end
   end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Admin, type: :model do
 
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin) { FactoryBot.create(:admin) }
 
   describe 'creation' do
     it 'can be created' do
@@ -17,7 +17,7 @@ RSpec.describe Admin, type: :model do
     end
 
     it 'returns false when user is not an admin' do
-      customer = FactoryGirl.create(:customer)
+      customer = FactoryBot.create(:customer)
       expect(customer.admin?).to be_falsy
     end
   end

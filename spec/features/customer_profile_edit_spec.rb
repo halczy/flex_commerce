@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'customer profile edit' do
 
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   before { feature_signin_as customer }
 
@@ -32,7 +32,7 @@ describe 'customer profile edit' do
     end
 
     it 'sets referer if not previously set' do
-      new_customer = FactoryGirl.create(:customer)
+      new_customer = FactoryBot.create(:customer)
       visit customer_path(customer)
       click_on 'Modify Profile'
       fill_in 'customer[referer_id]', with: new_customer.id
@@ -59,8 +59,8 @@ describe 'customer profile edit' do
     end
 
     it 'does not set referer if it already exist' do
-      old_referer = FactoryGirl.create(:customer)
-      new_referer = FactoryGirl.create(:customer)
+      old_referer = FactoryBot.create(:customer)
+      new_referer = FactoryBot.create(:customer)
       Referral.create!(referer: old_referer, referee: customer)
 
       visit customer_path(customer)

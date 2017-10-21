@@ -2,12 +2,12 @@ require 'rails_helper'
 
 describe 'Shipping Method CRUD', type: :feature do
 
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin) { FactoryBot.create(:admin) }
   before { feature_signin_as(admin) }
 
   describe 'create' do
     before do
-      @province = FactoryGirl.create(:province)
+      @province = FactoryBot.create(:province)
       visit admin_shipping_methods_path
       click_on 'New Shipping Method'
     end
@@ -23,9 +23,9 @@ describe 'Shipping Method CRUD', type: :feature do
     end
 
     it 'can create delivery type shipping method', js: true do
-      province_1 = FactoryGirl.create(:province)
-      province_2 = FactoryGirl.create(:province)
-      province_3 = FactoryGirl.create(:province)
+      province_1 = FactoryBot.create(:province)
+      province_2 = FactoryBot.create(:province)
+      province_3 = FactoryBot.create(:province)
       provinces = [ province_1, province_2, province_3,
                     province_1, province_2, province_3 ]
       rates = (1..6).to_a
@@ -110,7 +110,7 @@ describe 'Shipping Method CRUD', type: :feature do
 
   describe 'edit' do
     it 'can change no shipping type method name' do
-      FactoryGirl.create(:no_shipping)
+      FactoryBot.create(:no_shipping)
       visit admin_shipping_methods_path
       click_on 'Edit'
       fill_in 'shipping_method[name]', with: 'Test New Name'
@@ -122,10 +122,10 @@ describe 'Shipping Method CRUD', type: :feature do
 
     it 'can add shipping rates', js: true do
       field_num = 0
-      delivery = FactoryGirl.create(:delivery_sa)
-      FactoryGirl.create(:shipping_rate, geo_code: '1234', init_rate: 12,
+      delivery = FactoryBot.create(:delivery_sa)
+      FactoryBot.create(:shipping_rate, geo_code: '1234', init_rate: 12,
                           add_on_rate: 34, shipping_method: delivery)
-      city = FactoryGirl.create(:city)
+      city = FactoryBot.create(:city)
 
       visit admin_shipping_methods_path
       click_on 'Edit'
@@ -155,10 +155,10 @@ describe 'Shipping Method CRUD', type: :feature do
     end
 
     it 'can update shipping rates' do
-      delivery = FactoryGirl.create(:delivery_sa)
-      FactoryGirl.create(:shipping_rate, geo_code: '1234', init_rate: 12,
+      delivery = FactoryBot.create(:delivery_sa)
+      FactoryBot.create(:shipping_rate, geo_code: '1234', init_rate: 12,
                           add_on_rate: 34, shipping_method: delivery)
-      city = FactoryGirl.create(:city)
+      city = FactoryBot.create(:city)
 
       visit admin_shipping_methods_path
       click_on 'Edit'
@@ -174,8 +174,8 @@ describe 'Shipping Method CRUD', type: :feature do
     end
 
     it 'can remove shipping rate', js: true do
-      delivery = FactoryGirl.create(:delivery_sa)
-      FactoryGirl.create(:shipping_rate, geo_code: '1234', init_rate: 12,
+      delivery = FactoryBot.create(:delivery_sa)
+      FactoryBot.create(:shipping_rate, geo_code: '1234', init_rate: 12,
                           add_on_rate: 34, shipping_method: delivery)
 
       visit admin_shipping_methods_path
@@ -192,9 +192,9 @@ describe 'Shipping Method CRUD', type: :feature do
     end
 
     it 'can change self pick up address', js: true do
-      province = FactoryGirl.create(:province)
-      self_pickup = FactoryGirl.create(:self_pickup_sa)
-      FactoryGirl.create(:address, addressable: self_pickup,
+      province = FactoryBot.create(:province)
+      self_pickup = FactoryBot.create(:self_pickup_sa)
+      FactoryBot.create(:address, addressable: self_pickup,
                                    province_state: province,
                                    country_region: nil,
                                    city: nil,
@@ -217,7 +217,7 @@ describe 'Shipping Method CRUD', type: :feature do
 
     context 'failing cases' do
       it 'renders error when name is removed' do
-        FactoryGirl.create(:no_shipping)
+        FactoryBot.create(:no_shipping)
         visit admin_shipping_methods_path
         click_on 'Edit'
         fill_in 'shipping_method[name]', with: ''
@@ -227,8 +227,8 @@ describe 'Shipping Method CRUD', type: :feature do
       end
 
       it 'renders error when geo code alone is remove' do
-        delivery = FactoryGirl.create(:delivery_sa)
-        FactoryGirl.create(:shipping_rate, geo_code: '1234', init_rate: 12,
+        delivery = FactoryBot.create(:delivery_sa)
+        FactoryBot.create(:shipping_rate, geo_code: '1234', init_rate: 12,
                             add_on_rate: 34, shipping_method: delivery)
 
         visit admin_shipping_methods_path
@@ -240,9 +240,9 @@ describe 'Shipping Method CRUD', type: :feature do
       end
 
       it 'renders error if address is incomplete' do
-        province = FactoryGirl.create(:province)
-        self_pickup = FactoryGirl.create(:self_pickup)
-        FactoryGirl.create(:address, addressable: self_pickup,
+        province = FactoryBot.create(:province)
+        self_pickup = FactoryBot.create(:self_pickup)
+        FactoryBot.create(:address, addressable: self_pickup,
                                      province_state: province,
                                      country_region: nil,
                                      city: nil,
@@ -260,7 +260,7 @@ describe 'Shipping Method CRUD', type: :feature do
 
   describe 'destroy' do
     it 'can destory shipping method' do
-      FactoryGirl.create(:no_shipping, name: 'some name')
+      FactoryBot.create(:no_shipping, name: 'some name')
       visit admin_shipping_methods_path
       click_on 'Delete'
       click_on 'Confirm'

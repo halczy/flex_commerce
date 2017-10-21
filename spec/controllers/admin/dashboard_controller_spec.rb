@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Admin::DashboardController, type: :controller do
 
-  let(:admin) { FactoryGirl.create(:admin) }
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:admin) { FactoryBot.create(:admin) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   before { signin_as admin }
 
@@ -14,38 +14,38 @@ RSpec.describe Admin::DashboardController, type: :controller do
     end
 
     it 'contains pending confirm orders' do
-      3.times { FactoryGirl.create(:payment_order, success: true) }
+      3.times { FactoryBot.create(:payment_order, success: true) }
       get :index
       expect(assigns(:pd_confirm_orders).count).to eq(3)
     end
 
     it 'contains pending shipment orders' do
-      2.times { FactoryGirl.create(:service_order) }
+      2.times { FactoryBot.create(:service_order) }
       get :index
       expect(assigns(:pd_shipment_orders).count).to eq(2)
     end
 
     it 'contains pending pickup confirmation orders' do
-      FactoryGirl.create(:service_order, pickup_pending: true)
+      FactoryBot.create(:service_order, pickup_pending: true)
       get :index
       expect(assigns(:pd_pickup_orders).count).to eq(1)
     end
 
     it 'contains pending delivery confirmation orders' do
-      4.times { FactoryGirl.create(:service_order, shipped: true) }
+      4.times { FactoryBot.create(:service_order, shipped: true) }
       get :index
       expect(assigns(:pd_delivery_orders).count).to eq(4)
     end
 
     it 'contains pending withdraw transfers' do
-      2.times { FactoryGirl.create(:bank_transfer, status: 1) }
-      3.times { FactoryGirl.create(:alipay_transfer, status: 1) }
+      2.times { FactoryBot.create(:bank_transfer, status: 1) }
+      3.times { FactoryBot.create(:alipay_transfer, status: 1) }
       get :index
       expect(assigns(:pd_withdraws).count).to eq(5)
     end
 
     it 'contains out of stock products' do
-      2.times { FactoryGirl.create(:product) }
+      2.times { FactoryBot.create(:product) }
       get :index
       expect(assigns(:oos_products).count).to eq(2)
     end

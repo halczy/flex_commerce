@@ -2,18 +2,18 @@ require 'rails_helper'
 
 describe 'Product Inventories Management', type: :feature do
 
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin) { FactoryBot.create(:admin) }
   before { feature_signin_as(admin) }
 
   describe 'inventory management' do
 
     before do
-      @product_unsold = FactoryGirl.create(:product)
-      @product_sold = FactoryGirl.create(:product)
-      3.times { FactoryGirl.create(:inventory, product: @product_unsold) }
-      4.times { FactoryGirl.create(:inventory, product: @product_unsold, status: 1) }
-      2.times { FactoryGirl.create(:inventory, product: @product_sold) }
-      3.times { FactoryGirl.create(:inventory, product: @product_sold, status: 5) }
+      @product_unsold = FactoryBot.create(:product)
+      @product_sold = FactoryBot.create(:product)
+      3.times { FactoryBot.create(:inventory, product: @product_unsold) }
+      4.times { FactoryBot.create(:inventory, product: @product_unsold, status: 1) }
+      2.times { FactoryBot.create(:inventory, product: @product_sold) }
+      3.times { FactoryBot.create(:inventory, product: @product_sold, status: 5) }
       visit admin_products_path
     end
 
@@ -110,7 +110,7 @@ describe 'Product Inventories Management', type: :feature do
     end
 
     it 'can delete individual product', js: true do
-      unsold_inv = FactoryGirl.create(:inventory, product: @product_unsold)
+      unsold_inv = FactoryBot.create(:inventory, product: @product_unsold)
       visit inventories_admin_product_path(@product_unsold)
       click_on("btn_del_#{unsold_inv.id}")
       within("#delete_#{unsold_inv.id}") do

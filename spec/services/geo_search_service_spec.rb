@@ -12,8 +12,8 @@ RSpec.describe GeoSearchService, type: :model do
 
   describe '#search' do
     before do
-      @chicago = FactoryGirl.create(:city, id: '600100', name: 'Chicago')
-      @springfield = FactoryGirl.create(:city, id: '600200', name: 'Springfield')
+      @chicago = FactoryBot.create(:city, id: '600100', name: 'Chicago')
+      @springfield = FactoryBot.create(:city, id: '600200', name: 'Springfield')
     end
 
     it 'returns geos with matching id' do
@@ -31,9 +31,9 @@ RSpec.describe GeoSearchService, type: :model do
 
   describe 'full_search' do
     before do
-      @illinois = FactoryGirl.create(:province, id: '600000', name: 'Illinois')
-      @rockford = FactoryGirl.create(:city, id: '650000000000', name: 'Rockford', parent: @illinois)
-      @evanston = FactoryGirl.create(:city, id: '670000000000', name: 'Evanston', parent: @illinois)
+      @illinois = FactoryBot.create(:province, id: '600000', name: 'Illinois')
+      @rockford = FactoryBot.create(:city, id: '650000000000', name: 'Rockford', parent: @illinois)
+      @evanston = FactoryBot.create(:city, id: '670000000000', name: 'Evanston', parent: @illinois)
     end
 
     it 'returns geos with matching id and parent id' do

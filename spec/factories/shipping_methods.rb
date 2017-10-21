@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :no_shipping, class: ShippingMethod do
     name 'No Shipping'
     variety 0
@@ -10,7 +10,7 @@ FactoryGirl.define do
 
     after(:create) do |delivery|
       3.times do
-        FactoryGirl.create(:shipping_rate_province, shipping_method: delivery)
+        FactoryBot.create(:shipping_rate_province, shipping_method: delivery)
       end
     end
   end
@@ -25,8 +25,8 @@ FactoryGirl.define do
     variety 2
 
     after(:create) do |self_pickup|
-      FactoryGirl.create(:shipping_rate, shipping_method: self_pickup)
-      FactoryGirl.create(:address, addressable: self_pickup).build_full_address
+      FactoryBot.create(:shipping_rate, shipping_method: self_pickup)
+      FactoryBot.create(:address, addressable: self_pickup).build_full_address
     end
   end
 

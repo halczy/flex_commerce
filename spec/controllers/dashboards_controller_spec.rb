@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe DashboardsController, type: :controller do
 
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   describe 'GET show' do
     before { signin_as(customer) }
@@ -13,24 +13,24 @@ RSpec.describe DashboardsController, type: :controller do
     end
 
     it 'populates orders in creation process' do
-      FactoryGirl.create(:order, user: customer)
-      FactoryGirl.create(:order, user: customer, confirmed: true)
+      FactoryBot.create(:order, user: customer)
+      FactoryBot.create(:order, user: customer, confirmed: true)
       get :show, params: { id: customer.id }
       expect(assigns(:creation_process_orders).count).to eq(2)
     end
 
     it 'populates orders in payment process' do
-      FactoryGirl.create(:payment_order, user: customer)
-      FactoryGirl.create(:payment_order, user: customer, partial: true)
-      FactoryGirl.create(:payment_order, user: customer, fail: true)
+      FactoryBot.create(:payment_order, user: customer)
+      FactoryBot.create(:payment_order, user: customer, partial: true)
+      FactoryBot.create(:payment_order, user: customer, fail: true)
       get :show, params: { id: customer.id }
       expect(assigns(:payment_process_orders).count).to eq(3)
     end
 
     it 'populates orders in shipment process' do
-      FactoryGirl.create(:service_order, user: customer)
-      FactoryGirl.create(:service_order, user: customer, pickup_pending: true)
-      FactoryGirl.create(:service_order, user: customer, shipped: true)
+      FactoryBot.create(:service_order, user: customer)
+      FactoryBot.create(:service_order, user: customer, pickup_pending: true)
+      FactoryBot.create(:service_order, user: customer, shipped: true)
       get :show, params: { id: customer.id }
       expect(assigns(:shipment_orders).count).to eq(3)
     end
@@ -43,8 +43,8 @@ RSpec.describe DashboardsController, type: :controller do
     end
 
     it "redirects customer that try to access another customer's profile" do
-      customer_1 = FactoryGirl.create(:customer)
-      customer_2 = FactoryGirl.create(:customer)
+      customer_1 = FactoryBot.create(:customer)
+      customer_2 = FactoryBot.create(:customer)
       signin_as(customer_1)
       get :show, params: { id: customer_2.id }
       expect(response).to redirect_to root_url

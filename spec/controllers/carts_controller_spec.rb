@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe CartsController, type: :controller do
 
-  let(:customer) { FactoryGirl.create(:customer) }
-  let(:cart) { FactoryGirl.create(:cart) }
+  let(:customer) { FactoryBot.create(:customer) }
+  let(:cart) { FactoryBot.create(:cart) }
 
   describe 'POST add' do
     before do
-      @product = FactoryGirl.create(:product)
-      3.times { FactoryGirl.create(:inventory, product: @product) }
+      @product = FactoryBot.create(:product)
+      3.times { FactoryBot.create(:inventory, product: @product) }
     end
 
     it 'adds product inventories and redirect to cart#show' do
@@ -47,14 +47,14 @@ RSpec.describe CartsController, type: :controller do
         expect(Cart.last.inventories.count).to eq(1)
       end
     end
-    
+
     context 'validate_product' do
       it "does not add disabled product to cart" do
         @product.disabled!
         post :add, params: { pid: @product.id }
         expect(flash[:danger]).to be_present
       end
-      
+
       it "redirects to root_url when attempt to add disabled product" do
         @product.disabled!
         post :add, params: { pid: @product.id }
@@ -65,9 +65,9 @@ RSpec.describe CartsController, type: :controller do
 
   describe 'DELETE remove' do
     before do
-      @product = FactoryGirl.create(:product)
-      @cart = FactoryGirl.create(:cart)
-      3.times { FactoryGirl.create(:inventory, cart: @cart, product: @product,
+      @product = FactoryBot.create(:product)
+      @cart = FactoryBot.create(:cart)
+      3.times { FactoryBot.create(:inventory, cart: @cart, product: @product,
                                                status: 1) }
       session[:cart_id] = @cart.id
     end
@@ -94,9 +94,9 @@ RSpec.describe CartsController, type: :controller do
 
   describe 'PATCH update' do
     before do
-      @product = FactoryGirl.create(:product, strict_inventory: false)
-      @cart = FactoryGirl.create(:cart)
-      5.times { FactoryGirl.create(:inventory, cart: @cart, product: @product,
+      @product = FactoryBot.create(:product, strict_inventory: false)
+      @cart = FactoryBot.create(:cart)
+      5.times { FactoryBot.create(:inventory, cart: @cart, product: @product,
                                                status: 1) }
       session[:cart_id] = @cart.id
     end

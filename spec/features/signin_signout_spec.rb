@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'sign in as customer', type: :feature do
 
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   before do
     visit root_path
@@ -70,7 +70,7 @@ describe 'sign in as customer', type: :feature do
 end
 
 describe 'sign in as admin' do
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin) { FactoryBot.create(:admin) }
 
   it 'redirects to admin dashboard' do
     visit signin_path
@@ -93,8 +93,8 @@ describe 'sign in as admin' do
 end
 
 describe 'sign out' do
-  let(:customer) { FactoryGirl.create(:customer) }
-  let(:admin)    { FactoryGirl.create(:admin) }
+  let(:customer) { FactoryBot.create(:customer) }
+  let(:admin)    { FactoryBot.create(:admin) }
 
   it 'signs out customer and return to the home page' do
     visit signin_path

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Product CRUD', type: :feature do
 
-  let(:admin) { FactoryGirl.create(:admin) }
+  let(:admin) { FactoryBot.create(:admin) }
   before { feature_signin_as(admin) }
 
   describe 'create' do
@@ -14,10 +14,10 @@ describe 'Product CRUD', type: :feature do
     end
 
     it 'can create product' do
-      ship_delivery = FactoryGirl.create(:delivery)
-      ship_pickup   = FactoryGirl.create(:self_pickup)
-      ref_reward    = FactoryGirl.create(:ref_reward, no_products: true)
-      cash_back     = FactoryGirl.create(:cash_back, no_products: true)
+      ship_delivery = FactoryBot.create(:delivery)
+      ship_pickup   = FactoryBot.create(:self_pickup)
+      ref_reward    = FactoryBot.create(:ref_reward, no_products: true)
+      cash_back     = FactoryBot.create(:cash_back, no_products: true)
 
       click_on('New Product')
       fill_in "product[name]", with: "Test Product Name"
@@ -62,10 +62,10 @@ describe 'Product CRUD', type: :feature do
     end
 
     it 'can create product with categories' do
-      cat_1 =       FactoryGirl.create(:category)
-      cat_2 =       FactoryGirl.create(:category)
-      brand_cat =   FactoryGirl.create(:brand)
-      special_cat = FactoryGirl.create(:feature)
+      cat_1 =       FactoryBot.create(:category)
+      cat_2 =       FactoryBot.create(:category)
+      brand_cat =   FactoryBot.create(:brand)
+      special_cat = FactoryBot.create(:feature)
 
       visit admin_products_path
       click_on('New Product')
@@ -101,8 +101,8 @@ describe 'Product CRUD', type: :feature do
       end
 
       it 'can only assign one of each variety shipping method to product' do
-        ship_delivery = FactoryGirl.create(:delivery)
-        dup_delivery = FactoryGirl.create(:delivery, name: 'Duplicate Delivery')
+        ship_delivery = FactoryBot.create(:delivery)
+        dup_delivery = FactoryBot.create(:delivery, name: 'Duplicate Delivery')
         click_on('New Product')
         fill_in "product[name]", with: "Test Product with Images"
         fill_in "product[weight]", with: 12.34
@@ -113,8 +113,8 @@ describe 'Product CRUD', type: :feature do
       end
 
       it 'can only assign one of each variety reward method to product' do
-        cash_back     = FactoryGirl.create(:cash_back, name: 'CB1', no_products: true)
-        dup_cash_back = FactoryGirl.create(:cash_back, name: 'CB2', no_products: true)
+        cash_back     = FactoryBot.create(:cash_back, name: 'CB1', no_products: true)
+        dup_cash_back = FactoryBot.create(:cash_back, name: 'CB2', no_products: true)
         click_on('New Product')
         fill_in "product[name]", with: "Test Product with Images"
         fill_in "product[weight]", with: 12.34
@@ -128,8 +128,8 @@ describe 'Product CRUD', type: :feature do
 
   describe 'edit' do
     before do
-      @product = FactoryGirl.create(:product)
-      @product.categorizations.create(category: FactoryGirl.create(:category))
+      @product = FactoryBot.create(:product)
+      @product.categorizations.create(category: FactoryBot.create(:category))
       visit admin_products_path
     end
 
@@ -176,7 +176,7 @@ describe 'Product CRUD', type: :feature do
 
     it 'can reassgin categories' do
       @product.categories.first
-      new_cat = FactoryGirl.create(:category)
+      new_cat = FactoryBot.create(:category)
       click_on("edit_#{@product.id}")
       select "#{new_cat.name}", from: "reg_cat_sel"
       click_on('Update Product')
@@ -214,9 +214,9 @@ describe 'Product CRUD', type: :feature do
 
   describe 'delete' do
     before do
-      @product = FactoryGirl.create(:product)
-      @category = FactoryGirl.create(:category)
-      @image = FactoryGirl.create(:image, imageable_type: 'Product', imageable_id: @product.id)
+      @product = FactoryBot.create(:product)
+      @category = FactoryBot.create(:category)
+      @image = FactoryBot.create(:image, imageable_type: 'Product', imageable_id: @product.id)
       @product.categorizations.create(category: @category)
       visit admin_products_path
     end
@@ -242,7 +242,7 @@ describe 'Product CRUD', type: :feature do
     end
 
     it 'disables product when delete is not possible' do
-      FactoryGirl.create(:inventory, product: @product, status: 5)
+      FactoryBot.create(:inventory, product: @product, status: 5)
       visit admin_products_path
       click_on("btn_del_#{@product.id}")
       click_on("confirm_del_#{@product.id}")

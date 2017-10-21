@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ReferralsController, type: :controller do
 
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   describe 'GET set_referral' do
     context 'with valid params' do

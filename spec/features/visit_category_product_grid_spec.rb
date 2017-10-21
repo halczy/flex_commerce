@@ -9,20 +9,20 @@ describe 'category_grid', type: :feature do
                           Rails.root, 'public', 'placeholder_img',
                           'no-image-slide.png'), 'image/png'))
 
-    @cat = FactoryGirl.create(:category)
-    @brand = FactoryGirl.create(:brand)
-    @product_1 = FactoryGirl.create(:product, price_member: 900.01)
-    @product_2 = FactoryGirl.create(:product, price_member: 100.02)
-    @product_3 = FactoryGirl.create(:product, price_member: 500.03)
-    @product_4 = FactoryGirl.create(:product, price_member: 700.03, status: 0)
+    @cat = FactoryBot.create(:category)
+    @brand = FactoryBot.create(:brand)
+    @product_1 = FactoryBot.create(:product, price_member: 900.01)
+    @product_2 = FactoryBot.create(:product, price_member: 100.02)
+    @product_3 = FactoryBot.create(:product, price_member: 500.03)
+    @product_4 = FactoryBot.create(:product, price_member: 700.03, status: 0)
     Categorization.create(category: @cat, product: @product_1)
     Categorization.create(category: @cat, product: @product_2)
     Categorization.create(category: @cat, product: @product_3)
     Categorization.create(category: @brand, product: @product_1)
     Categorization.create(category: @brand, product: @product_2)
-    FactoryGirl.create(:inventory, product: @product_1)
-    FactoryGirl.create(:inventory, product: @product_2)
-    FactoryGirl.create(:inventory, product: @product_3)
+    FactoryBot.create(:inventory, product: @product_1)
+    FactoryBot.create(:inventory, product: @product_2)
+    FactoryBot.create(:inventory, product: @product_3)
   end
 
   context 'product' do
@@ -85,9 +85,9 @@ describe 'category_grid', type: :feature do
   context 'pagination' do
     before do
       20.times do
-        product = FactoryGirl.create(:product)
+        product = FactoryBot.create(:product)
         Categorization.create(category: @cat, product: product)
-        FactoryGirl.create(:inventory, product: product)
+        FactoryBot.create(:inventory, product: product)
       end
     end
 

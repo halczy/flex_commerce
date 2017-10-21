@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe SessionsHelper, type: :helper do
 
-  let(:user)       { FactoryGirl.create(:customer) }
-  let(:other_user) { FactoryGirl.create(:customer) }
+  let(:user)       { FactoryBot.create(:customer) }
+  let(:other_user) { FactoryBot.create(:customer) }
 
   describe '#login' do
     it 'writes user id to session' do

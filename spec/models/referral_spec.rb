@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Referral, type: :model do
 
-  let(:customer) { FactoryGirl.create(:customer) }
-  let(:referral) { FactoryGirl.create(:referral) }
+  let(:customer) { FactoryBot.create(:customer) }
+  let(:referral) { FactoryBot.create(:referral) }
 
   describe 'creation' do
     it 'can be created' do
@@ -48,7 +48,7 @@ RSpec.describe Referral, type: :model do
 
     it 'allow customer to get referees' do
       cstm = referral.referer
-      3.times { FactoryGirl.create(:referral, referer: cstm) }
+      3.times { FactoryBot.create(:referral, referer: cstm) }
       expect(cstm.referees.count).to eq(4)
       expect(cstm.referees).to include(referral.referee)
     end

@@ -1,5 +1,4 @@
-FactoryGirl.define do
-  
+FactoryBot.define do
   factory :inventory do
     status 0
     purchased_at ""

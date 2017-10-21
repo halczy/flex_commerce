@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CustomersController, type: :controller do
 
-  let(:customer) { FactoryGirl.create(:customer) }
+  let(:customer) { FactoryBot.create(:customer) }
 
   describe 'GET new' do
     it "renders the new customer sign up template" do
@@ -54,7 +54,7 @@ RSpec.describe CustomersController, type: :controller do
       context 'with valid params' do
         before do |example|
           if example.metadata[:create_cart]
-            session[:cart_id] = FactoryGirl.create(:cart).id
+            session[:cart_id] = FactoryBot.create(:cart).id
           end
 
           if example.metadata[:with_ref]
@@ -122,9 +122,9 @@ RSpec.describe CustomersController, type: :controller do
   end
 
   describe 'GET show' do
-    let(:customer)       { FactoryGirl.create(:customer) }
-    let(:other_customer) { FactoryGirl.create(:customer) }
-    let(:admin)          { FactoryGirl.create(:admin) }
+    let(:customer)       { FactoryBot.create(:customer) }
+    let(:other_customer) { FactoryBot.create(:customer) }
+    let(:admin)          { FactoryBot.create(:admin) }
 
     it 'renders show page for signed in customer' do
       signin_as(customer)
@@ -185,7 +185,7 @@ RSpec.describe CustomersController, type: :controller do
       end
 
       it 'sets customer referer if not set previously' do
-        new_customer = FactoryGirl.create(:customer)
+        new_customer = FactoryBot.create(:customer)
         patch :update, params: {
           id: customer.id,
           customer: {
@@ -215,8 +215,8 @@ RSpec.describe CustomersController, type: :controller do
 
     context 'with invalid params' do
       it 'rejects change to referer is set previously' do
-        old_referer = FactoryGirl.create(:customer)
-        new_referer = FactoryGirl.create(:customer)
+        old_referer = FactoryBot.create(:customer)
+        new_referer = FactoryBot.create(:customer)
         Referral.create!(referer: old_referer, referee: customer)
         patch :update, params: {
           id: customer.id,

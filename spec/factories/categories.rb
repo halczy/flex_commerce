@@ -1,5 +1,4 @@
-FactoryGirl.define do
-
+FactoryBot.define do
   factory :category do
     name { Faker::Cat.name + Faker::Number.number(10).to_s }
     display_order 1

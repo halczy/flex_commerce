@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe CustomerSearchService, type: :model do
 
   before do
-    @c1 = FactoryGirl.create(:customer, name: 'John Doe')
-    @c2 = FactoryGirl.create(:customer, name: 'Jane Doe')
-    @c3 = FactoryGirl.create(:customer, name: 'John Kirk')
+    @c1 = FactoryBot.create(:customer, name: 'John Doe')
+    @c2 = FactoryBot.create(:customer, name: 'Jane Doe')
+    @c3 = FactoryBot.create(:customer, name: 'John Kirk')
   end
 
   describe '#search' do
