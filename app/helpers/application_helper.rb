@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def app_title
-    ApplicationConfiguration.find_by(name: 'application_title').try(:plain) ||
+    ApplicationConfiguration.get('application_title') ||
     'Flex Commerce'
   end
 
