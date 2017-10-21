@@ -3,6 +3,9 @@
     <div class="d-flex justify-content-between mb-3">
       <div>
         <%= Time.now.year %> <%= app_title %>
+        <% if icp_license %>
+          <%= link_to icp_license, 'http://www.miibeian.gov.cn', class: 'ml-3' %>
+        <% end %>
       </div>
       <div>
         <a href="#"><%= t('.back_to_top') %></a>
