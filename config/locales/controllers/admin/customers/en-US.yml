@@ -1,0 +1,7 @@
+en-US:
+  admin:
+    customers:
+      search:
+        warning: Please enter one or more search terms.
+      update:
+        success: Successfully updated customer profile.

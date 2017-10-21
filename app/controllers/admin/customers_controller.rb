@@ -12,7 +12,7 @@ class Admin::CustomersController < Admin::AdminController
       @search_run = CustomerSearchService.new(search_term).search
       @search_result = @search_run.page params[:page]
     else
-      flash.now[:warning] = "Please enter one or more search terms."
+      flash.now[:warning] = t('.warning')
       render :search
     end
   end
@@ -22,7 +22,7 @@ class Admin::CustomersController < Admin::AdminController
 
   def update
     if @customer.update(customer_params)
-      flash[:success] = 'Customer updated successfully.'
+      flash[:success] = t('.success')
       redirect_to admin_customer_path(@customer)
     else
       render :edit
