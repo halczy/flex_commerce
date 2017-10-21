@@ -12,27 +12,27 @@ class Admin::TransfersController < Admin::AdminController
 
   def approve
     if @transfer_service.execute_transfer
-      flash[:success] = "Transfer approved!"
+      flash[:success] = t('.success')
     else
-      flash[:warning] = "Transfer fail."
+      flash[:warning] = t('.warning')
     end
     redirect_to admin_transfer_path(@transfer)
   end
 
   def manual_approve_alipay
     if @transfer_service.manual_alipay_transfer
-      flash[:success] = "Transfer approved!"
+      flash[:success] = t('.success')
     else
-      flash[:warning] = "Transfer fail."
+      flash[:warning] = t('.warning')
     end
     redirect_to admin_transfer_path(@transfer)
   end
 
   def reject
     if @transfer_service.cancel_transfer
-      flash[:success] = "Transfer cancelled."
+      flash[:success] = t('.success')
     else
-      flash[:warning] = "Cancellation fail."
+      flash[:warning] = t('.warning')
     end
     redirect_to admin_transfer_path(@transfer)
   end

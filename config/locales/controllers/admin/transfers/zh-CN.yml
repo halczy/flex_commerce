@@ -1,0 +1,12 @@
+en-US:
+  admin:
+    transfers:
+      approve:
+        success: 转帐成功
+        warning: 转帐失败
+      manual_approve_alipay: 
+        success: 转帐成功
+        warning: 转帐失败
+      reject:
+        success: 成功拒绝该转帐请求
+        warning: 拒绝转帐请求失败

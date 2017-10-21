@@ -1,0 +1,6 @@
+en-US:
+  admin:
+    wallets:
+      deposit:
+        success: Successfully deposited into the customer account.
+        warning: Transfer failed. Please check customer ident or amount.

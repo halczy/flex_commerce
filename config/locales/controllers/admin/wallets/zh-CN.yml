@@ -1,0 +1,6 @@
+zh-CN:
+  admin:
+    wallets:
+      deposit:
+        success: 成功为顾客账户增值
+        warning: 转帐失败，请检查顾客资料或增值金额。

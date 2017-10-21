@@ -1,0 +1,12 @@
+en-US:
+  admin:
+    transfers:
+      approve:
+        success: Transfer approved!
+        warning: Transfer failed.
+      manual_approve_alipay: 
+        success: Transfer approved!
+        warning: Transfer failed.
+      reject:
+        success: Transfer cancelled.
+        warning: Cancellation failed.
