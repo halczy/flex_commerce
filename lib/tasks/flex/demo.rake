@@ -1,6 +1,6 @@
 namespace :flex do
   desc 'Build demo/seed data'
-  task :seed => :environment do
+  task demo: :environment do
     puts 'Building demo data......'
 
     # Set locale
@@ -42,7 +42,7 @@ namespace :flex do
 
     # SHIPPING RATE
     if Geo.count == 0
-      raise('Geo data must be available. Run rails geo:setup to resolve is problem.')
+      raise('Geo data must be available. Run rails geo:setup to resolve this problem.')
     end
 
     Geo.province_state.each do |ps|
@@ -143,12 +143,11 @@ namespace :flex do
 
     # INVENTORIES
     1000.times do
-      Product.all.sample.inventories.create(status: Random.rand(0..5))
+      Product.all.sample.inventories.create(status: 0)
     end
     puts "INVENTORY: #{Inventory.count} inventories created."
 
     # SHIPPING METHOD
-    FactoryBot.create(:no_shipping)
     shipping_pickup = FactoryBot.create(:self_pickup_sa)
     pickup_rate = ShippingRate.new(geo_code: '*', init_rate: '0', add_on_rate: '0')
     shipping_pickup.shipping_rates << pickup_rate
@@ -181,7 +180,6 @@ namespace :flex do
       product.reward_methods << ref_reward
       product.reward_methods << cash_back
     end
-
     puts 'REWARD METHOD: Applied reward methods to all products.'
   end
 end
