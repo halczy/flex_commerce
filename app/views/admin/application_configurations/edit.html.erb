@@ -6,7 +6,7 @@
 
   <div class="form-group">
     <%= f.label :name %>
-    <%= f.text_field :name, class: 'form-control' %>
+    <%= f.text_field :name, class: 'form-control', disabled: true %>
   </div>
 
   <div class="form-group">
@@ -21,9 +21,9 @@
 
   <div class="form-group">
     <%= f.label :status, t('.boolean_value') %>
-    <%= f.select :status, options_for_select([['False', 0],
-                                              ['True',  1]]),
-                          {}, class: 'form-control' %>
+    <%= f.select :status, options_for_select([[t('false'), 0],
+                                              [t('true'),  1]]),
+                          { include_blank: true }, class: 'form-control' %>
   </div>
 
   <div class="d-flex justify-content-end">

@@ -47,5 +47,15 @@ RSpec.describe ApplicationConfiguration, type: :model do
     it 'returns nil when no config is found' do
       expect(ApplicationConfiguration.get('random')).to be_nil
     end
+
+    it 'does not return empty value' do
+      ApplicationConfiguration.create(name: 'empty_vtest', value: '', plain: 'abc')
+      expect(ApplicationConfiguration.get('empty_vtest')).to eq('abc')
+    end
+
+    it 'returns nil when all fields are empty or nil' do
+      ApplicationConfiguration.create(name: 'empty', value: '', plain: '')
+      expect(ApplicationConfiguration.get('empty')).to be_nil
+    end
   end
 end

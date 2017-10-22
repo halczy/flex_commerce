@@ -3,8 +3,9 @@ zh-CN:
     models:
       application_configuration: 程序设置
     attributes:
-      application_configuration: 
+      application_configuration:
         name: 引用名
         status: 逻辑值
         encrypted_value: 加密值
+        value: 加密值
         plain: 明文值

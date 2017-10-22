@@ -13,7 +13,11 @@ class ApplicationConfiguration < ApplicationRecord
 
   def self.get(name)
     config = ApplicationConfiguration.find_by(name: name)
-    config.try(:value) || config.try(:plain) || config.try(:status)
+    if config
+      return config.value  if     config.value.present?
+      return config.plain  if     config.plain.present?
+      return config.status unless config.status.nil?
+    end
   end
 
   private
