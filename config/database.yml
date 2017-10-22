@@ -18,5 +18,5 @@ test:
 production:
   <<: *default
   database: flex_commerce_production
-  username: flex_commerce
-  password: <%= ENV['FLEX_COMMERCE_DATABASE_PASSWORD'] %>
+  username: <%= ENV['PG_USERNAME'] %>
+  password: <%= ENV['PG_PASSWORD'] %>

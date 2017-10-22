@@ -338,7 +338,7 @@ DEPENDENCIES
   cocoon (~> 1.2, >= 1.2.10)
   coffee-rails (~> 4.2, >= 4.2.2)
   database_cleaner
-  dotenv-rails
+  dotenv-rails (~> 2.2, >= 2.2.1)
   factory_bot_rails
   faker
   image_processing (~> 0.4.5)

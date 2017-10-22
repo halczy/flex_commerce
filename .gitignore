@@ -20,7 +20,10 @@ Gemfile.lock
 yarn.lock
 
 .byebug_history
+/public/assets
 /public/packs
 /public/uploads
 
-.env
+.env.development
+.env.test
+.env.production

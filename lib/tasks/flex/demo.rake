@@ -35,6 +35,11 @@ namespace :flex do
                     hide: false)
     puts "CATEGORY: #{Category.special.count} special categories created."
 
+
+    # Build Geo
+    Rake::Task['geo:setup'].invoke
+    puts "GEO: #{Geo.count} geos created."
+    
     # SHIPPING METHODS
     shipping_delivery = ShippingMethod.create(name: 'Delivery',    variety: 1)
 

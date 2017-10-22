@@ -6,9 +6,10 @@
     "bootstrap": "4.0.0-beta",
     "coffeescript": "1.12.7",
     "jquery": "^3.2.1",
-    "popper.js": "^1.11.1"
+    "popper.js": "^1.11.1",
+    "webpack-merge": "^4.1.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^2.9.2"
+    "webpack-dev-server": "^2.9.3"
   }
 }
