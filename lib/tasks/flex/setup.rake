@@ -51,6 +51,13 @@ namespace :flex do
                           shipping_method: shipping_delivery)
     end
 
+    # Setup ICP License and Alipay Params.
+    ApplicationConfiguration.create(name: 'icp_license', plain: '')
+    ApplicationConfiguration.create(name: 'alipay_gateway', plain: '')
+    ApplicationConfiguration.create(name: 'alipay_app_id', value: '')
+    ApplicationConfiguration.create(name: 'alipay_app_private_key', value: '')
+    ApplicationConfiguration.create(name: 'alipay_public_key', value: '')
+
     puts 'Setup Completed!'
   end
 end
