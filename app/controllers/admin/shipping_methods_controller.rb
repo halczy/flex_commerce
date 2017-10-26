@@ -40,16 +40,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
   def edit; end
 
   def update
-    case params[:shipping_method][:variety]
-    when 'no_shipping'
-      update_status = @shipping_method.update(no_shipping_params)
-    when 'delivery'
-      update_status = @shipping_method.update(delivery_params)
-    when 'self_pickup'
-      update_status = @shipping_method.update(self_pickup_params)
-    end
-
-    if update_status
+    if @shipping_method.update(permitted_params.shipping_method)
       flash[:success] = t('.success')
       @shipping_method.try(:address).try(:build_full_address)
       redirect_to admin_shipping_method_path(@shipping_method)
@@ -78,25 +69,4 @@ class Admin::ShippingMethodsController < Admin::AdminController
       @address = @shipping_method.build_address if @shipping_method
       @provinces = Geo.province_state
     end
-
-    def no_shipping_params
-      params.require(:shipping_method).permit(:name, :variety)
-    end
-
-    def delivery_params
-      params.require(:shipping_method).permit(
-        :name, :variety,
-        shipping_rates_attributes: [:id, :geo_code, :init_rate, :add_on_rate,
-                                    :_destroy])
-    end
-
-    def self_pickup_params
-      params.require(:shipping_method).permit(
-        :name, :variety,
-        shipping_rates_attributes: [:id, :geo_code, :init_rate, :add_on_rate,
-                                    :_destroy],
-        address_attributes: [:id, :province_state, :street, :recipient,
-                    :contact_number, :addressable_id, :addressable_type])
-    end
-
 end

@@ -44,6 +44,10 @@ class ApplicationController < ActionController::Base
     @init_time = Time.zone.now
   end
 
+  def permitted_params
+    @permitted_params ||= PermittedParams.new(params)
+  end
+
   private
 
     def set_locale

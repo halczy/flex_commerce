@@ -211,7 +211,6 @@ RSpec.describe Admin::ShippingMethodsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
-
     context 'destroyable' do
       before { @shipping_method = FactoryBot.create(:self_pickup) }
       it 'can be destroy' do
