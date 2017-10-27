@@ -13,14 +13,7 @@ class Admin::ShippingMethodsController < Admin::AdminController
   end
 
   def create
-    case params[:shipping_method][:variety]
-    when 'no_shipping'
-      @shipping_method = ShippingMethod.new(no_shipping_params)
-    when 'delivery'
-      @shipping_method = ShippingMethod.new(delivery_params)
-    when 'self_pickup'
-      @shipping_method = ShippingMethod.new(self_pickup_params)
-    end
+    @shipping_method = ShippingMethod.new(permitted_params.shipping_method)
 
     if @shipping_method.save
       flash[:success] = t('.success')
