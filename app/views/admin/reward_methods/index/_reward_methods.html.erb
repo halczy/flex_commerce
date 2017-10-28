@@ -17,7 +17,7 @@
           <%= link_to reward_method.name, admin_reward_method_path(reward_method) %>
         </td>
         <td>
-          <%= reward_method.variety.titleize %>
+          <%= reward_method.translated_variety %>
         </td>
         <%= render 'admin/reward_methods/index/action_control',
                     reward_method: reward_method %>

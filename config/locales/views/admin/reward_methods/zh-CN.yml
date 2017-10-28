@@ -34,7 +34,7 @@ zh-CN:
         delete: 删除
         basic_properties: 基本信息
         name: 名称
-        type: 类别
+        type: 类型
         method_settings: 奖励设置
         percentage: 奖励百分比
         delete_reward_method: 删除奖励方式
