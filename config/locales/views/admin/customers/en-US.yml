@@ -1,7 +1,7 @@
 en-US:
   admin:
     customers:
-      show: 
+      show:
         title: Customer Detail
         return: Return to List
         edit: Edit Customer
@@ -13,6 +13,7 @@ en-US:
           name: Name
           cell_number: Cell Phone Number
           email: Email
+          referer: Referer
         deposit:
           deposit_to_customer: Deposit to Customer Account
           amount: Amount
@@ -32,7 +33,7 @@ en-US:
         detail: Detail
       search_form:
         search: Search
-        searching: Searching... 
+        searching: Searching...
       edit:
         title: Edit Customer Detail
         member_id: Member ID

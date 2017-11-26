@@ -23,6 +23,14 @@
             <th scope="row"><%= t('.email') %></th>
             <td><%= @customer.email %></td>
           </tr>
+          <% if @customer.referer %>
+          <tr>
+            <th scope="row"><%= t('.referer') %></th>
+            <td>
+              <%= link_to @customer.referer.name, @customer.referer %>
+            </td>
+          </tr>
+          <% end %>
         </tbody>
       </table>
   </div>

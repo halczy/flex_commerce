@@ -1,7 +1,7 @@
 zh-CN:
   admin:
     customers:
-      show: 
+      show:
         title: 顾客信息
         return: 返回列表
         edit: 编辑顾客信息
@@ -13,6 +13,7 @@ zh-CN:
           name: 姓名
           cell_number: 手机号
           email: 电子邮箱
+          referer: 推荐人
         deposit:
           deposit_to_customer: 增值顾客钱包
           amount: 金额
@@ -32,7 +33,7 @@ zh-CN:
         detail: 查看详情
       search_form:
         search: 搜索
-        searching: 正在搜索...         
+        searching: 正在搜索...
       edit:
         title: 编辑顾客信息
         member_id: 会员号
