@@ -15,7 +15,7 @@ namespace :geo do
     current_level = 0
 
     # Go through each json file and create geo record
-    geo_files.each do |geo_file|
+    geo_files.sort.each do |geo_file|
       file = File.read(geo_file)
       records = JSON.parse(file)
       current_level += 1
