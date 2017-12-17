@@ -33,4 +33,8 @@ module UsersHelper
     "#{member_id_str[0..2]}-#{member_id_str[-3..-1]}"
   end
 
+  def ref_link
+    "https://#{request.host}/r/#{current_user.member_id}"
+  end
+
 end

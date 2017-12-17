@@ -27,8 +27,7 @@
           <tr>
             <th scope="row"><%= t('.referer') %></th>
             <td>
-              <%= link_to @customer.referer.name, 
-                          admin_customer_path(@customer.referer) %>
+              <%= link_to @customer.referer.member_id, admin_customer_path(@customer.referer) %>
             </td>
           </tr>
           <% end %>
