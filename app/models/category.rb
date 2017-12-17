@@ -1,8 +1,8 @@
 class Category < ApplicationRecord
   include TranslateEnum
-  
+
   # Relationships
-  belongs_to :parent,           class_name: 'Category', optional: true
+  belongs_to :parent,           class_name: 'Category', optional: true, touch: true
   has_many   :child_categories, class_name: 'Category', foreign_key: 'parent_id'
   has_many   :categorizations,  dependent: :destroy
   has_many   :products,         through: :categorizations
