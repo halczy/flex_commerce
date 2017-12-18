@@ -28,9 +28,9 @@ class SessionsController < ApplicationController
 
     def ident_finder
       helpers.convert_ident
-      @user = User.find_by(email: params[:session][:email]) ||
-              User.find_by(cell_number: params[:session][:cell_number]) ||
-              User.find_by(member_id: params[:session][:member_id])
+      @user = User.where.not(email: nil).find_by(email: params[:session][:email]) ||
+              User.where.not(cell_number: nil).find_by(cell_number: params[:session][:cell_number]) ||
+              User.where.not(member_id: nil).find_by(member_id: params[:session][:member_id])
     end
 
     def redirect_by_class(user)
