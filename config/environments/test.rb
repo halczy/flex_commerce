@@ -42,4 +42,7 @@ Rails.application.configure do
 
   # I18n
   config.i18n.default_locale = "en-US"
+
+  # Faker Config
+  Faker::Config.locale = 'en-US'
 end
