@@ -5,8 +5,8 @@ zh-CN:
       content:
         reward: 奖励
       snapshot:
-        monthly_reward: 月奖励收入
-        total_reward: 总奖励收入
+        monthly_reward: 月奖励记录
+        total_reward: 总奖励累计
       transaction:
         amount: 金额
         referee: 推荐人
