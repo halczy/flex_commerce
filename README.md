@@ -9,11 +9,6 @@ Flex Commerce is an easily expandable and customizable e-commerce solution.
 * Ruby 2.4 or above
 * PostgreSQL 9.4 or above
 
-## Demo
-Demo site with randomly generated data. 
-
-[Demo Store](https://flex.omicronplus.com)
-
 #### Credentials
 ```
 Admin:
